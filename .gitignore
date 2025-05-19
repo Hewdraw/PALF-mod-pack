@@ -1,0 +1,10 @@
+log.txt
+*.rpyc
+traceback.txt
+*.rpyb
+errors.txt
+game/cache/shaders.txt
+*.save
+game/saves/persistent
+*.json
+*.bak
