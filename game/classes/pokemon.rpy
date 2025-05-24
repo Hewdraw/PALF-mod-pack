@@ -399,6 +399,7 @@
             return 100
 
         def LearnNewMove(self, newmoves, fullpp = True):
+            moveconfirmed = False
             if (isinstance(newmoves, str)):
                 newmoves = [(0, newmoves)]
             if (len(newmoves) > 0):

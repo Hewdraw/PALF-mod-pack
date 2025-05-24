@@ -121,7 +121,8 @@ init python:
 
         if (name not in ["Endure", "Protect", "Wide Guard", "Detect", "Enshroud", "Deathless", "Splinter Shield", "Spiky Shield", "Quick Guard", "Crafty Shield", "Silk Trap", "Baneful Bunker", "Obstruct"]):
             user.ClearStatus(".protections")
-        if (name != "Fury Cutter" or not doDamage):
+        
+        if (name != "Fury Cutter"):
             user.ClearStatus(".furycutter")
         
         if (abortmove):
@@ -130,6 +131,7 @@ init python:
             UsingMove = False
             MoveUser = None
             ActiveMove = None
+            user.ClearStatus(".furycutter")
 
             ClearSemiInvuls(user)
 
@@ -2927,6 +2929,8 @@ init python:
             user.ClearStatus("thrashing")
         if (user.HasStatus("outraged") and not doDamage):
             user.ClearStatus("outraged")
+        if (user.HasStatus(".furycutter") and not doDamage):
+            user.ClearStatus(".furycutter")
 
         for fvl in user.GetForeverals():
             if (lookupforeveraldata(fvl, FVLMacros.FVLType) == ForeveralTypes.Training):

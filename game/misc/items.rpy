@@ -336,7 +336,7 @@ init python:
         return GetItemEntry(item)[7]
 
     def IsPerishable(item):
-        return ItemHasCategory(item, "berry") or ItemHasCategory(item, "exp item") or ItemHasCategory(item, "treat boost") or ItemHasCategory(item, "apricorn")
+        return ItemHasTag(item, "berry") or ItemHasTag(item, "exp item") or ItemHasTag(item, "treat boost") or ItemHasTag(item, "apricorn")
 
     def GetItemSellValue(item):
         global soldmysterygift
