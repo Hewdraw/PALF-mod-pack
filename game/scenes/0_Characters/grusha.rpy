@@ -807,7 +807,7 @@ label Grusha1Part2:
 
     $ BecomeContacted("Grusha")
 
-    grusha unamusedbrow talkingmouth "Thanks. Now, [bluecolor]'honey'{/color}, let's go home. And wait until you hear what The Little Prince did at school today!"
+    grusha unamusedbrow talkingmouth "Thanks. Now, [bluecolor]'honey'{/color}, let's go home. And wait until you hear what the Little Prince did at school today!"
 
     hide grusha with dis
 

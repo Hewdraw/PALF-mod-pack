@@ -1,5 +1,7 @@
 label lunch010513:
 
+$ AddEvent("Leaf", "LentDratini")
+
 show leaf uniform with dis
 
 leaf @talkingmouth "Heya."

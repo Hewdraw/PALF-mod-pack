@@ -136,7 +136,7 @@ oak playfuleyes playfuleyebrows frownmouth @confused "Melody? Was that answer to
 
 melody @talking2mouth "I'm still here, with my uniform on, and my phone's in my pocket. Read between the lines."
 
-oak @talking2mouth "{size=30}...'Become a teacher', I thought. It's easy, I thought. Kobukan's the perfect place to test my theories, I thought.{/size}"
+oak @talking2mouth "{size=30}...'Become a teacher', I thought. 'It's easy', I thought. 'Kobukan's the perfect place to test my theories', I thought.{/size}"
 
 oak closedbrow talking2mouth "Right. Class dismissed. Well done on the exam, everyone. I'll see you tomorrow."
 
@@ -338,7 +338,7 @@ yellow @surprised "Oh! Yes, there is. Um, if you use a STAB move, you get energy
 
 blue @angrybrow talking2mouth "We can figure it out as we go! Do we want to sit around here tutorializing forever, or do we want to get {i}into{/i} it?"
 
-ethan @closedbrow talking2mouth "{size=30}Geez, he's pushy...{/size} Look, if you need a referesher on how contests work, just click the 'Contest Help' button at the bottom of the screen."
+ethan @closedbrow talking2mouth "{size=30}Geez, he's pushy...{/size} Look, if you need a refresher on how contests work, just click the 'Contest Help' button at the bottom of the screen."
 
 blue @surprised "What? There's nothing like that here."
 

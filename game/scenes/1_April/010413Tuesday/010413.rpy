@@ -299,6 +299,7 @@ menu:
 
     "{color=#b7669e}[[Charm]{/color} Wait! I want to join the Student Council!" if not council_campaigning:
 
+        $ council_campaigning = True
         $ TraitChange("Charm")
 
         brawly @talkingmouth "...Uh... I thought you weren't trying to get in?"

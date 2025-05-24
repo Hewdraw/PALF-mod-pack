@@ -245,7 +245,7 @@ while (HasEgg()):
     oak @happy "Ah! I believe this one hatched from one of your eggs."
 
     if HasEgg("Larvesta Egg"):
-        $ del inventory[Item.LarvestaEgg]
+        $ LoseItem(Item.LarvestaEgg)
 
         $ sidemonnum = 636
         $ PlaySound("pokemon/cries/636.mp3")
@@ -266,7 +266,7 @@ while (HasEgg()):
         $ AddMon(Pokemon(pokedexlookupname("Larvesta", DexMacros.Id), level=1, shinylock=False), True)
 
     elif HasEgg("Togepi Egg"):
-        $ del inventory[Item.TogepiEgg]
+        $ LoseItem(Item.TogepiEgg)
 
         $ sidemonnum = 175
         $ PlaySound("pokemon/cries/175.mp3")
@@ -279,7 +279,7 @@ while (HasEgg()):
         $ AddMon(Pokemon(pokedexlookupname("Togepi", DexMacros.Id), level=1, shinylock=False), True)
 
     elif HasEgg("Tyrogue Egg"):
-        $ del inventory[Item.TyrogueEgg]
+        $ LoseItem(Item.TyrogueEgg)
 
         $ sidemonnum = 236
         $ PlaySound("pokemon/cries/236.mp3")
@@ -292,7 +292,7 @@ while (HasEgg()):
         $ AddMon(Pokemon(pokedexlookupname("Tyrogue", DexMacros.Id), level=1, shinylock=False), True)
 
     elif HasEgg("Smoochum Egg"):
-        $ del inventory[Item.SmoochumEgg]
+        $ LoseItem(Item.SmoochumEgg)
 
         $ sidemonnum = 238
         $ PlaySound("pokemon/cries/238.mp3")
@@ -306,7 +306,7 @@ while (HasEgg()):
         $ AddMon(Pokemon(pokedexlookupname("Smoochum", DexMacros.Id), level=1, shinylock=False), True)
 
     elif HasEgg("Magby Egg"):
-        $ del inventory[Item.MagbyEgg]
+        $ LoseItem(Item.MagbyEgg)
 
         $ sidemonnum = 240
         $ PlaySound("pokemon/cries/240.mp3")
@@ -319,7 +319,7 @@ while (HasEgg()):
         $ AddMon(Pokemon(pokedexlookupname("Magby", DexMacros.Id), level=1, shinylock=False), True)
 
     elif HasEgg("Wynaut Egg"):
-        $ del inventory[Item.WynautEgg]
+        $ LoseItem(Item.WynautEgg)
 
         $ sidemonnum = 360
         $ PlaySound("pokemon/cries/360.mp3")
@@ -332,7 +332,7 @@ while (HasEgg()):
         $ AddMon(Pokemon(pokedexlookupname("Wynaut", DexMacros.Id), level=1, shinylock=False), True)
 
     elif HasEgg("Bonsly Egg"):
-        $ del inventory[Item.BonslyEgg]
+        $ LoseItem(Item.BonslyEgg)
 
         $ sidemonnum = 438
         $ PlaySound("pokemon/cries/360.mp3")
@@ -346,7 +346,7 @@ while (HasEgg()):
         $ AddMon(Pokemon(pokedexlookupname("Bonsly", DexMacros.Id), level=1, shinylock=False), True)
 
     elif HasEgg("Mantyke Egg"):
-        $ del inventory[Item.MantykeEgg]
+        $ LoseItem(Item.MantykeEgg)
 
         $ sidemonnum = 458
         $ PlaySound("pokemon/cries/458.mp3")
@@ -367,7 +367,7 @@ while (HasEgg()):
         $ AddMon(Pokemon(pokedexlookupname("Mantyke", DexMacros.Id), level=1), True)
 
     elif HasEgg("Toxel Egg"):
-        $ del inventory[Item.ToxelEgg]
+        $ LoseItem(Item.ToxelEgg)
 
         $ sidemonnum = 848
         $ PlaySound("pokemon/cries/848.mp3")
@@ -385,7 +385,7 @@ while (HasEgg()):
         $ AddMon(Pokemon(pokedexlookupname("Toxel", DexMacros.Id), level=1), True)
 
     elif HasEgg("Deino Egg"):
-        $ del inventory[Item.DeinoEgg]
+        $ LoseItem(Item.DeinoEgg)
 
         $ sidemonnum = 633
         $ PlaySound("pokemon/cries/633.mp3")

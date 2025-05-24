@@ -697,7 +697,7 @@ label natenightscene2:
 
         pause 0.5
 
-        nate @closedbrow talking2mouth "Just thinking, I guess."
+        nate -surprisedbrow @closedbrow talking2mouth "Just thinking, I guess."
 
         pause 1.0
 
@@ -738,7 +738,7 @@ label natenightscene2:
         red @sadbrow talking2mouth "Not related to {i}our{/i} thing?"
 
         nate @sadbrow talkingmouth "No, a different thing that threatens peace as we know it, and could end the happy lives of billions."
-        nate surprisedbrow frownmouth @sad2eyes talkingmouth "{size=30}It never ends. It just {i}never{/i} ends.{/size}"
+        nate surprisedbrow frownmouth @sad2eyes sadeyebrows talkingmouth "{size=30}It never ends. It just {i}never{/i} ends.{/size}"
 
         red @talking2mouth "Maybe it won't. But... I grew up peacefully."
 
@@ -767,7 +767,7 @@ label natenightscene2:
 
         red @talking2mouth "I immediately see what you mean, and this must {i}never{/i} get out."
 
-        nate @closedbrow talkingmouth "Hah. Sleep well, [nate_name]. I've got a world to make."
+        nate -unamusedbrow -frownmouth @closedbrow talkingmouth "Hah. Sleep well, [nate_name]. I've got a world to make."
 
         red @happy "Stay safe."
 

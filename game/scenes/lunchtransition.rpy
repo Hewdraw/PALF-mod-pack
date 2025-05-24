@@ -46,7 +46,7 @@ label lunchtransition6:
     jump afterlunchtransition
 
 label lunchtransition7:
-    alder happy2 "Those were some good battles today! I'm confident that our leagues are in good hands, with you students taking the reigns."
+    alder happy2 "Those were some good battles today! I'm confident that our leagues are in good hands, with you students taking the reins."
     jump afterlunchtransition
 
 label afterlunchtransition:

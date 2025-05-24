@@ -461,7 +461,9 @@ elif (not HasEvent("Instructor Bertha", 4.1) and classstats["Ground"] >= 30):#Bu
 
         bertha @norm2 "You flatter me, dearie. Now, are you ready to take the exam? This'll be a harder one, but you're a tough cookie, so I'm sure you can handle it."
 
-        red @happy "I'm pretty sure I can do this, yeah!"
+        bertha @happy2 "Pass this one and I can start teaching your Pokémon Bulldoze. The smaller cousin to Earthquake--for when you don't need to level a building, just a room."
+
+        red @happy "Not sure I'll have much call for that, but I'm pretty sure I can do this, yeah!"
 
         $ AddEvent("Instructor Bertha", 4)
     else:

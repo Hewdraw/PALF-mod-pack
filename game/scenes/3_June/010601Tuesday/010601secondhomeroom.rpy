@@ -113,7 +113,7 @@ yellow @sad2eyes talking2mouth "I, um, I just want to be able to follow along. I
 pause 0.5
 
 red @sadbrow talkingmouth "Alright. But, hey, maybe I'm completely wrong here, but I think... you know, just make sure you don't do something you'll regret."
-red @happy "Or {i}don't{/i} do someting you'll regret, I guess. Kobukan has a lot of opportunities. Once-in-a-lifetime kinda things, you know?"
+red @happy "Or don't {i}not{/i} do something you'll regret, I guess. Kobukan has a lot of opportunities. Once-in-a-lifetime kinda things, you know?"
 
 yellow @sadbrow talking2mouth "...Yeah. Yeah, I know."
 

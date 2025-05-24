@@ -3314,7 +3314,7 @@ show dawn surprisedbrow frownmouth:
     xpos 0.66
     linear 0.3 xpos 0.72 ypos 1.03 rotate 3
 
-narrator "Hilda casually tosses Dawn a white box with a smiling Vanilite on the cover. Dawn stumbles a bit to catch it."
+narrator "Hilda casually tosses Dawn a white box with a smiling Vanillite on the cover. Dawn stumbles a bit to catch it."
 
 show dawn -surprisedbrow -frownmouth with dis:
     xpos 0.72 ypos 1.03 rotate 3

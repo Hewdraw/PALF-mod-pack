@@ -115,13 +115,13 @@ init python:#brainaction makes the function return True or False, to determine w
         if (pkmn.GetId() == 416):
             if (pkmn.GetHealthPercentage() <= 0.666):
                 return ("Heal Order", [pkmn])
-            elif (len(GetBattlers(pkmn)) < 3):
+            elif (len(EnemyBattlers()) < 3):
                 return ("Defend Order", [pkmn])
         return None
 
     def gardeniafieldswitchbrain(trainer):
         for mon in trainer.GetUnfaintedTeam():
-            if (mon.GetNickname() != "Phantump"):#send out Phantump last
+            if ("Phantump" not in mon.GetNickname()):#send out Phantump last
                 return mon
         return None#this just means it's giving up trying to make a choice, not that you switch in "nothing"
 

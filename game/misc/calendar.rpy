@@ -201,6 +201,7 @@ label calendar(direction):
                 Item.PechaPot: "Pecha Berry",
                 Item.AspearPot: "Aspear Berry",
                 Item.CheriPot: "Cheri Berry",
+                Item.ChestoPot: "Chesto Berry",
                 Item.SitrusPot: "Sitrus Berry",
                 Item.LumPot: "Lum Berry",
             }

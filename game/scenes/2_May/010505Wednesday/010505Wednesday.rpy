@@ -773,7 +773,7 @@ narrator "As the haze of sleep leaves your mind, you suddenly remember what the 
 leaf @surprised bigblush "Oh... right, right! We're on Tia, flying across the ocean. I..."
 leaf @fullblush embarrassed "I thought we... were in bed..."
 
-if ("RejectedConfession" in oldpersondex["Leaf"]["Events"]):
+if (HasEvent("Leaf", "RejectedConfession")):
     red @playfuleyes talking2mouth "Once again: {w=0.5}we are not dating."
 
     leaf @flirttalk "We {i}definitely were{/i} in the dream I was having."
@@ -2789,6 +2789,8 @@ blue @closedbrow talking2mouth "Yeah, here you go."
 
 narrator "Blue passes Leaf a Poké Ball."
 
+$ RemoveEvent("Leaf", "LentDratini")
+
 if (GetTrainerTeam("Leaf", "Dratini").Gender == Genders.Female):
     blue @closedbrow talkingmouth "She's strong."
 
@@ -3843,7 +3845,7 @@ elif (_return == "Baseball Field"):
         flannery @closedbrow talking2mouth "I was scared that... your patience would run out. I know it's not easy to get along with me."
         flannery -frownmouth @sadbrow happymouth "You basically have to be friends with two separate people. And I don't think there's anyone in this school who'd be willing to put up with me, other than you."
 
-        if (GetRelationshipRank("Flannery") == 1):
+        if (GetRelationshipRank("Flannery") > 0):
             whitney @talking2mouth "What about [first_name]?"
 
             flannery frownmouth @surprisedbrow talking2mouth "Huh?"
@@ -3904,7 +3906,7 @@ elif (_return == "Baseball Field"):
 
         flannery @talking2mouth "I don't know why [first_name] freaked out up there, but personally, I think Cheren's full of it."
 
-        if (GetRelationshipRank("Flannery") == 1):
+        if (GetRelationshipRank("Flannery") > 0):
             flannery @angry "Mind control? Get real! [first_name]'s an awesome dude who's one of the few people patient enough to deal with me in the morning!"
         
         else:

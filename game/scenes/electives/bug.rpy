@@ -130,7 +130,7 @@ if (not HasEvent("Burgh", 1)): #first class
 
     burgh norm2 "Yes, in the front."
     
-    skyla @sadbrow talkingmouth "...Um, What, uh, what does 'rendering models' mean?"
+    skyla @sadbrow talkingmouth "...Um, what, uh, what does 'rendering models' mean?"
 
     hide skyla at rightside with dis
 

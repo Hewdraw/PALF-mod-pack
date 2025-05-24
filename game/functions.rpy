@@ -660,7 +660,6 @@ init python:
             character = "Professor Cherry"
         rank = int(strip_letters(scene))
         conditions = ""
-        ignorenotevent = False
         if (IsAbsent(character)):
             return character + " is unavailable."
         for condition, value in sceneconditionsdict.items():
@@ -671,6 +670,13 @@ init python:
                 if (IsBefore(value[0], value[1], value[2])):
                     return "The future is cloudy..."
                 skipcomma = True
+            elif (condition == "Event2"):
+                if (value[2] == "The future is cloudy..."):
+                    skipcomma = True
+                    if (not HasEvent(value[0], value[1])):
+                        return value[2]
+                else:
+                    conditions += value[2]
             elif (condition == "Event"):
                 if (value[2] == "The future is cloudy..."):
                     skipcomma = True
@@ -684,7 +690,7 @@ init python:
                 if (HasEvent(value[0], value[1])):
                     return value[2]
                 skipcomma = True
-            elif (not ignorenotevent and condition == "NotEvent"):
+            elif (condition == "NotEvent"):
                 if (HasEvent(value[0], value[1])):
                     return value[2]
                 skipcomma = True
@@ -715,6 +721,9 @@ init python:
                     return False
             elif (condition == "Date"):
                 if (IsBefore(value[0], value[1], value[2])):
+                    return False
+            elif (condition == "Event2"):
+                if (not HasEvent(value[0], value[1])):
                     return False
             elif (condition == "Event"):
                 if (not HasEvent(value[0], value[1])):
@@ -1248,7 +1257,7 @@ init python:
 
         if (mood < -5):
             moodname = "angry"
-            if (character == "Cheren"):
+            if (character == "Cheren" and IsAfter(1, 5, 2004)):
                 moodname = "sad2eyes noshine shadow smilemouth"
             elif (character == "Iono"):
                 moodname = "body6"
@@ -1262,7 +1271,7 @@ init python:
             moodname = "happy"
             if (character in ["Hilbert", "Silver", "Sabrina"]):
                 moodname = "smilemouth"
-            elif (character == "Cheren"):
+            elif (character == "Cheren" and IsAfter(1, 5, 2004)):
                 moodname = "sad2eyes noshine shadow smilemouth"
             elif (character == "Iono"):
                 moodname = "body3"
@@ -1385,6 +1394,8 @@ init python:
             char = "Professor Oak"
         if (not HasEvent(char, event)):
             metadata = [calDate.year, calDate.month, calDate.day, timeOfDay, location] if not custommetadata else custommetadata
+            if metadata == -1:
+                metadata = [calDate.year, calDate.month, calDate.day - 1, timeOfDay, location]
             CurrentPersondex()[char]["Events"].append((event, metadata))
 
     def HasEvent(char, event):
@@ -1789,8 +1800,6 @@ init python:
                         inventorymetadata[recorded_item] = [move]
             elif (software == Item.TMSoftware2000 and not IsWinner):
                 renpy.say(None, "The recording of {} seems to have been corrupted in the scuffle--at least the {} is reusable.".format(move, GetItemName(blank_item)))
-
-            del inventorymetadata[blank_item]
 
     def version_key(version):
         """

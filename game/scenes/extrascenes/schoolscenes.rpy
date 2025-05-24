@@ -270,7 +270,7 @@ label SoniaMagnetGet:
     sonia @talking2mouth "Certainly. How does... hm. How would $500 sound?"
 
     menu:
-        "Sure. Here you go.":
+        "Sure. Here you go." if money >= 500:
             $ money -= 500
             $ ValueChange("Sonia", 6)
 
@@ -283,31 +283,29 @@ label SoniaMagnetGet:
 
             red @sadbrow talkingmouth "Aw, Sonia, you don't have to do that. I'm fine paying a little bit, really."
 
-            sonia @sadbrow talkingmouth "N-no, I musn't be greedy. Gran wouldn't approve. Again, very sorry."
+            sonia @sadbrow talkingmouth "N-no, I mustn't be greedy. Gran wouldn't approve. Again, very sorry."
 
             $ ValueChange("Sonia", 3)
 
-            $ GetItem(Item.Magnet, text="You got the magnet, and some guilt! But guilt isn't a tracked stat, so there's no mechanical reprecussions for taking this option.{w=1.5}\nYou monster.")
+            $ GetItem(Item.Magnet, text="You got the magnet, and some guilt! But guilt isn't a tracked stat, so there's no mechanical repercussions for taking this option.{w=1.5}\nYou monster.")
 
         "I don't have that much on me." if money < 500:
             sonia @confusedbrow talking2mouth "Oh, terribly sorry. Er... I should've remembered, you're also... my mistake. Please, take the magnet, free of charge."
 
             red @sadbrow talkingmouth "Aw, Sonia, you don't have to do that. I'm fine paying a little bit, really."
 
-            sonia @sadbrow talkingmouth "N-no, I musn't be greedy. Gran wouldn't approve. Again, very sorry."
+            sonia @sadbrow talkingmouth "N-no, I mustn't be greedy. Gran wouldn't approve. Again, very sorry."
             
             $ ValueChange("Sonia", 3)
 
-            $ GetItem(Item.Magnet, text="You got the magnet, and some guilt! But guilt isn't a tracked stat, so there's no mechanical reprecussions for taking this option.{w=1.5}\nYou monster.")
+            $ GetItem(Item.Magnet, text="You got the magnet, and some guilt! But guilt isn't a tracked stat, so there's no mechanical repercussions for taking this option.{w=1.5}\nYou monster.")
 
         "I don't have that much on me, but you can ask Gardenia to pay you." if money < 500 and bank >= 500:
-            sonia @talkingmouth "Oh! Do you have some sort of deal...?"
+            sonia @talkingmouth "Oh! Right, yes. Gardenia's got some of my money in storage, as well. How are you finding it?"
 
-            red @talking2mouth "Yeah, she's keeping my money for me. Some sort of 'banking' thing."
             red @closedbrow sweat talking2mouth "To be honest, I'm not exactly sure what she's doing with my money, but she's adding a little bit to it every day, so... I guess it's fine?"
 
-            sonia @closedbrow talking2mouth "Hm... interesting. I'll ask her about this, then. Perhaps I should, er, bank with her as well."
-            sonia @sadbrow talkingmouth "She jolly well ought to be more reliable than the banks in Galar, in any case. They're {i}never{/i} open."
+            sonia @sadbrow talkingmouth "Fair enough. She jolly well ought to be more reliable than the banks in Galar, in any case. They're {i}never{/i} open."
             sonia @talking2mouth "Oh, please excuse my dithering."
 
             red @happy "Totally fine, Sonia."
@@ -438,28 +436,33 @@ label RosaMagnetGet:
         $ GetItem(Item.Magnet, text="You got the Magnet! Rosa quickly passes it to you, while looking over her shoulder.")
 
         jump afterrosamagnettrade
-    
-    $ itemname = GetItemName(item)
 
-    if (GetGiftValue(character, item) >= 7):
-        rosa @surprised "Woah, really?! That's way more valuable than this Magnet... thank you so much! I really, {i}really{/i} mean it!"
-        $ ValueChange("Rosa", GetGiftValue(character, item) + 3)
-        $ GetItem(Item.Magnet, text="You trade the Magnet for the [itemname], which Rosa giddily accepts.")
+    elif (LoseItem(item)):
+        $ itemname = GetItemName(item)
+        $ itemvalue = GetGiftValue(character, item)
+        
+        if (itemvalue >= 7):
+            rosa @surprised "Woah, really?! That's way more valuable than this Magnet... thank you so much! I really, {i}really{/i} mean it!"
+            $ ValueChange("Rosa", itemvalue + 3)
+            $ GetItem(Item.Magnet, text="You trade the Magnet for the [itemname], which Rosa giddily accepts.")
 
-    elif (GetGiftValue(character, item) >= 5):
-        rosa @surprised "Wow! That's a very fair trade. Thank you so much for your support!"
-        $ ValueChange("Rosa", GetGiftValue(character, item) + 3)
-        $ GetItem(Item.Magnet, text="You trade the Magnet for the [itemname], which Rosa happily accepts.")
+        elif (itemvalue >= 5):
+            rosa @surprised "Wow! That's a very fair trade. Thank you so much for your support!"
+            $ ValueChange("Rosa", itemvalue + 3)
+            $ GetItem(Item.Magnet, text="You trade the Magnet for the [itemname], which Rosa happily accepts.")
 
-    elif (GetGiftValue(character, item) >= 3):
-        rosa @talkingmouth "Sure! That's a fair trade. Thank you very much."
-        $ ValueChange("Rosa", GetGiftValue(character, item) + 3)
-        $ GetItem(Item.Magnet, text="You trade the Magnet for the [itemname], which Rosa accepts.")
+        elif (itemvalue >= 3):
+            rosa @talkingmouth "Sure! That's a fair trade. Thank you very much."
+            $ ValueChange("Rosa", itemvalue + 3)
+            $ GetItem(Item.Magnet, text="You trade the Magnet for the [itemname], which Rosa accepts.")
 
-    elif (GetGiftValue(character, item) >= 1):
-        rosa @talkingmouth "Suuuure. That, um, that kinda works."
-        $ ValueChange("Rosa", GetGiftValue(character, item) + 3)
-        $ GetItem(Item.Magnet, text="You trade the Magnet for the [itemname], which Rosa good-naturedly accepts.")
+        else:
+            rosa @talkingmouth "Suuuure. That, um, that kinda works."
+            $ ValueChange("Rosa", itemvalue + 3)
+            $ GetItem(Item.Magnet, text="You trade the Magnet for the [itemname], which Rosa good-naturedly accepts.")
+
+    else:
+        jump starttrade
 
     label afterrosamagnettrade:
 

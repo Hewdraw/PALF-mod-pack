@@ -55,7 +55,7 @@ label Hilbert1:
 
     narrator "Hilbert's voice is thick with bitterness."
 
-    red @talking2mouth "...Do you want to talk?"
+    red @talking2mouth "[ellipses]Do you want to talk?"
 
     if (IsBefore(1, 5, 2004)):
         hilbert @sadmouth "How long have we been roommates? You know this. Obviously, I don't want to talk."
@@ -63,7 +63,7 @@ label Hilbert1:
     else:
         hilbert @talkingmouth "How long were we roommates? You know this. Obviously, I don't want to talk."
 
-    red @confused "...Right."
+    red @confused "[ellipses]Right."
 
     pause 1.0
 
@@ -85,7 +85,7 @@ label Hilbert1:
 
     red @talkingmouth "So, what's your story with her?"
 
-    hilbert @sadbrow talkingmouth "...It really is impossible to turn you off, isn't it?"
+    hilbert @sadbrow talkingmouth "[ellipses]It really is impossible to turn you off, isn't it?"
 
     red @talkingmouth "Kinda, yeah."
 
@@ -127,21 +127,21 @@ label Hilbert1:
 
     pause 0.5
 
-    narrator "You sneak a peek over your shoulder at his small form hurrying after you, and you can't help but smirk. He's actually kinda cute... {w=0.5}when he isn't talking, anyway."
+    narrator "You sneak a peek over your shoulder at his small form hurrying after you, and you can't help but smirk. He's actually kinda cute[ellipses] {w=0.5}when he isn't talking, anyway."
 
     scene abandonedhouse 
     show hilbert angry at night
     with splitfade
 
-    hilbert "{w=0.5}Hah... {w=0.5}Hah... {w=0.5}...Hah. D-don't... {w=0.5}Hah..."
+    hilbert "{w=0.5}Hah[ellipses] {w=0.5}Hah[ellipses] {w=0.5}[ellipses]Hah. D-don't[ellipses] {w=0.5}Hah[ellipses]"
 
     red night @happy "See? Told you you could make it."
 
-    hilbert @closedbrow angrymouth "And I... told {i}you...{/i} that it was too long a walk."
+    hilbert @closedbrow angrymouth "And I[ellipses] told {i}you[ellipses]{/i} that it was too long a walk."
 
     pause 2.0
 
-    hilbert -angry @talkingmouth "...Where are we?"
+    hilbert -angry @talkingmouth "[ellipses]Where are we?"
 
     if (HasEvent("Silver", "Overthrown")):
         red @talkingmouth "Like I said. A friend's old house. He was kicked out, but[ellipses] he'll get it back. Reclaim his throne, y'know?"
@@ -164,15 +164,15 @@ label Hilbert1:
 
     hilbert @talkingmouth "No, I know {i}what{/i} you said. {i}Why{/i} did you say Prince?"
 
-    red @talking2mouth "...I dunno, man. Sorry if I crossed a line. I was just poking fun at you, since you were acting kinda... princely."
+    red @talking2mouth "[ellipses]I dunno, man. Sorry if I crossed a line. I was just poking fun at you, since you were acting kinda[ellipses] princely."
 
-    hilbert @sadbrow talkingmouth "...Tch. That's what my mother used to call me."
+    hilbert @sadbrow talkingmouth "[ellipses]Tch. That's what my mother used to call me."
 
     red @closedbrow talking2mouth "Aurea?"
 
     hilbert @closedbrow talking2mouth "No, Professor Juniper is my guardian. My {i}mother.{/i}"
 
-    red @closedbrow talking2mouth "Um... Hilda?"
+    red @closedbrow talking2mouth "Um[ellipses] Hilda?"
 
     pause 1.0
 
@@ -194,7 +194,7 @@ label Hilbert1:
 
     hilbert @talkingmouth "They were murdered. Right in front of me."
 
-    red @sad "Oh..."
+    red @sad "Oh[ellipses]"
 
     hilbert @talkingmouth "And I swore, on that day, that I would kill the one responsible."
 
@@ -206,31 +206,31 @@ label Hilbert1:
 
     hilbert @talkingmouth "Yes."
 
-    red @talkingmouth "Not... 'find'? Or 'bring to justice'? Or even 'punish'?"
+    red @talkingmouth "Not[ellipses] 'find'? Or 'bring to justice'? Or even 'punish'?"
 
     hilbert @talkingmouth "No. Kill. Revenge is my ideal. I've no interest in the truth."
 
     pause 1.0
 
-    red @closedbrow talking2mouth "That's... pretty heavy, man."
+    red @closedbrow talking2mouth "That's[ellipses] pretty heavy, man."
 
     hilbert @talkingmouth "It's the only thought that's occupied my mind for many, many years. I've been plotting. Hating. Dreaming of when I could get my revenge."
     hilbert @angry "I have been wallowing in darkness. To the point the dark, and the cold, has become my own bitter blade."
 
-    red @talkingmouth "Uh..."
+    red @talkingmouth "Uh[ellipses]"
 
-    hilbert @angry "The dragon of the meteor will fall at my hand. And then, if there's a life left for me..."
+    hilbert @angry "The dragon of the meteor will fall at my hand. And then, if there's a life left for me[ellipses]"
 
     pause 0.5
 
-    hilbert @talkingmouth "...I guess I'll go to prison."
+    hilbert @talkingmouth "[ellipses]I guess I'll go to prison."
 
     red @surprised "What?"
 
     if (not IsBefore(1, 5, 2004)):
-        redmind @frownmouth "The dragon of the meteor? He can't be... he {i}can't{/i} be talking about Tia, can he?"
+        redmind @frownmouth "The dragon of the meteor? He can't be[ellipses] he {i}can't{/i} be talking about Tia, can he?"
     else:
-        redmind @frownmouth "The dragon of the meteor? He can't be... he {i}can't{/i} be talking about Rayquaza, can he?"
+        redmind @frownmouth "The dragon of the meteor? He can't be[ellipses] he {i}can't{/i} be talking about Rayquaza, can he?"
 
     hilbert "{w=0.5}.{w=0.5}.{w=0.5}."
 
@@ -243,7 +243,7 @@ label Hilbert1:
     if (not IsBefore(1, 5, 2004)):
         hilbert @talkingmouth "I despise how easily it comes to you. I loathe that you made me trust you, when you knew full well what power you had."
 
-        red @sadbrow talking2mouth "Hilbert, I didn't know about Frienergy until a couple weeks into the year..."
+        red @sadbrow talking2mouth "Hilbert, I didn't know about Frienergy until a couple weeks into the year[ellipses]"
 
         hilbert @angry "And when you found out, did you tell me about it? Did you tell anyone?"
 
@@ -274,17 +274,17 @@ label Hilbert1:
 
     pause 1.0
 
-    red @sad "...Hilbert."
+    red @sad "[ellipses]Hilbert."
 
     hilbert @talkingmouth "Yes."
 
-    red @closedbrow frownmouth "I... can't begin to understand the pain you're going through, but killing isn't the answer."
+    red @closedbrow frownmouth "I[ellipses] can't begin to understand the pain you're going through, but killing isn't the answer."
 
     hilbert @talkingmouth "Then what is? 'Forgiveness'? 'Living well'?"
 
-    red @closedbrow talking2mouth "Um... I'd try just talking it out with the person you've got a vendetta against."
+    red @closedbrow talking2mouth "Um[ellipses] I'd try just talking it out with the person you've got a vendetta against."
 
-    hilbert @closedbrow talkingmouth "...Whatever. When you see everything with blackened eyes, the world looks dark. 'Living well' is impossible."
+    hilbert @closedbrow talkingmouth "[ellipses]Whatever. When you see everything with blackened eyes, the world looks dark. 'Living well' is impossible."
 
     pause 1.0
 
@@ -298,7 +298,7 @@ label Hilbert1:
 
     hilbert @sadbrow talkingmouth "It looks like a first edition Pokémon League Expo hat. It's probably a counterfeit, though, since they were only on for a limited run."
         
-    red @happy "Oh, uh... Sam gave it to me. Er, Professor Oak, I mean."
+    red @happy "Oh, uh[ellipses] Sam gave it to me. Er, Professor Oak, I mean."
 
     hilbert @talkingmouth "Can I see it?"
 
@@ -327,7 +327,7 @@ label Hilbert1:
     pause 1.0
 
     red @talkingmouth "Thanks."
-    red @closedbrow talking2mouth "...But, really, what was that about?"
+    red @closedbrow talking2mouth "[ellipses]But, really, what was that about?"
 
     hilbert @talkingmouth "There are exactly seven hundred and forty-eight of those hats in existence. They were manufactured in 2001." 
     hilbert @talkingmouth "They were the last Kantonian League Expo hats ever made." 
@@ -346,7 +346,7 @@ label Hilbert1:
 
     $ PlaySound("idea.ogg")
 
-    red @surprised "Wait. So, what you're telling me is... this hat is {i}really{/i} valuable?"
+    red @surprised "Wait. So, what you're telling me is[ellipses] this hat is {i}really{/i} valuable?"
 
     hilbert @talkingmouth "It could be."
 
@@ -355,7 +355,7 @@ label Hilbert1:
 
     narrator "Hilbert snatches the hat off your head and gestures at its insides angrily."
 
-    hilbert @angrybrow talkingmouth "If you hadn't {i}soiled{/i} it with your greasy hair, and... and your... dandruff!"
+    hilbert @angrybrow talkingmouth "If you hadn't {i}soiled{/i} it with your greasy hair, and[ellipses] and your[ellipses] dandruff!"
 
     narrator "Hilbert tosses the hat back to you."
 
@@ -363,13 +363,13 @@ label Hilbert1:
 
     hilbert @closedbrow talking2mouth "Easily $1,500,000."
 
-    red @sad "Oh, no... and how much is it worth now?"
+    red @sad "Oh, no[ellipses] and how much is it worth now?"
 
     hilbert @angry "After ten years of use? $70,000 maximum."
 
     pause 1.0
 
-    red @closedbrow sadmouth tears "Oh... I could have been rich..."
+    red @closedbrow sadmouth tears "Oh[ellipses] I could have been rich[ellipses]"
 
     if (IsBefore(1, 5, 2004)):
         hilbert @talkingmouth "Ugh. I'm actually glad we had this talk. At least now you appreciate your damn hat more. It physically pained me seeing you going to bed every night with it on. You don't even put it on the nightstand or anything."
@@ -380,7 +380,7 @@ label Hilbert1:
     pause 0.5
 
     if (IsBefore(1, 5, 2004)):
-        red @talking2mouth "Hey... do you watch me sleep?"
+        red @talking2mouth "Hey[ellipses] do you watch me sleep?"
 
         hilbert @talkingmouth "I watch everyone in the room sleep. You're not special."
 
@@ -393,7 +393,7 @@ label Hilbert1:
         hilbert @talkingmouth "I'm scared of the dark. Watching you four sleep reminds me that I'm not alone."
 
     else:
-        red @talking2mouth "Hey... did you watch me sleep?"
+        red @talking2mouth "Hey[ellipses] did you watch me sleep?"
 
         hilbert @talkingmouth "I watched everyone in that room sleep. You're not special."
 
@@ -420,7 +420,7 @@ label Hilbert1:
 
     hilbert @talkingmouth "Tch. This whole conversation has been a waste of time. And now I've forgotten why I even came to Inspira in the first place."
 
-    red @talkingmouth "...I think I know."
+    red @talkingmouth "[ellipses]I think I know."
 
     hilbert @talkingmouth "Then keep it to yourself."
 
@@ -436,17 +436,17 @@ label Hilbert1:
 
     hilbert "{w=0.5}.{w=0.5}.{w=0.5}."
 
-    red @talkingmouth "...But I'll help you find the one responsible, if you can tell me about them."
+    red @talkingmouth "[ellipses]But I'll help you find the one responsible, if you can tell me about them."
 
     hilbert @talkingmouth "I accept your help."
 
     red @surprised "Woah. That easily?"
 
     if (IsBefore(1, 5, 2004)):
-        hilbert @talkingmouth "I'm not in any position to be turning down offers of aid. Besides, you're... {w=0.5}competent. I would welcome your aid as my... compatriot."
+        hilbert @talkingmouth "I'm not in any position to be turning down offers of aid. Besides, you're[ellipses] {w=0.5}competent. I would welcome your aid as my[ellipses] compatriot."
 
     else:
-        hilbert @sadbrow talkingmouth "Your power affords you... communicative ability. I'm not in any position to be turning down people who can provide that. Besides, you're... {w=0.5}competent. I would welcome your aid as my... compatriot."
+        hilbert @sadbrow talkingmouth "Your power affords you[ellipses] communicative ability. I'm not in any position to be turning down people who can provide that. Besides, you're[ellipses] {w=0.5}competent. I would welcome your aid as my[ellipses] compatriot."
 
     red @talkingmouth "That's{w=0.5}.{w=0.5}.{w=0.5}.{nw}"
 
@@ -473,7 +473,7 @@ label Hilbert1:
 
         pause 2.0
 
-        silver @talkingmouth "What the fuck...?"
+        silver @talkingmouth "What the fuck[ellipses]?"
 
     scene black with Dissolve(2.0)
 
@@ -526,14 +526,14 @@ label Hilbert2:
     narrator "You'd been idly relaxing in your room, texting random friends when you suddenly received a text."
     narrator "'Come to the Battle Hall now. Alone. -HvS.'"
     narrator "You made your way to the Battle Hall, gently asking some students who were using the Battle Hall to depart. They assumed it was Battle Team business, and ran off without a word of protest."
-    if (not persondex["Hilbert"]["Contact"]):
+    if (not IsContacted("Hilbert")):
         narrator "Though it was a new number, you figured there was only one person 'HvS' could be."
 
     show hilbert with dis
 
     redmind @closedbrow frownmouth "'Hilbert von Schwarzdrachen.'"
 
-    if (not persondex["Hilbert"]["Contact"]):
+    if (not IsContacted("Hilbert")):
         $ BecomeContacted("Hilbert")
 
     hilbert @talkingmouth "You're here early."
@@ -544,7 +544,7 @@ label Hilbert2:
 
     red @talkingmouth "Wait, are you {i}sweating?{/i}"
 
-    hilbert @closedbrow talkingmouth "I... ran here, yes."
+    hilbert @closedbrow talkingmouth "I[ellipses] ran here, yes."
     
     red @happy "Hey, that's new! Good job!"
 
@@ -567,7 +567,7 @@ label Hilbert2:
     else:
         red @talkingmouth "I'm ready to hear it."
 
-        hilbert @talkingmouth "...[first_name], there is something I must confess to you."
+        hilbert @talkingmouth "[ellipses][first_name], there is something I must confess to you."
 
         pause 1.0
 
@@ -584,11 +584,11 @@ label Hilbert2:
         hilbert -surprisedbrow -frownmouth -surprised @surprised "Oh."
         hilbert @closedbrow talking2mouth "I said 'I am going to kill the king of Team Plasma.'"
 
-        red @unamusedbrow unamusedmouth "...Okay, I guess I didn't mishear you this time."
+        red @unamusedbrow unamusedmouth "[ellipses]Okay, I guess I didn't mishear you this time."
 
         hilbert @talkingmouth "As I was saying. You're probably surprised. It's because the king of Team Plasma is responsible for my parents' deaths."
 
-        red @talkingmouth "I thought you said... it was the dragon of the meteor?"
+        red @talkingmouth "I thought you said[ellipses] it was the dragon of the meteor?"
 
         hilbert @closedbrow talkingmouth "Every king needs a sword. As I said, the dragon will fall, then the king will die."
 
@@ -604,9 +604,9 @@ label Hilbert2:
 
             hilbert @talkingmouth "My enemy. That's all you need to know."
 
-        red @sadbrow talking2mouth "Well... I'm glad you're telling me this. But {i}why{/i} are you telling me this?"
+        red @sadbrow talking2mouth "I mean[ellipses] I'm glad you're telling me this. But {i}why{/i} are you telling me this?"
 
-        hilbert @talkingmouth "You insisted on being part of my mission. I believe the second part is coming up... very soon."
+        hilbert @talkingmouth "You insisted on being part of my mission. I believe the second part is coming up[ellipses] very soon."
 
         redmind @sadbrow frownmouth "Shit. I thought I had more time to talk him out of this."
 
@@ -615,14 +615,14 @@ label Hilbert2:
 
         pause 0.5
 
-        red @sad "Well... what's next?"
+        red @sad "Well[ellipses] what's next?"
 
     hilbert @closedbrow talkingmouth "There's something that's always bothered me about my parents' death. I seek to resolve that oddity today."
 
     narrator "You know that Hilbert's waiting for you to ask for elaboration."
     narrator "However, you also know that if you don't ask for elaboration, Hilbert won't be able to stop explaining himself anyway."
 
-    hilbert @closedbrow talkingmouth "They were killed by... {i}ugh.{/i} A cannon."
+    hilbert @closedbrow talkingmouth "They were killed by[ellipses] {i}ugh.{/i} A cannon."
 
     red @confused "A cannon?"
 
@@ -630,7 +630,7 @@ label Hilbert2:
     hilbert @sadbrow talkingmouth "Until a decade ago, of course."
 
     red @talking2mouth "No, sure, I know what cannons are, in concept. I mean, Blastoise has them. Zap Cannon, Flash Cannon, sure."
-    red @closedbrow talking2mouth "But... what's a {i}human{/i} cannon?"
+    red @closedbrow talking2mouth "But[ellipses] what's a {i}human{/i} cannon?"
 
     hilbert @sadbrow talkingmouth "Machines. They're devices created to kill."
 
@@ -639,19 +639,19 @@ label Hilbert2:
     hilbert @angrybrow angrymouth "You're so naive. People use swords at the {i}Pokéathlon.{/i} For sport. {i}Entertainment.{/i}"
     hilbert @closedbrow talkingmouth "This 'cannon' can't do anything {i}but{/i} kill."
 
-    red @sadbrow talking2mouth "...I don't like thinking that such a thing could exist."
+    red @sadbrow talking2mouth "[ellipses]I don't like thinking that such a thing could exist."
 
     hilbert @closedbrow talkingmouth "Most people don't."
 
     pause 0.5
 
-    hilbert @sadbrow talkingmouth "Know it exists, I mean. And... I'm sorry I've told you about it."
+    hilbert @sadbrow talkingmouth "Know it exists, I mean. And[ellipses] I'm sorry I've told you about it."
 
     pause 0.5
 
     hilbert @closedbrow talkingmouth "If you want to stop this mission, now's the time. You'll only learn more you wish you hadn't."
 
-    red @talking2mouth "If you already knew, then... I'm in this for the long haul."
+    red @talking2mouth "If you already knew, then[ellipses] I'm in this for the long haul."
 
     hilbert @closedbrow smilemouth "Hm."
 
@@ -662,10 +662,10 @@ label Hilbert2:
     red @closedbrow talking2mouth sweat "Alright. Trick of the light, I guess."
 
     hilbert @closedbrow talkingmouth "I need to do further research on this 'cannon'. There aren't many people who know they exist--nevermind how to make one."
-    hilbert @talkingmouth closedbrow "If I can determine that, then I can narrow down who the King of Team Plasma is. And if I can figure that out... I know who my target is."
+    hilbert @talkingmouth closedbrow "If I can determine that, then I can narrow down who the King of Team Plasma is. And if I can figure that out[ellipses] I know who my target is."
 
     if (GetRelationshipRank("Hilda") >= 2):
-        red @talking2mouth "I heard that Team Plasma's airship attacked Opelucid. I guess that aircraft had these 'cannons' on it...?"
+        red @talking2mouth "I heard that Team Plasma's airship attacked Opelucid. I guess that aircraft had these 'cannons' on it[ellipses]?"
 
         hilbert @closedbrow talking2mouth "That's correct. The cannons that destroyed my home."
 
@@ -687,7 +687,7 @@ label Hilbert2:
 
     hilbert @talkingmouth "There's a library in Inspira."
 
-    red @confused "A... {i}public{/i} library? That has information about thousand-year-old weapons?"
+    red @confused "A[ellipses] {i}public{/i} library? That has information about thousand-year-old weapons?"
 
     hilbert @talkingmouth "A shining showcase of the naivete of the Kobukan region. It's not like they could store those important historical books on a military base, or anything of that sort."
     hilbert @closedbrow talkingmouth "Kobukan doesn't even have a military."
@@ -720,7 +720,7 @@ label Hilbert2:
 
     pause 1.0
 
-    red @closedbrow talking2mouth "...Alright. Are they just going to let us in? I mean, if these books talk about ways to, like, {i}kill{/i} people, then, they've got to be restricted, right?"
+    red @closedbrow talking2mouth "[ellipses]Alright. Are they just going to let us in? I mean, if these books talk about ways to, like, {i}kill{/i} people, then, they've got to be restricted, right?"
     
     hilbert @talkingmouth "There are secrets all around this region laid out in plain sight. Being within the pages of a book is one of the better camouflages."
 
@@ -737,13 +737,13 @@ label Hilbert2:
 
     hilbert @talkingmouth "In case we are confronted, follow my lead. I understand you cannot lie, so I won't ask you to."
 
-    redmind @frownmouth sadbrow "What if we actually find something that helps Hilbert with his mission, though...?"
+    redmind @frownmouth sadbrow "What if we actually find something that helps Hilbert with his mission, though[ellipses]?"
 
     red @talkingmouth sadbrow "You know, we don't have to do this now. We could come back another day."
 
     narrator "Hilbert takes a big gulp of air, and you notice with some surprise that his hands are shaking."
 
-    hilbert @talkingmouth "...I cannot give myself the time necessary to lose my nerve."
+    hilbert @talkingmouth "[ellipses]I cannot give myself the time necessary to lose my nerve."
 
     $ PlaySound("Door_Slam.ogg")
 
@@ -792,7 +792,7 @@ label Hilbert2:
         shauntal @happy "It's a hobby as much as anything--my other job doesn't call for me often. Where better to spend my time than surrounded by priceless manuscripts?"
         red @happy "I can think of a couple places. But you know what? Whatever floats your boat!"
     else:
-        hilbert @talking2mouth "I was not aware an Elite Four member worked here. Does the Unova League...?"
+        hilbert @talking2mouth "I was not aware an Elite Four member worked here. Does the Unova League[ellipses]?"
         shauntal @surprised "Oh! You know me? Yes, yes, the League knows." 
         shauntal @happy "Being here is a hobby as much as anything--my other job doesn't call for me often. Where better to spend my time than surrounded by priceless manuscripts?"
         red @happy "I can think of a couple places. But you know what? Whatever floats your boat!"
@@ -850,7 +850,7 @@ label Hilbert2:
 
     pause 1.0
 
-    red @unamusedbrow unamusedmouth "...I'd be bored to tears if I wasn't so horrified of what I was reading."
+    red @unamusedbrow unamusedmouth "[ellipses]I'd be bored to tears if I wasn't so horrified of what I was reading."
 
     narrator "You're currently poring over a massive leather-bound tome called L'Éncyclopedie de Kalos."
     narrator "It does, in fact, contain information about the Greatest War, and even about these 'cannons' that Hilbert had mentioned."
@@ -867,13 +867,13 @@ label Hilbert2:
 
     narrator "The Éncyclopedie goes on to elaborate that these weapons were used against Pokémon, too. Some Pokémon even {i}used{/i} the weapons in question."
 
-    redmind @closedbrow frownmouth "I can't believe Pokémon would do that. But... I can't really believe that humans would do it, either..."
+    redmind @closedbrow frownmouth "I can't believe Pokémon would do that. But[ellipses] I can't really believe that humans would do it, either[ellipses]"
 
     narrator "All you've been able to gather from the encyclopedia, after hours of research, is that the world used to be a much more deadly place." 
     narrator "It's also apparent that--true to Hilbert's supposition--most people do not remember that such weapons even exist."
     
     redmind @thinking "So whoever built these cannons for Team Plasma must have had some sort of connection to their history. Maybe a Kalosian?" 
-    redmind @thinking "But I'm a kid from Kanto, and I know about them, now... I guess anyone with the blueprints could build 'em, and it doesn't take much to learn about them, either."
+    redmind @thinking "But I'm a kid from Kanto, and I know about them, now[ellipses] I guess anyone with the blueprints could build 'em, and it doesn't take much to learn about them, either."
     redmind @sadbrow frownmouth "I mean, anyone who ever held this book could be the mastermind. I'm not an engineer, but from how they describe cannons, it seems pretty easy to figure out. I bet Hilbert's sections will tell him how they actually worked, even."
 
     pause 1.0
@@ -939,7 +939,7 @@ label Hilbert2:
     show brendan -surprisedbrow -frownmouth -surprised
     with dis
 
-    calem closedbrow talking2mouth "If he keeps slamming that door, we're going to have to pay to repair it..."
+    calem closedbrow talking2mouth "If he keeps slamming that door, we're going to have to pay to repair it[ellipses]"
 
     pause 0.5
 
@@ -955,18 +955,18 @@ label Hilbert2:
     hide flashback
     hide blank with dis
 
-    redmind -sepia @angrybrow frownmouth "Unobservant, huh...?"
+    redmind -sepia @angrybrow frownmouth "Unobservant, huh[ellipses]?"
 
     narrator "Your eyes narrow as you scan the pages one more time."
     narrator "Slowly, oddities begin to appear--little things you wouldn't have noticed before."
 
-    redmind @frownmouth "Someone dog-eared this page. So... that means someone else has been looking at this book."
+    redmind @frownmouth "Someone dog-eared this page. So[ellipses] that means someone else has been looking at this book."
     redmind @confusedeyebrows frownmouth "Of course, that doesn't mean anything by itself, but this book was pretty dust-free when I took it down."
-    redmind @frownmouth "But this entire section is dusty. It doesn't seem like the books have been touched in a while, besides this one..."
-    redmind @frownmouth "In the margins, here, there are notes scribbled in pencil... three-digit codes. Other sections of the library, maybe?"
-    redmind @surprisedbrow frownmouth "I recognize these numbers... 355 and 623. They're other sections the librarian told us to go to!"
+    redmind @frownmouth "But this entire section is dusty. It doesn't seem like the books have been touched in a while, besides this one[ellipses]"
+    redmind @frownmouth "In the margins, here, there are notes scribbled in pencil[ellipses] three-digit codes. Other sections of the library, maybe?"
+    redmind @surprisedbrow frownmouth "I recognize these numbers[ellipses] 355 and 623. They're other sections the librarian told us to go to!"
     redmind @thinking "So someone was doing the same sort of research we are now."
-    redmind @thinking "Who...?"
+    redmind @thinking "Who[ellipses]?"
 
     pause 0.5
 
@@ -981,15 +981,15 @@ label Hilbert2:
     else: 
         red @talkingmouth "{size=30}Excuse me, Ma'am?{/size}"
         shauntal @surprised "M-ma'am?! D-do these glasses make me look old?!"
-        shauntal @happy "Ehehe... I mean... you can just call me {b}Shauntal{/b}!"
+        shauntal @happy "Ehehe[ellipses] I mean[ellipses] you can just call me {b}Shauntal{/b}!"
         $ BecomeNamed("Shauntal")
 
-    red @surprised "Um... alright then."
+    red @surprised "Um[ellipses] alright then."
     red @talkingmouth "I had a question about this book. Is there any way I could see who checked it out?"
 
     shauntal @surprised "Oh, L'Éncyclopedie de Kalos? I'm sorry, no. We don't allow our encyclopedias to be checked out. They're historical, you see. {i}That{/i} one was owned by André Stendahl himself!"
     shauntal @happy "You're always welcome to come here and use them for research, though!"
-    shauntal @surprised "Though... it {i}is{/i} interesting that you've picked {i}that{/i} book in particular."
+    shauntal @surprised "Though[ellipses] it {i}is{/i} interesting that you've picked {i}that{/i} book in particular."
 
     red @happy sweat "I just picked the biggest one off the shelf."
 
@@ -1000,14 +1000,14 @@ label Hilbert2:
     red @surprised "Ma'am, do you remember who it was?"
 
     if HasEvent("Nate", "ClassSwap"):
-        shauntal @surprised "Sorry; I don't... I never got his name. I'm sure I've seen him at Kobukan, though--he must be another student."
+        shauntal @surprised "Sorry; I don't[ellipses] I never got his name. I'm sure I've seen him at Kobukan, though--he must be another student."
     
     else:
-        shauntal @surprised "Sorry; I don't... I never got his name. He was a young man, though--about your age. I'd guess he was a Kobukan student."
+        shauntal @surprised "Sorry; I don't[ellipses] I never got his name. He was a young man, though--about your age. I'd guess he was a Kobukan student."
 
     red @talkingmouth "Miss Shauntal, please. I need you to tell me anything you can about him. What did he look like? What was he wearing? Did he say anything? Did he check anything else out?"
 
-    shauntal @surprised "U-um... I'm sorry; I don't think I should share that."
+    shauntal @surprised "U-um[ellipses] I'm sorry; I don't think I should share that."
 
     show hilbert with dis:
         xpos 0.66
@@ -1035,7 +1035,7 @@ label Hilbert2:
 
     red @surprised "What?! What is it?!"
 
-    shauntal angry "Dog ears... pencil markings... ! This book was owned by André Stendhal himself!"
+    shauntal angry "Dog ears[ellipses] pencil markings[ellipses] ! This book was owned by André Stendhal himself!"
 
     hilbert angry "He would be furious if he could see this!"
 
@@ -1048,12 +1048,12 @@ label Hilbert2:
     hilbert surprised @angry "Tell us everything you know. We'll tie him up a smidgeon on the tight side and throw him in the book return box {i}for{/i} you."
 
     if HasEvent("Nate", "ClassSwap"):
-        shauntal "Ooooh... that visor-wearing little miscreant... how dare he infiltrate my Karen's classroom! I'll have her throw him out by his spiky hair!"
-        redmind @thinking "Spiky hair... Visor... Karen's class? Really only one person it could be..."
+        shauntal "Ooooh[ellipses] that visor-wearing little miscreant[ellipses] how dare he infiltrate my Karen's classroom! I'll have her throw him out by his spiky hair!"
+        redmind @thinking "Spiky hair[ellipses] Visor[ellipses] Karen's class? Really only one person it could be[ellipses]"
 
     else:
-        shauntal "Ooooh... that spiky-haired little miscreant... with his puns and his visor and his charm... when I get my hands on him...!"
-        redmind @thinking "Spiky hair... Puns... visor? Really only one person it could be..."
+        shauntal "Ooooh[ellipses] that spiky-haired little miscreant[ellipses] with his puns and his visor and his charm[ellipses] when I get my hands on him[ellipses]!"
+        redmind @thinking "Spiky hair[ellipses] Puns[ellipses] visor? Really only one person it could be[ellipses]"
 
     if (GetRelationshipRank("Nate") > 0):
         red @talkingmouth "We must be on the right track, if we're researching something Nate already researched."
@@ -1065,7 +1065,7 @@ label Hilbert2:
 
     narrator "Hilbert looks at you, then pointedly jerks his head towards the exit, walking away."
 
-    shauntal surprised "Wait... you know? But I didn't even say anything yet!"
+    shauntal surprised "Wait[ellipses] you know? But I didn't even say anything yet!"
 
     red @closedbrow talking2mouth "'Scuse me, Ma'a--{i}Shauntal{/i}. {size=30}Sorry about your book.{/size}"
 
@@ -1112,7 +1112,7 @@ label Hilbert2:
 
     hilbert @angrybrow talkingmouth "Is a sword good? Only when wielded by a good man. The sword of an evil man is a tool that must be destroyed."
 
-    red @closedbrow talking2mouth "...It's a legendary Pokémon. You said Team Plasma attacked your home. How could Team Plasma capture... I mean, legendary Pokémon are basically gods, right?"
+    red @closedbrow talking2mouth "[ellipses]It's a legendary Pokémon. You said Team Plasma attacked your home. How could Team Plasma capture[ellipses] I mean, legendary Pokémon are basically gods, right?"
 
     hilbert @sadbrow talkingmouth "A Pokémon, even if revered as a deity, is still just a Pokémon."
 
@@ -1150,7 +1150,7 @@ label Hilbert2:
 
     pause 0.5
 
-    hilbert @sadbrow talkingmouth "Her... choices were her own..."
+    hilbert @sadbrow talkingmouth "Her[ellipses] choices were her own[ellipses]"
 
     pause 0.5
 
@@ -1164,11 +1164,11 @@ label Hilbert2:
 
     red @sad "Hilbert, you're planning to die for them."
 
-    hilbert @closedbrow talkingmouth "This is not an emotional decision. This is based on logic, and reason, and... and... the calculus of justice."
+    hilbert @closedbrow talkingmouth "This is not an emotional decision. This is based on logic, and reason, and[ellipses] and[ellipses] the calculus of justice."
 
     red @closedbrow talking2mouth "And Hilda doesn't fit into this equation. You'll disappear and leave her alone, with nothing to show for the years she spent with you."
 
-    hilbert @sadbrow talkingmouth "...She will not be alone. Her father is a good, honest, man. And..."
+    hilbert @sadbrow talkingmouth "[ellipses]She will not be alone. Her father is a good, honest, man. And[ellipses]"
 
     narrator "Hilbert looks at you curiously."
 
@@ -1183,16 +1183,16 @@ label Hilbert2:
     red @confused "I don't follow."
 
     hilbert @closedbrow talkingmouth "I could have done this mission myself. I just needed to go to the library."
-    hilbert @sadbrow talkingmouth "But... for some, odd, reason... I went with you."
+    hilbert @sadbrow talkingmouth "But[ellipses] for some, odd, reason[ellipses] I went with you."
     hilbert @closedbrow talkingmouth "This took time. Time I did not have. Your schedule is too full."
 
     pause 0.5
 
-    hilbert @talkingmouth "I will leave a lot unfinished. A lot unsaid. Apologies... undelivered."
-    hilbert @sadbrow talkingmouth "I wish there was some way to repay Hilda for everything she has given me. Her patience, her trust, and her help. But I... I know that an appropriate amount of repayment cannot be acquired in my lifetime."
+    hilbert @talkingmouth "I will leave a lot unfinished. A lot unsaid. Apologies[ellipses] undelivered."
+    hilbert @sadbrow talkingmouth "I wish there was some way to repay Hilda for everything she has given me. Her patience, her trust, and her help. But I[ellipses] I know that an appropriate amount of repayment cannot be acquired in my lifetime."
     hilbert @closedbrow talkingmouth "You have shown me the way with your light. I now trust in you to [bluecolor]finish{/color} what I cannot. Especially in regards to Hilda."
 
-    red @sad "That's... an insane amount of pressure."
+    red @sad "That's[ellipses] an insane amount of pressure."
 
     hilbert @sadbrow "{w=0.5}.{w=0.5}.{w=0.5}."
     hilbert @talkingmouth "Then your first job when my part is over will be to apologize to yourself on my behalf."

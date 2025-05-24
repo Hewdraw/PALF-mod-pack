@@ -1199,7 +1199,7 @@ label Nate2:
 
     bea @talking2mouth "What did you do?"
 
-    nate @talking2mouth "...He groomed me to be his successor. My great-grandfather, Doyle M. Hall, founded Altru, and my grandfather Brighton took up the reigns after. My father, Blake, inherited the company when he was only sixteen." 
+    nate @talking2mouth "...He groomed me to be his successor. My great-grandfather, Doyle M. Hall, founded Altru, and my grandfather Brighton took up the reins after. My father, Blake, inherited the company when he was only sixteen." 
     nate @sadbrow talkingmouth "I was meant to be next."
     nate @sadbrow talkingmouth "He told me to be cold. To calculate the face I showed the world, to be whichever person could make the most profit out of whatever moment I found myself in."
     nate @talkingmouth "And I believed in that philosophy. But my profit is peace."

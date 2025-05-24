@@ -121,7 +121,7 @@ init python:
 
         if (name not in ["Endure", "Protect", "Wide Guard", "Detect", "Enshroud", "Deathless", "Splinter Shield", "Spiky Shield", "Quick Guard", "Crafty Shield", "Silk Trap", "Baneful Bunker", "Obstruct"]):
             user.ClearStatus(".protections")
-        if (name != "Fury Cutter"):
+        if (name != "Fury Cutter" or not doDamage):
             user.ClearStatus(".furycutter")
         
         if (abortmove):
@@ -1003,7 +1003,7 @@ init python:
                     action.ChangeSuccess(False)
             elif (name == "Fury Cutter"):
                 cutcount = user.GetStatusCount(".furycutter")
-                power = 40 * pow(2, cutcount)
+                power = min(160, 40 * pow(2, cutcount))
                 user.ApplyStatus(".furycutter", cutcount + 1, user, True)
             elif (name in ["Thunder Wave", "Stun Spore", "Glare", "Zap Cannon"]):
                 if (target.HasType("Ground") and name == "Thunder Wave"):
@@ -1235,7 +1235,7 @@ init python:
                     else:
                         switchCommand = team.index(RandomChoice(newlist))
                     newPokemon = usertrainer.GetTeam()[switchCommand]
-                    usertrainer.ShiftTeam(team.index(user), switchCommand, True)
+                    usertrainer.ShiftTeam(team.index(user), switchCommand, True, selfforced=True)
                     posttext += "{} switched out, and {} switched in!".format(username, newPokemon.GetNickname())
                     forcedswitch = newPokemon
             elif (name == "Shed Tail"):
@@ -1565,7 +1565,7 @@ init python:
                 posttext += user.ChangeStats(Stats.SpecialDefense, 1)
                 if (name == "Defend Order" and "Defend Order" in moveboosts):
                     AddNewWildPokemon(Pokemon("Beedrill", level=22, moves=["Bug Bite", "Twineedle", "Pursuit", "Poison Jab"], gender=Genders.Male), True)
-                    if (len(EnemyTrainers()) < 3):
+                    if (len(EnemyBattlers()) < 3):
                         AddNewWildPokemon(Pokemon("Beedrill", level=22, moves=["Bug Bite", "Twineedle", "Pursuit", "Poison Jab"], gender=Genders.Male))
                     posttext += "Combee calls the swarm!"
             elif (name == "Stockpile"):
@@ -1988,7 +1988,7 @@ init python:
                     action.ChangeSuccess(False)
             elif (name == "Fillet Away"):
                 if (user.GetHealthPercentage() > 0.5 and (user.GetStatChanges(Stats.Attack) < 6 or user.GetStatChanges(Stats.SpecialAttack) < 6 or user.GetStatChanges(Stats.Speed) < 6)):
-                    user.AdjustHealth(-user.GetStat(Stats.Health) / 2.0)
+                    user.AdjustHealth(math.floor(-user.GetStat(Stats.Health) / 2.0))
                     posttext += user.ChangeStats(Stats.Attack, 2)
                     posttext += user.ChangeStats(Stats.SpecialAttack, 2)
                     posttext += user.ChangeStats(Stats.Speed, 2)
@@ -2211,7 +2211,7 @@ init python:
                         switchCommand = team.index(RandomChoice(newlist))
                     
                     newPokemon = user.GetTrainer().GetTeam()[switchCommand]
-                    usertrainer.ShiftTeam(team.index(user), switchCommand, True)
+                    usertrainer.ShiftTeam(team.index(user), switchCommand, True, selfforced=True)
                     posttext += "{} passed the baton to {}!".format(username, newPokemon.GetNickname())
                     forcedswitch = newPokemon
                     preservestats = True
@@ -2522,6 +2522,9 @@ init python:
                         sideeffects.append(SideEffect(user, target, "flinching"))
                     elif ownitem == Item.PoisonBarb:
                         posttext += target.ApplyStatus("poisoned", applier = user)
+                    elif ownitem == Item.ToxicOrb:
+                        posttext += target.ApplyStatus("badly poisoned", applier = user)
+
                 else:
                     doDamage = False
                     action.ChangeSuccess(False)
@@ -2929,28 +2932,27 @@ init python:
             if (lookupforeveraldata(fvl, FVLMacros.FVLType) == ForeveralTypes.Training):
                 if (fvl == "Tyrogue Everal"):
                     if (IsPunchMove(name)):
-                        user.ModifyEV(Stats.Defense, 3)
-                        posttext += "{} trained his Defense by punching!".format(username)
+                        if user.ModifyEV(Stats.Defense, 3):
+                            posttext += "{} trained his Defense by punching!".format(username)
                     elif ("Kick" in name):
-                        user.ModifyEV(Stats.Attack, 3)
-                        posttext += "{} trained his Attack by kicking!".format(username)
+                        if user.ModifyEV(Stats.Attack, 3):
+                            posttext += "{} trained his Attack by kicking!".format(username)
                 elif (fvl == "Meditite Everal"):
                     pronouns = ("his" if user.GetGender() == Genders.Male else ("her" if user.GetGender() == Genders.Female else "its"))
                     if (element == "Fighting"):
-                        user.ModifyEV(Stats.Attack, 3)
-                        posttext += "{} trained {} Attack through physical power!".format(username, pronouns)
+                        if user.ModifyEV(Stats.Attack, 3):
+                            posttext += "{} trained {} Attack through physical power!".format(username, pronouns)
                     elif (element == "Psychic"):
-                        user.ModifyEV(Stats.SpecialDefense, 3)
-                        posttext += "{} trained {} Special Defense through mental fortitude!".format(username, pronouns)
+                        if user.ModifyEV(Stats.SpecialDefense, 3):
+                            posttext += "{} trained {} Special Defense through mental fortitude!".format(username, pronouns)
                 elif (fvl == "Marill Everal"):
                     pronouns = ("his" if user.GetGender() == Genders.Male else ("her" if user.GetGender() == Genders.Female else "its"))
                     if (move.Category == "Physical"):
-                        user.ModifyEV(Stats.Attack, 3)
-                        posttext += "{} trained {} Attack through physical power!".format(username, pronouns)
+                        if user.ModifyEV(Stats.Attack, 3):
+                            posttext += "{} trained {} Attack through physical power!".format(username, pronouns)
                     elif (move.Category == "Special"):
-                        user.ModifyEV(Stats.Health, 3)
-                        posttext += "{} trained {} HP through special power!".format(username, pronouns)
-        
+                        if user.ModifyEV(Stats.Health, 3):
+                            posttext += "{} trained {} HP through special power!".format(username, pronouns)
         if doDamage and target != None and target.HasStatus("illusion"):
             target.suspiciousmoves.append(name)
 

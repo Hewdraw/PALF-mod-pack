@@ -19,7 +19,7 @@ init python:
             if (self.addquotes):
                 formatwhat = "\"" + formatwhat + "\""
 
-            return Character(name=self.name, color="#700000", image=None, ctc="ctc_blink", ctc_position="fixed", callback=callbackcontinue, dynamic=False)(formatwhat, **kwargs)
+            return Character(name=self.name, color="#700000", image=None, ctc=(None if InContest else "ctc_blink"), ctc_position="fixed", callback=callbackcontinue, dynamic=False)(formatwhat, **kwargs)
 
     class CustomCharacter():
         def __init__(self, name, color, image, **kwargs):
@@ -168,7 +168,7 @@ init python:
                         replacement = "*" * len(word)
                         formatwhat = formatwhat.replace(word, replacement).replace(word.title(), replacement).replace(word.capitalize(), replacement).replace(word.upper(), replacement).replace(word + "s", replacement + "s").replace(word + "es", replacement + "es")
 
-                return Character(name=formatname, color=formatcolor, image=self.image, ctc="ctc_blink", ctc_position="fixed", callback=formatcallback, dynamic=dynamic)(formatwhat, **kwargs)
+                return Character(name=formatname, color=formatcolor, image=self.image, ctc=(None if InContest else "ctc_blink"), ctc_position="fixed", callback=formatcallback, dynamic=dynamic)(formatwhat, **kwargs)
 
 define defaultpersondex = {
     "Professor Oak" : {"Region": "Kanto", "Named" : True, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
@@ -441,7 +441,7 @@ define hexmaniac = CustomCharacter("Hex Maniac", "#ff4400", "hexmaniac")
 define sidemon = CustomCharacter("Sidemon", "#000", "sidemonportrait")
 define lace = CustomCharacter("Lady Ace Trainer", "#6E7AA8", "lace")
 define oldman = CustomCharacter("Old Man", "#C68C28", "oldman")
-define anabel = CustomCharacter("Anabel", "#BFABC9", "anabel")
+define anabel = CustomCharacter("Anabel", "#a367c0", "anabel")
 define allister = CustomCharacter("Allister", "#9C96C5", "allister")
 define phobos = CustomCharacter("Lawrence", "#333", "phobos")#COMPLIMENT ME!!! TELL ME I'M CLEVER!!!
 define kate = CustomCharacter("Kate", "#59BB83", "kate")
@@ -601,7 +601,7 @@ define sceneconditions = {
     "Hilda1" : {"Level" : 2, "Others" : ["Nate", "Bea", "Bianca"]},
     "Hilda2" : {"Level" : 4, "Date" : [7, 5, 2004], "Hilbert" : 1},
     "Hilbert1" : {"Level" : 2, "Date" : [19, 4, 2004]},
-    "Hilbert2" : {"Level" : 4, "Hilda" : 1},
+    "Hilbert2" : {"Level" : 4, "Hilda" : 1, "Nate" : 1},
     "Iono1" : {"Level" : 2, "Event" : ["Iono", "SkippedClass", "The future is cloudy..."]},
     "Janine1" : {"Level" : 2, "Date" : [25, 4, 2004]},
     "Janine2" : {"Level" : 4, "Date" : [7, 5, 2004]},
@@ -630,12 +630,12 @@ define sceneconditions = {
     "Silver2" : {"Level" : 4, "Date" : [7, 5, 2004]},
     "Silver3" : {"Level" : 6, "Event" : ["Silver", "Silver2Part2", "The future is cloudy..."]},
     "Skyla1" : {"Level" : 2, "Date" : [18, 4, 2004]},
-    "Skyla2" : {"Level" : 4, "Event" : ["Skyla", "TalkedBothProfessors", "Visit Flying and Bug classes."], "NotEvent" : ["Skyla", "Skyla2", "Sneak out at night."]},
+    "Skyla2" : {"Level" : 4, "Date" : [7, 5, 2004], "Event2" : ["Skyla", "Skyla1Part2", "The future is cloudy..."], "Event" : ["Skyla", "TalkedBothProfessors", "Visit Flying and Bug classes."], "NotEvent" : ["Skyla", "Skyla2", "Sneak out at night."]},
     "Sonia1" : {"Level" : 2, "Nessa" : 1},
     "Sonia2" : {"Level" : 4, "Date" : [7, 5, 2004]},
     "Tia1" : {"Level" : 2},
     "Tia2" : {"Level" : 4, "Date" : [17, 5, 2004], "Others" : ["Professor Cherry"], "NotEvent" : ["Tia", "Tia2Part1", "Go to Inspira on a weekday."]},
-    "Wally1" : {"Level" : 2},
+    "Wally1" : {"Level" : 2, "Event" : ["Wally", "ClassIntro", "Attend class with Wally."]},
     "Whitney1" : {"Level" : 2, "Date" : [27, 4, 2004]},
     "Whitney2" : {"Level" : 4, "Date" : [7, 5, 2004]}
 }

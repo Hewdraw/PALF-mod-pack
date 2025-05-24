@@ -786,7 +786,7 @@ elif (_return == "Baseball Field"):
                     $ ValueChange("Brendan", 3, 0.75, False)
                     $ ValueChange("May", 3, 0.25)
                     $ mayhaslarvesta = True
-                    $ del inventory[Item.LarvestaEgg]
+                    $ LoseItem(Item.LarvestaEgg)
 
                 "Nothing.":
                     brendan @closedbrow talking2mouth "Fine."
@@ -1387,63 +1387,63 @@ elif (_return == "Academy"):
                     ">Swap in the Larvesta egg" if HasEgg("Larvesta Egg"):
                         $ GetItem(melonyegg, 1)
                         $ melonyegg = "Larvesta Egg"
-                        $ del inventory[Item.LarvestaEgg]
+                        $ LoseItem(Item.LarvestaEgg)
 
                         red @happy "Here, Ma'am! I'm leaving behind this Larvesta egg. It's pretty warm, so maybe it'll warm up this classroom?"
 
                     ">Swap in the white egg with red and blue triangles" if HasEgg("Togepi Egg"):
                         $ GetItem(melonyegg, 1)
                         $ melonyegg = "Togepi Egg"
-                        $ del inventory[Item.TogepiEgg]
+                        $ LoseItem(Item.TogepiEgg)
 
                         red @happy "Here, Ma'am! I'm leaving behind this egg. It's kinda cute, and looks really nice all wrapped up in this blanket."
 
                     ">Swap in the Tyrogue egg" if HasEgg("Tyrogue Egg"):
                         $ GetItem(melonyegg, 1)
                         $ melonyegg = "Tyrogue Egg"
-                        $ del inventory[Item.TyrogueEgg]
+                        $ LoseItem(Item.TyrogueEgg)
 
                         red @happy "Here, Ma'am! I'm leaving behind this Tyrogue egg. It's kinda rugged, so I bet you could give it tight hugs without hurting it."
 
                     ">Swap in the Smoochum egg" if HasEgg("Smoochum Egg"):
                         $ GetItem(melonyegg, 1)
                         $ melonyegg = "Smoochum Egg"
-                        $ del inventory[Item.SmoochumEgg]
+                        $ LoseItem(Item.SmoochumEgg)
 
                         red @happy "Here, Ma'am! I'm bringing back the Smoochum egg you had originally."
 
                     ">Swap in the red, warm, lumpy egg" if HasEgg("Magby Egg"):
                         $ GetItem(melonyegg, 1)
                         $ melonyegg = "Magby Egg"
-                        $ del inventory[Item.MagbyEgg]
+                        $ LoseItem(Item.MagbyEgg)
                         
                         red @happy "Here, Ma'am! I'm leaving behind this warm, lumpy egg. It's pretty warm, so maybe it'll warm up this classroom?"
 
                     ">Swap in the rubbery blue egg" if HasEgg("Wynaut Egg"):
                         $ GetItem(melonyegg, 1)
                         $ melonyegg = "Wynaut Egg"
-                        $ del inventory[Item.WynautEgg]
+                        $ LoseItem(Item.WynautEgg)
 
                         red @happy "Here, Ma'am! I'm leaving behind this rubbery, blue egg. If you want an egg to stay with, why not this one?"
 
                     ">Swap in the heavy, brown egg" if HasEgg("Bonsly Egg"):
                         $ GetItem(melonyegg, 1)
                         $ melonyegg = "Bonsly Egg"
-                        $ del inventory[Item.BonslyEgg]
+                        $ LoseItem(Item.BonslyEgg)
 
                         red @happy "Here, Ma'am. I'm leaving behind this heavy, brown egg. It seems really sturdy--but it's not actually a log!"
 
                     ">Swap in the blue egg with the markings" if HasEgg("Mantyke Egg"):
                         $ GetItem(melonyegg, 1)
                         $ melonyegg = "Mantyke Egg"
-                        $ del inventory[Item.MantykeEgg]
+                        $ LoseItem(Item.MantykeEgg)
 
                         red @happy "Here, Ma'am. I'm leaving behind this blue egg. It's got some interesting markings on it that look kinda like a happy face. Maybe it'll cheer you up?"
 
                     ">Swap in the purple, humming egg" if HasEgg("Toxel Egg"):
                         $ GetItem(melonyegg, 1)
                         $ melonyegg = "Toxel Egg"
-                        $ del inventory[Item.ToxelEgg]
+                        $ LoseItem(Item.ToxelEgg)
 
                         red @happy "Here, Ma'am. I'm leaving behind this purple, humming egg. It's got some nasty static electricity, so make sure you're grounded when you touch it."
 
@@ -1519,8 +1519,8 @@ elif (_return == "Relic Hall"):
 
             redmind @surprised "Okay... I'm getting a powerful, furious aura from Flannery here. I should probably tread carefully..."
 
-            if (GetRelationship("Flannery") == "Challenger"):
-                redmind @thinking "I've been doing a bit of research on her 'condition' ever since we had our talk, and from what I know of Flannery, [bluecolor]I should probably just leave and come back later.{/color}"
+            if (GetValue("Flannery") >= 10):
+                redmind @thinking "I've spent enough time around Flannery I'm pretty sure [bluecolor]I should probably just leave and come back later.{/color}"
 
             show ethan -surprisedbrow frownmouth
             show iris -surprisedbrow frownmouth
@@ -1645,17 +1645,7 @@ elif (_return == "Relic Hall"):
 
                     red @talkingmouth "Sure. Thanks for the assist, Flannery."
 
-                    if (GetRelationship("Flannery") == "Challenger"):
-                        flannery @talking2mouth "Anything for my challenger! Use that li'l guy to figure out why I can't handle mornings!"
-
-                        pause 1.0
-
-                        red @confused "How?"
-
-                        flannery @tiredbrow talking2mouth "I dunno, that's your job."
-
-                    else:
-                        flannery "No probs!"
+                    flannery "No probs!"
 
             jump wraparoundegghunt
 
@@ -2457,55 +2447,55 @@ elif (_return == "Garden"):
             ">Give the Happiny an egg" if HasEgg():
                 menu:
                     ">Hand over the Larvesta egg" if HasEgg("Larvesta Egg"):
-                        $ del inventory[Item.LarvestaEgg]
+                        $ LoseItem(Item.LarvestaEgg)
                         $ happinyegg = "Larvesta Egg"
                         narrator "The Happiny juggles the egg for a bit, getting used to the heat, then tucks it into its pouch, seemingly contented."
                         jump gaveegg
 
                     ">Hand over the white egg with red and blue triangles" if HasEgg("Togepi Egg"):
-                        $ del inventory[Item.TogepiEgg]
+                        $ LoseItem(Item.TogepiEgg)
                         $ happinyegg = "Togepi Egg"
                         narrator "The Happiny tucks the egg into its pouch, seemingly contented."
                         jump gaveegg
 
                     ">Hand over the Tyrogue egg" if HasEgg("Tyrogue Egg"):
-                        $ del inventory[Item.TyrogueEgg]
+                        $ LoseItem(Item.TyrogueEgg)
                         $ happinyegg = "Tyrogue Egg"
                         narrator "The Happiny tucks the egg into its pouch, seemingly contented."
                         jump gaveegg
 
                     ">Hand over the Smoochum egg" if HasEgg("Smoochum Egg"):
-                        $ del inventory[Item.SmoochumEgg]
+                        $ LoseItem(Item.SmoochumEgg)
                         $ happinyegg = "Smoochum Egg"
                         narrator "The Happiny is surprised by the cold of the egg, and quickly tucks the egg into its pouch to warm it up, seemingly contented."
                         jump gaveegg
 
                     ">Hand over the red, warm, lumpy egg" if HasEgg("Magby Egg"):
-                        $ del inventory[Item.MagbyEgg]
+                        $ LoseItem(Item.MagbyEgg)
                         $ happinyegg = "Magby Egg"
                         narrator "The Happiny juggles the egg for a bit, getting used to the heat, then tucks it into its pouch, seemingly contented."
                         jump gaveegg
 
                     ">Hand over the rubbery blue egg" if HasEgg("Wynaut Egg"):
-                        $ del inventory[Item.WynautEgg]
+                        $ LoseItem(Item.WynautEgg)
                         $ happinyegg = "Wynaut Egg"
                         narrator "The Happiny tucks the egg into its pouch, seemingly contented."
                         jump gaveegg
                         
                     ">Hand over the heavy, brown egg" if HasEgg("Bonsly Egg"):
-                        $ del inventory[Item.BonslyEgg]
+                        $ LoseItem(Item.BonslyEgg)
                         $ happinyegg = "Bonsly Egg"
                         narrator "The Happiny seems confused as to why you're giving it a log, before recognizing it as an egg, and tucking it into its pouch, seemingly contented."
                         jump gaveegg
 
                     ">Hand over the blue egg with the markings" if HasEgg("Mantyke Egg"):
-                        $ del inventory[Item.MantykeEgg]
+                        $ LoseItem(Item.MantykeEgg)
                         $ happinyegg = "Mantyke Egg"
                         narrator "The Happiny tucks the egg into its pouch, seemingly contented."
                         jump gaveegg
 
                     ">Hand over the purple, humming egg" if HasEgg("Toxel Egg"):
-                        $ del inventory[Item.ToxelEgg]
+                        $ LoseItem(Item.ToxelEgg)
                         $ happinyegg = "Toxel Egg"
                         narrator "The Happiny tucks the egg into its pouch, seemingly contented, though it jumps from the static every once in a while."
                         jump gaveegg
@@ -3751,39 +3741,39 @@ if (numeggs > 1):
 
     menu:
         ">Donate the Larvesta egg." if HasEgg("Larvesta Egg"):
-            $ del inventory[Item.LarvestaEgg]
+            $ LoseItem(Item.LarvestaEgg)
             jump eggdonation
 
         ">Donate the white egg with red and blue triangles." if HasEgg("Togepi Egg"):
-            $ del inventory[Item.TogepiEgg]
+            $ LoseItem(Item.TogepiEgg)
             jump eggdonation
 
         ">Donate the Tyrogue egg." if HasEgg("Tyrogue Egg"):
-            $ del inventory[Item.TyrogueEgg]
+            $ LoseItem(Item.TyrogueEgg)
             jump eggdonation
 
         ">Donate the Smoochum egg." if HasEgg("Smoochum Egg"):
-            $ del inventory[Item.SmoochumEgg]
+            $ LoseItem(Item.SmoochumEgg)
             jump eggdonation
 
         ">Donate the red, warm, lumpy egg." if HasEgg("Magby Egg"):
-            $ del inventory[Item.MagbyEgg]
+            $ LoseItem(Item.MagbyEgg)
             jump eggdonation
             
         ">Donate the rubbery blue egg." if HasEgg("Wynaut Egg"):
-            $ del inventory[Item.WynautEgg]
+            $ LoseItem(Item.WynautEgg)
             jump eggdonation
 
         ">Donate the heavy, brown egg." if HasEgg("Bonsly Egg"):
-            $ del inventory[Item.BonslyEgg]
+            $ LoseItem(Item.BonslyEgg)
             jump eggdonation
 
         ">Donate the blue egg with the markings." if HasEgg("Mantyke Egg"):
-            $ del inventory[Item.MantykeEgg]
+            $ LoseItem(Item.MantykeEgg)
             jump eggdonation
 
         ">Donate the purple, humming egg." if HasEgg("Toxel Egg"):
-            $ del inventory[Item.ToxelEgg]
+            $ LoseItem(Item.ToxelEgg)
             jump eggdonation
 
         ">Keep the rest":

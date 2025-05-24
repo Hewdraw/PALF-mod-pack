@@ -894,7 +894,7 @@ red @talkingmouth "Yeah, alright. See you later!"
 scene blank2 with splitfade 
 
 narrator "You make your way back to the dorm... but, weirdly, Yellow and Ethan seem to have already gone to bed." 
-narrator "Blue is just sitting on the couch, looking forlornly at an Pokémon Mystery Dungeons & Dragons mat. Leaf, sitting on the other end of the couch, seems to be trying to escape without being noticed."
+narrator "Blue is just sitting on the couch, looking forlornly at a Pokémon Mystery Dungeons & Dragons mat. Leaf, sitting on the other end of the couch, seems to be trying to escape without being noticed."
 
 scene suitenight
 show blue og wistfulbrow frownmouth:

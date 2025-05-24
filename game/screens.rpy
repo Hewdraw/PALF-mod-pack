@@ -106,25 +106,39 @@ screen say(who, what):
     if (betatesting()):
         text config.version + ": " + str(renpy.call_stack_depth()) xalign 0.5 outlines [ (absolute(4), "#fff", absolute(0), absolute(0)) ]
     $ si = SideImage()
-    if (who != None and si != Null and who not in [pokedexlookup(sidemonnum, DexMacros.Name), starter_name] and not renpy.variant("small") and not hideside and (not showredonly or who.lower() == first_name.lower() or who == "You" and playercharacter == None)):
+    if (who != None and si != Null and who not in [pokedexlookup(sidemonnum, DexMacros.Name), starter_name] and not hideside and (not showredonly or who.lower() == first_name.lower() or who == "You" and playercharacter == None)):
         add si
 
     style_prefix "say"
 
-    window:
-        id "window"
-        if who is not None and who != "":
-            window:
-                id "namebox"
-                style "namebox"
-                text who id "who"
+    if (renpy.variant("small")):
+        window:
+            id "window"
+            if who is not None and who != "":
+                window:
+                    id "namebox"
+                    style "namebox"
+                    text who id "who" xpos 225 ypos 115 xanchor 0.0 yanchor 0.0
 
-            text what id "what" size (36 if count_non_brace_chars(what) < 230 else 31)
-        
-        else:
-            text what id "what" ypos 0.15 size (36 if count_non_brace_chars(what) < 230 else 31)
+                text what id "what" xpos 340 ypos 0.55 xanchor 0.0 yanchor 0.0 size (36 if count_non_brace_chars(what) < 230 else 31) xsize 1136
+            
+            else:
+                text what id "what" xpos 340 ypos 0.45 size (36 if count_non_brace_chars(what) < 230 else 31) xsize 1136
+    else:
+        window:
+            id "window"
+            if who is not None and who != "":
+                window:
+                    id "namebox"
+                    style "namebox"
+                    text who id "who"
 
-    if (who != None and si != Null and who in [pokedexlookup(sidemonnum, DexMacros.Name), starter_name] and not renpy.variant("small") and not hideside and (not showredonly or who.lower() == first_name.lower() or who == "You" and playercharacter == None)):
+                text what id "what" size (36 if count_non_brace_chars(what) < 230 else 31)
+            
+            else:
+                text what id "what" ypos 0.15 size (36 if count_non_brace_chars(what) < 230 else 31)
+
+    if (who != None and si != Null and who in [pokedexlookup(sidemonnum, DexMacros.Name), starter_name] and not hideside and (not showredonly or who.lower() == first_name.lower() or who == "You" and playercharacter == None)):
         add si
 
 ## Make the namebox available for styling through the Character object.
@@ -332,6 +346,9 @@ init python:
         if InContest:
             renpy.invoke_in_new_context(renpy.say, None, "You cannot save in the middle of a contest!")
             return
+        if (renpy.get_screen("main_menu")):
+            renpy.invoke_in_new_context(renpy.say, None, "You cannot save in the title screen!")
+            return
         else:
             renpy.save("quicksave")
             renpy.notify("Quicksave successful!")
@@ -345,6 +362,9 @@ init python:
     def quickload_confirmation():
         if (sceneviewer or persistent.sceneviewer):
             renpy.invoke_in_new_context(renpy.say, None, "You cannot load in the scene viewer!")
+            return
+        elif (renpy.get_screen("main_menu")):
+            renpy.invoke_in_new_context(renpy.say, None, "You cannot load in the title screen!")
             return
         else:
             if renpy.can_load("quicksave"):
@@ -2796,10 +2816,13 @@ init python:
     def RenameFile(slot):
         global save_name
         if (sceneviewer or persistent.sceneviewer):
-            renpy.invoke_in_new_context(renpy.say, None, "You cannot save in the scene viewer")
+            renpy.invoke_in_new_context(renpy.say, None, "You cannot save in the scene viewer!")
             return
         if (inbattle):
             renpy.invoke_in_new_context(renpy.say, None, "You cannot save in the middle of a battle!")
+            return
+        if InContest:
+            renpy.invoke_in_new_context(renpy.say, None, "You cannot save in the middle of a contest!")
             return
         else:
             savename = FileSaveName(slot)
@@ -3960,7 +3983,7 @@ screen choosetarget(move, attacker):
 screen moves(mon, ignoreValidity = False):
     if (not renpy.get_screen("battleui")):
         use battleui()
-    $ Moves = mon.GetMoves()
+    $ Moves = mon.GetMoves()[:4]
     $ NumMoves = len(Moves)
 
     if (HasValidMoves(mon) or ignoreValidity):
@@ -4692,7 +4715,7 @@ screen newtables():
                     if (numcharacters > 2):
                         $ description = "The Disciplinary Committee has taken over this table. Students are pointing at a map and seriously planning some future event."
                     else:
-                        $ description = "The Disciplinary Committee usually takes over this table, but it looks a bit sparse right... a large map lays, unattended, on the table."
+                        $ description = "The Disciplinary Committee usually takes over this table, but it looks a bit sparse right now... a large map lays, unattended, on the table."
                 elif (table == "Home Table"):
                     $ description = "This table is filled with the residents of Dorm 25. They argue, chat, and laugh fluidly, waving you over to join them."
                     $ socialtype = RandomChoice(GetYellowStudents(), True)

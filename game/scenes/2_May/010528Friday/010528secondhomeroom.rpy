@@ -132,7 +132,7 @@ pause 1.0
 oak @angrybrow talkingmouth "But what of the Elite Four that were not carried forward into the Indigo League? Analyzing their history may provide the greatest insight into Champion Lance's weaknesses, given how often..."
 oak @sadbrow talkingmouth "...Well, how often they beat him, frankly."
 oak @talking2mouth "The Johto league Elite Four members that were not retained were named Walker Wayne and Magnus Kobushi."
-oak @closedbrow talking2mouth "Walker, a Flying-type specialist, was a former Gym Leader in Violet city." 
+oak @closedbrow talking2mouth "Walker, a Flying-type specialist, was a former Gym Leader in Violet City." 
 oak @talkingmouth "He supposedly took his defeat at Champion Lance's hands quite poorly, and immediately left Johto, swearing not to return until he could prove himself the superior Flying-type master."
 oak @happy "One supposes that he mistook Champion Lance for a bird keeper, as opposed to a dragon tamer!"
 

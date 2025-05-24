@@ -1120,7 +1120,7 @@ label Jasmine2Part2:
     show jasmine surprisedbrow with dis
 
     byron -surprised @happy2 "Nah, that's ridiculous."
-    byron @norm2 "Go on, kids, you'll be late for you next classes."
+    byron @norm2 "Go on, kids, you'll be late for your next classes."
 
     jasmine sadbrow @talking2mouth "How can you dismiss me so easily?"
 

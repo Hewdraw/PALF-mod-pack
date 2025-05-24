@@ -1193,6 +1193,7 @@ label Skyla2Part2:
 
     show wes painthood cloakhood nogoggles with dis
 
+    stop music fadeout 1.5
     $ renpy.music.queue("Audio/Music/theonlyshadowleft.ogg", channel='music', loop=True, fadein=1.5, tight=None)
 
     show screen songsplash("Colosseum Battle Remastered", "Zame")

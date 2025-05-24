@@ -9,7 +9,7 @@ label beginbusiness:
 if (bank > 0 and not HasEvent("Gardenia", "DepositedFirstTime")):
     $ AddEvent("Gardenia", "DepositedFirstTime")
     gardenia @surprised "Thanks for depositing your money! I'll make sure to keep it nice and safe."
-    gardenia @talking2mouth "You can now look forward to earning a nice $[math.floor(bank / 100)] every day from now 'til the end of the year."
+    gardenia @talking2mouth "You can now look forward to earning a nice $[min(1000, math.floor(bank / 100))] every day from now 'til the end of the year."
     gardenia @happy "I look forward to many more economic encounters, my thrifty friend!"
     
     red @sadbrow talkingmouth "Uh... yeah... I can't help but feel like no matter how much I bank, it'll be small potatoes compared to your empire, though."
@@ -32,7 +32,7 @@ if (bank > 0 and not HasEvent("Gardenia", "DepositedFirstTime")):
 
     red @confused "Mashed potatoes?"
 
-    gardenia @talkingmouth "A {i}field{/i} of potatoes, partner. Yeah, you might only be earning $[math.floor(bank / 100)] right now, but you know how long it'll take you to {i}double{/i} your money, with my compound, everyday interest?"
+    gardenia @talkingmouth "A {i}field{/i} of potatoes, partner. Yeah, you might only be earning $[min(1000, math.floor(bank / 100))] right now, but you know how long it'll take you to {i}double{/i} your money, with my compound, everyday interest?"
 
     red @talking2mouth "No idea. I guess this is a math thing?"
 

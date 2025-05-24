@@ -597,7 +597,7 @@ whitney @surprised "Psst! Hey, hey!"
 
 red @talkingmouth "Hay's for horses, but go ahead."
 
-if ("Level2SceneVer2" in persondex["Whitney"]["Events"]):
+if (HasEvent("Whitney", "Level2SceneVer2")):
     whitney @closedeyes talkingmouth "I can't believe I forgot to ask you when we hung out over the weekend. I just got so distracted with my own stuff."
 
 whitney @talking2mouth "What's up with your Pikachu? How did you {i}do{/i} that to Dawn?"

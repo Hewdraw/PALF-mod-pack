@@ -1041,7 +1041,7 @@ label Silver2Part2:
 
     red @sweat talking2mouth "I... I don't know what the answer is, but... I know what it {i}isn't{/i}."
 
-    silver @sadbrow talking2mouth "Yeah, well, you're in the same boat as me, then. And apparently if you don't know the answer for long enough, they take the reigns away from you."
+    silver @sadbrow talking2mouth "Yeah, well, you're in the same boat as me, then. And apparently if you don't know the answer for long enough, they take the reins away from you."
 
     pause 1.0
 

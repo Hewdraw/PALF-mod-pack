@@ -357,8 +357,8 @@
     def IsSpecialAbility(ability):
         return ability in ["Prism Armor", "Thrice Denied", "Truant", "Multitype", "Stance Change", "Schooling", "Comatose", "Shields Down", "Disguise", "RKS System", "Battle Bond", "Power Construct", "Ice Face", "Gulp Missile", "Zero to Hero", "Commander", "Trace", "Forecast", "Flower Gift", "Zen Mode", "Illusion", "Imposter", "Power of Alchemy", "Receiver", "Disguise", "Power Construct", "Ice Face", "Hunger Switch", "Gulp Missile", "Neutralizing Gas", "Zero to Hero", "Commander"]
 
-    def CanSwitch(pkmn, forced):
-        if ((forced and not pkmn.HasStatus("ingrained")) or pkmn.HasType("Ghost") or pkmn.GetHealthPercentage() <= 0.0):
+    def CanSwitch(pkmn, forced, selfforced=False):
+        if (selfforced or (forced and not pkmn.HasStatus("ingrained")) or pkmn.HasType("Ghost") or pkmn.GetHealthPercentage() <= 0.0):
             return True
         return not (
         pkmn.HasStatus("blocked")

@@ -179,7 +179,7 @@ hilda uniform @sadbrow sadmouth "{size=30}I never thought I'd be {i}unhappy{/i} 
 
 bea uniform @sadbrow talking2mouth "{size=30}I fear Sir Bruno has left us. What stands there now is... something else.{/size}"
 
-narrator "In spite of the general consensus that Bruno's new shirted appearance is deeply unsettingly, no-one seems willing to mention it to him."
+narrator "In spite of the general consensus that Bruno's new shirted appearance is deeply unsetting, no-one seems willing to mention it to him."
 
 stop music fadeout 4.0 channel "crowd"
 

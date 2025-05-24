@@ -116,7 +116,7 @@ label GrushaLunchScene:
 
         grusha @talkingmouth "[first_name]. {i}Hola, amigo{/i}. Yeah, trying to figure out what to eat."
 
-        red @confused "Where's The Little Prince?"
+        red @confused "Where's the Little Prince?"
 
         grusha @talking2mouth "Got a bowl of warm water back in my dorm. Go there between classes to switch it out."
         grusha @sad2brow talking2mouth "{size=30}Just between you and me, I think I caught one of my roommates trying to sit on him. I'm starting to think there's something off about her.{/size}"

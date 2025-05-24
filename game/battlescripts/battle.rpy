@@ -158,12 +158,13 @@ while (Turn == 0 or not BattleOver()):
             skipchoices = False
             for status, move_names in movestatuses.items():
                 if mon.HasStatus(status):
-                    skipchoices = True
                     lastmove = GetLastMove(ActionLog, mon, lookformoves=move_names, returnaction=True)
-                    lasttarget = lastmove.GetTargets()[0]
-                    if lasttarget not in Battlers():
-                        lasttarget = GetTargets(mon, GetMoveRange(lastmove.Move), True)[min(len(GetTargets(mon, GetMoveRange(lastmove.Move), True)) - 1, lastmove.GetTargetSlots()[0])]
-                    CurrentActions.append(Action(0, mon.GetStat(Stats.Speed), ActionTypes.Move, mon.GetTrainer(), mon, GetMove(lastmove.Move.Name), [lasttarget.GetTrainer()], [lasttarget], Turn))
+                    if (lastmove != None):
+                        skipchoices = True
+                        lasttarget = lastmove.GetTargets()[0]
+                        if lasttarget not in Battlers():
+                            lasttarget = GetTargets(mon, GetMoveRange(lastmove.Move), True)[min(len(GetTargets(mon, GetMoveRange(lastmove.Move), True)) - 1, lastmove.GetTargetSlots()[0])]
+                        CurrentActions.append(Action(0, mon.GetStat(Stats.Speed), ActionTypes.Move, mon.GetTrainer(), mon, GetMove(lastmove.Move.Name), [lasttarget.GetTrainer()], [lasttarget], Turn))
 
         if (not mon.HasStatus("recharging") and not skipchoices):
             show screen battle
@@ -478,16 +479,17 @@ while (Turn == 0 or not BattleOver()):
             skipenemychoices = False
             for status, move_names in movestatuses.items():
                 if mon.HasStatus(status):
-                    skipenemychoices = True
                     lastmove = GetLastMove(ActionLog, mon, lookformoves=move_names, returnaction=True)
-                    lasttarget = lastmove.GetTargets()[0]
-                    if lasttarget not in Battlers():
-                        lasttarget = GetTargets(mon, GetMoveRange(lastmove.Move), True)[min(len(GetTargets(mon, GetMoveRange(lastmove.Move), True)) - 1, lastmove.GetTargetSlots()[0])]
-                    newmove = GetMove(lastmove.Move.Name)
-                    if (lastmove.Move.Name in mon.GetMoveNames()):
-                        newmove = lastmove.Move
+                    if (lastmove != None):
+                        skipenemychoices = True
+                        lasttarget = lastmove.GetTargets()[0]
+                        if lasttarget not in Battlers():
+                            lasttarget = GetTargets(mon, GetMoveRange(lastmove.Move), True)[min(len(GetTargets(mon, GetMoveRange(lastmove.Move), True)) - 1, lastmove.GetTargetSlots()[0])]
+                        newmove = GetMove(lastmove.Move.Name)
+                        if (lastmove.Move.Name in mon.GetMoveNames()):
+                            newmove = lastmove.Move
 
-                    CurrentActions.append(Action(0, mon.GetStat(Stats.Speed), ActionTypes.Move, mon.GetTrainer(), mon, newmove, [lasttarget.GetTrainer()], [lasttarget], Turn))
+                        CurrentActions.append(Action(0, mon.GetStat(Stats.Speed), ActionTypes.Move, mon.GetTrainer(), mon, newmove, [lasttarget.GetTrainer()], [lasttarget], Turn))
 
             if (not mon.HasStatus("recharging") and not skipenemychoices):
                 if (custombrain == None or custombrain(mon) == None):

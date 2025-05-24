@@ -1181,7 +1181,7 @@ python:
     inventory = {
         Item.WallaceBrandPokemakeupKit : 1,
         Item.InstantCoffee : 1,
-        Item.BrownWig : 1,
+        Item.TwoToneWig : 1,
         Item.MegaTiara : 1,
         Item.RibbonCase : 1,
         Item.KeytoSootopolis : 1,

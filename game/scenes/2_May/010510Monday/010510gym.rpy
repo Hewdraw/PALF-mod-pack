@@ -59,12 +59,12 @@ alder @happy2 "But {i}effective!{/i}"
 
 redmind uniform @thinking "I'm not sure how effective it'd be, actually... that one Lopunny didn't need a Mega Stone, after all..."
 
-if ("ForeveralsFiguredOut" in persondex["Professor Oak"]["Events"]):
+if HasEvent("Professor Oak", "ForeveralsFiguredOut"):
     redmind @thinking "And it wouldn't work on me, at all. The Foreverals seem to generate an endless stream of Mega Stone-like objects for my Pokémon."
 
     redmind @happy "Shame they only last until the end of the battle. If they lasted longer, I could sell them!"
 
-elif ("ForeveralsALittleBit" in persondex["Professor Oak"]["Events"]):
+elif HasEvent("Professor Oak", "ForeveralsALittleBit"):
     redmind @thinking "Besides, if I'm understanding these gems right, the Foreverals seem to generate an endless stream of Mega Stone-like objects for my Pokémon."
 
     redmind @happy "Shame they only last until the end of the battle. If they lasted longer, I could sell them!"

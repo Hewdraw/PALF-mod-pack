@@ -28,15 +28,28 @@ alder norm @norm2 "[first_name]. May I have a word?"
 
 red uniform @talkingmouth "Sure thing, Professor."
 
-$ starter_species_name = pokedexlookup(starter_id, DexMacros.Name)
-alder happy @happy2 "I've noticed that your [starter_species_name] is getting stronger. Good job!"
+if (starterobj.GetLevel() == 5):
+    $ starter_species_name = pokedexlookup(starter_id, DexMacros.Name)
+    alder happy @happy2 "I've noticed your [starter_species_name] is getting stronger. Good job!"
 
-$ startergenderpronoun = "he's" 
-if (playerparty[0].GetGender() == Genders.Female):
-    $ startergenderpronoun = "she's"
-elif (playerparty[0].GetGender() == Genders.Unknown):
-    $ startergenderpronoun = "they're"
-red @happy "Oh! Uh, thank you, Sir. I feel like [startergenderpronoun] really trying!"
+    $ startergenderpronoun = "he's" 
+    if (playerparty[0].GetGender() == Genders.Female):
+        $ startergenderpronoun = "she's"
+    elif (playerparty[0].GetGender() == Genders.Unknown):
+        $ startergenderpronoun = "they're"
+    red @happy "Oh! Uh, thank you, Sir. I feel like [startergenderpronoun] really trying!"
+
+else:
+    alder happy @happy2 "I've noticed your [starter_species_name] is still level five. not to rush you or anything, but is there a problem?"
+
+    $ startergenderpronoun = "He's" 
+    if (playerparty[0].GetGender() == Genders.Female):
+        $ startergenderpronoun = "She's"
+    elif (playerparty[0].GetGender() == Genders.Unknown):
+        $ startergenderpronoun = "They're"
+    red @talkingmouth "No, Sir. I'm just spreading my studies around a bit--I'm pretty sure I can catch up later."
+
+    alder @norm4 "Alright. Just don't leave it {i}too{/i} long. Remember, your Pokémon's growth is tied to your own efforts."
 
 bruno norm @norm2 "This is a critical time for your [starter_species_name]. The first few levels will inform how your Pokémon evolves in all future battles."
 alder @happy2 "Right! A few more classes, a bit more studying... And you'll be right there. Speaking of, your assigned partner today is..."

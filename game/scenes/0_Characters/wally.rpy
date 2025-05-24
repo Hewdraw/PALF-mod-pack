@@ -310,7 +310,7 @@ label Wally1:
 
     pause 1.0
 
-    wally @closedbrow talking2mouth "It's funny, actually. Ralts {i}are{/i} never seen so far West of Petalburg. He must've sensed me panicking and freaking out from miles away."
+    wally @closedbrow talking2mouth "It's funny, actually. Ralts are {i}never{/i} seen so far West of Petalburg. He must've sensed me panicking and freaking out from miles away."
     wally @happy "I'm glad he did. He came up to me, put his little hands on my chest, and... sat on me."
 
     red @confused "What?"
@@ -595,7 +595,7 @@ label Wally1Part2:
 
     wally @happy "Yeah, it does! A bunch of old religions used to avoid saying their god's name, out of respect. Like, Arceus used to be called Sinnoh before Hisui was renamed Sinnoh."
     wally @closedbrow talking2mouth "Groudon and Kyogre used to be referred to as the 'Ore's Ruler' and the 'Aqueous Sultan.' But in the writings of the early Stone and Waters clans, they would always refer to these 'gods' as OR and AS."
-    wally @happy "Get it?! DE is a written the exact same way that OR and AS is."
+    wally @happy "Get it?! DE is written the exact same way that OR and AS is."
     wally @angrybrow talkingmouth "I don't know what DE means, but I'm pretty sure I know exactly who it refers to--the third of the Super-Ancient Pokémon, the dragon of the sky, Rayquaza!"
 
     red @surprised "What?!"
@@ -675,6 +675,7 @@ label Wally1Part2:
 
     narrator "You throw on some pants and your hat and quickly run outside, but immediately run into..."
 
+    stop music fadeout 1.5
     show screen songsplash("Embracing One's Duty", "Zame")
     queue music "audio/music/embracingonesduty.ogg"
 
@@ -853,7 +854,7 @@ label Wally1Part2:
     pause 1.0
 
     wally @talking2mouth "Six years."
-    wally tearfuleyes sadeyebrows tears @talking2mouth "{i}Six years.{/i}."
+    wally tearfuleyes sadeyebrows tears @talking2mouth "{i}Six years.{/i}"
 
     pause 2.0
 
@@ -1099,28 +1100,32 @@ label Wally1Part2:
     zinnia @closedbrow talking2mouth "That stupid little kid... He's {i}not{/i} a Draconid. I'm saving him, really. After all, he couldn't make his way to the top of the tower, even if he did everything else right. So I'm saving him, just like I'll save everyone else."
     zinnia @angrybrow talking2mouth "Yeah. I'm the hero. {i}I'm{/i} the hero! Not him. Not anyone else."
 
-    zinnia yanderebrow yanderemouth "Me!{w=0.5}"
+    $ autoquote = False
+
+    zinnia yanderebrow yanderemouth "\"Me!"
 
     show zinnia with vpunch:
         ypos 1.05 zoom 1.1
 
     $ BecomeNamed("Zinnia")
 
-    extend " Zinnia!{w=0.5}"
+    extend " Zinnia!"
 
     show zinnia with vpunch:
         ypos 1.1 zoom 1.2
 
-    extend " Lorekeeper of the Draconids!{w=0.5}"
+    extend " Lorekeeper of the Draconids!"
 
     show zinnia with vpunch:
         ypos 1.15 zoom 1.3
 
-    extend " {size=50}{b}Me!{/b}{/size}"
+    extend " {size=50}{b}Me!{/b}\"{/size}"
 
     show zinnia with vpunch:
         ypos 1.3 zoom 1.5
 
     scene blank2 with Dissolve(2.0)
+
+    $ autoquote = True
 
     return

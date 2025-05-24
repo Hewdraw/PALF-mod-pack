@@ -261,7 +261,7 @@ init -2 python:
         208 : [208, "Air Horn", "Carefully manufactured to wake up sleepyheads.", "Misc.", True, "None", lambda: False, 1, ["pov switch", "leaf item"]],
         209 : [209, "Wallace-Brand Pokémakeup Kit", "One of Uncle Wallace's first sponsors. Your Pokémon wear it proudly.", "Misc.", True, "None", lambda: False, 1, ["pov switch", "lisia item"]],
         210 : [210, "Instant Coffee", "For grandad. He's such a grump in the morning.", "Misc.", True, "None", lambda: False, 1, ["pov switch", "lisia item"]],
-        211 : [211, "Brown Wig", "It deceives comically well.", "Misc.", True, "None", lambda: False, 1, ["pov switch", "lisia item"]],
+        211 : [211, "Two-Tone Wig", "No-one would ever guess that you're disguising yourself with even more outlandish hair. Audacity's refuge is eternally reliable.", "Misc.", True, "None", lambda: False, 1, ["pov switch", "lisia item"]],
         212 : [212, "Mega Tiara", "A gleaming Key Stone is embedded in it. Polished daily.", "Misc.", True, "None", lambda: False, 1, ["pov switch", "lisia item"]],
         213 : [213, "Ribbon Case", "Four Ranks. Five Categories. And your six Pokémon won them all. You are very proud of them.", "Misc.", True, "None", lambda: False, 1, ["pov switch", "lisia item"]],
         214 : [214, "Key to Sootopolis", "Shining silver. They gave it to you after the Super-Ancient Pokémon attacked... all you could do was cheer them up after, though.", "Misc.", True, "None", lambda: False, 1, ["pov switch", "lisia item"]],
@@ -319,11 +319,11 @@ init -2 python:
         266 : [266, "Eviolite", "Boosts the defenses of a Pokémon that can still evolve.", "Battle Items", True, "None", lambda: False, 1, []],
         267 : [267, "Feebas Egg", "Laid by Champion Wallace's Milotic, Lucy. An egg of enormous prestige, especially for coordinators.", "Misc.", True, "None", lambda: False, 5, []],
         268 : [268, "Toxic Orb", "Badly Poisons the Pokémon holding it at the end of the turn.", "Battle Items", True, "None", lambda: False, 3, ["likedByJanine"]],
-        269 : [269, "Exp. Candy XS", "Increases a Pokémon's experience by 100 points.", "Medicines", True, "Pokemon", lambda mon: mon.GetLevel() < 100 or mon.GetEvos() != [], 1, ["exp item"]],
-        270 : [270, "Exp. Candy S", "Increases a Pokémon's experience by 800 points.", "Medicines", True, "Pokemon", lambda mon: mon.GetLevel() < 100 or mon.GetEvos() != [], 2, ["exp item"]],
-        271 : [271, "Exp. Candy M", "Increases a Pokémon's experience by 3,000 points.", "Medicines", True, "Pokemon", lambda mon: mon.GetLevel() < 100 or mon.GetEvos() != [], 3, ["exp item"]],
-        272 : [272, "Exp. Candy L", "Increases a Pokémon's experience by 10,000 points.", "Medicines", True, "Pokemon", lambda mon: mon.GetLevel() < 100 or mon.GetEvos() != [], 4, ["exp item"]],
-        273 : [273, "Exp. Candy XL", "Increases a Pokémon's experience by 30,000 points.", "Medicines", True, "Pokemon", lambda mon: mon.GetLevel() < 100 or mon.GetEvos() != [], 5, ["exp item", "likedByJanine"]],
+        269 : [269, "Exp. Candy XS", "Increases a Pokémon's experience by up to 100 points, with stronger Pokémon receiving less.", "Medicines", True, "Pokemon", lambda mon: mon.GetLevel() < 100 or mon.GetEvos() != [], 1, ["exp item"]],
+        270 : [270, "Exp. Candy S", "Increases a Pokémon's experience by 800 points, with stronger Pokémon receiving less.", "Medicines", True, "Pokemon", lambda mon: mon.GetLevel() < 100 or mon.GetEvos() != [], 2, ["exp item"]],
+        271 : [271, "Exp. Candy M", "Increases a Pokémon's experience by 3,000 points, with stronger Pokémon receiving less.", "Medicines", True, "Pokemon", lambda mon: mon.GetLevel() < 100 or mon.GetEvos() != [], 3, ["exp item"]],
+        272 : [272, "Exp. Candy L", "Increases a Pokémon's experience by 10,000 points, with stronger Pokémon receiving less.", "Medicines", True, "Pokemon", lambda mon: mon.GetLevel() < 100 or mon.GetEvos() != [], 4, ["exp item"]],
+        273 : [273, "Exp. Candy XL", "Increases a Pokémon's experience by 30,000 points, with stronger Pokémon receiving less.", "Medicines", True, "Pokemon", lambda mon: mon.GetLevel() < 100 or mon.GetEvos() != [], 5, ["exp item", "likedByJanine"]],
         274 : [274, "Oran Pot", "Decorates your dorm. Smells like oranges. Grows an Oran Berry once a day.", "Dorm", True, "None", lambda: False, 2, ["berry pot"]],
         275 : [275, "Rawst Pot", "Decorates your dorm. Smells like strawberries. Grows a Rawst Berry once every two days.", "Dorm", True, "None", lambda: False, 2, ["berry pot"]],
         276 : [276, "Cheri Pot", "Decorates your dorm. Smells like cherries. Grows a Cheri Berry once every two days.", "Dorm", True, "None", lambda: False, 2, ["berry pot"]],
@@ -648,15 +648,15 @@ init -2 python:
                     if (item == Item.RareCandy):
                         PrintExp(itemtarget.GainExperience(itemtarget.CalculateAllExperienceNeededForLevel(itemtarget.GetMaxLevel() + 1) - itemtarget.GetExperience() + 1, ignorescaling=True))
                     elif (item == Item.ExpCandyXS):
-                        PrintExp(itemtarget.GainExperience(100, ignorescaling=True))
+                        PrintExp(itemtarget.GainExperience(100))
                     elif (item == Item.ExpCandyS):
-                        PrintExp(itemtarget.GainExperience(800, ignorescaling=True))
+                        PrintExp(itemtarget.GainExperience(800))
                     elif (item == Item.ExpCandyM):
-                        PrintExp(itemtarget.GainExperience(3000, ignorescaling=True))
+                        PrintExp(itemtarget.GainExperience(3000))
                     elif (item == Item.ExpCandyL):
-                        PrintExp(itemtarget.GainExperience(10000, ignorescaling=True))
+                        PrintExp(itemtarget.GainExperience(10000))
                     elif (item == Item.ExpCandyXL):
-                        PrintExp(itemtarget.GainExperience(30000, ignorescaling=True))
+                        PrintExp(itemtarget.GainExperience(30000))
                 else:
                     pass # TODO: add the evolution mechanic once the evolution rework has been done
             

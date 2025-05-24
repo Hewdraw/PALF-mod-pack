@@ -647,7 +647,7 @@ elif (not HasEvent("Instructor Wallace", 4.1) and classstats["Water"] >= 30):#Aq
     else:
         red uniform @talking2mouth "Wallace, I've done a bit more training. And I'm ready to win, this time!"
 
-    wallace @happy "Brilliant! Then Pick one Pokémon to use! {color=#0048ff}But don't use a Water-type this time. Things'll turn out poorly if you do!~{/color}"
+    wallace @happy "Brilliant! Then pick one Pokémon to use! {color=#0048ff}But don't use a Water-type this time. Things'll turn out poorly if you do!~{/color}"
 
     python:
         hidebattleui = True

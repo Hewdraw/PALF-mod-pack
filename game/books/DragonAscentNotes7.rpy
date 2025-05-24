@@ -85,7 +85,7 @@ init 3 python:
         "",
         "Rapid whirlwinds form at top of tower, throwing off planes, flying Pokémon. Helicopter unviable."
         "",
-        "Strong Winds form upon aerial approach, clear reaction to intrusion. Likely formed by Pokémon, perhaps powerful machine. If latter, weather-altering technology could change world as we know it, solve world hunger.",
+        "Strong winds form upon aerial approach, clear reaction to intrusion. Likely formed by Pokémon, perhaps powerful machine. If latter, weather-altering technology could change world as we know it, solve world hunger.",
         "",
         "ADDENDUM: Above is unlikely, world hunger caused largely by logistics issues and greed, not unfavorable weather. Look into later. Need to focus."], include_para_tab=False)
 

@@ -1824,7 +1824,7 @@ label Cheren2:
     show ionojustpink closed
     with dis
 
-    Character("{gradient=#EE8FB5-#1d8fc5}???{/gradient}") "{glitch=5.00}\"...Well, it's a been a bit since I've done my own hardware maintenance.\"{/glitch}"
+    Character("{gradient=#EE8FB5-#1d8fc5}???{/gradient}") "{glitch=5.00}\"...Well, it's been a bit since I've done my own hardware maintenance.\"{/glitch}"
     
     show ionojustteal neutral
     show ionojustpink neutral
@@ -1919,7 +1919,7 @@ label Cheren2:
     with dis
 
     gardenia @angrybrow talking2mouth "Alright, Slimer, let's imagine you {i}aren't{/i} a ghost. Let's imagine you're actually a Kobukan student that somehow got permission to live in the Contest Coliseum."
-    gardenia @talking2mouth "What would you need to repair your I-Balls? Mareep blood? Candles made of red wax? A handmade Galarica wreaths of genuine Galarian holly, acquired at a decent price from my market?"
+    gardenia @talking2mouth "What would you need to repair your I-Balls? Mareep blood? Candles made of red wax? A handmade Galarica wreath of genuine Galarian holly, acquired at a decent price from my market?"
 
     show ionojustteal neutral
     show ionojustpink neutral

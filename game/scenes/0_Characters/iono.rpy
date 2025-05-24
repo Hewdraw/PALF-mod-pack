@@ -1041,7 +1041,7 @@ drayden @unamusedeyebrows "And[ellipses] one may be forced to ask what a Champio
 
 pause 2.0
 
-iono @sadbrow talking2mouth "{i}Señor{/i}, Please. I[ellipses] I want to be normal. I want to be a normal student. Nothing weird about me. No special accommodations, no special circumstances, just[ellipses] a normal Iono."
+iono @sadbrow talking2mouth "{i}Señor{/i}, please. I[ellipses] I want to be normal. I want to be a normal student. Nothing weird about me. No special accommodations, no special circumstances, just[ellipses] a normal Iono."
 iono @talking2mouth "I can't be a normal student if I know there's no way I'm graduating."
 
 red @talking2mouth sweat "I'll be honest, Sir, I hadn't really thought about what giving Iono the chance to graduate would mean for me or my friends. And you've given me a lot to think about it."
@@ -1230,7 +1230,7 @@ red @talking2mouth "Yeah, I bet you are, but your tiredness shouldn't affect how
 
 pause 1.0
 
-red @confused "Hey. When we brought that stuff to repair your I-Balls, you[ellipses] lead us {i}right{/i} to your bunker. But preventing people from knowing where you {i}are{/i} is[ellipses] like, your number-one thing, right?"
+red @confused "Hey. When we brought that stuff to repair your I-Balls, you[ellipses] led us {i}right{/i} to your bunker. But preventing people from knowing where you {i}are{/i} is[ellipses] like, your number-one thing, right?"
 
 pause 1.0
 

@@ -1214,9 +1214,10 @@ if (GetTrainerTeam("Brendan", "Sandshrew", False) in playerparty):
     $ AddEvent("Brendan", "CaughtSandshrew")
 else:
     $ AddEvent("Brendan", "NotCaughtSandshrew")
-$ ballsused = 20 - GetItemCount("Poké Ball")
+$ ballsleft = GetItemCount(Item.PokeBall)
+$ ballsused = 20 - ballsleft
 if (Item.PokeBall in inventory.keys()):
-    $ del inventory[Item.PokeBall]
+    $ LoseItem(Item.PokeBall, ballsleft)
 
 if (GetTrainerTeam("Brendan", "Sandshrew", False) in playerparty):
     $ playerparty.remove(GetTrainerTeam("Brendan", "Sandshrew", False))

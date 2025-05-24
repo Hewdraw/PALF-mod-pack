@@ -84,11 +84,14 @@ screen contestmovedata(move):
     frame:
         background Frame("GUI/character_frame.webp", 10, 10)
         xsize 1150
-        ysize 175
+        ysize 205
         xalign 0.26
-        ypos 0.1
+        ypos 0.09
         text move.Name xminimum 550 xalign 0.5 yalign .05 size 100
-        text ParseContestEffects(move)[10:] size 40 xmaximum 1100 xalign 0.5 yalign .95
+        vbox:
+            yalign .95 xalign 0.5
+            text "Type: " + "{color=" + GetContestTypeColor(move.Contest) + "}" + move.Contest size 40 xmaximum 1100 xalign 0.5
+            text ParseContestEffects(move)[10:] size 40 xalign 0.5
 
 screen ContestChoices(coordinator, startingmon):
     default spendingenergy = False
@@ -124,7 +127,7 @@ screen ContestChoices(coordinator, startingmon):
             vbox:
                 xalign 0.5
                 yalign 0.5
-                null height 225
+                null height 250
                 fixed:
                     xmaximum 600
                     ymaximum 67

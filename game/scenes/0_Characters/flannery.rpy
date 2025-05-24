@@ -262,7 +262,7 @@ label Flannery1:
 
     flannery @surprised "Huh?"
 
-    red @talkingmouth "I really want to see if I can help you. And I'm curious, anyway. I have hunch there's something more to this than... just not being able to wake up well."
+    red @talkingmouth "I really want to see if I can help you. And I'm curious, anyway. I have a hunch there's something more to this than... just not being able to wake up well."
 
     flannery @closedbrow talkingmouth "I mean... yeah, I guess you can do some research. If you can even manage to find the time with how crazy Kobukan runs us. Wait, what kind of research?"
 

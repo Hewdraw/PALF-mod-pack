@@ -416,6 +416,7 @@ label rock_class_31:
         xpos -0.2
         ease 0.7 xpos 0.33
     lenora "Aw, c'mon! Give the ol' Rock Snake a little credit!"
+    $ BecomeNamed("Instructor Lenora")
     olivia sadbrow @talking2mouth "Okay, sure. Not beyond {i}you{/i}, Lenora. Way to kick a girl when she's down."
     lenora @surprised "That's not what I meant at all! You're the one with a lead on a real Onix mystery!"
     lenora "Remember that story you told me? The one you got off of Kahuna Hala?"

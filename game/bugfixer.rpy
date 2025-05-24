@@ -10,7 +10,7 @@ python:
         print("creating new calDate")
         changemade = True
 
-    if ("persondex" not in globals()):
+    if ("persondex" not in globals() or (playercharacter == None and GetCharValue("Whitney") == -9999)):
         changemade = True
         print("rebuilding persondex")
         persondex = copy.deepcopy(defaultpersondex)
@@ -457,6 +457,18 @@ python:
             changemade = True
 
         abilities = GetAbilities(mon.Id)
+        if ('pikachuobj' in globals() and mon == pikachuobj):
+            abilities = ["Freelectric"]
+        elif ('pikachuobj' not in globals() and playercharacter == None and mon.Id in [25, 25.2]):#FIX THIS if you ever get a non-MC Pikachu
+            pikachuobj = mon
+            abilities = ["Freelectric"]
+            print("setting pikachuobj to " + mon.GetNickname())
+            changemade = True
+        elif ('starterobj' not in globals() and (('starter_id' in globals() and mon.Id in starter_id) or ('starter_name' in globals() and mon.GetNickname() == starter_name) or ('starter_species_name' in globals() and pokedexlookup(mon.Id, DexMacros.Name) == starter_species_name))):
+            starterobj = mon
+            print("setting starterobj to " + mon.GetNickname())
+            changemade = True
+
         if (mon.Ability not in abilities and not bugtesting()):
             newability = random.choice(abilities)
             print("setting ability of {} to {}, formerly {}".format(mon.GetNickname(), newability, mon.Ability))
@@ -505,7 +517,7 @@ python:
         print("if pika loadouts is nothing, set it")
         changemade = True
 
-    if (not HasEvent("Leaf", "LentDratini") and IsAfter(4, 5, 2004)):
+    if (not HasEvent("Leaf", "LentDratini") and IsAfter(13, 5, 2004)):
         AddEvent("Leaf", "LentDratini")
         print("adding lentdratini event to leaf")
         changemade = True
@@ -543,6 +555,11 @@ python:
     elif (GetRelationshipRank("Sabrina") != 0 and GetRelationship("Sabrina") in ["...?", "Classmate"]):
         CurrentPersondex()["Sabrina"]["RelationshipRank"] = 0
         print('fixing sabrina relationship to 1')
+        changemade = True
+
+    if (GetRelationshipRank("Wally") > 0 and not HasEvent("Wally", "ClassIntro")):
+        print("retconning in wally's classintro")
+        AddEvent("Wally", "ClassIntro")
         changemade = True
 
     if ('dungeon' not in globals() or (dungeon != None and not betatesting())):

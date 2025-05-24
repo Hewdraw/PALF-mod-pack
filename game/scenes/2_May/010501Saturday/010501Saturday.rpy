@@ -1178,7 +1178,7 @@ queue music "audio/music/unwaveringemotions.ogg"
 
 roxanne @sadbrow happymouth "I apologize for what is likely to be a drawn-out and excessively sentimental speech."
 roxanne @closedbrow talkingmouth "I've been told my speeches flip-flop between 'inspirational' and 'insomnia-curing' with frightening suddenness, and I fear that today's will be no exception."
-roxanne @talkingmouth "So, in the interest of brevity, and a graceful handing over of the reigns, I will summarize my thoughts in three two-word bytes."
+roxanne @talkingmouth "So, in the interest of brevity, and a graceful handing over of the reins, I will summarize my thoughts in three two-word bytes."
 roxanne @talkingmouth "And, to express my gratitude to the two men who have been by my side for the past year, men I have grown to trust and love, I will allow them to provide the first four words of the six."
 
 pause 1.0
@@ -1352,7 +1352,7 @@ silver @talkingmouth "Outside! There's... you need to... get strong battlers, an
 
 falkner @angrybrow talking2mouth "Wait, why do you care so much if he's a man or a woman?"
 
-roxanne @talkingmouth closedbrow "Or something else. We musn't forget that possibility."
+roxanne @talkingmouth closedbrow "Or something else. We mustn't forget that possibility."
 
 brawly @happy "Oh, yeah, I had a friend like that in Hoenn. Great surfer. You met them, right, Roxie?"
 

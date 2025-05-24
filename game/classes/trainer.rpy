@@ -91,7 +91,7 @@
         def GetType(self):
             return self.Type
 
-        def ShiftTeam(self, swapto, swapfrom, force=False, positionswitch = False):
+        def ShiftTeam(self, swapto, swapfrom, force=False, positionswitch = False, selfforced=False):
             global switchedmon
             
             swappingmon = self.GetTeam()[swapto]
@@ -101,7 +101,7 @@
                 if (swappingtomon.GetHealth() <= 0):
                     renpy.say(None, "{} is fainted, and can't switch in!".format(swappingtomon.GetNickname()))
                     return False
-                elif (not CanSwitch(swappingmon, force)):
+                elif (not CanSwitch(swappingmon, force, selfforced)):
                     renpy.say(None, "Can't switch in!")
                     return False
 

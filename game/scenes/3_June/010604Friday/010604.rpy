@@ -15,7 +15,7 @@ oak @talking2mouth "{gradualsize=20-36}...which brings to our discussion of One-
 
 $ PlaySound("knock.ogg")
 
-extend " Sheer Cold was--{w=0.5} Hm?"
+extend " Sheer Cold was--{w=0.5} hm?"
 
 flannery uniform @tiredbrow talking2mouth "{size=30}Who's knocking on the door this early?{/size}"
 

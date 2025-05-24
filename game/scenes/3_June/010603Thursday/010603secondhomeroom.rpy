@@ -164,7 +164,7 @@ blue @talking2mouth "No, the fuck we're not."
 
 leaf @sarcastic "We're going shopping to get Yellow a coordinator's dress."
 
-blue @sad2eyes angryeyebrows talking2mouth "Then you should've lead with {i}that{/i}."
+blue @sad2eyes angryeyebrows talking2mouth "Then you should've led with {i}that{/i}."
 
 leaf surprisedbrow frownmouth @flirtbrow talkingmouth "Alright. Let's go back to the dorm and grab Yellow."
 
@@ -675,7 +675,7 @@ show yellow behind blue:
     xpos 0.6
     ease 0.5 xpos -0.2
 
-blue @confusedbrow talkingmouth "No, Seriously? What's going on? Did I miss something?"
+blue @confusedbrow talkingmouth "No, seriously. What's going on? Did I miss something?"
 
 yellow @sadbrow talking2mouth "Um, Blue, when someone says 'private clothes,' that means, um..."
 

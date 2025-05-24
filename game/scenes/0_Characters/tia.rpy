@@ -590,7 +590,7 @@ label Tia2Part2:
 
     pause 1.0
 
-    narrator "Tia brings you the drink, and, as expected, it's a massive tower of sugar, whip cream, powders, and... you're not even sure what that yellow glaze is. Caramel? Honey? Only God knows."
+    narrator "Tia brings you the drink, and, as expected, it's a massive tower of sugar, whipped cream, powders, and... you're not even sure what that yellow glaze is. Caramel? Honey? Only God knows."
 
     pause 1.0
 

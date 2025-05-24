@@ -472,7 +472,7 @@ label Nessa2:
     python:
         trainer1 = MakeRed()
         trainer2 = MakeTrainer("Nessa", TrainerType.Ally)
-        roughneckteam = GetTrainerTeam("Silver")[2:]
+        roughneckteam = GetTrainerTeam("Grunts")[2:]
         trainer3 = Trainer("roughneck", TrainerType.Enemy, roughneckteam, number=2)
 
     call Battle([trainer1, trainer2, trainer3], reanchor=[False, False, True], customexpressions=["red", "red angrybrow happymouth", "nessa", "nessa angrybrow happymouth", "roughneck", "roughneck angry"]) from _call_Battle_121

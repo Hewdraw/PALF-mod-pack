@@ -828,28 +828,49 @@ label May2:
 
     red @sadbrow talkingmouth "Dish duty? You know, I can cook, too. I'm not bad at it, even."
 
-    may @talkingmouth "Oh, I know. I tasted Dawn's cake, remember?"
+    if (IsAfter(22, 5, 2005)):
+        may @talkingmouth "Oh, I know. I tasted Dawn's cake, remember?"
 
-    show mallow surprisedbrow frownmouth with dis:
-        xpos 0.33 ypos 1.2 zoom 1.3
-        ease 0.5 ypos 1.0 zoom 1.0
+        show mallow surprisedbrow frownmouth with dis:
+            xpos 0.33 ypos 1.2 zoom 1.3
+            ease 0.5 ypos 1.0 zoom 1.0
 
-    pause 1.0
+        pause 1.0
 
-    show may surprisedbrow frownmouth with dis:
-        xpos 0.66 ypos 1.2 zoom 1.3
-        ease 0.5 ypos 1.0 zoom 1.0
+        show may surprisedbrow frownmouth with dis:
+            xpos 0.66 ypos 1.2 zoom 1.3
+            ease 0.5 ypos 1.0 zoom 1.0
 
-    red @surprisedbrow talking2mouth heavyblush "Uh... should you tell Brendan?"
+        red @surprisedbrow talking2mouth heavyblush "Uh... should you tell Brendan?"
 
-    mallow @sadbrow talkingmouth "What kind of person did you bring into my Cooking Club, [first_name]?"
+        mallow @sadbrow talkingmouth "What kind of person did you bring into my Cooking Club, [first_name]?"
 
-    may talking2mouth "Wait, wait, hold on! You've got it wrong! I'm not a pervert, I have a boyfriend! I'd never taste another woman's cake!"
-    may sadbrow "{size=30}...Okay, actually, I might be a pervert, and I {i}did{/i} look at Serena's, but I {i}do{/i} have a boyfriend, and--{/size}"
+        may talking2mouth "Wait, wait, hold on! You've got it wrong! I'm not a pervert, I have a boyfriend! I'd never taste another woman's cake!"
+        may sadbrow "{size=30}...Okay, actually, I might be a pervert, and I {i}did{/i} look at Serena's, but I {i}do{/i} have a boyfriend, and--{/size}"
+
+    else:
+        may @talkingmouth "Oh, I know. Leaf told me about your sticky buns."
+
+        show mallow surprisedbrow frownmouth with dis:
+            xpos 0.33 ypos 1.2 zoom 1.3
+            ease 0.5 ypos 1.0 zoom 1.0
+
+        pause 1.0
+
+        show may surprisedbrow frownmouth with dis:
+            xpos 0.66 ypos 1.2 zoom 1.3
+            ease 0.5 ypos 1.0 zoom 1.0
+
+        red @closedbrow sweat talking2mouth "I can't believe she did that."
+
+        mallow @sadbrow talkingmouth "What kind of person did you bring into my Cooking Club, [first_name]?"
+
+        may talking2mouth "Wait, wait, hold on! You've got it wrong! I'm not a pervert, I have a boyfriend!" 
+        may sadbrow "I'm not interested in anyone's buns but Brendan's! Not that they're {i}bad{/i}, probably, but I {i}do{/i} have a boyfriend, and--"
 
     show blank2 with splitfade 
 
-    narrator "You quickly throw on an apron and move to the sink as May flounders about, cooking up a pile of excuses that, without accounting for taste, seems pretty rotten."
+    narrator "You quickly throw on an apron and move to the sink as May flounders about, cooking up a pile of excuses that, without accounting for taste, seem pretty rotten."
 
     pause 2.0
 
@@ -866,7 +887,7 @@ label May2:
 
     mallow @happy "I still can't believe your Dad is {i}the{/i} Professor Birch. If I'd known that, I never would have let you go."
 
-    may @talkingmouth "He's pretty humble about it. I know he seriously considered going to Alola at one point, though. I know the Aether Foundation is one of the best places to study Pokémon habitats."
+    may @talkingmouth "He's pretty humble about it. I know he seriously considered going to Alola at one point, though--the Aether Foundation is one of the best places to study Pokémon habitats."
     may @happy "I guess it's for the best he didn't, though--if he had, I might never have met Brendan! I might not have even gone to Kobukan."
 
     pause 1.0

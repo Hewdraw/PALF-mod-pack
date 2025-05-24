@@ -58,6 +58,7 @@ init python:
         "EthanGeneric10" : (lambda: timeOfDay == "Morning"),
         "EthanGeneric9" : (lambda: classstats[location.title()] > 4),
         "EthanGeneric4" : (lambda: classstats[location.title()] > 4),
+        "EthanGeneric14" : (lambda: classstats[location.title()] > 4),
         "EthanGeneric5" : (lambda: AimLevel() > 14)
     }
 

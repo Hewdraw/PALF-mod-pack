@@ -123,7 +123,7 @@ label bug_class_07:
     burgh @norm2 "My own preferred solution is a Bug/Rock hybrid such as Crustle or Armaldo."
     burgh @happy "In addition to laying Stealth Rock, which devastates Flying teams, these Pokémon can knock birds from the sky."
     burgh happy2 "Few birds will withstand a Smack Down or Stone Edge. And these moves are equally strong against Fire-types!"
-    narrator "Burgh warns that Vikavolt and Frostmoth, despite their anti-Flying moves, may be too slow to capitalize..."
+    narrator "Burgh warns that Vikavolt and Frosmoth, despite their anti-Flying moves, may be too slow to capitalize..."
     return
 
 label bug_class_08:

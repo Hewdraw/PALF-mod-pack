@@ -448,6 +448,8 @@
             
             self.HandleLiberationOverflow()
 
+            return moveconfirmed
+
         def HandleLiberationOverflow(self):
             hidescreen = False
             if (self.Id == 25.2):
@@ -531,8 +533,8 @@
                     newmoves = GetLevelMoves(self, self.GetLevel(), True)
                     if (len(newmoves) != 0):
                         renpy.say(None, " ".join(responselist))
-                        responselist.clear()
-                        self.LearnNewMove(newmoves, True)   
+                        if (self.LearnNewMove(newmoves, True)):
+                            responselist.clear()
 
             if (self.GetLevel() != priorlevel and self.Id != 25.2 and not fainting):
                 evoconditions = []
@@ -624,7 +626,7 @@
             
             priorexperience = max(priorexperience, self.CalculateAllExperienceNeededForLevel(self.Level))
             expleft = math.floor(self.GetExperience() - priorexperience)
-            if (undercap and self.Level >= self.GetLevelCap() and expleft != 0):
+            if (undercap and self.Level >= self.GetLevelCap() and expleft > 0):
                 if (Item.ExperienceCondenser in inventorymetadata and inventorymetadata[Item.ExperienceCondenser][0]):
                     self.Experience -= expleft
                     inventorymetadata[Item.ExperienceCondenser][1] += expleft
@@ -725,12 +727,15 @@
 
         def ModifyEV(self, stat, amount):
             amount = RunItemFunction("gainEVs", self, [amount])
-            if (self.CanModifyEV(stat, amount)):
+            cando = self.CanModifyEV(stat, amount)
+            if (cando):
                 self.EVs[stat] += amount
 
             for i, item in enumerate(self.EVs):
                 if (item > 252):
                     self.EVs[i] = 252
+
+            return cando
 
         def GetItem(self):
             return self.Item
@@ -1644,7 +1649,7 @@
             elif (formename == "DittoTransform"):
                 self.FormeOverride = self.GetStatusCount("transformed").GetId()
                 self.AbilityOverride = self.GetStatusCount("transformed").GetAbility()
-                self.OldMoves = copy.deepcopy(self.GetOldMoves())
+                self.OldMoves = copy.deepcopy(self.GetMoves())
                 self.Moves = []
                 self.StatChanges = self.GetStatusCount("transformed").GetAllStatChanges()
                 for learntmove in self.GetStatusCount("transformed").GetMoveNames():

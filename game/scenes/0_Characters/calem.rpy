@@ -264,7 +264,7 @@ label Calem1:
     red @winkbrow happymouth "Wow, you {i}just{/i} learned my Dad's dead, and you're asking me about my mother? I heard Kalosians move fast, but--"
 
     calem @closedbrow talking2mouth "That is a vicious stereotype[ellipses] {nw}"
-    extend @closedbrow talkingmouth "That is accurate too often for me to wholly dismiss. Ah, it is the air of Kalos. It simply makes you believe in love. What can I say?"
+    extend @closedbrow talkingmouth "that is accurate too often for me to wholly dismiss. Ah, it is the air of Kalos. It simply makes you believe in love. What can I say?"
 
     pause 1.0
 

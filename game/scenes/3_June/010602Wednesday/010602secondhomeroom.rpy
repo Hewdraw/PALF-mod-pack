@@ -742,7 +742,7 @@ label klaraconvincepartner:
                                 jump day010603
 
                             else:
-                                narrator "Hurt and confused, you forgo texting, and decide to head straight to bed."
+                                narrator "Tiredness overwhelms you, and you decide to head straight to bed."
 
                                 jump day010603   
 

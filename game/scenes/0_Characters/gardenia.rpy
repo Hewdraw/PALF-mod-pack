@@ -284,7 +284,7 @@ label Gardenia1:
     gardenia @talkingmouth "Pretty much got it! That's the core of business--find the deal that makes the biggest profit."
     gardenia @sadbrow talking2mouth "But if the only profit you're looking for is money, well... that's just {i}unimaginative{/i}!"
     gardenia @talkingmouth "Profit can be all kinds of things. It can be happiness, it can be memories, it can be trust, it can be the promise of money later on."
-    gardenia @talking2mouth sad2brow "Now, don't think I'm some kind of hippy antidisestablishmentarianist. I like money. I'm not going to start seizing the means of production anytime soon."
+    gardenia @talking2mouth sad2brow "Now, don't think I'm some kind of hippie antidisestablishmentarianist. I like money. I'm not going to start seizing the means of production anytime soon."
     gardenia @talkingmouth "But money's an end to {i}true{/i} profit. If the only profit you're pursuing is monetary, then you're picking up pennies--it's a waste of time."
     gardenia @happy "You know how I've succeeded in business? I can {i}always{/i} make an offer with every possible advantage to it. Sure, the other offer exists, but why would you ever pick it?"
     gardenia @talkingmouth "That's how I seem to know what people are going to do. I'm not a mind-reader, or anything. I'm just following the rule: if all the profit is on one option, people are {i}going{/i} to take that option."
@@ -305,7 +305,7 @@ label Gardenia1:
 
             gardenia @surprisedbrow frownmouth "[ellipses]"
             gardenia @sad2brow talkingmouth "Well, I guess every rule has an exception."
-            gardenia @sad2brow talkingmouth "Oh well. It was at least worth a shot. Still, take the best and jeans off. You'll sweat to death otherwise."
+            gardenia @sad2brow talkingmouth "Oh well. It was at least worth a shot. Still, take the vest and jeans off. You'll sweat to death otherwise."
 
         "[courageoption]You're quite the salesman. You've convinced me.":
             $ TraitChange("Courage")
@@ -574,8 +574,8 @@ label Gardenia1Part2:
     show gardenia with dis:
         xpos 0.5
 
-    red @talkingmouth sweat "[ellipses]And that kinda fills out pretty much everything I can tell you about battling in one sitting. Man, I need some water."
-    red @closedbrow talking2mouth "Man, my throat is sore. I don't normally talk this much for so long."
+    red @talkingmouth sweat "[ellipses]And that kinda fills out pretty much everything I can tell you about battling in one sitting."
+    red @closedbrow talking2mouth "Man, my throat is sore. I don't normally talk this much for so long. I need some water."
 
     gardenia @talkingmouth "Thought you might, so I came prepared. Here you go!"
 
@@ -1020,7 +1020,7 @@ label Gardenia1Part2:
 
     red @sadbrow talking2mouth "I'm so sorry you had to live with that."
 
-    gardenia @sadbrow talking2mouth "I bet you're probably the only one at Kobukan who can even halfway understand what it's like to be poor. We were only in that house for five years, but... it changed me. It changed my mom, it changed my Dad."
+    gardenia @sadbrow talking2mouth "I bet you're probably the only one at Kobukan who can even halfway understand what it's like to be poor. We were only in that house for five years, but... it changed me. It changed my mom, it changed my dad."
     gardenia @sadbrow talkingmouth "Our thermostats are never a degree hotter than they need to be. We have wallets bulging with coupons. Dinners are planned based on whatever ingredients expire soonest."
     gardenia @talking2mouth "I could outbid a large regional energy company in Sinnoh, and I still patch up my own clothes. My mom cuts my hair. We make bread out of old Nanab berries. This stuff stays with you."
 
@@ -1061,4 +1061,17 @@ label Gardenia1Part2:
 
     label endofgardenia1part2:
 
+    call silence() from _call_silence_3
+
+    $ renpy.music.queue("audio/music/GSCBike_Start.ogg", channel='music', loop=None, fadein=1.0, tight=None)
+    $ renpy.music.queue("audio/music/GSCBike_Loop.ogg", channel='music', loop=True)
+    $ freeroaming = True
+
+    scene map with splitfade
+    show blank2 as blackground behind map
+    show screen currentdate 
+    call screen map_UI(_with_none=False)
+    hide blackground
+    with dissolve
+    
     return

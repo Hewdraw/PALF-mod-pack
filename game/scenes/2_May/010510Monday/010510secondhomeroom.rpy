@@ -133,7 +133,7 @@ oak @talkingmouth "Oh, it looks like class is over. Hm... well, we'll discuss th
 
 hide oakbg with dis
 
-if ("TalkToBlue" in persondex["Professor Oak"]["Events"]):
+if (HasEvent("Professor Oak", "TalkToBlue")):
     show oak at rightside
 
     show blue uniform at leftside
@@ -319,7 +319,7 @@ if (not HasEvent("Blue", "NoBattle")):
 
     pause 0.5
 
-    if ("TalkToBlue" in persondex["Professor Oak"]["Events"]):
+    if (HasEvent("Professor Oak", "TalkToBlue")):
         blue @closedbrow talkingmouth "Oh. Right. Gramps said some stuff to me after class. I'm pretty sure you put him up to it."
 
         red @talkingmouth "Earlier today, I {i}suggested{/i} that he talk to you."
@@ -701,7 +701,7 @@ sonia @talking2mouth "I've been looking at these Foreverals {i}all{/i} evening, 
 
 red @talkingmouth "Oh, you mean how they work?"
 
-if ("ForeveralsFiguredOut" in persondex["Professor Oak"]["Events"]):
+if HasEvent("Professor Oak", "ForeveralsFiguredOut"):
     red @happy "Yeah, I figured them out, too. It's really easy to figure out what they do when you're using them in battle, actually."
 
     sonia @confused "Oh!"

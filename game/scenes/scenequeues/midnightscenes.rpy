@@ -62,7 +62,7 @@ label JasmineGrushaTiaMidnightScene:
 
         pause 0.5
 
-        jasmine @happy "Well, we {i}must{/i} buy the next book, musn't we?"
+        jasmine @happy "Well, we {i}must{/i} buy the next book, mustn't we?"
         jasmine @angrybrow talking2mouth "Why, I'd say I'm quite cross at this author for leaving us on such a cliffhanger!"
         jasmine @closedbrow sweat talking2mouth "Not cross enough to stop reading, though[ellipses]"
 
@@ -110,7 +110,7 @@ label JasmineGrushaTiaMidnightScene:
 
         show tia glasses with gaussdissolve
 
-        narrator "The around Tia shifts, and a pair of glasses forms on her brow--ornamental, of course, and nonfunctional--but crafted in imitation of Jasmine's."
+        narrator "The air around Tia shifts, and a pair of glasses forms on her brow--ornamental, of course, and nonfunctional--but crafted in imitation of Jasmine's."
         narrator "Dragon see, dragon do."
 
         jasmine @sadbrow talking2mouth "Careful. Grusha's not back yet. If he sees you transform before we've managed to tell him about you, it could come as quite a shock."
