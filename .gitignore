@@ -8,3 +8,4 @@ game/cache/shaders.txt
 game/saves/persistent
 *.json
 *.bak
+*.pyc
