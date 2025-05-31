@@ -1476,7 +1476,10 @@ init python:
         if (value >= target):
             return (True, "{} reacts strongly to the bell!".format(mon.GetNickname()))
         else:
-            return (False, "{} seems to ignore the bell... perhaps you should spend more time with {} specialists. ({}%%)".format(mon.GetNickname(), typestring, str(FormatNum(value / target * 100))[:5]))
+            if (sbprogress): #Fraction
+                return (False, "{} seems to ignore the bell... perhaps you should spend more time with {} specialists. ({}/{})".format(mon.GetNickname(), typestring, value, target))
+            else: #Percentage
+                return (False, "{} seems to ignore the bell... perhaps you should spend more time with {} specialists. ({}%%)".format(mon.GetNickname(), typestring, str(FormatNum(value / target * 100))[:5]))
 
     def EthanNameFilter(originalstring):
         if (playercharacter == "Ethan" or not ethanmisname):
@@ -2210,3 +2213,6 @@ default beepboop = False
 default dungeon = None
 #the last save file this game was saved under
 default version = None
+## GHOST ADDITIONAL VARIABLES DEFINED HERE
+default sbprogress = True #Boolean True if fraction, else default to percentage
+## GHOST ADDITIONAL VARIABLES END HERE

@@ -379,6 +379,8 @@ init -2 python:
         global receivedUse
         global ItemText
         global invoverwrite
+        global sbprogress #GHOST FRIENDSHIP TRACKER MOD GLOBAL VARIABLE!!!
+
         ItemText = ""
 
         if item == "":
@@ -664,7 +666,12 @@ init -2 python:
                 # TODO: replace after the evolution rework has been done
                 if (playercharacter != None):
                     renpy.say(None, "You ring the bell, but you cannot hear it.")
-                else:
+                sbmenu = renpy.display_menu([
+                    ("> Ring the Soothe Bell", 0), #Attempt to evolve Pokemon
+                    ("> Display friendship progress as a fraction", 1), 
+                    ("> Display friendship progress as a percentage", 2)
+                ])
+                if (sbmenu == 0):
                     anyinterest = False
                     for mon in playerparty:
                         if len(GetEvos(mon.Id)) > 0:
@@ -713,7 +720,15 @@ init -2 python:
                             renpy.transition(dis)
                             renpy.hide("whitney")
                     bellrung = True
-            
+                elif(sbmenu == 1):
+                    sbprogress = True #Problem: Need to update global value.
+                    renpy.say(None,"The progress for friendship evolutions is now displayed as a fraction.")
+                    #success = True
+                else: #sbmenu output == 2
+                    sbprogress = False 
+                    renpy.say(None,"The progress for friendship evolutions is now displayed as a percentage.")
+                    #success = True
+
             elif ItemHasTag(item, "treat boost"): # Treat boost items
                 activetreat = item
                 posttext = "You will attract {}-type Pokémon more frequently.".format(treatboosts[item])
