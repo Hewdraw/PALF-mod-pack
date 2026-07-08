@@ -16,7 +16,7 @@ else:
     show cheren
     with dis
 
-skyla @happy "Alright, let's go! We'll save Instructor Will, and break in the head of the big evil boss hiding in the forest!"
+skyla @happy "Alright, let's go! We'll save Instructor Will, and bust up the big evil boss hiding in the forest!"
 
 cheren @talking2mouth "It is unlikely any threat such as that is present... but if it is so, then so it is."
 
@@ -51,18 +51,10 @@ python:
         endname = "Haunted Depths",#a string
         backgrounds = {"Night" : "midnightforest", "Default": "eveningforest"},#a dictionary of timeofdays to check against. If the current timeofday is not listed, then the "Default" value is picked.
         music = ("audio/music/duskforest.ogg"),#a tuple that contains one or two elements. If it contains two, the first is nolooped, and the second is looped. if it contains one, then it's looped
-        encounterpool = {# a dictionary encounterpool, in the same format as the ones for normal wildareas
-            pokedexlookupname("Pumpkaboo", DexMacros.Id): 5,
-            pokedexlookupname("Phantump", DexMacros.Id): 3,
-            pokedexlookupname("Rowlet", DexMacros.Id): 1,
-            pokedexlookupname("Shuppet", DexMacros.Id): 7,
-            pokedexlookupname("Paras", DexMacros.Id): 10,
-            pokedexlookupname("Foongus", DexMacros.Id): 7,
-        },
+        encounterpool = wildpools["unhallowed holt"],# a dictionary encounterpool, in the same format as the ones for normal wildareas
         difficulty = 16,#an int, 1-100, indicating the dungeon's difficulty. Should be roughly equivalent to AimLevel()
         floors = 5,#the number of battles you need to win to go through the level
         floorlength = 3,#the number of turns a battle will last, at max, before you find the stairs
-        levelrange = range(11, 14),#a level range, set up the same way as normal wildarea level ranges
         startingmysteriosity=20,#the base chance that mysteriosity happenings will occur
         startingferocity=10,#the base chance that strong Pokémon will appear
         startinggenerosity=40,#the base chance that good things will happen

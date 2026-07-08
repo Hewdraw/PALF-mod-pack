@@ -142,7 +142,7 @@ label JasmineGrushaTiaMidnightScene:
 
         jasmine @talkingmouth "I trust you weren't egg-rolling?"
 
-        grusha @sad2brow "What kind of parent do you think I am? No, I strapped him to the back of a Cyclizar and slapped it on the butt. Little Prince should be three regions away by now."
+        grusha @sad2brow "What kind of parent do you think I am? No, I strapped him to the back of a Cyclizar and slapped it on the {i}culo{/i}. Little Prince should be three regions away by now."
 
         jasmine @talking2mouth unamusedbrow "So if I open the door to our bedroom, I'm not going to see it sitting in that bowl of warm water you've put on the dresser."
 
@@ -242,7 +242,7 @@ label JasmineGrushaTiaMidnightScene:
 
         show jasmine confusedeyebrows with dis
 
-        narrator "Grusha's hand traces the jagged line that unconsciously crawls up his chest, terminating a centimeter above his upper lip. Jasmine's eyebrow raises, asking a silent question."
+        narrator "Grusha's hand unconsciously traces the jagged line that crawls up his chest, terminating a centimeter above his upper lip. Jasmine's eyebrow raises, asking a silent question."
 
         pause 1.0
 
@@ -317,15 +317,5 @@ label JasmineGrushaTiaMidnightScene:
         narrator "Your understanding of Jasmine, Grusha, and Tia goes up!"
 
         return
-
-
-
-
-
-
-
-        
-
-
-        
+    
 return

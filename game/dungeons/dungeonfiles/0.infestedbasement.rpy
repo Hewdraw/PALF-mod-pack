@@ -8,23 +8,10 @@ python:
         endname = "Griseous Cellar",#a string
         backgrounds = {"Default": "catacombs3"},#a dictionary of timeofdays to check against. If the current timeofday is not listed, then the "Default" value is picked.
         music = ("audio/music/sealedruin.ogg"),#a tuple that contains one or two elements. If it contains two, the first is nolooped, and the second is looped. if it contains one, then it's looped
-        encounterpool = {# a dictionary encounterpool, in the same format as the ones for normal wildareas
-            pokedexlookupname("Weedle", DexMacros.Id): 10, 
-            pokedexlookupname("Paras", DexMacros.Id) : 10, 
-            pokedexlookupname("Nymble", DexMacros.Id) : 10,
-            pokedexlookupname("Tarountula", DexMacros.Id): 10,
-            pokedexlookupname("Rattata", DexMacros.Id): 10,
-            pokedexlookupname("Grimer", DexMacros.Id): 10,
-            pokedexlookupname("Ekans", DexMacros.Id): 10,
-            pokedexlookupname("Sandshrew", DexMacros.Id): 10,
-            pokedexlookupname("Zubat", DexMacros.Id): 10,
-            pokedexlookupname("Venonat", DexMacros.Id): 10,
-            pokedexlookupname("Skorupi", DexMacros.Id): 10
-        },
+        encounterpool = wildpools["infested basement"],# a dictionary encounterpool, in the same format as the ones for normal wildareas
         difficulty = 14,#an int, 1-100, indicating the dungeon's difficulty. Should be roughly equivalent to AimLevel()
         floors = 4,#the number of battles you need to win to go through the level
         floorlength = 3,#the number of turns a battle will last, at max, before you find the stairs
-        levelrange = range(10, 15),#a level range, set up the same way as normal wildarea level ranges
         startingmysteriosity=50,#the base chance that mysteriosity happenings will occur
         startingferocity=1,#the base chance that strong Pokémon will appear
         startinggenerosity=100,#the base chance that good things will happen

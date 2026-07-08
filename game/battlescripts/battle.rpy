@@ -27,6 +27,7 @@ python:
     GainExp = gainexp
     BattlerIndex = 0
     FaintedMons = []
+    CaughtMons = []
     Fled = False
     Unrunnable = unrunnable
     terabuttontext = "Terastallize"
@@ -52,6 +53,7 @@ python:
     GimmickCost = 1 
     AutoLose = False
     AutoWin = False
+    SwitchAI = BattleAI()
 
     BattleSetup()# sets a bunch of battle variables of the 'mons
     for trainer in Trainers:
@@ -109,14 +111,23 @@ python:
         elif (len(specialmusic) == 2):
             renpy.music.queue(specialmusic[0], channel='music', loop=None, fadein=1.0, tight=None)
             renpy.music.queue(specialmusic[1], channel='music', loop=True)
-        else:
-            renpy.music.queue(specialmusic, channel='music', loop=True, fadein=1.0, tight=None) 
+        elif (not HasEvent("Game", "ContestShowcase")):
+            renpy.music.queue(specialmusic, channel='music', loop=True, fadein=1.0, tight=None)
+        else:#if in a contest showcase, play the song only once
+            renpy.music.queue(specialmusic, channel='music', loop=HasEvent("Game", "LimitlessShowcase"), fadein=1.0, tight=None)
+
 
 if (dungeon == None):
     call CreateSplash(playerteamnames, enemyteamnames, customexpressions, reanchor, uniforms, pkmnnames, pkmnids, customoutfits) from _call_CreateSplash
 
 label Start:
+
 while (Turn == 0 or not BattleOver()):
+    if (HasEvent("Game", "ContestShowcase") and not HasEvent("Game", "LimitlessShowcase")):
+        if (renpy.music.get_pos() == None or renpy.music.get_pos() >= renpy.music.get_duration() - 5):
+            narrator "{b}And that's the scene! The performance is over!{/b}"
+            jump losebattle
+
     python:
         random.seed()
         MultihitCount = None
@@ -166,6 +177,9 @@ while (Turn == 0 or not BattleOver()):
                             lasttarget = GetTargets(mon, GetMoveRange(lastmove.Move), True)[min(len(GetTargets(mon, GetMoveRange(lastmove.Move), True)) - 1, lastmove.GetTargetSlots()[0])]
                         CurrentActions.append(Action(0, mon.GetStat(Stats.Speed), ActionTypes.Move, mon.GetTrainer(), mon, GetMove(lastmove.Move.Name), [lasttarget.GetTrainer()], [lasttarget], Turn))
 
+            if (dialogfunc != None):
+                dialogfunc("PreChoice")
+
         if (not mon.HasStatus("recharging") and not skipchoices):
             show screen battle
 
@@ -204,14 +218,25 @@ while (Turn == 0 or not BattleOver()):
                 python:
                     eb().Health = 0
                     BattleCheck()
+            elif (battleCommand == 'devfaint'):
+                python:
+                    fb().Health = 0
+                    BattleCheck()
             elif (battleCommand == 'tera'):
                 if (mon.IsTerad()):
                     $ mon.Terastallized = -1
                 else:
                     $ mon.Terastallized = Turn
                 jump ChooseStart
+            elif (battleCommand == 'tetra'):
+                python:
+                    calcs = CalculateTetraElement(mon)
+                    if (calcs != None):
+                        mon.HasAbility("Tetra Element")
+                        mon.ChangeForme(calcs)
+                jump ChooseStart
             elif (battleCommand == 'lib'):
-                if (mon.GetId() == 25):
+                if (mon.Id == 25):#when I used .GetId() here, it could re-trigger with the Mimikyu DVL. That's hilarious.
                     call dawnpikachudialog6 from _call_dawnpikachudialog6
                 else:
                     label newbanner:
@@ -260,6 +285,14 @@ while (Turn == 0 or not BattleOver()):
                         mon.ClearStatus("diveralized")
                     else:
                         mon.ApplyStatus("diveralized")
+                jump ChooseStart
+            elif (battleCommand == 'call'):
+                if (dialogfunc != None):
+                    $ dialogfunc("Call")
+                    if (AutoWin):
+                        jump endbattle
+                else:
+                    "Calling will have no effect."
                 jump ChooseStart
             elif (battleCommand == 'mega'):
                 python:
@@ -338,7 +371,8 @@ while (Turn == 0 or not BattleOver()):
                                             renpy.jump("ChooseStart")
                                         elif (not targetFoes[0].GetTrainer().GetIsPokemon()):
                                             renpy.say(None, "You can't catch an opponent's Pokémon! You don't even have a Snag Machine!")
-                                            dialogfunc("FailToCatch")
+                                            if (dialogfunc != None):
+                                                dialogfunc("FailToCatch")
                                             renpy.jump("ChooseStart")
                                         finalTarget = targetFoes
                                     else:
@@ -389,11 +423,17 @@ while (Turn == 0 or not BattleOver()):
                                 renpy.jump("ChooseStart")
                             newPokemon = mon.GetTrainer().GetTeam()[switchCommand]
                             if (newPokemon.GetHealth() == 0):
-                                renpy.say(None, "{} has fainted, and cannot fight!".format(newPokemon.GetNickname()))
+                                if (not HasEvent("Game", "ContestShowcase")):
+                                    renpy.say(None, "{} has fainted, and cannot fight!".format(newPokemon.GetNickname()))
+                                else:
+                                    renpy.say(None, "{} is embarrassed, and cannot perform!".format(newPokemon.GetNickname()))
                                 renpy.jump("Switching")
                             elif (newPokemon in Battlers()):
                                 renpy.show_screen("battleui")
-                                renpy.say(None, "{} is already in battle!".format(newPokemon.GetNickname()))
+                                if (not HasEvent("Game", "ContestShowcase")):
+                                    renpy.say(None, "{} is already in battle!".format(newPokemon.GetNickname()))
+                                else:
+                                    renpy.say(None, "{} is already performing!".format(newPokemon.GetNickname()))
                                 renpy.jump("Switching")
                             elif (newPokemon in SwappingInMon):
                                 renpy.show_screen("battleui")
@@ -464,34 +504,43 @@ while (Turn == 0 or not BattleOver()):
     label enemydecisions:
 
     python:
-        #FIX THIS: this is the opponent's logic. Beef this up.
+        SwitchAI.threattable = {}
         for mon in EnemyBattlers():
-            #THIS IS WHERE TETRA ELEMENT IS CALCULATED
-            if (mon.GetId() == pokedexlookupname("Eevee", DexMacros.Id) and mon.HasAbility("Tetra Element", False)):
-                calcs = CalculateTetraElement(mon)
-                if (calcs != None):
-                    mon.HasAbility("Tetra Element")
-                    renpy.say(None, "Energy is gathering around Blue's Eevee! It's changing form!")
-                    mon.ChangeForme(calcs)
-
-            validmoves = GetValidMoves(mon)
-
             skipenemychoices = False
             for status, move_names in movestatuses.items():
                 if mon.HasStatus(status):
+                    skipenemychoices = True
                     lastmove = GetLastMove(ActionLog, mon, lookformoves=move_names, returnaction=True)
                     if (lastmove != None):
-                        skipenemychoices = True
                         lasttarget = lastmove.GetTargets()[0]
                         if lasttarget not in Battlers():
                             lasttarget = GetTargets(mon, GetMoveRange(lastmove.Move), True)[min(len(GetTargets(mon, GetMoveRange(lastmove.Move), True)) - 1, lastmove.GetTargetSlots()[0])]
                         newmove = GetMove(lastmove.Move.Name)
                         if (lastmove.Move.Name in mon.GetMoveNames()):
                             newmove = lastmove.Move
-
                         CurrentActions.append(Action(0, mon.GetStat(Stats.Speed), ActionTypes.Move, mon.GetTrainer(), mon, newmove, [lasttarget.GetTrainer()], [lasttarget], Turn))
 
             if (not mon.HasStatus("recharging") and not skipenemychoices):
+                if switchaction := SwitchAI.ShouldSwitch(mon):
+                    CurrentActions.append(switchaction)
+                    continue
+
+                #THIS IS WHERE TETRA ELEMENT IS CALCULATED
+                if (mon.GetId() == pokedexlookupname("Eevee", DexMacros.Id) and mon.HasAbility("Tetra Element", False)):
+                    calcs = CalculateTetraElement(mon)
+                    if (calcs != None):
+                        mon.HasAbility("Tetra Element")
+                        renpy.say(None, "Energy is gathering around Blue's Eevee! It's changing form!")
+                        mon.ChangeForme(calcs)
+
+                elif (mon.GetId() in [51, 51.1, 961] and "Wugtrio Triveral" in mon.GetForeverals()):
+                    calcs = CalculateWugtrioTriveral(mon)
+                    if (calcs not in [None, mon.GetId()]):
+                        renpy.say(None, "Energy is gathering around Phobos' {}! It's changing form!".format(mon.GetNickname()))
+                        mon.ChangeForme(calcs)
+
+                validmoves = GetValidMoves(mon)
+
                 if (custombrain == None or custombrain(mon) == None):
                     besttarget = -1
                     if (mon.GetIntelligence() == 0 and not testbattle):
@@ -549,7 +598,6 @@ while (Turn == 0 or not BattleOver()):
                                     targets = [random.choice(targets)]
 
                         if (movechosen != None):
-
                             CurrentActions.append(Action(0, mon.GetStat(Stats.Speed), ActionTypes.Move, mon.GetTrainer(), mon, movechosen, GetTrainers(targets), targets, Turn))
 
 
@@ -660,10 +708,11 @@ while (Turn == 0 or not BattleOver()):
     label preCurrentActions:
 
     python:
-        currentAction = CurrentActions[currentactionindex]
-        actionsuccess = PerformAction(currentAction)
-        BattleCheck()
-        ActionLog.append(currentAction)
+        if (currentactionindex < len(CurrentActions)):
+            currentAction = CurrentActions[currentactionindex]
+            actionsuccess = PerformAction(currentAction)
+            BattleCheck()
+            ActionLog.append(currentAction)
 
     if (dungeon != None and actionsuccess and currentAction.GetUser().GetTrainerType() != TrainerType.Enemy):
         $ dungeon.DungeonPostTurn()
@@ -676,6 +725,11 @@ while (Turn == 0 or not BattleOver()):
         jump preCurrentActions
 
     python:
+        for mon in CaughtMons:
+            if (mon.GetCaught() > 0):
+                mon.AdjustHealth(mon.GetCaught(), absolute=True)
+                mon.ResetCaught()
+                
         CurrentActions = []
         DoEffects()
         BattleCheck()
@@ -686,7 +740,6 @@ while (Turn == 0 or not BattleOver()):
             dialogfunc("PostTurn")
         if (dungeon != None):
             dungeon.DungeonPostRound()
-
         
 label endbattle:
 
@@ -695,9 +748,15 @@ if (StopMusic):
 if (Fled):
     $ IsWinner = False
     $ wildcount = 0
-    "You got away safely!"
+    "Got away safely!"
 else:
-    $ IsWinner = PlayerWon()
+    python:
+        IsWinner = PlayerWon()
+
+        for mon in CaughtMons:
+            if (mon.GetCaught() > 0):
+                mon.AdjustHealth(mon.GetCaught(), absolute=True)
+                mon.ResetCaught()
 
     if (IsWinner):
         if (WildBattle):
@@ -708,11 +767,17 @@ else:
             "You win! Pikachu's Liberation Limit increased by one!"
         else:
             if (dungeon == None):
-                "You win!"
+                if (not HasEvent("Game", "ContestShowcase")):
+                    "You win!"
+                else:
+                    "Your Pokémon put on an incredible show! Time to clear the stage!"
             else:
                 "You quickly take the stairs to the next floor!"
     else:
-        "You lose!"
+        if (not HasEvent("Game", "ContestShowcase")):
+            "You lose!"
+        else:
+            "Your Pokémon are exhausted. Time to end the performance early."
         $ wildcount = 0
 
         if (WildBattle and not isgame):
@@ -767,9 +832,7 @@ else:
                                     explist += mon.GainExperience(bonusexperience, True)
                                 if (len(explist) > 0):
                                     renpy.say(None, " ".join(explist))
-                                
 
-                
                 else:
                     "You think you and your Pokémon have learned everything you can from this level of battle..."
 
@@ -838,6 +901,11 @@ python:
             renpy.block_rollback()
         renpy.suspend_rollback(False)
         _rollback = True
+
+    alltags = renpy.get_showing_tags("master", sort=True) 
+    if (alltags != None):
+        for tag in reversed(alltags):
+            renpy.change_zorder("master", tag, zorder=0)
 
 return IsWinner 
 
@@ -953,10 +1021,25 @@ init python:
             if (othermon.HasStatus("octolocked") and othermon.GetStatusCount("octolocked") not in Battlers()):
                 othermon.ClearStatus("octolocked")
 
+        if (mon.HasStatus("demotivated")):
+            if ("Phobos2" in battlehistory):
+                returnmessage += "{} isn't having fun at all. ".format(mon.GetNickname())
+                returnmessage += mon.ChangeStats(Stats.Defense, -1, mon)
+                returnmessage += mon.ChangeStats(Stats.SpecialDefense, -1, mon)
+            else:
+                returnmessage += "{} isn't having fun any more. ".format(mon.GetNickname())
+            returnmessage += mon.ChangeStats(Stats.Attack, -1, mon)
+            returnmessage += mon.ChangeStats(Stats.SpecialAttack, -1, mon)
+            returnmessage += mon.ChangeStats(Stats.Speed, -1, mon)
+
         if (returntext):
-            return FormatText(returnmessage)
+            if (returnmessage):
+                return FormatText(returnmessage)
+            else:
+                return ""
         elif (returnmessage != ""):
             renpy.say(None, FormatText(returnmessage))
+
         mon.PlayCry()
 
     def AdjustPokemon(mon):
@@ -988,18 +1071,18 @@ init python:
             for i, mon in enumerate(newstarters):
                 replacements = [newmon for newmon in trainer.GetUnfaintedTeam() if newmon not in EnemyBattlers()]
                 if (mon.GetHealth() <= 0 and len(replacements) > 0):
-                    newmon = None
-                    if (CustomSwitchBrain != None):
-                        newmon = CustomSwitchBrain(trainer)
-                    if (newmon == None):
-                        newmon = random.choice(replacements)
-                    trainer.ShiftTeam(i, trainer.GetTeam().index(newmon), True)
+                    newmon = SwitchAI.MidTurnSwitch(mon)
+                    trainer.ShiftTeam(i, trainer.GetTeam().index(newmon), True, preserveStatus=preserveAllStats)
                     if (len(trainer.GetUnfaintedTeam()) >= trainer.GetNumber()):
                         mon.Untransform()
-                        renpy.say(None, "{} switched out, and {} switched in!".format(mon.GetNickname(), newmon.GetNickname()))
+                        if (not (HasEvent("Lawrence", "LiberationBattle2") and mon.HasStatus("recruited"))):
+                            renpy.say(None, "{} switched out, and {} switched in!".format(mon.GetNickname(), newmon.GetNickname()))
+                        else:
+                            renpy.say(None, "{} fled the battlefield, and {} switched in!".format(mon.GetNickname(), newmon.GetNickname()))
+                            trainer.GetTeam().remove(mon)
                         if (dialogfunc != None):
                             dialogfunc("EnemySwitch")
-                        SwitchInEffects(newmon)        
+                        SwitchInEffects(newmon)                            
 
     def PerformAction(action):
         global Fled
@@ -1136,6 +1219,7 @@ init python:
             mistyterrainpenalty = 0.5 if element == "Dragon" and BattlefieldExists("Misty Terrain") and IsGrounded(target) else 1.0
             electricterrainbonus = 1.3 if element == "Electric" and BattlefieldExists("Electric Terrain") and IsGrounded(user) else 1.0
             grassyterrainbonus = 1.3 if element == "Grass" and BattlefieldExists("Grassy Terrain") and IsGrounded(user) else 1.0
+            psychicterrainbonus = 1.3 if element == "Psychic" and BattlefieldExists("Psychic Terrain") and IsGrounded(user) else 1.0
             grassyterrainpenalty = 0.5 if move.Name in ["Magnitude", "Earthquake", "Bulldoze"] and BattlefieldExists("Grassy Terrain") and IsGrounded(target) else 1.0
             chargedbonus = 2.0 if element == "Electric" and user.HasStatus("charged") else 1.0
             steelworkerbonus = 1.5 if element == "Steel" and user.HasAbility("Steelworker") else 1.0
@@ -1167,6 +1251,7 @@ init python:
             sunpenalty = 0.5 if WeatherIs("sunny") and element == "Water" else 1.0
             rainbonus = 1.5 if WeatherIs("rainy") and element == "Water" else 1.0
             rainpenalty = 0.5 if WeatherIs("rainy") and element == "Fire" else 1.0
+            bunnybattlepenalty = 0.33 if WeatherIs("Bunny Battle!") else 1.0
             toughclawsbonus = 1.3 if contact and user.HasAbility("Tough Claws") else 1.0
             atebonus = 1.2 if atebonus and user.HasAbility("Pixilate") else 1.0
             analyticbonus = 1.3 if analyticbonus and user.HasAbility("Analytic") else 1.0
@@ -1196,7 +1281,7 @@ init python:
                 * sheerforcebonus * sandforcebonus * analyticbonus * toughclawsbonus
                 * punkrockbonus * technicianbonus * strongjawbonus * sharpnessbonus
                 * dryskinbonus * helpinghandbonus * chargedbonus
-                * mistyterrainpenalty * electricterrainbonus * grassyterrainbonus
+                * mistyterrainpenalty * electricterrainbonus * grassyterrainbonus * psychicterrainbonus
                 * watersportpenalty * mudsportpenalty 
                 * supremeoverlordbonus * waterbubblebonus * powerspotbonus * batterybonus
                 * steelyspiritbonus)
@@ -1211,7 +1296,7 @@ init python:
 
             basedamage = math.floor(math.floor(math.floor(2.0 * user.GetLevel() / 5.0 + 2) * basepower * atkStatVal / defStatVal) / 50.0) + 2
             basedamage = PokeRound(basedamage * parentalbondpenalty)
-            basedamage = PokeRound(basedamage * sunbonus * sunpenalty * rainbonus * rainpenalty)
+            basedamage = PokeRound(basedamage * sunbonus * sunpenalty * rainbonus * rainpenalty * bunnybattlepenalty)
             basedamage = PokeRound(basedamage * critbonus)
             basedamage = math.floor(basedamage * randomvariation)
             basedamage = PokeRound(basedamage * stabbonus)
@@ -1267,10 +1352,16 @@ init python:
             partyleads += trainer.GetTeam()[:battletype]
 
         for mon in partyleads:
-            if (mon.GetHealth() == 0 and not mon in FaintedMons):
+            if (mon.GetHealth() == 0 and mon not in (FaintedMons + CaughtMons)):
                 prefixexpgain = ""
                 if (mon.GetCaught() > 0):
                     renpy.say(None, "{} was caught!".format(mon.GetNickname()))
+                    CaughtMons.append(mon)
+                    Trainers.remove(mon.GetTrainer())
+                    for trainer in Trainers:
+                        if (trainer.Name == 'red'):
+                            mon.Owner = trainer
+                            break
                     if (mon != GetTrainerTeam("Brendan", "Sandshrew", False)):
                         renpy.transition(dissolve)
                         renpy.show_screen("mondata", mon)
@@ -1281,44 +1372,49 @@ init python:
                     mon.PlayCry()
                     if (mon in playerparty):
                         pokemonfainted = True
-                    prefixexpgain = f"{mon.GetNickname()} fainted!"
-                    if (mon.HasStatus('.keystone')):
-                        for othermon in mon.GetTrainer().GetTeam():
-                            othermon.Health = 0
-                    if (not GainExp):
-                        renpy.say(None, prefixexpgain)
-                    if (dungeon != None):
-                        dungeon.ChangeBad(3)
-                        if (dungeon.GetLootList() != None and len(dungeon.GetLootList()) != 0):
-                            item = WeightedRandomChoice(dungeon.GetLootList(False))
-                            itemname = GetItemName(item)
-                            preposition = ("an" if itemname[0].lower() in ["a", "e", "i", "o", "u"] else "a")
-                            dungeon.RecordItemGet(item)
-                            GetItem(item, count = 1, text = None, audio = False, hidefanfare=True)
-                            prefixexpgain += f" It dropped {preposition} {itemname}!"
-                    mon.GetTrainer().IncreaseFaintedPokemonCount()
-                    mon.ChangeForme(None, revert=True)
-                    mon.ClearStatus("", all=True)
-                    mon.FaintedOnTurn = Turn
-                    for allymon in GetBattlers(mon):
-                        if (allymon.HasAbility("Power of Alchemy")):
-                            allymon.ApplyStatus("alchemized", mon.GetAbility())
-                FaintedMons.append(mon)
-                mon.Untransform()
-                if (GainExp):
-                    if (mon.GetTrainerType() == TrainerType.Enemy):#if opponent faints...
-                        splitmons = []
-                        for othermon in PlayerPokemon():
-                            if (othermon.HasItem(Item.ExperienceShare) and othermon not in PlayerBattlers() and othermon.GetHealthPercentage() > 0):
-                                splitmons.append(othermon)
-                        
-                        exptext = []
-                        for playermon in PlayerBattlers() + splitmons:#give experience to all playerbattlers
-                            exptext += playermon.GainExperience(mon.CalculateGivingExperience(playermon) / (len(splitmons) + 1) * (playermon.GetTrainer().GetNumber() if playermon.HasItem(Item.ExperienceShare) else 1.0), prefix=([prefixexpgain] if prefixexpgain != "" else None))
-                            prefixexpgain = ""
-                        PrintExp(exptext)
+                    if (not (HasEvent("Lawrence", "LiberationBattle2") and mon.GetTrainerType() == TrainerType.Enemy)):
+                        if (not HasEvent("Game", "ContestShowcase")):
+                            prefixexpgain = f"{mon.GetNickname()} fainted!"
+                        else:
+                            prefixexpgain = f"{mon.GetNickname()} lost the beat!"
+                        if (mon.HasStatus('.keystone')):
+                            for othermon in mon.GetTrainer().GetTeam():
+                                othermon.Health = 0
+                        if (not GainExp):
+                            renpy.say(None, prefixexpgain)
+                        if (dungeon != None):
+                            dungeon.ChangeBad(3)
+                            if (dungeon.GetLootList() != None and len(dungeon.GetLootList()) != 0):
+                                item = WeightedRandomChoice(dungeon.GetLootList(False))
+                                itemname = GetItemName(item)
+                                preposition = ("an" if itemname[0].lower() in ["a", "e", "i", "o", "u"] else "a")
+                                dungeon.RecordItemGet(item)
+                                GetItem(item, count = 1, text = None, audio = False, hidefanfare=True)
+                                prefixexpgain += f" It dropped {preposition} {itemname}!"
+                        mon.GetTrainer().IncreaseFaintedPokemonCount()
+                        mon.ChangeForme(None, revert=True)
+                        mon.ClearStatus("", all=True)
+                        mon.FaintedOnTurn = Turn
+                        for allymon in GetBattlers(mon):
+                            if (allymon.HasAbility("Power of Alchemy")):
+                                allymon.ApplyStatus("alchemized", mon.GetAbility())
+                        FaintedMons.append(mon)
+                        mon.Untransform()
+                        if (GainExp):
+                            if (mon.GetTrainerType() == TrainerType.Enemy):#if opponent faints...
+                                splitmons = []
+                                for othermon in PlayerPokemon():
+                                    if (othermon.HasItem(Item.ExperienceShare) and othermon not in PlayerBattlers() and othermon.GetHealthPercentage() > 0):
+                                        splitmons.append(othermon)
+                                
+                                exptext = []
+                                for playermon in PlayerBattlers() + splitmons:#give experience to all playerbattlers
+                                    exptext += playermon.GainExperience(mon.CalculateGivingExperience(playermon) / (len(splitmons) + 1) * (playermon.GetTrainer().GetNumber() if playermon.HasItem(Item.ExperienceShare) else 1.0), prefix=([prefixexpgain] if prefixexpgain != "" else None))
+                                    prefixexpgain = ""
+                                PrintExp(exptext)
                 
-                AdjustPokemon(mon)
+                if (mon not in CaughtMons):
+                    AdjustPokemon(mon)
 
         hasOne = False
         for mon in FriendlyPokemon():
@@ -1340,6 +1436,9 @@ init python:
                 newpokemon = dungeon.AddNewDungeonPokemon()
                 newtext = SwitchInEffects(newpokemon, True, False, True)
                 renpy.say(None, "A wild {} appeared out of the Mysteriosity! {}".format(newpokemon.GetNickname(), newtext))
+            elif (HasEvent("Lawrence", "LiberationBattle2") and not HasEvent("Grusha", "IronJugulisCalled")):
+                EnemyPokemon()[0].Heal()
+                renpy.say(None, "ETERNITY PHOBOS used MAX REVIVE(s)!")
             else:
                 return True
         
@@ -1357,7 +1456,7 @@ init python:
 
     def ApplyWeather(weather, countdown, user=None):
         global CurrentWeather
-        if (CurrentWeather != None and WeatherIs(weather) or AbilityOnField("Cloud Nine")):
+        if (CurrentWeather != None and WeatherIs(weather) or AbilityOnField("Cloud Nine") or WeatherIs("Bunny Battle!")):
             return "But it failed!"
         else:
             CurrentWeather = (weather, countdown if user == None else RunItemFunction("settingWeatherTerrain", user, [weather, countdown]))
@@ -1428,7 +1527,8 @@ init python:
             "taunted", "encored", "enduring", "deathless", "protected", "mind read", "locked on", ".lockingon", ".mindreading", ".baneful", ".enshrouded", 
             ".splintering", ".spiky", ".silked", "pranking", "disabled", "firespun", "whirlpooled", "uproaring", "drowsy", "entombed", "dug in", "airborne", 
             "ethereal", "electrified", "ionized", "embargoed", "laser focused", "levitating", "roosted", "perishing", "petal dancing", "coated in magic", 
-            "clamped", "infested", "diving", "diveralized", "grudging", ".obstructing", "unhealthy", "recharging", "quashed"]            
+            "clamped", "infested", "diving", "diveralized", "grudging", ".obstructing", "unhealthy", "recharging", "quashed", 
+            "charging light", "hardening light", "hardheaded", "cloaked in light", "whipping up winds"]#charge-up moves
         
         pickuped = False
         harvested = False
@@ -1515,6 +1615,10 @@ init python:
                 del GetFieldEffects(user)["future sight"]
                 newaction = Action(0, moveuser.GetStat(Stats.Speed, triggerAbilities=False), ActionTypes.Move, moveuser.GetTrainer(), moveuser, GetMove("Future Sight"), [user.GetTrainer()], [user], Turn)
                 DoMove(newaction, moveuser, GetMove("Future Sight"), [user], alreadypretext="The vision came true!")
+
+            RunItemFunction("preEndOfTurn", user, [])
+
+            returnable += ItemText
 
             if (user.GetTurnSwitchedIn() != Turn or JustSwitchedIn(ActionLog, user)):
                 if (user.HasStatus("burned")):

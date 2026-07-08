@@ -241,14 +241,10 @@ calem @talkingmouth "Not that this conversation isn't illuminating, but we were 
 
 red @surprised "Oh! Right! Yes, of course."
 
-show may at dissolveaway:
-    xpos 2.0/7.0
-show leaf at dissolveaway:
-    xpos 4.0/7.0
-show serena at dissolveaway:
-    xpos 5.0/7.0
-show calem at dissolveaway:
-    xpos 6.0/7.0
+hide may with dis
+hide leaf with dis
+hide serena with dis
+hide calem with dis
 
 pause 2.0
 
@@ -535,13 +531,7 @@ menu:
         
         extend happy " {i}hopefully.{/i}"
         
-        show calem:
-            parallel:
-                ypos 1.0
-                ease 1.0 ypos 3.0
-            parallel:
-                alpha 1.0
-                ease 0.4 alpha 0.0
+        hide calem with fadeoutbottom
     
     ">Give Brendan a call" if persondex["Brendan"]["Contact"]:
         show brendan uniform behind phone_A:
@@ -575,13 +565,7 @@ menu:
         
         brendan happy "{i}Okay, no prob. Gimme a call back when you figure it out!{/i}"
             
-        show brendan:
-            parallel:
-                ypos 1.0
-                ease 1.0 ypos 3.0
-            parallel:
-                alpha 1.0
-                ease 0.4 alpha 0.0
+        hide brendan with fadeoutbottom
 
     ">Give May a call" if persondex["May"]["Contact"]:
         show may uniform behind phone_A:
@@ -615,13 +599,7 @@ menu:
         
         may happy "{i}Ok-ay! I'll let Brendan know, in the meantime.{/i}"
             
-        show may:
-            parallel:
-                ypos 1.0
-                ease 1.0 ypos 3.0
-            parallel:
-                alpha 1.0
-                ease 0.4 alpha 0.0
+        hide may with fadeoutbottom
     
     ">Give Serena a call" if persondex["Serena"]["Contact"]:
         show serena uniform behind phone_A:
@@ -655,13 +633,7 @@ menu:
         
         serena happy "{i}Very well! I'll inform Calem, and keep him updated, then.{/i}"
             
-        show serena:
-            parallel:
-                ypos 1.0
-                ease 1.0 ypos 3.0
-            parallel:
-                alpha 1.0
-                ease 0.4 alpha 0.0
+        hide serena with fadeoutbottom
     
     ">Give Leaf a call" if persondex["Leaf"]["Contact"]:
         $ calledleaf = True
@@ -703,7 +675,7 @@ menu:
         
         leaf @sarcastic "{i}You better. $1,500 is riding on this!{/i}"
             
-        hide leaf with dis
+        hide leaf with fadeoutbottom
 
         pause 2.0
 
@@ -722,16 +694,9 @@ redmind @angry "Of course, the {i}one{/i} time I need somebody around, the place
 
 pause 1.5
 
-show erikaintro:
-    alpha 0.0 zoom 1.0
-    parallel:
-        ease 1.0 alpha 1.0
-    parallel:
-        ease 5.0 zoom 1.05
-show erikaCG awake:
-    alpha 0.0 zoom 1.0
+show erikaintro with Dissolve(1.0):
     ease 5.0 zoom 1.05
-        
+    
 $ renpy.pause(2.0, hard=True)
 
 redmind @confusedeyebrows frownmouth "Hm, looks like somebody had the right idea finding a quiet place to nap.{w=0.5} But in the middle of a school day?"
@@ -739,9 +704,7 @@ redmind @thinking "I'd ask her for some directions, but I really don't want to w
 redmind "Then again, I don't see or hear anyone else around..."
 
 show erikaintro:
-    alpha 1.0 zoom 1.05
-show erikaCG awake:
-    alpha 0.0 zoom 1.05
+    zoom 1.05
 
 redmind @thinking "I suppose I could just wake her up and ask her, but I wonder if she'll be mad at me for disturbing her beauty sleep..."
 
@@ -776,11 +739,12 @@ menu:
         
 pause 1.0
         
-show erikaCG awake with dis
+show erikaCG awake with dis:
+    zoom 1.05
 
 $ renpy.pause(1.5, hard=True)
 
-erika uniform "[ellipses]"
+erika -closedbrow uniform "[ellipses]"
 
 red @happy "Hi!"
 
@@ -821,55 +785,31 @@ red @surprised "Waugh!"
 hide erikaintro
 hide erikaCG
     
-erika sad @sadbrow surprised2mouth "Please, stay away! I promise I have nothing worth stealing!{w=0.5} D-don't hurt me! It's too public here!"
+erika sad @sadbrow surprised2mouth "Please, stay away! I promise I have nothing worth stealing! D-don't hurt me! It's too public here!"
 
 red @surprised "Ee-!{w=0.25} Wait, I wasn't trying to...{w=0.25} Let me expl--"
 
-$ PlaySound("Slap.ogg")
-pause 0.1
+erika @talking2mouth "Turtwig, defend me!"
 
-show erika angry:
-    xpos 620 ypos 1.0 zoom 1.3565 rotate 0
-    ease 0.1 xpos 520 ypos 1.2 zoom 1.44 rotate -3
-
-show garden at garden_move1
-
-pause 0.25
-
-$ ValueChange("Erika", -1, 620/1920)
-
-red @closedeyes surprisedmouth "Ow, my pride."
-
-show erika:
-    xpos 520 ypos 1.2 zoom 1.44 rotate -3
-    ease 0.2 xpos 360 ypos 1.1 zoom 1.3565 rotate 0
-
-show garden at garden_move2
-
-erika sad @surprisedmouth "S-stay back! There's a professor right around the corner! And I have Pokémon!"
-
-show garden:
-    xpos 960 zoom 0.84781 rotate 0
-
-redmind @frownmouth "I very much doubt both of those claims."
-
-show garden:
-    zoom 0.84781
-    ease 0.5 zoom 0.625
-
-show erika angry:
-    xpos 360 ypos 1.1 zoom 1.3565 rotate 0
-    ease 0.5 zoom 1.0 xpos 500 ypos 1.0
-    
-red @closedeyes talking2mouth "Look, slow down. I'm not attacking you, or robbing you, or anything."
-red @sad "I was just trying to ask you something. I'm a good guy, really."
+python: 
+    trainer1 = MakeRed()
+    trainer2 = MakeTrainer("Erika")
 
 show garden:
     zoom 0.625 xalign 0.5
 
-show erika:
-    xpos 500 zoom 1.0
-    ease 0.5 xpos 940
+call Battle([trainer1, trainer2], customexpressions=["red surprisedbrow frownmouth", "red wince frownmouth", "erika surprisedbrow surprised2mouth", "erika angrybrow frownmouth"], uniforms=[True, True]) from _call_Battle_185
+$ RecordBattle("Erika0")
+
+show erika sadbrow frownmouth uniform with dis
+
+erika @surprisedmouth "S-stay back! There's a professor right around the corner! And I have--I have {i}more{/i} Pokémon! Turtwig was merely my Kobukan starter, I--"
+
+show erika angry:
+    xpos 0.5
+    
+red @closedeyes talking2mouth "Look, slow down. I'm not trying to rob you."
+red @sad "I was just trying to ask you something. I'm a good guy, really."
     
 erika @angry "'Self-evident is goodness in the heart of the man who speaks not of his own.'"
 
@@ -909,16 +849,22 @@ red @happy "Hey, don't worry about it. It was my bad, too."
 show erika at getcloser:
     xpos 940
 
-erika -sad @talkingmouth "How is your eye? Are you injured? I know a little first aid..."
+erika -sad @talkingmouth "How is your [playerparty[0].GetSpeciesName()]? Is it injured? I know a little first aid..."
 
-red @happy "Ah, don't worry about it. I've taken worse before."
+if (WonBattle("Erika0")):
+    red @happy "Ah, don't worry about it. It's just a battle between two trainers. Pokémon won't get injured from something like {i}that{/i}."
+    red @sadbrow talkingmouth "Still, you should probably bring your Pokémon to the healing machine before lunch ends."
+
+else:
+    red @happy "You gave us a pretty serious beating, but it's just a Pokémon battle between two trainers. Pokémon won't get injured from something like {i}that{/i}."
+    red @talkingmouth "I'll just bring my Pokémon to the healing machine before lunch ends."
 
 show erika at getfurther:
     xpos 940
 
-erika @surprised "Truly? You must be quite the street tough."
+erika @surprised "Oh my. You speak with such confidence--you must be quite learned in the ways of battle?"
 
-redmind @thinking "It's more like you have the wrist strength of a Wynaut, but sure."
+redmind @thinking "To the detriment of everything else, yeah."
 
 red @talkingmouth "Anyway, sorry about waking you up, again. I was actually just trying to figure out where in the garden I am."
 
@@ -1083,18 +1029,19 @@ hide leaf
 hide serena
 hide may
 
-show brendan uniform at dissolvein behind blank2:
+show brendan uniform behind blank2:
     xpos 1.0/7.0 xzoom -1
-show ethan uniform at dissolvein behind blank2:
+show ethan uniform behind blank2:
     xpos 2.0/7.0
-show calem uniform at dissolvein behind blank2:
+show calem uniform behind blank2:
     xpos 3.0/7.0
-show may uniform at dissolvein behind blank2:
+show may uniform behind blank2:
     xpos 4.0/7.0
-show leaf uniform at dissolvein behind blank2:
+show leaf uniform behind blank2:
     xpos 5.0/7.0
-show serena uniform at dissolvein behind blank2:
+show serena uniform behind blank2:
     xpos 6.0/7.0 xzoom -1
+with dis
 
 $ renpy.music.play("Audio/Morning_ambience.ogg", channel='crowd', loop=True, fadein=1.0)
 
@@ -1177,7 +1124,7 @@ ethan @talkingmouth "Twelve, actually."
 
 leaf @sarcastic "You can remember that, but can't remember a name."
 
-ethan @closedbrow talking2mouth "What's this about a national tournament, though?"
+ethan @closedbrow talking2mouth "What's this about a National Tournament, though?"
 
 leaf @sarcastic "Uh... It's, like, only the most important event any student Trainer looks forward to.{w=0.5} Or at least any Trainer worth their salt."
 

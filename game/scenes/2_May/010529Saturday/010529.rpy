@@ -300,12 +300,12 @@ if (GetRelationshipRank("Klara") > 0):
     narrator "For your close relationship with Klara... your [contestcolor]Coordinating Knowledge{/color} went up by [coordinatorpointsup] points!"
 
 if (HasEvent("Instructor Wallace", 2) > 0):
-    $ coordinatorpointsup = classstats["Water"]
+    $ coordinatorpointsup = GetElective("Water")
     $ coordinatingknowledge += coordinatorpointsup
     narrator "For your experience in Instructor Wallace's class... your [contestcolor]Coordinating Knowledge{/color} went up by [coordinatorpointsup] points!"
 
 if (HasEvent("Instructrice Fantina", 2) > 0):
-    $ coordinatorpointsup = classstats["Ghost"]
+    $ coordinatorpointsup = GetElective("Ghost")
     $ coordinatingknowledge += coordinatorpointsup
     narrator "For your experience in Instructrice Fantina's class... your [contestcolor]Coordinating Knowledge{/color} went up by [coordinatorpointsup] points!"
 
@@ -500,7 +500,7 @@ if (GetRelationshipRank("Jasmine") > 0):
 if (GetRelationshipRank("Brendan") > 0):
     red @talkingmouth "Brendan, can you tell me more about the Millennium Drop? You're probably the person I know who knows the most about contests."
 
-    $ ValueChange("Jasmine", 1, 0.66)
+    $ ValueChange("Brendan", 1, 0.66)
 
 else:
     red @talkingmouth "You guys are in the Coordinator Club, right? I was hoping you could tell me more about the Millennium Drop."

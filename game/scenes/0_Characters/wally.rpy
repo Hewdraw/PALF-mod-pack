@@ -1093,7 +1093,7 @@ label Wally1Part2:
     sidemon "Whismur..."
 
     zinnia -sad2brow -poutmouth @surprised "Oh! Of course, what am I thinking? It's time for your dessert!"
-    zinnia @closedbrow talking2mouth "Such a spoiled girl you are, Aster... So what would like, hmm, sweetie?"
+    zinnia @closedbrow talking2mouth "Such a spoiled girl you are, Aster... So what would you like, hmm, sweetie?"
 
     pause 1.0
 

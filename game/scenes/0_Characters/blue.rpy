@@ -99,7 +99,7 @@ blue @angry "Don't you {i}dare{/i} say we're equal. I {i}train{/i} harder. I {i}
 
 red @closedbrow talking2mouth "...Sigh. That's not true, [blue_name], but whatever."
 
-if (IsBefore(30, 4, 2004)):
+if (IsBefore(1, 5, 2004)):
     blue @angry "And that's another thing! That goddamn nickname! My name is {b}Blue{/b}! {b}Blue Oak{/b}! Emphasis on the Blue, de-emphasize the Oak!"
 
     blue @angry "You ruined any possibility I had of having friends in Pallet Town, with everyone calling me [blue_name] all the time! Because {i}of course{/i}, they would 'follow the leader,' and just copy whatever you were doing!"
@@ -206,7 +206,7 @@ if (IsBefore(1, 5, 2004)):
 
     pause 1.0
 
-    blue @closedbrow talkingmouth "Whatever. If you're too slow to figure it out, I'm not going to explain it for you."
+    blue @closedbrow talkingmouth "If you're too slow to figure it out, I'm not going to explain it for you."
 
 else:
     red @talkingmouth "Yes. Blue, Frienergy aside, we {i}were{/i} friends. Always."

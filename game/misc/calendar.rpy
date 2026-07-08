@@ -144,6 +144,9 @@ label calendar(direction):
     stop music fadeout 1.5
 
     python:
+        showscrimblo = False#rosa will hide her scrimblo unless specifically reactivated
+        skipnightscenes = False
+        skiptextingscenes = False
         #if you've seen the iono recruitment scene at least one day ago, unlock Iono's Scene 1
         if (not HasEvent("Iono", "SkippedClass") and HasEvent("Cheren", "Cheren2Part2") and GetEventDateTime("Cheren", "Cheren2Part2") != calDate and getRWDay(1) not in ["Saturday", "Sunday"]):
             AddEvent("Iono", "SkippedClass")
@@ -236,13 +239,14 @@ label calendar(direction):
     if (len(potsblooming) > 0):
         python:
             berry_map = {
-                Item.OranPot: Item.OranBerry,
-                Item.RawstPot: Item.RawstBerry,
-                Item.PechaPot: Item.PechaBerry,
-                Item.AspearPot: Item.AspearBerry,
-                Item.CheriPot: Item.CheriBerry,
-                Item.SitrusPot: Item.SitrusBerry,
-                Item.LumPot: Item.LumBerry
+                Item.OranPot: "Oran Berry",
+                Item.RawstPot: "Rawst Berry",
+                Item.PechaPot: "Pecha Berry",
+                Item.AspearPot: "Aspear Berry",
+                Item.CheriPot: "Cheri Berry",
+                Item.ChestoPot: "Chesto Berry",
+                Item.SitrusPot: "Sitrus Berry",
+                Item.LumPot: "Lum Berry",
             }
             for pot in potsblooming:
                 GetItem(berry_map[pot], 1, hidefanfare=True)

@@ -127,7 +127,7 @@ label psychic_class_08:
     will @surprised "Until quite recently, it was thought to be mythical. And much about it is mysterious to this day."
     will @talking2mouth "As the stories would have it, Phione can... swap the very {i}hearts{/i} of other Pokémon. That is--place the soul of one into the other's body."
     will @happy "By now, however, such tales have been firmly debunked. Phione can learn no such move."
-    morty @pensivebrow pensiveeyes pensivemouth "Hmm."
+    morty @pensiveeyebrows pensiveeyes pensivemouth "Hmm."
     narrator "Will returns his focus to moves that {i}do{/i} exist..."
     return
 
@@ -510,6 +510,7 @@ label psychic_class_29:
     hexmaniac @happy "(I was right... I was right all along... Take that, Mom! I really AM special!!)"
     will happy "Well, I hope you've all been inspired by your classmate's performance! You see? Psychic power is within all of your reach!"
     narrator "Will seems elated to have a new protégé..."
+    hide hexmaniac with dis
     return
 
 label psychic_class_30:
@@ -612,6 +613,7 @@ label psychic_class_33:
     will @sad "Which is forbidden in competitive battles, naturally."
     will happy "But not in the classroom!"
     narrator "Will claims Espathra need plenty of exercise, and that he'll be keeping his out of its Poké Ball..."
+    $ HidePokemon()
     return
 
 label psychic_class_34:

@@ -68,7 +68,7 @@ python:
     trainer2.GetTeam()[0].ChangeStats(Stats.Speed, 2)
 
 call Battle([trainer1, trainer2], gainexp=False, healParty=False, clearstats=False, uniforms=[True, False], lockbag=True) from _call_Battle_144
-$ battlehistory["Kris1"] = _return
+$ RecordBattle("Kris1")
 
 $ renpy.transition(dissolve)
 show screen currentdate

@@ -1,6 +1,7 @@
 label newtable(tabletype):
 
 python:
+    lunchcharacters = []
     randnum = Random()
     chars = list(set(GetTables()[tabletype]).intersection(GetStudents()))
     studychars = list(set(chars).intersection(WillStudy()))
@@ -20,6 +21,7 @@ if (tabletype == "Melody's Table"):
 
 menu:
     ">Sit at the table" if tabletype == "Melody's Table":
+        $ lunchcharacter = ["Melody"]
         if (not HasEvent("Melody", "SatAtTable1")):
             $ melody_name = first_name
             $ AddEvent("Melody", "SatAtTable1")
@@ -95,6 +97,7 @@ menu:
         hide melody with dis
 
     "{b}>Study the Psychic-type{/b}" if tabletype == "Remedial Table":
+        $ lunchcharacter = chars
         rosa @angrybrow happymouth "We've got this, guys! Instructor Will will be so impressed when he comes back!"
 
         bianca @happy "I've got snacks, so we can keep our energy up while studying!"
@@ -128,6 +131,7 @@ menu:
         narrator "Bonds increased!"
 
     ">Study with Cheren" if "Cheren" in chars:
+        $ lunchcharacter = ["Cheren"]
         if ("Cheren" not in studychars):
             narrator "Cheren does not seem willing to study with you right now."
 
@@ -151,6 +155,7 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Silver" if "Silver" in chars:
+        $ lunchcharacter = ["Silver"]
         if ("Silver" not in studychars):
             narrator "Silver does not seem willing to study with you right now."
 
@@ -175,6 +180,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Gardenia" if "Gardenia" in chars:
+        $ lunchcharacter = ["Gardenia"]
+        
         if ("Gardenia" not in studychars):
             narrator "Gardenia does not seem willing to study with you right now."
 
@@ -199,6 +206,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Skyla" if "Skyla" in chars:
+        $ lunchcharacter = ["Skyla"]
+        
         if ("Skyla" not in studychars):
             narrator "Skyla does not seem willing to study with you right now."
 
@@ -226,6 +235,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Iono" if "Iono" in chars:
+        $ lunchcharacter = ["Iono"]
+        
         if ("Iono" not in studychars):
             narrator "Iono does not seem willing to study with you right now."
 
@@ -249,6 +260,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Leaf" if "Leaf" in chars:
+        $ lunchcharacter = ["Leaf"]
+        
         if ("Leaf" not in studychars):
             narrator "Leaf does not seem willing to study with you right now."
 
@@ -277,6 +290,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
     
     ">Study with Blue" if "Blue" in chars:
+        $ lunchcharacter = ["Blue"]
+        
         if ("Blue" not in studychars):
             narrator "Blue does not seem willing to study with you right now."
 
@@ -299,6 +314,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
     
     ">Talk with Yellow about [yellowcharacter]" if "Yellow" in chars:
+        $ lunchcharacter = ["Yellow"]
+        
         python:
             yellowcharacterpronoun = "he" if persondex[yellowcharacter]["Sex"] == Genders.Male else "she"
             yellowcharacterpronoun2 = "him" if persondex[yellowcharacter]["Sex"] == Genders.Male else "her"
@@ -316,13 +333,15 @@ menu:
         show yellow happy with dis
 
         if (yellowcharacter != "Cheren"):
-            narrator "You learn some new information about [yellowcharacter]. You feel like you understand [yellowcharacterpronoun2] better now."
+            narrator "You learn something new about [yellowcharacter]. You feel like you understand [yellowcharacterpronoun2] better now."
         else:
             narrator "Everything Yellow tells you about Cheren just contradicts what you thought you knew about him..."
 
         $ ValueChange(yellowcharacter, 7, -0.5, changemood=False)
 
     ">Study with Ethan" if "Ethan" in chars:
+        $ lunchcharacter = ["Ethan"]
+        
         ethan @confusedeyebrows talking2mouth "Hm? Dude, you know that I, like, can't really teach you anything you don't already know, right? We take the exact same classes."
         red @happy "Hey, I just wanted to hang out."
         ethan @closedbrow talkingmouth "Ah, you're too nice, you know that?"
@@ -351,8 +370,9 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
 
-
     ">Study with Rosa" if "Rosa" in chars:
+        $ lunchcharacter = ["Rosa"]
+        
         if ("Rosa" not in studychars):
             narrator "Rosa does not seem willing to study with you right now."
 
@@ -378,6 +398,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Nessa" if "Nessa" in chars:
+        $ lunchcharacter = ["Nessa"]
+        
         if ("Nessa" not in studychars):
             narrator "Nessa does not seem willing to study with you right now."
 
@@ -403,6 +425,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Raihan" if "Raihan" in chars:
+        $ lunchcharacter = ["Raihan"]
+        
         if ("Raihan" not in studychars):
             narrator "Raihan does not seem willing to study with you right now."
 
@@ -430,6 +454,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Sonia" if "Sonia" in chars:
+        $ lunchcharacter = ["Sonia"]
+        
         if ("Sonia" not in studychars):
             narrator "Sonia does not seem willing to study with you right now."
 
@@ -455,6 +481,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Sabrina" if "Sabrina" in chars:
+        $ lunchcharacter = ["Sabrina"]
+        
         if ("Sabrina" not in studychars):
             narrator "Sabrina does not seem willing to study with you right now."
 
@@ -479,7 +507,10 @@ menu:
         $ ValueChange("Sabrina", 1, ((chars.index("Sabrina") + 1) / (len(chars) + 1)))
         $ IncreaseProficiency(classtype, 0.25)
     
+
     ">Study with Nate" if "Nate" in chars:
+        $ lunchcharacter = ["Nate"]
+        
         if ("Nate" not in studychars):
             narrator "Nate does not seem willing to study with you right now."
 
@@ -515,6 +546,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Hilbert" if "Hilbert" in chars:
+        $ lunchcharacter = ["Hilbert"]
+        
         if ("Hilbert" not in studychars):
             narrator "Hilbert does not seem willing to study with you right now."
 
@@ -540,12 +573,14 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Hilda" if "Hilda" in chars:
+        $ lunchcharacter = ["Hilda"]
+        
         if ("Hilda" not in studychars):
             narrator "Hilda does not seem willing to study with you right now."
 
             jump newtablestart
         
-        hilda @talkingmouth "Sure, I've got some time. I can probably help you with Poison, Steel, and Rock-type Pokémon. Which are you looking for some help with?"
+        hilda @talking2mouth "Sure, I've got some time. I can probably help you with Poison, Steel, and Rock-type Pokémon. Which are you looking for some help with?"
         
         $ classtype = ""
         menu:
@@ -568,6 +603,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Bea" if "Bea" in chars:
+        $ lunchcharacter = ["Bea"]
+        
         if ("Bea" not in studychars):
             narrator "Bea does not seem willing to study with you right now."
 
@@ -592,6 +629,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Bianca" if "Bianca" in chars:
+        $ lunchcharacter = ["Bianca"]
+        
         if ("Bianca" not in studychars):
             narrator "Bianca does not seem willing to study with you right now."
 
@@ -628,8 +667,9 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
 
-    
     ">Study with Calem" if "Calem" in chars:
+        $ lunchcharacter = ["Calem"]
+        
         if ("Calem" not in studychars):
             narrator "Calem does not seem willing to study with you right now."
 
@@ -655,6 +695,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Serena" if "Serena" in chars:
+        $ lunchcharacter = ["Serena"]
+        
         if ("Serena" not in studychars):
             narrator "Serena does not seem willing to study with you right now."
 
@@ -676,7 +718,7 @@ menu:
 
             "Nevermind":
                 serena @talkingmouth "That's fine. {i}À plus tard.{/i}"
-                redmind uniform @confusedeyes frownmouth "What did she call me?"
+                redmind uniform @confusedbrow frownmouth "What did she call me?"
                 jump newtablestart
 
         narrator "Serena cheerfully guides you through the material, though you catch her yawning once or twice."
@@ -684,6 +726,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Wally" if "Wally" in chars:
+        $ lunchcharacter = ["Wally"]
+        
         if ("Wally" not in studychars):
             narrator "Wally does not seem willing to study with you right now."
 
@@ -708,6 +752,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
     
     ">Study with May" if "May" in chars:
+        $ lunchcharacter = ["May"]
+        
         if ("May" not in studychars):
             narrator "May does not seem willing to study with you right now."
 
@@ -734,6 +780,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Brendan" if "Brendan" in chars:
+        $ lunchcharacter = ["Brendan"]
+        
         if ("Brendan" not in studychars):
             narrator "Brendan does not seem willing to study with you right now."
 
@@ -768,6 +816,7 @@ menu:
 
 
     ">Ask Professor Cherry for Tutoring" if "Professor Cherry" in chars:
+        $ lunchcharacter = ["Professor Cherry"]
         kris @surprised "Oh? {w=0.5}{nw}"
         extend @happy "Well, sure! I always like to see my students take an active interest in their education." 
 
@@ -789,6 +838,8 @@ menu:
         narrator "Your [classtype] proficiency increased to [newtotal]!"
 
     ">Study with Misty" if "Misty" in chars:
+        $ lunchcharacter = ["Misty"]
+        
         if ("Misty" not in studychars):
             narrator "Misty does not seem willing to study with you right now."
 
@@ -812,6 +863,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Klara" if "Klara" in chars:
+        $ lunchcharacter = ["Klara"]
+        
         klara @happy "Oh my gosh, yes! I'd {i}love{/i} to help you study!"
         $ classtype = ""
         menu:
@@ -836,6 +889,8 @@ menu:
             $ IncreaseProficiency(classtype, 0.5)
 
     ">Study with Dawn" if "Dawn" in chars:
+        $ lunchcharacter = ["Dawn"]
+        
         if ("Dawn" not in studychars):
             narrator "Dawn does not seem willing to study with you right now."
 
@@ -861,6 +916,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Erika" if "Erika" in chars:
+        $ lunchcharacter = ["Erika"]
+        
         if ("Erika" not in studychars):
             narrator "Erika does not seem willing to study with you right now."
 
@@ -884,8 +941,9 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
 
-
     ">Study with Flannery" if "Flannery" in chars:
+        $ lunchcharacter = ["Flannery"]
+        
         if ("Flannery" not in studychars):
             narrator "Flannery does not seem willing to study with you right now."
 
@@ -913,6 +971,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Whitney" if "Whitney" in chars:
+        $ lunchcharacter = ["Whitney"]
+        
         if ("Whitney" not in studychars):
             narrator "Whitney does not seem willing to study with you right now."
 
@@ -940,10 +1000,12 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Tia (and Whitney)" if "Tia" in chars and "Whitney" in chars:
+        $ lunchcharacter = ["Whitney", "Tia"]
         if ("Tia" not in studychars):
             narrator "Tia does not seem willing to study with you right now."
 
             jump newtablestart
+        
         if ("Whitney" not in studychars):
             narrator "Whitney does not seem willing to study with you right now."
 
@@ -982,6 +1044,7 @@ menu:
             $ IncreaseProficiency(classtype, 0.1)
 
     ">Study with Tia" if "Tia" in chars and "Whitney" not in chars:
+        $ lunchcharacter = ["Tia"]
         if ("Tia" not in studychars):
             narrator "Tia does not seem willing to study with you right now."
 
@@ -1019,6 +1082,8 @@ menu:
             jump newtablestart
 
     ">Study with Jasmine" if "Jasmine" in chars:
+        $ lunchcharacter = ["Jasmine"]
+        
         if ("Jasmine" not in studychars):
             narrator "Jasmine does not seem willing to study with you right now."
 
@@ -1041,6 +1106,8 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Grusha" if "Grusha" in chars:
+        $ lunchcharacter = ["Grusha"]
+        
         if ("Grusha" not in studychars):
             narrator "Grusha does not seem willing to study with you right now."
 
@@ -1061,7 +1128,6 @@ menu:
         narrator "Grusha helps you with the material with a cold and unreadable expression. By the end of lunch, his jaw is tightly clenched, and he abruptly leaves the table without saying goodbye."
         $ ValueChange("Grusha", 2, ((chars.index("Grusha") + 1) / (len(chars) + 1)))
         $ IncreaseProficiency(classtype, 0.25)
-
 
     "[convostring]" if (not tabletype == "Melody's Table"):
         if (len(chars) > 1):
@@ -1086,5 +1152,33 @@ menu:
                     ValueChange(char, valuechange, ((chars.index(char) + 1) / (len(chars) + 1)), i == len(chars) - 1)
                 else:
                     ValueChange(yellowcharacter, 4, ((chars.index("Yellow") + 1) / (len(chars) + 1)), i == len(chars) - 1, changemood=False)
+    
+$ lunchcharacters = chars
+
+label lunchbunnyrecruit:
+
+if (IsAfter(6, 6, 2004) and IsBefore(12, 6, 2004)):
+    python:
+        bunnyrecruits = []
+        for char in lunchcharacters:
+            if (CanBunnyRecruit(char)):
+                bunnyrecruits.append((char, char))
+
+    if (len(bunnyrecruits) > 0):
+        redmind uniform @closedbrow frownmouth "Hm[ellipses] maybe now would be a good time to mention the party on Saturday?"
+
+        python:
+            lunchchar = renpy.display_menu(bunnyrecruits)
+            renpy.transition(dis)
+            renpy.show(GetCharacterSprite(lunchchar, None, True))
+
+        "You want to talk to [lunchchar]?"
+
+        menu:
+            "Yes.":
+                call BunnyRecruit(lunchchar, True) from _call_BunnyRecruit_15
+
+            "No.":
+                jump lunchbunnyrecruit
 
 return

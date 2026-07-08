@@ -473,7 +473,7 @@ show cheren surprisedbrow frownmouth
 with dis
 
 cheren @talkingmouth "Ah? Blue? You're back?"
-nate "Hey! [first_name]. Surprised to see you here."
+nate "Hey! [first_name[0]]. Surprised to see you here."
 
 blue @closedbrow talking2mouth "Yeah, yeah. Figured the Pokécenter was too far away, so this idiot could do something for us."
 
@@ -994,7 +994,7 @@ show text "{color=#ffffff}...{/color}" as text3:
         linear 1.0 alpha 0.0
 $ renpy.pause(4.0, hard=True)
 
-show clouds:
+scene clouds:
     yalign 0.5
 show fields1:
     yalign 0.33 xalign 0.95
@@ -1306,17 +1306,13 @@ $ timeOfDay = "Evening"
 play music "Audio/Music/Fieldstheme_Start.ogg" noloop
 queue music "Audio/Music/Fieldstheme_Loop.ogg"
 
+show fields1b behind ethan:
+    zoom 0.85
 show brendan
 show may at leftside
-show leaf at midrightside behind serena
+show leaf at midrightside
+hide fields1 
 with dis
-
-show fields1b behind ethan with dis:
-    alpha 1.0
-
-show fields1:
-    alpha 1.0
-    ease 10 alpha 0.0
 
 if (WonBattle("BrendanMay1")):
     brendan @happy "Hey! Nice battlin', dude!"

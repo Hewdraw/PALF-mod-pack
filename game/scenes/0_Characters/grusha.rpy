@@ -834,8 +834,15 @@ label Grusha1Part2:
     show summer angrybrow goggles2 frownmouth at night with Dissolve(2.0):
         xpos 0.66 xzoom -1 
 
-    summer @talking2mouth "...We've chased that egg all the way to Kobukan."
-    summer @closedbrow talking2mouth "Damn. I never thought I'd end up in this tiny region again."
+    if (IsBefore(13, 6, 2004)):#Before the phobos breakdown
+        summer @talking2mouth "...We've chased that egg all the way to Kobukan."
+
+        summer @closedbrow talking2mouth "Damn. I never thought I'd end up in this tiny region again."
+    
+    else:
+        summer @talking2mouth "As though that alien Pokémon mission wasn't enough, now we need to track down that egg. And it just {i}happened{/i} to float all the way to Kobukan."
+    
+        summer @talking2mouth "I never thought such a tiny region could hold all this[ellipses] and of course it's dragging me back."
 
     show summer at night:
         xpos 0.66
@@ -886,7 +893,7 @@ label Grusha1Part2:
     pause 1.0
 
     summer @closedbrow talking2mouth "Alright, let's get on with it. That egg is extremely important, and we have no idea who could have picked it up." 
-    summer @angry "If it was the Pinchers, the egg could go underground, and then we'd never be able to find it. What does your gizmo say?"
+    summer @angrybrow talking2mouth "If it was the Pinchers, the egg could go underground, and then we'd never be able to find it. What does your gizmo say?"
 
     kate @happy "Oh! The Ovitrace AquaScan says the egg's right here, in the harbor!"
 
@@ -909,7 +916,11 @@ label Grusha1Part2:
     kate -surprisedbrow @confusedbrow talking2mouth "Um. What did you think AquaScan meant?"
 
     summer @unamusedbrow unamusedmouth "[ellipses]"
-    summer @talking2mouth "Fine. That one's on me. At least we ended up in the right {i}region.{/i} We have contacts here. If someone at that Academy picked it up, then we should know soon."
+    
+    if (IsBefore(13, 6, 2004)):#Before the phobos breakdown
+        summer @talking2mouth "Fine. That one's on me. At least we ended up in the right {i}region.{/i} We have contacts here. If someone at that Academy picked it up, then we should know soon."
+    else:
+        summer @talking2mouth "Fine. That one's on me. Since we're already working with the Academy, if a student picked it up, then we should know soon."
 
     show kate sadbrow frownmouth with dis
 

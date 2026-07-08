@@ -54,7 +54,7 @@ python:
     ], number=3)
 
 call Battle([trainer1, trainer2], clearstats=False, gainexp=False, healParty=False, uniforms=[True, False], lockbag=True) from _call_Battle_119
-$ battlehistory["Oak8"] = _return
+$ RecordBattle("Oak8")
 
 $ renpy.transition(dissolve)
 show screen currentdate

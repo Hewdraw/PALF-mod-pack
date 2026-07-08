@@ -98,8 +98,8 @@ show hilda:
     xpos 500
     ease 0.7 xpos 750
     
-hilda @talkingmouth "What else?{w=0.5} Hilbert-wrangling."
-hilda angrybrow  frownmouth @talkingmouth "This {i}is{/i} his classroom, right?"
+hilda @talking2mouth "What else?{w=0.5} Hilbert-wrangling."
+hilda angrybrow  frownmouth @talking2mouth "This {i}is{/i} his classroom, right?"
 
 red @closedbrow talking2mouth "Yeah, but he's hiding under the desk over there."
 
@@ -109,7 +109,7 @@ show hilbert angry uniform with dis:
 
 hilbert @talkingmouth "You {i}traitor.{/i}"
          
-hilda angrybrow talkingmouth "There you are.{w=0.5}{nw}"
+hilda angrybrow talking2mouth "There you are.{w=0.5}{nw}"
 
 show hilda angry with dis:
     xpos 750
@@ -125,7 +125,7 @@ show hilda:
     xpos 800
     ease 0.5 xpos 850
     
-hilda @closedbrow talkingmouth "Well, now you're not.{w=0.5} You know what happens when you go too long without exercise!"
+hilda @closedbrow talking2mouth "Well, now you're not.{w=0.5} You know what happens when you go too long without exercise!"
 
 red @confused "What's this about a regimen?"
 
@@ -134,7 +134,7 @@ show hilda:
     ease 0.75 xpos 750
 
 hilda sad "Ugh. Where to begin."
-hilda closedbrow talkingmouth "Hilbert's got this... 'dream' that he obsesses over. And because he's so obsessed, he forgets to eat, or sleep, or drink..."
+hilda closedbrow talking2mouth "Hilbert's got this... 'dream' that he obsesses over. And because he's so obsessed, he forgets to eat, or sleep, or drink..."
 hilda angry "Or exercise. Which is why Hilbert will fall asleep in the middle of a conversation he's bored of. Because he's got the stamina of a Cleffa."
 
 hilbert @talkingmouth "{size=30}Or maybe I just fall asleep in the middle of boring conversations because they're boring?{/size}"
@@ -166,7 +166,7 @@ menu:
         with dis
 
         $ ValueChange("Hilda", -2, 750.0/1920.0)
-        hilda @closedbrow talkingmouth "I... literally can't even begin to describe how goddamn wrong you are about that."
+        hilda @closedbrow talking2mouth "I... literally can't even begin to describe how goddamn wrong you are about that."
 
         $ ValueChange("Hilbert", 1, 1300.0/1920.0)
 
@@ -188,7 +188,7 @@ pause 1.0
 
 red @talkingmouth "So, you're going to the Recreation Center, too?{w=0.5} I was planning on checking the place out."
 
-hilda @talkingmouth  "Then let's go together. Ready?"
+hilda @talking2mouth  "Then let's go together. Ready?"
 
 red @talkingmouth "As I'll ever be!"
 
@@ -224,7 +224,7 @@ hilda uniform happy "Hilbert and I will be over by the courts.{w=0.5} Would you 
 
 red @talkingmouth "Nah, I was planning on checking out the pools.{w=0.5} Thanks for the offer, though."
 
-hilda -happy @talking2mouth "All right, have fun.{w=0.5} We'll be done in about two hours, but if you're finished before us, you can take off."
+hilda -happy @talkingmouth "All right, have fun.{w=0.5} We'll be done in about two hours, but if you're finished before us, you can take off."
 
 red @talkingmouth "Okay, sounds good.{w=0.5} See you later!"
 

@@ -1,5 +1,8 @@
 label nightscenequeue:
 
+if (skipnightscenes):
+    return
+
 label natenightscene:
     if (IsAfter(17, 5, 2004) and EventAvailable("Nate", "ClassSwap")):
         scene blank2 with splitfade
@@ -299,7 +302,7 @@ label wallynightscene:
 
         redmind @thonk "I'm not sure how useful these notes will be in finding Tia. I mean, I already know where she is. But I {i}do{/i} wonder about these so-called Will-O-Wisps."
 
-        $ GetItem("Mirage Research #4", 1)
+        $ GetItem("Mirage Research #4")
 
         red @talkingmouth "Thanks." 
         red @sadbrow talkingmouth "And, uh, good luck on... everything else."
@@ -829,7 +832,11 @@ label IonoRosaSabrinaNightScene:
         queue music "audio/music/joinavenue_start.ogg" noloop
         queue music "audio/music/joinavenue_loop.ogg"
 
-        rosa @surprisedbrow talking2mouth "Wait[ellipses] you {i}are{/i}! Sabrina and I saw you in class, but I couldn't be sure--it's actually you, Iono!"
+        if (IsWeekend()):
+            rosa @surprisedbrow talking2mouth "Wait[ellipses] you {i}are{/i}! Sabrina and I saw you in gym class, but I couldn't be sure--it's actually you, Iono!"
+
+        else:
+            rosa @surprisedbrow talking2mouth "Wait[ellipses] you {i}are{/i}! Sabrina and I saw you in class, but I couldn't be sure--it's actually you, Iono!"
 
         iono neutralbrow smilemouth @neutralbrow talkingmouth "Wait, you're[ellipses] Rosa? {i}Rosa?!{/i}"
 

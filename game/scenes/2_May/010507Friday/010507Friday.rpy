@@ -976,11 +976,13 @@ else:
         playerparty.append(pikachuobj)
         trainer1 = MakeRed(2)
         trainer2 = Trainer("dawn", TrainerType.Enemy, dawnparty)
-        dawnbattle = True
+        AddEvent("Game", "LiberationBattle")
+        AddEvent("Dawn", "LiberationBattle")
 
     call Battle([trainer1, trainer2], gainexp=False, specialmusic="Audio/Music/legendary.ogg", dialogfunc=dawnpikachudialog, custombrain=dawnpikachubrain) from _call_Battle_117
     $ battlehistory["Dawn1"] = _return
-    $ dawnbattle = False
+    $ RemoveEvent("Game", "LiberationBattle")
+    $ RemoveEvent("Dawn", "LiberationBattle")
 
     if (not WonBattle("Dawn1")):
         jump gameover

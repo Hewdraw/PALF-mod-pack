@@ -168,7 +168,7 @@ if (not HasEvent("Instructor Melony", 1)): #first class
 
     hide melony
     hide hilbertintro with dis
-elif (not HasEvent("Instructor Melony", 2.1) and classstats["Ice"] >= 10):#Slow Freeze
+elif (not HasEvent("Instructor Melony", 2.1) and GetElective("Ice") >= 10):#Slow Freeze
     show melony with dis
     if (not HasEvent("Instructor Melony", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -268,7 +268,7 @@ elif (not HasEvent("Instructor Melony", 2.1) and classstats["Ice"] >= 10):#Slow 
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide melony with dis
-elif (not HasEvent("Instructor Melony", 3.1) and classstats["Ice"] >= 20):#Never-Melt Ice
+elif (not HasEvent("Instructor Melony", 3.1) and GetElective("Ice") >= 20):#Never-Melt Ice
     show melony with dis
     if (not HasEvent("Instructor Melony", 3)):
         show melony sadbrow frownmouth with dis
@@ -359,7 +359,7 @@ elif (not HasEvent("Instructor Melony", 3.1) and classstats["Ice"] >= 20):#Never
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide melony with dis
-elif (not HasEvent("Instructor Melony", 4.1) and classstats["Ice"] >= 30):#Ice Shard
+elif (not HasEvent("Instructor Melony", 4.1) and GetElective("Ice") >= 30):#Ice Shard
     show melony with dis
     if (not HasEvent("Instructor Melony", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -479,6 +479,7 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+            hide melony with dis
             jump aftertutoring
         else:
             jump aftericesetup
@@ -494,6 +495,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ newmon.LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide melony with dis
         jump endclass
 else:
     melony @sad "Oh... sorry, sweetie. That Pokémon can't learn [taughtmove]."

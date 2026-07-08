@@ -149,7 +149,7 @@ if (not HasEvent("Burgh", 1)): #first class
 
     hide burgh
 
-elif (not HasEvent("Burgh", 2.1) and classstats["Bug"] >= 10):#Chrysalize
+elif (not HasEvent("Burgh", 2.1) and GetElective("Bug") >= 10):#Chrysalize
     show burgh with dis
     if (not HasEvent("Burgh", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -318,7 +318,7 @@ elif (not HasEvent("Burgh", 2.1) and classstats["Bug"] >= 10):#Chrysalize
 
     hide burgh with dis
 
-elif (not HasEvent("Burgh", 3.1) and classstats["Bug"] >= 20):#Silver Powder
+elif (not HasEvent("Burgh", 3.1) and GetElective("Bug") >= 20):#Silver Powder
     show burgh with dis
     if (not HasEvent("Burgh", 3)):
         $ renpy.pause(1.0, hard=True)
@@ -394,7 +394,7 @@ elif (not HasEvent("Burgh", 3.1) and classstats["Bug"] >= 20):#Silver Powder
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide burgh with dis
-elif (not HasEvent("Burgh", 4.1) and classstats["Bug"] >= 30):#Silver Wind
+elif (not HasEvent("Burgh", 4.1) and GetElective("Bug") >= 30):#Silver Wind
     show burgh with dis
     if (not HasEvent("Burgh", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -510,6 +510,9 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+
+            hide burgh with dis
+
             jump aftertutoring
         else:
             jump afterbugsetup
@@ -525,6 +528,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ newmon.LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide burgh with dis
         jump endclass
 else:
     burgh @sad2 "Sorry, I'm not sure I know how to teach that Pokémon [taughtmove]..."

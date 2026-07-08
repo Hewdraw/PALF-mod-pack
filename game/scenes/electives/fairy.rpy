@@ -211,7 +211,10 @@ if (not HasEvent("Instructor Valerie", 1)): #first class
     hide dawn
     hide whitney
 
-    narrator "Though you were certain she was gonna take a jab at some of the male class members' lack of fashionable distinction, she made sure to compliment all three of you."
+    if (IsPresent("Wally")):
+        narrator "Though you were certain she was gonna take a jab at some of the male class members' lack of fashionable distinction, she made sure to compliment all four of you."
+    else:
+        narrator "Though you were certain she was gonna take a jab at some of the male class members' lack of fashionable distinction, she made sure to compliment all three of you."
 
     show whitney uniform surprised at rightside with dis
 
@@ -239,7 +242,7 @@ if (not HasEvent("Instructor Valerie", 1)): #first class
     valerie "Farewell, my darling Beautifly.{w=0.5} Make sure to flutter to your next classes safely."
 
     hide valerie
-elif (not HasEvent("Instructor Valerie", 2.1) and classstats["Fairy"] >= 10):#Ardent Gaze
+elif (not HasEvent("Instructor Valerie", 2.1) and GetElective("Fairy") >= 10):#Ardent Gaze
     show valerie with dis
     if (not HasEvent("Instructor Valerie", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -407,7 +410,7 @@ elif (not HasEvent("Instructor Valerie", 2.1) and classstats["Fairy"] >= 10):#Ar
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide valerie with dis
-elif (not HasEvent("Instructor Valerie", 3.1) and classstats["Fairy"] >= 20):#Fairy Feather
+elif (not HasEvent("Instructor Valerie", 3.1) and GetElective("Fairy") >= 20):#Fairy Feather
     show valerie with dis
     if (not HasEvent("Instructor Valerie", 3)):
         $ renpy.pause(1.0, hard=True)
@@ -496,7 +499,7 @@ elif (not HasEvent("Instructor Valerie", 3.1) and classstats["Fairy"] >= 20):#Fa
         redmind @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide valerie with dis
-elif (not HasEvent("Instructor Valerie", 4.1) and classstats["Fairy"] >= 30):#Draining Kiss
+elif (not HasEvent("Instructor Valerie", 4.1) and GetElective("Fairy") >= 30):#Draining Kiss
     show valerie with dis
     if (not HasEvent("Instructor Valerie", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -640,6 +643,9 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+
+            hide valerie with dis
+
             jump aftertutoring
         else:
             jump afterfairysetup
@@ -655,6 +661,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ playerparty[newindex].LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide valerie with dis
         jump endclass
 else:
     valerie @sad "I'm sorry, this Pokémon is made of a cloth that I don't believe I can tailor."

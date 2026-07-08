@@ -6,10 +6,23 @@ show screen partyviewer
 python:
     teachablemoves = []
     movenames = []
+    movecounts = {}
+    move_indices = {}
+
     for move in inventorymetadata[Item.TechnicalMachineCase]:
-        if (move not in movenames):
+        movecounts[move] = movecounts.get(move, 0) + 1
+
+        count = movecounts[move]
+
+        if move not in move_indices:
+            move_indices[move] = len(teachablemoves)
             movenames.append(move)
             teachablemoves.append((move, move))
+        else:
+            index = move_indices[move]
+            label = move + (" x" + str(count) if count > 1 else "")
+            teachablemoves[index] = (label, move)
+
     if (len(teachablemoves) == 0):
         renpy.say(None, "You have no Technical Machines with valid move data on them.")#this shouldn't show up.
         renpy.jump("exitusetm")

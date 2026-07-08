@@ -192,7 +192,7 @@ dawn @talkingmouth "He's kind of a famous figure in the Coordinator's club. He w
 
 red @talkingmouth "Is he still a coordinator?"
 
-if (classstats["Water"] > 10):
+if (GetElective("Water") > 10):
     red @talkingmouth "Instructor Wallace has never mentioned him."
 
 dawn @sad "Well... generally, you need to move around, and dance, and, um... pose... in contests."

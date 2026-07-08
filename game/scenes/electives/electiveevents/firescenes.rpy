@@ -538,17 +538,27 @@ label fire_class_38:
     hide classpsyc with dis
     hide will with dis
     pause 0.5
-    show classpoison with dis
+    show classroom 
+    show poisontype
+    with dis
     show koga with dis
     koga @talking2mouth "He's disturbed because he ran into a high-ranking INTERPOL representative."
     koga @closedbrow talking2mouth "Instructor Blaine recognized her immediately, proof of their familiarity. He also assumed that she'd come to arrest him--itself a sign of guilt."
     koga @talking2mouth "The obvious conclusion is that his past has come back to haunt him." 
     koga closedbrow "I would begin with his exit from science, which never had a clear motive."
-    hide classpoison with dis
-    hide koga with dis
+    
+    hide classroom 
+    hide poisontype
+    hide koga 
+    with dis
+
     pause 0.5
-    show classfire with dis
-    show blaine happy with dis
+
+    show classroom 
+    show fireclass
+    show blaine happy
+    with dis
+    
     blaine "And here we are yet again! Wonderful, wonderful. Let's move on to Centiskorch's Gigantamax form..."
     narrator "Blaine has returned to pretending that nothing is amiss..."
     return

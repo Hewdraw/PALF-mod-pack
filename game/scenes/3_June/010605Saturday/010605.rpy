@@ -107,7 +107,7 @@ yellow @sadbrow talkingmouth "I hate to ruin this moment of connection--it's rea
 
 show leaf sadbrow -frownmouth with dis
 
-leaf @talkingmouth "Yessss... but battling Ethan would give me an excuse to 'forget' it."
+leaf @talkingmouth "Yessss[ellipses] but battling Ethan would give me an excuse to 'forget' it."
 
 red @happy "Aw, c'mon. Is this just 'cause you're nervous about it?"
 
@@ -569,7 +569,7 @@ label klarapartyscene2:
 
     scene blank2 with splitfadefaster
 
-    narrator "You quickly dash between bushes and buildings, hiding from nonexistant eyes. The serpentine route you take somewhat delays your arrival at the dorm--but you eventually arrive in front of Dorm 303."
+    narrator "You quickly dash between bushes and buildings, hiding from nonexistent eyes. The serpentine route you take somewhat delays your arrival at the dorm--but you eventually arrive in front of Dorm 303."
 
     scene door with splitfade
 
@@ -758,7 +758,7 @@ label klarapartyscene3:
 
     pause 1.0
 
-    leaf @angrybrow angrymouth "No you {i}didn't!{i} You said, multiple times, it was {i}this{/i} Saturday!"
+    leaf @angrybrow angrymouth "No you {i}didn't!{/i} You said, multiple times, it was {i}this{/i} Saturday!"
 
     klara @sadbrow talking2mouth "Wait, you're getting angry at me because {i}you{/i} misunderstood? Please don't, I don't like drama."
 
@@ -858,7 +858,7 @@ label klarapartyscene3:
 
     leaf @angry "Pre--{i}pretended?!{/i}"
 
-    if (HasEvent("Klara", "AgreePartner")):
+    if (HasEvent("Klara", "AcceptPartner")):
         klara @sadbrow talkingmouth "You know, [first_name] told me while we were coordinating together that you and he were having some problems. Is this because of that?"
 
     else:
@@ -979,6 +979,8 @@ label klarapartyscene3:
     call clearscreens() from _call_clearscreens_267
 
     narrator "You ran away."
+
+    $ oldpersondex["Leaf"]["Mood"] = -15
 
     show nessa sadbrow frownmouth
     show misty sadbrow frownmouth

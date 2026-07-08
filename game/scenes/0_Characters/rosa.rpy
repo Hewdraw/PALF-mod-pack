@@ -69,7 +69,7 @@ label Rosa1:
 
     extend @angrybrow talking2mouth "You've got an appointment. {nw}{w=0.75}"
 
-    show rosa winkeyes sadeyebrows sweat sadmouth with dis
+    show rosa winkeyes sadeyebrows sweat talking2mouth with dis
 
     extend @angrybrow talking2mouth "With the director. {nw}{w=1.0}"
 
@@ -174,7 +174,7 @@ label Rosa1:
 
     red @confused "Yeah. About that. Uh, that one scene..."
 
-    rosa @sadmouth "Yup, it was a prosthetic."
+    rosa @talking2mouth "Yup, it was a prosthetic."
 
     red @closedbrow talking2mouth "Oh, phew."
 
@@ -239,7 +239,7 @@ label Rosa1:
     rosa @talkingmouth "Anyway, I was about to go back to Virbank and challenge Roxie--the music video only took three days to shoot--but there were a few other jobs for extras at the studios, and since I was on-set, they just re-hired me."
     rosa @happy "And by the time those extra positions were done with, Piers' band's video page was just drowned in comments asking about 'Yankee Buns.'"
     rosa @talkingmouth "Well, Mr. Deeoh, the director, wanted to capitalize on my popularity, so he put me in a couple more videos. And then a few longer-form documentaries."
-    rosa @happybrow sadmouth "Luckily, as I became more popular, I lost the 'Yankee Buns' nickname. But my Galarian fans still call me that, mostly. I try not to go to Galar too often."
+    rosa @happybrow talking2mouth "Luckily, as I became more popular, I lost the 'Yankee Buns' nickname. But my Galarian fans still call me that, mostly. I try not to go to Galar too often."
     rosa @closedbrow talking2mouth "Anyway, after that, I started getting bigger and bigger roles, and..."
     rosa @sad "Well, now it's like this." 
     rosa @happy "It's Rosa! World-famous star, stealer of hearts, and putter of butts in seats!"
@@ -261,7 +261,7 @@ label Rosa1:
 
     pause 1.0
 
-    rosa -surprisedbrow -frownmouth @sideeyes sadmouth sadeyebrows "Well. I'm kinda... it's kinda embarrassing to admit this. But, um..."
+    rosa -surprisedbrow -frownmouth @sideeyes talking2mouth sadeyebrows "Well. I'm kinda... it's kinda embarrassing to admit this. But, um..."
     rosa @sadbrow sweat happymouth "I didn't mean to become so famous, and get all this attention and money and movies and stuff. It was kinda an accident."
     rosa @sadbrow sweat happymouth "Maybe it's silly of me, but in my head, I still think of myself as a trainer first, and an actress second. This whole... world-famous star thing... is just a sidequest. A scene that'll be cut in the biography of my life."
 
@@ -294,7 +294,7 @@ label Rosa1:
 
     red @closedbrow talking2mouth "If you didn't actually come out here to shop, why {i}did{/i} you come out here?"
 
-    rosa @sweat happybrow sadmouth "Oh. Um... actually, I was trying to get away from my fans. There's a big group of them back on campus, and..."
+    rosa @sweat happybrow talking2mouth "Oh. Um... actually, I was trying to get away from my fans. There's a big group of them back on campus, and..."
     rosa @happy sweat "I love them, of course. And everything they do. But every time I meet one, they act like it's the most important day of their life."
     rosa @happy "I tell them I'm really nothing special when I'm not in front of a green screen, but I also don't want to ruin their mental image of me, so..."
     rosa @talkingmouth "Sometimes it's nice to just get lost in the crowd once in a while."
@@ -332,7 +332,7 @@ label Rosa1:
 
     red @surprised "Sure. Be my guest. But what could a star like you want to ask someone like me?"
 
-    rosa @sadmouth "When you were pretending to be my bodyguard... I've never seen someone so bad at acting."
+    rosa @talking2mouth "When you were pretending to be my bodyguard... I've never seen someone so bad at acting."
     rosa @closedbrow talking2mouth "It's like... like you conveyed the idea that you were trying to trick people into thinking you were a bodyguard way more than you did the idea that you actually {i}were{/i} one."
     if (not IsBefore(1, 5, 2004)):
         rosa @closedbrow talking2mouth "Is that because of your empathy power? Or are you just a {i}really{/i} terrible actor?"
@@ -534,7 +534,7 @@ label Rosa2:
     pause 1.0
 
     rosa @sweat talking2mouth "Well, {i}want{/i} to direct might be a bit of a strong phrase. I guess I think these are the movies that my producers might let me work on."
-    rosa @sadbrow sadmouth "Of course, they're not really in the mood to give me anything else right now. I had to beg and bargain for a long time to even get to go to Kobukan, and my contracts there are {i}very{/i} specific about what I could do."
+    rosa @sadbrow talking2mouth "Of course, they're not really in the mood to give me anything else right now. I had to beg and bargain for a long time to even get to go to Kobukan, and my contracts there are {i}very{/i} specific about what I could do."
 
     pause 0.5
 
@@ -703,7 +703,7 @@ label Rosa2:
     pause 0.5
 
     rosa @sweat talkingmouth "It's almost kinda funny. I saw a thread once about one of my movies, and there were a bunch of pictures of me on-set, including one that was taken just outside my camper." 
-    rosa @sadbrow sweat sadmouth "Don't know how the photographer got in. Anyway, I was actually taking my wetsuit off, then." 
+    rosa @sadbrow sweat talking2mouth "Don't know how the photographer got in. Anyway, I was actually taking my wetsuit off, then." 
 
     red @surprisedeyes confusedeyebrows surprisedmouth "What the {i}hell?!{/i}"
 
@@ -781,7 +781,7 @@ label Rosa2:
 
     pause 0.5
 
-    show rosa sadmouth with dis
+    show rosa talking2mouth with dis
 
     pause 0.5
 
@@ -795,7 +795,7 @@ label Rosa2:
 
     red @happy "So, how soon should I prepare my speech to thank the academy?"
 
-    rosa -sadbrow -sadmouth @sadbrow talkingmouth "Well, you know, I don't think that was the worst thing ever. There's something you can definitely do to hone that."
+    rosa -sadbrow -talking2mouth @sadbrow talkingmouth "Well, you know, I don't think that was the worst thing ever. There's something you can definitely do to hone that."
 
     red @talkingmouth "Oh, cool? I didn't think I did {i}that{/i} well, actually."
 
@@ -878,11 +878,11 @@ label Rosa2:
 
     rosa @talkingmouth "What do you mean?"
 
-    if (classstats["Psychic"] >= AimLevel() - 3):
+    if (GetElective("Psychic") >= AimLevel() - 3):
         red @talkingmouth "You're in the Psychic elective. I'm pretty good with Psychic, myself. Maybe we could trade notes. Study together."
-    elif (classstats["Electric"] >= AimLevel() - 3):
+    elif (GetElective("Electric") >= AimLevel() - 3):
         red @talkingmouth "You're in the Electric elective. I'm pretty good with Electric, myself. Maybe we could trade notes. Study together."
-    elif (classstats["Bug"] >= AimLevel() - 3):
+    elif (GetElective("Bug") >= AimLevel() - 3):
         red @talkingmouth "You're in the Bug elective. I'm pretty good with bugs, myself. Maybe we could trade notes. Study together."
     else:
         red @talkingmouth "I'm on the Kobukan Battle Team, you know? You're at a slight disadvantage, due to having your team hampered by your managers."
@@ -1003,11 +1003,15 @@ label Rosa2:
         red @confused "...Huh."
 
     python:
+        showscrimblo = True
         trainer1 = MakeRed()
         trainer2 = Trainer("rosa", TrainerType.Enemy, GetTrainerTeam("Rosa"))
 
     call Battle([trainer1, trainer2]) from _call_Battle_123
-    $ battlehistory["Rosa3"] = _return
+
+    python:
+        battlehistory["Rosa3"] = _return
+        showscrimblo = False
 
     queue music "audio/music/joinavenue_start.ogg" noloop
     queue music "audio/music/joinavenue_loop.ogg"
@@ -1178,7 +1182,7 @@ label Rosa3:
 
     rosa @talkingmouth "{size=30}Hm? Yes, the marketable plushies. Didn't I already...? Oh, a live signing? Yes, I think I can do that. When? Oh, that's pretty busy, but I'll try to move some of my schedule around for it.{/size}"
 
-    redmind @confusedeyebrows frownmouth "Man. Don't those guys get enough money out of her? They gotta slap her face on a plushy, too?"
+    redmind @confusedeyebrows frownmouth "Man. Don't those guys get enough money out of her? They gotta slap her face on a plushie, too?"
 
     pause 1.0
 
@@ -1257,7 +1261,7 @@ label Rosa3:
 
     pause 0.5
 
-    rosa @poutsadmouth "...Did you know that Iono voiced him?"
+    rosa @talking2mouth "...Did you know that Iono voiced him?"
 
     if (IsNamed("Iono")):
         red @surprised "Really?"
@@ -1301,7 +1305,7 @@ label Rosa3:
     red @winkbrow talkingmouth "Remember what happened when we battled that time in the Battle Hall?"
 
     if (WonBattle("Rosa3")):
-        rosa @lightblush sideeyes poutsadmouth "Hmph! It was close. I {i}almost{/i} won..."
+        rosa @lightblush sideeyes pout poutsadmouth "Hmph! It was close. I {i}almost{/i} won..."
 
     else:
         rosa @happy "Of course! I {i}won{/i} that one."
@@ -1356,7 +1360,7 @@ label Rosa3:
     pause 1.5
 
     narrator "While Rosa takes the call, you entertain yourself by taking a closer look at the houses nearby." 
-    narrator "This is an unfamiliar area--though you and Rosa have taken it a couple times before to avoid main streets on the way back from Inspira, but unfamiliar areas have started to make you a bit uncomfortable."
+    narrator "This is an unfamiliar area--though you and Rosa have taken it a couple times before to avoid main streets on the way back from Inspira--but unfamiliar areas have started to make you a bit uncomfortable."
 
     redmind @sad2brow frownmouth "She isn't wearing her wetsuit right now, after all..."
 
@@ -1455,11 +1459,11 @@ label Rosa3:
 
     raihan @talking2mouth "No-one could sell that one, Whitley. Not even you."
 
-    rosa @closedbrow sad2mouth "It's..."
+    rosa @closedbrow talking2mouth "It's..."
 
     pause 1.0
 
-    rosa @sideeyes sadmouth "The photographer."
+    rosa @sideeyes talking2mouth "The photographer."
 
     raihan angrybrow @angrymouth "What's this about a photographer? This better not be what I'm reckoning it is."
 

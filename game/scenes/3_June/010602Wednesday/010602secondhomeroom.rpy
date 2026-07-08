@@ -181,7 +181,7 @@ pause 1.0
 
 $ hideside = False
 
-if (HasEvent("Professor Oak", "ParticipateMDTryouts")):
+if (IsCoordinator()):
     red @sadbrow talkingmouth "Oh, man. This is reminding me of the Battle Team tryouts. Only difference is, in the tryouts, I knew what I was doing."
     red @happy "This time, I'm pretty much going in blind!"
 
@@ -243,7 +243,7 @@ lisia @talking2mouth "...Why? There's--there's so many people here, from all dif
 lisia @sadmouth "So many people's wishes will--"
 
 phobos @happybrow talkingmouth "Now, now, now. There's no need to coordinatorsplain to me. I'm quite aware of the history behind this contest."
-phobos @closedbrow talking2mouth "We simply have the opportunity to make the tryouts... mmm, shorter."
+phobos @closedbrow talking2mouth "We simply have the opportunity to make the tryouts[ellipses] mmm, shorter."
 phobos @winkbrow talkingmouth "Why, you know that one of your club members would win, no? Why bother with the hassle of weeding out all this chaff when I could do the same thing with the stroke of a pen?"
 
 pause 1.0
@@ -390,7 +390,7 @@ red @happy "Everyone needs a 'thing.'"
 leaf @talkingmouth "True."
 leaf @talkingmouth "So. Moment of truth, big guy. Are you going to participate in the tryouts?"
 
-if (HasEvent("Professor Oak", "ParticipateMDTryouts")):
+if (IsCoordinator()):
     red @happy "Sure am. Never done it before, but, hey, I never beat an Altaria before I did, either."
 
     jump leafjoinresponse
@@ -465,7 +465,7 @@ label klaraconvincepartner:
         
     menu:
         "Alright, you got me.":
-            $ AddEvent("Klara", "AgreePartner")
+            $ AddEvent("Klara", "AcceptPartner")
             if (HasEvent("Professor Oak", "IgnoreMDTryouts")):
                 jump mdtryouts
             else:
@@ -514,7 +514,7 @@ label klaraconvincepartner:
 
             menu:
                 "How could I say no?":
-                    $ AddEvent("Klara", "AgreePartner")
+                    $ AddEvent("Klara", "AcceptPartner")
                     if (HasEvent("Professor Oak", "IgnoreMDTryouts")):
                         jump mdtryouts
                     else:
@@ -631,7 +631,7 @@ label klaraconvincepartner:
 
                     menu finalklaraleveragechoice:
                         "Yes. Besties.":
-                            $ AddEvent("Klara", "AgreePartner")
+                            $ AddEvent("Klara", "AcceptPartner")
                             klara happy "Yay! Knew we could get there eventually."
 
                             if (HasEvent("Professor Oak", "IgnoreMDTryouts")):
@@ -710,6 +710,8 @@ label klaraconvincepartner:
                             python:
                                 AddEvent("Klara", "FormerBond" + str(GetValue("Klara")))
                                 AddEvent("Klara", "BrokeBond")
+                                if (coordinatorpartner == "Klara"):
+                                    coordinatorpartner = None
                                 persondex["Klara"]["Mood"] = 0
                                 persondex["Klara"]["Value"] = 0
                                 persondex["Klara"]["Nature"] = TrainerNature.Special
@@ -778,7 +780,7 @@ label mdtryouts:
 
     hide yellow with dis
 
-    if (HasEvent("Klara", "AgreePartner")):
+    if (HasEvent("Klara", "AcceptPartner")):
         klara makeup hairpin neutralcoat @happy "Cute girl. She's really not a threat at all, is she?"
 
         red @confused "Huh?"
@@ -815,7 +817,7 @@ label mdtryouts:
                 jump klaraconvincepartner
 
             "Yep, let's go!":
-                $ AddEvent("Klara", "AgreePartner")
+                $ AddEvent("Klara", "AcceptPartner")
                 $ ValueChange("Klara", 10)
 
                 klara @happy "Cool. That's another thing I love about you. You always do what you say you will!"
@@ -925,7 +927,7 @@ python:
     elif (HasEvent("Yellow", "RejectPartner")):
         coordinatorpartner = None
     else:
-        AddEvent("Klara", "AgreePartner")
+        AddEvent("Klara", "AcceptPartner")
         coordinatorpartner = "Klara"
 
 if (coordinatorpartner != None):
@@ -1045,7 +1047,7 @@ lisia happy "Group one--please come to the stage! And let's ring in the beginnin
 
 python:
     protaggroup = CoordinatorGroup([
-        Coordinator(first_name, condition=coordinatingknowledge, isprotag=True, contestsprite="")
+        Coordinator(first_name, condition=coordinatingknowledge, isprotag=True, contestsprite="", iscontrollable=True)
     ])
 
     if (coordinatorpartner == "Yellow"):

@@ -76,7 +76,7 @@ pause 1.0
 if (GetRelationshipRank("Silver") > 0):
     silver @closedbrow talkingmouth "Hi, red."
 
-    red @sadbrow talkingmouth "Hi, red."
+    red uniform @sadbrow talkingmouth "Hi, red."
 
     skyla @happy "Aw, you guys have cute nicknames for each other! Can I be 'red', too? Because of my red hair?"
 
@@ -92,7 +92,7 @@ if (GetRelationshipRank("Silver") > 0):
 
     silver @angry "Yeah, it's funny, 'til you {i}see it happen.{/i}"
 
-    red @confused "Hm?"
+    red uniform @confused "Hm?"
 
     silver @talkingmouth "Nevermind. Let's just battle. Show our Pokémon a good time."
 
@@ -103,7 +103,7 @@ else:
 
     show silver surprisedbrow with dis
 
-    redmind @happy "Sorry, red! Should've been born an Esper."
+    redmind uniform @happy "Sorry, red! Should've been born an Esper."
 
     show silver -surprisedbrow with dis
 
@@ -174,7 +174,7 @@ if (WonBattle("SilverSkyla1")):
 
     silver @sad "Well, I didn't see any of that."
 
-    rosa @sweat sadeyebrows poutsadmouth "That might be because you were locked onto us with a deadly Kubrick stare that entire time..."
+    rosa @sweat sadeyebrows pouthappymouth pout "That might be because you were locked onto us with a deadly Kubrick stare that entire time..."
 
     silver @surprisedbrow "{w=0.5}.{w=0.5}.{w=0.5}."
     silver @talkingmouth "That's just how my face looks."

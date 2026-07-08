@@ -3198,7 +3198,7 @@ label Cheren2Part2:
     
     skyla happy "{size=40}Mission complete!{/size}"
 
-    $ PlaySound("audio/07_fanfare.ogg")
+    $ PlaySound("07_fanfare.ogg")
 
     pause 2.0
 

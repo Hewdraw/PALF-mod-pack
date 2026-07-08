@@ -252,7 +252,7 @@ if (not HasEvent("Instructor Will", 1)): #first class
     ethan happy "Sure, but at least it's not boring!"
 
     hide will
-elif (not HasEvent("Instructor Will", 2.1) and classstats["Psychic"] >= 10):#Clear Mind
+elif (not HasEvent("Instructor Will", 2.1) and GetElective("Psychic") >= 10):#Clear Mind
     show will with dis
     if (not HasEvent("Instructor Will", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -330,7 +330,7 @@ elif (not HasEvent("Instructor Will", 2.1) and classstats["Psychic"] >= 10):#Cle
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide will with dis
-elif (not HasEvent("Instructor Will", 3.1) and classstats["Psychic"] >= 20):#Twisted Spoon
+elif (not HasEvent("Instructor Will", 3.1) and GetElective("Psychic") >= 20):#Twisted Spoon
     show will with dis
     if (not HasEvent("Instructor Will", 3)):
         $ renpy.pause(1.0, hard=True)
@@ -406,7 +406,7 @@ elif (not HasEvent("Instructor Will", 3.1) and classstats["Psychic"] >= 20):#Twi
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide will with dis
-elif (not HasEvent("Instructor Will", 4.1) and classstats["Psychic"] >= 30):#Psybeam
+elif (not HasEvent("Instructor Will", 4.1) and GetElective("Psychic") >= 30):#Psybeam
     show will with dis
     if (not HasEvent("Instructor Will", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -508,6 +508,7 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+            hide will with dis
             jump aftertutoring
         else:
             jump afterpsychicsetup
@@ -523,6 +524,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ newmon.LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide will with dis
         jump endclass
 else:
     will @happy "Hahaha! Not even the Great Will can teach that Pokémon [taughtmove]!"

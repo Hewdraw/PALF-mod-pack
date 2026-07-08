@@ -28,7 +28,7 @@ alder norm @norm2 "[first_name]. May I have a word?"
 
 red uniform @talkingmouth "Sure thing, Professor."
 
-if (starterobj.GetLevel() == 5):
+if (starterobj.GetLevel() != 5):
     $ starter_species_name = pokedexlookup(starter_id, DexMacros.Name)
     alder happy @happy2 "I've noticed your [starter_species_name] is getting stronger. Good job!"
 
@@ -40,7 +40,7 @@ if (starterobj.GetLevel() == 5):
     red @happy "Oh! Uh, thank you, Sir. I feel like [startergenderpronoun] really trying!"
 
 else:
-    alder happy @happy2 "I've noticed your [starter_species_name] is still level five. not to rush you or anything, but is there a problem?"
+    alder happy @happy2 "I've noticed your [starter_species_name] is still level five. Not to rush you or anything, but is there a problem?"
 
     $ startergenderpronoun = "He's" 
     if (playerparty[0].GetGender() == Genders.Female):

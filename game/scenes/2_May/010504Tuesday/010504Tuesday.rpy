@@ -135,7 +135,7 @@ leaf @talking2mouth "Listen up! I've got a mission for one of you, and I need to
 
 pause 1.0
 
-hilda sadbrow @talkingmouth "I'm going back to bed."
+hilda sadbrow @talking2mouth "I'm going back to bed."
 
 hide hilda with dis
 
@@ -144,7 +144,7 @@ leaf @surprised "W-wait! Hilda, come back!"
 show hilda frownmouth with dis:
     xpos 0.2
 
-hilda @talkingmouth "{cps=20}What?{/cps}"
+hilda @talking2mouth "{cps=20}What?{/cps}"
 
 show hilda surprisedbrow
 show may surprisedbrow
@@ -172,11 +172,11 @@ leaf @embarrassedbrow talking2mouth blush "As... as long as you don't fall off."
 
 pause 1.0
 
-hilda @talkingmouth "What kind of joke is this, Leaf?"
+hilda @talking2mouth "What kind of joke is this, Leaf?"
 
 leaf @talking2mouth "It's... it's not a joke."
 
-hilda @talkingmouth "...Okay, so that's worse."
+hilda @talking2mouth "...Okay, so that's worse."
 
 show serena behind may
 show hilda behind may
@@ -217,7 +217,7 @@ bianca @happy "Yup! Sorry, Leaf."
 
 leaf @sadbrow talking2mouth "Oh.{w=0.5} Oh, crap."
 
-hilda @closedbrow talkingmouth "Yeah, I'm going back to bed."
+hilda @closedbrow talking2mouth "Yeah, I'm going back to bed."
 
 hilda @angry "And if I see that damn air horn again, I'm flushing it down the toilet."
 
@@ -1070,7 +1070,7 @@ leafmind @angrybrow frownmouth "...I'm annoyed that he guessed it so easily."
 
 leaf @closedbrow talking2mouth "It's not love. He's a good friend."
 
-if ("AcceptedConfession" in oldpersondex["Leaf"]["Events"]):
+if (HasEvent("Leaf", "AcceptedConfession")):
     leaf @closedbrow blush talking2mouth "And he owes me a date."
 else:
     leaf @talking2mouth "He made it pretty clear that's where it ended."
@@ -2627,7 +2627,7 @@ if (GetRelationshipRank("Tia") == 1):
 
     red @talking2mouth "But... you can talk! And... and write! And, like... do all kinds of human stuff!"
 
-    tia @happy lightblush "Aw. {font=fonts/sign.ttf}Thank{/font} you! I've been {font=fonts/sign.ttf}trying{/font} really hard. For a {font=fonts/sign.ttf}very{/font} long time."
+    tia @happy lightblush "Aw. [tiafont]Thank{/font} you! I've been [tiafont]trying{/font} really hard. For a [tiafont]very{/font} long time."
 else:
     narrator "Tia nods happily."
 

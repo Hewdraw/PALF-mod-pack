@@ -79,8 +79,8 @@ menu:
 
 pause 0.5
 
-red @closedbrow talking2mouth "The first time we met, you thought I was attacking you, and you slapped me in the face."
-red @talking2mouth "A week ago, you thought I was mind-controlling you, and you tried to get me kicked from the battle team."
+red @closedbrow talking2mouth "The first time we met, you thought I was attacking you, and you battled me out of the blue."
+red @talking2mouth "A week ago, you thought I was mind-controlling you, and you tried to get me kicked from the Battle Team."
 red @sad2eyes talkingmouth "What's going to happen next month? You think I'm stealing priceless art, and you call the cops on me?"
 
 erika @sadmouth "I... I don't think..."

@@ -472,15 +472,21 @@ pause 1.0
 
 miriam @talking2mouth "Oh."
 
-miriam -surprisedbrow -frownmouth -surprised @angrybrow talking2mouth "So when you went into the forest this week..."
+if (rescuedtia or rescuedsabrina or rescuedwill):
+    miriam -surprisedbrow -frownmouth -surprised @angrybrow talking2mouth "So when you went into the forest this week..."
 
-red @surprised "No, no, {i}I{/i} was allowed to. I had special permission from the Disciplinary Committee."
+    red @surprised "No, no, {i}I{/i} was allowed to. I had special permission from the Disciplinary Committee."
 
-miriam @talkingmouth "Well, thank you for letting me know."
+    miriam @talkingmouth "Well, thank you for letting me know."
 
-pause 1.0
+    pause 1.0
 
-miriam @sadbrow talking2mouth "...There's another student out there, isn't there?"
+    miriam @sadbrow talking2mouth "...There's another student out there, isn't there?"
+
+else:
+    pause 1.0
+    
+    miriam -surprisedbrow -frownmouth -surprised @sadbrow talking2mouth "...There's a student out there, isn't there?"
 
 leaf @sadbrow talking2mouth "Y-"
 
@@ -1847,7 +1853,7 @@ show fulldeoxys:
         ease 1.5 ypos 1.17
         repeat
 
-"AZOTH1" "\"{font=fonts/alien.ttf}Deoxys.{/font}\""
+TempCharacter("{gradient=#EC5124-#0B98B4}AZOTH1{/gradient}") "{font=fonts/alien.ttf}Deoxys.{/font}"
 
 pause 1.0
 
@@ -1870,7 +1876,7 @@ show fulldeoxys:
         ease 1.0 ypos 1.17
         repeat
 
-"AZOTH1" "\"{font=fonts/alien.ttf}Deoxys.{/font}\""
+TempCharacter("{gradient=#EC5124-#0B98B4}AZOTH1{/gradient}") "{font=fonts/alien.ttf}Deoxys.{/font}"
 
 yellow @surprised "They're... they're afraid. They're running from something. A 'bad person.'"
 
@@ -1893,11 +1899,11 @@ show fulldeoxys:
         ease 0.5 ypos 1.17
         repeat
 
-"AZOTH1" "\"{font=fonts/alien.ttf}D E O X Y S.{/font}\""
+TempCharacter("{gradient=#EC5124-#0B98B4}AZOTH1{/gradient}") "{font=fonts/alien.ttf}D E O X Y S.{/font}"
 
 yellow @sad "They're... they're being chased. Someone is trying to take their treasure. Is... what's your treasure, Azoth?"
 
-"AZOTH1" "\"{font=fonts/alien.ttf}Deoxys.{/font}\""
+TempCharacter("{gradient=#EC5124-#0B98B4}AZOTH1{/gradient}") "{font=fonts/alien.ttf}Deoxys.{/font}"
 
 pause 1.0
 

@@ -1,4 +1,5 @@
-init -1 python:
+init -3 python:
+    import re
     import copy
     import random 
     import math
@@ -308,8 +309,9 @@ init -1 python:
         DefaultGiftReaction = 7
         Tags = 8
 
+init -1 python:
     class Item:
         pass
     # Associate every item name to a macro
     for entry in itemdex.values():
-        setattr(Item, entry[ItemdexMacros.Name].replace(" ", "").replace("é", "e").replace("-", "").replace("(", "").replace(")", "").replace("'", "").replace("#", "").replace(".", ""), entry[ItemdexMacros.Id])
+        setattr(Item, entry[ItemdexMacros.Name].replace(" ", "").replace("é", "e").replace("-", "").replace("(", "").replace(")", "").replace("'", "").replace("#", "").replace(".", "").replace(":", ""), entry[ItemdexMacros.Id])

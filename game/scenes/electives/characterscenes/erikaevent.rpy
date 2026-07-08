@@ -41,11 +41,13 @@ if (IsAfter(11, 4, 2004) and IsBefore(20, 4, 2004) and not HasEvent("Erika", "Ba
 
     erika @happy "Oh, no! Rather, you convinced me that I could defend myself from the brutes and adversaries doubtlessly embedded in the school."
 
-    erika @talkingmouth "I, again, am truly sorry about that slap. But it gave me a tremendous sense of self-confidence about my ability to succeed in this school."
+    erika @talkingmouth "I, again, am truly sorry about how I reacted when we first met. But it gave me a tremendous sense of self-confidence about my ability to succeed in this school."
 
     red @confused "Uh-huh."
 
-    redmind @thinking "Seriously. That was such a weak slap. But I don't have the heart to tell her."
+    if (WonBattle("Erika0")):
+        redmind @thinking "I mean[ellipses] I beat her. Easily. Why did that make her {i}more{/i} confident?"
+        redmind @closedeyes sadeyebrows frownmouth "[ellipses]Ah, hell, if she became more confident from that, more power to her."
 
     red @happy "Well, that's great! Maybe I'll see you around some more, then?"
 

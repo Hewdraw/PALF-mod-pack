@@ -254,7 +254,7 @@ label bug_class_14:
     hide burgh with dis
     hide may with dis
     bugsy uniform @surprised "OHSHIT--"
-    Character("Scizor") "\"-ZZZORR!\""
+    TempCharacter("Scizor") "\"-ZZZORR!\""
     $ PlaySound("pokemon/cries/212.mp3") 
     red uniform @surprised "Wha-? What's going on?"
     bugsy @talking2mouth "Over there--I thought I saw--"
@@ -266,7 +266,7 @@ label bug_class_14:
     red @happyeyebrows talkingmouth "Why does your Scizor look like he's about to kill me?"
     bugsy @surprised "Shoot--sorry!"
     bugsy @talkingmouth "Sssh, Fern, it's okay. That's just [first_name]--we're Bug buddies! He's a really nice guy, I promise."
-    Character("Fern") "\"-Ssszzz...\""
+    TempCharacter("Fern") "\"-Ssszzz...\""
     $ PlaySound("pokemon/cries/212.mp3")
     bugsy @happy "{i}There{/i} we go."
     red @angryeyebrows talking2mouth "Alright, I believed you about the Spinarak. But are you gonna say {i}that{/i} was a misunderstanding, too?"
@@ -383,6 +383,7 @@ label bug_class_18:
     return
 
 label bug_class_19:
+    show burgh with dis
     burgh @sad "Oh, dear... I quite understand why you're thinking of dropping my class."
     burgh @sad2 "There's no need to apologize, and certainly none to shed tears. Here, sit down--and have a tissue."
     burgh @norm "I've been teaching at Kobukan for almost a decade now. In that time, many of my students have reached the same conclusion you have."
@@ -396,6 +397,7 @@ label bug_class_19:
     return
 
 label bug_class_20:
+    show burgh with dis
     burgh @norm2 "Today we'll be discussing the charmingly-named {b}Infestation{/b}."
     burgh @norm "As you might have guessed, it attracts a swarming cloud of insects."
     burgh @surprised "It's perfect for pollinating your garden--I've given Ramos a hand several times. Yet he's always called me 'Gertrude'..."
@@ -605,6 +607,7 @@ label bug_class_29:
     bugsy @happy "Burgh helped me out with that. I've known Fern longer than him, so I could only trade with someone I really trusted!"
     bugsy @talkingmouth "Oh, and he's {i}de-he-finitely{/i} not dangerous. Fern's {i}super{/i} well behaved. Isn't that right, buddy?"
     $ PlaySound("pokemon/cries/212.mp3")
+    show sideportraitfull at backinpokeball, dormdesk
     bugsy @happy "I don't even keep him in his Poké Ball, most of the time. It's just... y'know... school rules."
     redmind @thinking "Boy, does that sound familiar..."
     bugsy @talkingmouth "Anyway, Fern's ability is {b}Technician{/b}, which powers up moves that aren't the strongest."
@@ -613,7 +616,9 @@ label bug_class_29:
     bugsy @talkingmouth "I dunno... it hasn't been {i}too{/i} long since then, right? D'you think maybe there could still be some out there? Or maybe they could be brought back from fossils?"
     bugsy happy "You should get Lenora on that, okay, Burgh?"
     narrator "Burgh recommends viewing the the Nacrene Museum's Antiquities Collection..."
-    hide bugsy with dis
+    hide sideportraitfull
+    hide bugsy 
+    with dis
     return
 
 label bug_class_30:
@@ -662,6 +667,7 @@ label bug_class_32:
         xpos -0.2
         ease 0.4 xpos 0.33
     valerie "Hello!"
+    $ BecomeNamed("Instructor Valerie")
     bugsy uniform @happy "Hi, Valerie!"
     pause 0.5
     burgh norm3 "...Valerie, dear. You've completely ruined my dramatic buildup."
@@ -683,12 +689,12 @@ label bug_class_32:
 label bug_class_33:
     show valerie with dis
     valerie @happy "My, my! It feels like the first day of class all over again!"
-    valerie @talkingmouth "And what Pokémon could I start with other than {b}Rimbombee{/b}? As the only Bug/Fairy Pokémon, it holds a very special place in my heart."
-    valerie "Juvenile Rimbombee are called {b}Cutiefly{/b}. They're essential pollinators in Alola, keeping all of its bright flowers flourishing."
-    valerie @surprised "Both Cutiefly and Rimbombee can sense aura--though they don't use it for battle, like a Lucario might. Instead, they locate whichever flowers are ripest with pollen."
-    valerie @happy "Cutiefly and Rimbombee collect the pollen and spread it during their travels--while eating the honey left for them in exchange."
+    valerie @talkingmouth "And what Pokémon could I start with other than {b}Ribombee{/b}? As the only Bug/Fairy Pokémon, it holds a very special place in my heart."
+    valerie "Juvenile Ribombee are called {b}Cutiefly{/b}. They're essential pollinators in Alola, keeping all of its bright flowers flourishing."
+    valerie @surprised "Both Cutiefly and Ribombee can sense aura--though they don't use it for battle, like a Lucario might. Instead, they locate whichever flowers are ripest with pollen."
+    valerie @happy "Cutiefly and Ribombee collect the pollen and spread it during their travels--while eating the honey left for them in exchange."
     valerie @talkingmouth "It's a perfect example of symbiosis, and one on which the ecosystem depends."
-    valerie @sad "If Rimbombee went extinct, so would forty percent of Alola's native plants--and all of the Pokémon which feed on them."
+    valerie @sad "If Ribombee went extinct, so would forty percent of Alola's native plants--and all of the Pokémon which feed on them."
     valerie @happy "So we'll have to keep their habitat as lovely as we've found it!"
     valerie "And we'll have to remember that {i}all{/i} Pokémon depend on one another, as part of the great web of life."
     narrator "Valerie praises the harmonious way in which Alolans interact with nature..."

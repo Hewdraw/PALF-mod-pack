@@ -162,7 +162,7 @@ if (interaction == "Study"):
                     jump aftersetup
         
         else:
-            redmind uniform @thinking "It doesn't look like there's anyone in the library willing to study right now, so I'll have to study alone. It won't be as effective as studying with someone."
+            redmind @thinking "It doesn't look like there's anyone in the library willing to study right now, so I'll have to study alone. It won't be as effective as studying with someone."
 
             menu:
                 "That's fine.":
@@ -188,7 +188,6 @@ elif (interaction == "Town"):
         jump aftersetup
 
 elif (interaction == "Fields"):
-    
     if (IsBefore(13, 4, 2004)):
         redmind @thinking "I should probably get a bit more used to the campus before I head out alone."
         jump aftersetup
@@ -205,8 +204,9 @@ elif (interaction == "Fields"):
             else:
                 $ SetLastHangout("Gardenia")
                 call Gardenia1Part2 from _call_Gardenia1Part2
+                jump aftersetup
 
-        elif (IsAfter(10, 5, 2004) and not (rescuedwill and rescuedsabrina and rescuedtia) and IsBefore(17, 5, 2004)):
+        elif (IsAfter(10, 5, 2004) and not (rescuedwill and rescuedsabrina and rescuedtia) and IsBefore(16, 5, 2004)):
             menu:
                 "{color=#0f0}[[Easy]{/color} >Rescue Instructor Will from the Unhallowed Holt" if not rescuedwill:
                     jump unhallowedholt
@@ -291,7 +291,7 @@ elif (interaction == "Fields"):
         jump aftersetup 
 
 elif (interaction == "Catacombs"):
-    if (HasEvent("Professor Oak", "FoundCatacombs") or (IsPresent("Silver") and IsPresent("Cheren") and IsPresent("Skyla"))):
+    if (HasEvent("Professor Oak", "FoundCatacombs") or IsPresent(["Silver", "Cheren", "Skyla"])):
         if (trainer1.HasMons()):
             call wildarea("catacombs") from _call_wildarea_8
         else:
@@ -348,6 +348,11 @@ elif (interaction == "LevelCheck"):
     red @talkingmouth "Thanks for the advice."
 
     jump aftersetup
+
+elif (interaction == "ContestScene"):
+    call contestscenequeue() from _call_contestscenequeue
+    if (_return):
+        call PostContestBunnyCheck() from _call_PostContestBunnyCheck
 
 elif (interaction in ["B5", "B5Plus"]):
     show stadium_empty with dis
@@ -445,8 +450,8 @@ elif (interaction == "CookingClub"):
 
         red @happy "Wouldn't dream of asking for one."
 
-        if (not HasEvent("May", "SeenClassic")):
-            $ AddEvent("May", "SeenClassic")
+        if (not HasEvent("May", "SeenCooking")):
+            $ AddEvent("May", "SeenCooking")
 
             red @talkingmouth "Hey, is that a new outfit?"
 
@@ -566,49 +571,63 @@ else:
                             expstring += mon.GainExperience(math.floor(pow(AimLevel(), 3) / 25 * (GetCharacterLevel(interaction) / 5)))
                         PrintExp(expstring)
 
-                    renpy.hide(interactionsprite)
-                jump afterfreetime
+                if (interaction not in GiftsGiven and IsContacted("Gardenia")):
+                    narrator "Would you like to give [interaction] a gift?"
 
-            ">Give a gift" if (interaction not in GiftsGiven and persondex["Gardenia"]["Contact"]):
-                python:
-                    global invoverwrite
-                    global itemdesc
-                    invoverwrite = None
-                    itemdesc = " "
-                    item = renpy.call_screen("fieldinventory", True)
-                if (item == "back"):
-                    $ renpy.hide(interactionsprite)
-                    $ renpy.jump("freeroam")
-                else:
-                    $ itemname = GetItemName(item)
-                    menu:
-                        ">Give [interaction] the [itemname]":
-                            if (LoseItem(item)):
-                                python:
-                                    presentvalue = GetGiftValue(interaction, item)
-                                    renpy.show(GetCharacterSprite(interaction, presentvalue))
-                                    if (presentvalue < 1):
-                                        renpy.say(None, "You swear you saw {} cringing as they take the {}...".format(interaction, itemname))
-                                    elif (presentvalue == 1):
-                                        renpy.say(None, "{} seems confused, but politely accepts the {}.".format(interaction, itemname))
-                                    elif (presentvalue == 2):
-                                        renpy.say(None, "{} accepts the {}.".format(interaction, itemname))
-                                    elif (presentvalue == 3):
-                                        renpy.say(None, "{} happily accepts the {}.".format(interaction, itemname))
-                                    elif (presentvalue == 4):
-                                        renpy.say(None, "{} joyfully accepts the {}.".format(interaction, itemname))
-                                    elif (presentvalue >= 5):
-                                        renpy.say(None, "{} ecstatically accepts the {}!".format(interaction, itemname))
-                                    if (interaction in ["Jasmine", "Grusha"]):
-                                        presentvalue *= 2
-                                    GiftsGiven.append(interaction)
-                                    ValueChange(interaction, presentvalue, 0.12, changemood=False)
+                    menu giftingmenu:
+                        ">Give a gift":
+                            python:
+                                global invoverwrite
+                                global itemdesc
+                                invoverwrite = None
+                                itemdesc = " "
+                                item = renpy.call_screen("fieldinventory", True)
+                            if (item == "back"):
+                                pass
+                            else:
+                                $ itemname = GetItemName(item)
+                                menu:
+                                    ">Give [interaction] the [itemname]":
+                                        if (LoseItem(item)):
+                                            python:
+                                                presentvalue = GetGiftValue(interaction, item)
+                                                renpy.show(GetCharacterSprite(interaction, presentvalue))
+                                                if (presentvalue < 1):
+                                                    renpy.say(None, "You swear you saw {} cringing as they take the {}...".format(interaction, itemname))
+                                                elif (presentvalue == 1):
+                                                    renpy.say(None, "{} seems confused, but politely accepts the {}.".format(interaction, itemname))
+                                                elif (presentvalue == 2):
+                                                    renpy.say(None, "{} accepts the {}.".format(interaction, itemname))
+                                                elif (presentvalue == 3):
+                                                    renpy.say(None, "{} happily accepts the {}.".format(interaction, itemname))
+                                                elif (presentvalue == 4):
+                                                    renpy.say(None, "{} joyfully accepts the {}.".format(interaction, itemname))
+                                                elif (presentvalue >= 5):
+                                                    renpy.say(None, "{} ecstatically accepts the {}!".format(interaction, itemname))
+                                                if (interaction in ["Jasmine", "Grusha"]):
+                                                    presentvalue *= 2
+                                                GiftsGiven.append(interaction)
+                                                ValueChange(interaction, presentvalue, 0.12, changemood=False)
 
-                        "Nevermind":
+                                    "Nevermind":
+                                        jump giftingmenu
+
+                        ">Do not":
                             pass
 
-                    $ renpy.hide(interactionsprite)
-                    $ renpy.jump("freeroam")
+                if (CanBunnyRecruit(interaction)):
+                    narrator "Now seems like it might be a good time to mention the party on Saturday[ellipses] do you want to bring it up with [interaction]?"
+
+                    menu:
+                        "Yes.":
+                            call BunnyRecruit(interaction, False) from _call_BunnyRecruit_1
+
+                        "No.":
+                            pass
+
+                $ renpy.hide(interactionsprite)
+
+                jump afterfreetime
 
             "Nevermind":
                 python:
@@ -651,7 +670,7 @@ if (IsDate(5, 6, 2004)):
     elif (timeOfDay == "Noon"):
         call klarapartyscene2 from _call_klarapartyscene2
 
-    else:
+    elif (timeOfDay == "Evening"):
         call klarapartyscene3 from _call_klarapartyscene3
 
 if (timeOfDay == "Morning"):
@@ -660,11 +679,7 @@ elif (timeOfDay == "Noon" or timeOfDay == "Afternoon"):
     $ timeOfDay = "Evening"
 elif (timeOfDay == "Evening" or timeOfDay == "After School"):
     if (excusesecondhomeroom):
-        $ jumpto = "aftersecondhomeroom"
-        $ jumptoyear = "01"
-        $ jumptomonth = ("0" if calDate.month < 10 else "") + str(calDate.month)
-        $ jumptodate = ("0" if calDate.day < 10 else "") + str(calDate.day)
-        $ renpy.jump(jumpto + jumptoyear + jumptomonth + jumptodate)
+        jump aftersecondhomeroom010419
     else:
         $ timeOfDay = "Night"
 
@@ -692,7 +707,7 @@ elif (timeOfDay == "Night"):
 
     show screen currentdate with dis
 
-    if (not skipnightscenes and getRWDay(0) != "Friday"):
+    if (getRWDay(0) != "Friday"):
         call nightscenequeue from _call_nightscenequeue
 
     return

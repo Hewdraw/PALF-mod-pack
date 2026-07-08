@@ -11,11 +11,14 @@ init:
         ypos 1.0
 
         group body auto:
-            attribute neutralbody "red_body_neutralbody" default
+            attribute neutralbody ConditionSwitch(
+                "HasEvent('Game', 'AutoBunny') or HasEvent('Game', 'AutoContest')", "red_body_hatless",
+                "True", "red_body_neutralbody") default
             attribute hatless "red_body_hatless"
             attribute neutralhatless "red_body_hatless"
             attribute swimsuithatless "red_body_hatless"
             attribute contest "red_body_hatless"
+            attribute bunny "red_body_hatless"
             attribute battleteam null
 
         group underlay auto:
@@ -23,6 +26,9 @@ init:
 
         group costume auto:
             attribute neutralcostume ConditionSwitch(
+                "HasEvent('Game', 'AutoBunny')", "red_costume_bunny",
+                "HasEvent('Game', 'AutoContest')", "red_costume_contest",
+                "HasEvent('Game', 'AutoUniform')", "red_costume_uniform",
                 "GetRelationshipRank(\"Silver\") > 1 and location == \"mountain\"", "red_costume_winter",
                 "True", "red_costume_neutralcostume") default
             attribute neutralhatless ConditionSwitch(
@@ -52,12 +58,14 @@ init:
             attribute playfulbrow "red_eyes_playfuleyes"
             attribute thinking "red_eyes_closedeyes"
             attribute unamusedbrow "red_eyes_playfuleyes"
+            attribute unamusedeyes "red_eyes_playfuleyes"
             attribute winkbrow "red_eyes_winkeyes"
             attribute angrybrow "red_eyes_angryeyes"
             attribute angry "red_eyes_angryeyes"
             attribute wince "red_eyes_winkeyes"
             attribute pity "red_eyes_sadeyes"
             attribute sigh "red_eyes_closedeyes"
+            attribute upbrow "red_eyes_upeyes"
 
         group mouth auto:
             attribute neutralmouth default
@@ -95,13 +103,17 @@ init:
             attribute wince "red_eyebrows_confusedeyebrows"
             attribute thonk "red_eyebrows_confusedeyebrows"
             attribute pity "red_eyebrows_sadeyebrows"
+            attribute upbrow "red_eyebrows_neutraleyebrows"
 
         group hat auto:
-            attribute hat "red_hat_hat" default
+            attribute hat ConditionSwitch(
+                "HasEvent('Game', 'AutoBunny') or HasEvent('Game', 'AutoContest')", Null(),
+                "True", "red_hat_hat") default
             attribute contest null
             attribute hatless null
             attribute neutralhatless null
             attribute swimsuithatless null
+            attribute bunny null
 
         group tears auto
 
@@ -120,7 +132,7 @@ init:
 
         group glasses auto
 
-        always "red_eyesparkles" if_not ["noeyes", "noshine", "happybrow", "closedbrow", "closedeyes", "deadeyes", "happyeyes", "thinking", "happy", "sad2eyes", "sad2brow", "winkeyes", "winkbrow", "upeyes", "upbrow", "downeyes", "downbrow", "angry2eyes", "angry2brow", "angryeyes", "angrybrow", "angry", "wince"] 
+        always "red_eyesparkles" if_not ["noeyes", "noshine", "happybrow", "closedbrow", "closedeyes", "deadeyes", "happyeyes", "thinking", "happy", "sad2eyes", "sad2brow", "winkeyes", "winkbrow", "upeyes", "upbrow", "downeyes", "downbrow", "angry2eyes", "angry2brow", "angryeyes", "angrybrow", "angry", "wince", "sigh"] 
         always "red_eyesparkles_sad2eyes" if_not ["noshine"] if_any ["sad2eyes", "sad2brow"]
         always "red_eyesparkles_winkeyes" if_not ["noshine"] if_any ["winkeyes", "winkbrow", "wince"]
         always "red_eyesparkles_upeyes" if_not ["noshine"] if_any ["upeyes", "upbrow"]
@@ -152,6 +164,7 @@ init:
 
         group eyes auto:
             attribute neutraleyes default
+            attribute neutralbrow "tia_eyes_neutraleyes"
             attribute sad "tia_eyes_sadeyes"
             attribute happy "tia_eyes_happyeyes"
             attribute surprised "tia_eyes_surprisedeyes"
@@ -167,6 +180,7 @@ init:
 
         group eyebrows auto:
             attribute neutraleyebrows default
+            attribute neutralbrow "tia_eyebrows_neutraleyebrows"
             attribute sad "tia_eyebrows_sadeyebrows"
             attribute happy "tia_eyebrows_happyeyebrows"
             attribute surprised "tia_eyebrows_surprisedeyebrows"
@@ -295,6 +309,7 @@ init:
 
         group eyes auto:
             attribute neutraleyes default
+            attribute neutralbrow "jasmine_eyes_neutraleyes"
             attribute sad "jasmine_eyes_sadeyes"
             attribute happy "jasmine_eyes_happyeyes"
             attribute surprised "jasmine_eyes_surprisedeyes"
@@ -317,6 +332,7 @@ init:
 
         group eyebrows auto:
             attribute neutraleyebrows default
+            attribute neutralbrow "jasmine_eyebrows_neutraleyebrows"
             attribute sad "jasmine_eyebrows_sadeyebrows"
             attribute happy "jasmine_eyebrows_happyeyebrows"
             attribute surprised "jasmine_eyebrows_surprisedeyebrows"
@@ -411,7 +427,10 @@ init:
             attribute furiousbrow "grusha_eyes_angry2eyes"
             attribute confusedbrow "grusha_eyes_neutraleyes"
             attribute confused "grusha_eyes_neutraleyes"
+            attribute neutralbrow "grusha_eyes_neutraleyes"
             attribute winkbrow "grusha_eyes_winkeyes"
+
+        group eyesoverlay auto
 
         group eyebrows auto:
             attribute neutraleyebrows default
@@ -432,6 +451,7 @@ init:
             attribute furiousbrow "grusha_eyebrows_angryeyebrows"
             attribute confusedbrow "grusha_eyebrows_confusedeyebrows"
             attribute confused "grusha_eyebrows_confusedeyebrows"
+            attribute neutralbrow "grusha_eyebrows_neutraleyebrows"
             attribute winkbrow "grusha_eyebrows_neutraleyebrows"
 
         group mouth auto:
@@ -741,24 +761,27 @@ init:
         
         group body auto:
             attribute neutral ConditionSwitch(
+                "HasEvent('Yellow', 'AutoContest')", "yellow_body_contest",
+                "GetEventDatetime('Yellow', 'CherryUnpopular') == calDate", "yellow_body_neutralhairdown",
                 "getRWDay(0) not in ['Saturday', 'Sunday'] and timeOfDay not in ['Evening', 'Night']", "yellow_body_neutralhat",
-                "str(calDate.day)[-1] in [1, 2]", "yellow_body_neutral",
-                "str(calDate.day)[-1] in [3, 4]", "yellow_body_neutralbraid",
-                "str(calDate.day)[-1] in [5, 6]", "yellow_body_neutralbraidfront",
-                "str(calDate.day)[-1] in [7, 8]", "yellow_body_neutralhairdown",
+                "calDate.day % 10 in [1, 5, 9]", "yellow_body_neutral",
+                "calDate.day % 10 in [2, 6, 0]", "yellow_body_neutralbraid",
+                "calDate.day % 10 in [3, 7]", "yellow_body_neutralbraidfront",
                 "True", "yellow_body_neutrallowponytail") default
 
             attribute uniform ConditionSwitch(
+                "GetEventDatetime('Yellow', 'CherryUnpopular') == calDate", "yellow_body_uniformhairdown",
                 "getRWDay(0) not in ['Saturday', 'Sunday'] and timeOfDay not in ['Evening', 'Night']", "yellow_body_uniformhat",
-                "str(calDate.day)[-1] in [1, 2]", "yellow_body_uniform",
-                "str(calDate.day)[-1] in [3, 4]", "yellow_body_uniformbraid",
-                "str(calDate.day)[-1] in [5, 6]", "yellow_body_uniformbraidfront",
-                "str(calDate.day)[-1] in [7, 8]", "yellow_body_uniformhairdown",
+                "calDate.day % 10 in [1, 5, 9]", "yellow_body_uniform",
+                "calDate.day % 10 in [2, 6, 0]", "yellow_body_uniformbraid",
+                "calDate.day % 10 in [3, 7]", "yellow_body_uniformbraidfront",
                 "True", "yellow_body_uniformlowponytail")
 
         group fullblush auto
 
         group blush auto
+
+        group eyebag auto
 
         group eyes auto:
             attribute neutraleyes default
@@ -776,6 +799,8 @@ init:
             attribute sad2brow "yellow_eyes_sad2eyes"
             attribute scaredbrow "yellow_eyes_scaredeyes"
             attribute confusedbrow "yellow_eyes_neutraleyes"
+            attribute winkbrow "yellow_eyes_winkeyes"
+            attribute neutralbrow "yellow_eyes_neutraleyes"
 
         group eyebrows auto:
             attribute neutraleyebrows default
@@ -793,6 +818,8 @@ init:
             attribute sad2brow "yellow_eyebrows_sadeyebrows"
             attribute scaredbrow "yellow_eyebrows_interestedeyebrows"
             attribute confusedbrow "yellow_eyebrows_confusedeyebrows"
+            attribute winkbrow "yellow_eyebrows_neutraleyebrows"
+            attribute neutralbrow "yellow_eyebrows_neutraleyebrows"
 
         group mouth auto:
             attribute neutralmouth default
@@ -801,7 +828,7 @@ init:
             attribute happy "yellow_mouth_happymouth"
             attribute surprised "yellow_mouth_surprisedmouth"
             attribute thinking "yellow_mouth_neutralmouth"
-            attribute talkingmouth "yellow_mouth_talking2mouth"
+            attribute smilemouth "yellow_mouth_neutralmouth"
 
         group tears auto
 
@@ -812,6 +839,8 @@ init:
         group shadow auto
 
         group healingpower auto
+
+        group sweat auto
 
     image side yellow = LayeredImageProxy("yellow", Transform(xpos=0.08, yanchor=0.35))
 
@@ -905,7 +934,8 @@ init:
 
         always "sonia_body"
 
-        group blush auto
+        group blush auto:
+            attribute lightblush "sonia_blush_blush"
 
         group hair auto:
             attribute neutralhair default
@@ -1111,7 +1141,10 @@ init:
         xalign 0.5
         yanchor 0.6
         ypos 1.0
-        always "mace_body"
+
+        group body auto:
+            attribute neutral "mace_body_neutral" default
+            attribute uniform "mace_body_uniform" 
 
         group brow auto:
             attribute neutralbrow default
@@ -1161,6 +1194,24 @@ init:
 
     image side falkner = LayeredImageProxy("falkner", Transform(xpos=0.05, yanchor=0.35, xzoom=-1))
 
+    python:
+        def LeafHatlessOutfitMatch():
+            hatlessoutfits = [
+                'adventure',
+                'date', 
+                'bunny', 
+                'casual',
+                'hatless',
+                'towel',
+                'bedhair'
+            ]
+            leafatts = renpy.get_attributes('leaf')
+            if (leafatts != None):
+                for att in leafatts:
+                    if (att in hatlessoutfits):
+                        return True
+            return False
+
     layeredimage leaf:
         zoom 0.5
         xalign 0.5
@@ -1171,12 +1222,19 @@ init:
             attribute neutral default
             attribute date "leaf_body_adventure"
 
+        group shadow auto
+
         group brow auto if_not ["makeup"]:
             attribute neutralbrow default
             attribute sad "leaf_brow_sadbrow"
             attribute angry "leaf_brow_angrybrow"
             attribute happy "leaf_brow_happybrow"
-            attribute surprised "leaf_brow_surprisedbrow"
+            attribute surprised ConditionSwitch(
+                "LeafHatlessOutfitMatch()", "leaf_brow_surprisedhatlessbrow",
+                "True", "leaf_brow_surprisedbrow")
+            attribute surprisedbrow ConditionSwitch(
+                "LeafHatlessOutfitMatch()", "leaf_brow_surprisedhatlessbrow",
+                "True", "leaf_brow_surprisedbrow")
             attribute flirt "leaf_brow_flirtbrow"
             attribute flirttalk "leaf_brow_flirtbrow"
             attribute embarrassed "leaf_brow_embarrassedbrow"
@@ -1226,7 +1284,8 @@ init:
 
         group cry auto
 
-        group shadow auto
+        group sweat auto:
+            attribute sweat null
 
         group disguise auto:
             attribute nodisguise null
@@ -1279,6 +1338,7 @@ init:
         group outfit auto:
             attribute neutral "ethan_outfit_neutral" default
             attribute casual "ethan_outfit_casual"
+            attribute bunny null
         
         group tired auto
 
@@ -1302,9 +1362,11 @@ init:
             attribute happybrow "ethan_eyes_happyeyes"
             attribute confusedbrow "ethan_eyes_neutraleyes"
             attribute playfulbrow "ethan_eyes_playfuleyes"
+            attribute flirtbrow "ethan_eyes_playfuleyes"
             attribute winkbrow "ethan_eyes_winkeyes"
             attribute unamusedbrow "ethan_eyes_playfuleyes"
             attribute wince "ethan_eyes_winkeyes"
+            attribute neutralbrow "ethan_eyes_neutraleyes"
 
         group eyebrows auto:
             attribute neutraleyebrows default
@@ -1326,9 +1388,11 @@ init:
             attribute confused "ethan_eyebrows_confusedeyebrows"
             attribute confusedbrow "ethan_eyebrows_confusedeyebrows"
             attribute playfulbrow "ethan_eyebrows_playfuleyebrows"
+            attribute flirtbrow "ethan_eyebrows_playfuleyebrows"
             attribute winkbrow "ethan_eyebrows_neutraleyebrows"
             attribute unamusedbrow "ethan_eyebrows_unamusedeyebrows"
             attribute wince "ethan_eyebrows_confusedeyebrows"
+            attribute neutralbrow "ethan_eyebrows_neutraleyebrows"
 
         group mouth auto:
             attribute neutralmouth default
@@ -1348,18 +1412,20 @@ init:
         group anger auto:
             attribute angry "ethan_anger_anger"
 
-        group blush auto
+        group blush auto:
+            attribute blush "ethan_blush_lightblush"
 
-        group hat auto
+        group hat auto:
+            attribute bunny null
 
         group cry auto
 
         group eyeshine auto:
             attribute noshine null
 
-        always "ethan_eyesparkles" if_not ["noshine", "sad2brow", "happybrow", "closedbrow", "closedeyes", "deadeyes", "happyeyes", "thinking", "happy", "sad2eyes", "angry2eyes", "angry2brow", "playfuleyes", "playfulbrow", "winkeyes", "winkbrow", "unamusedbrow", "downeyes", "downbrow", "upeyes", "upbrow", "wince"]
+        always "ethan_eyesparkles" if_not ["noshine", "sad2brow", "happybrow", "closedbrow", "closedeyes", "deadeyes", "happyeyes", "thinking", "happy", "sad2eyes", "angry2eyes", "angry2brow", "playfuleyes", "playfulbrow", "winkeyes", "winkbrow", "unamusedbrow", "downeyes", "downbrow", "upeyes", "upbrow", "wince", "flirtbrow", "flirteyes"]
         always "ethan_eyesparkles_sad2eyes" if_any ["sad2eyes", "sad2brow"] if_not ["noshine"]
-        always "ethan_eyesparkles_playfuleyes" if_any ["playfuleyes", "playfulbrow", "unamusedbrow"] if_not ["noshine"]
+        always "ethan_eyesparkles_playfuleyes" if_any ["playfuleyes", "playfulbrow", "unamusedbrow", "flirtbrow", "flirteyes"] if_not ["noshine"]
         always "ethan_eyesparkles_winkeyes" if_any ["winkeyes", "winkbrow", "wince"] if_not ["noshine"]
         always "ethan_eyesparkles_downeyes" if_any ["downeyes", "downbrow"] if_not ["noshine"]
         always "ethan_eyesparkles_upeyes" if_any ["upeyes", "upbrow"] if_not ["noshine"]
@@ -1441,7 +1507,7 @@ init:
 
         group shadow auto
 
-        group brow auto:
+        group brow auto if_not ["contest"]: 
             attribute neutralbrow default
             attribute sad "brendan_brow_sadbrow"
             attribute angry "brendan_brow_angrybrow"
@@ -1449,14 +1515,16 @@ init:
             attribute surprised "brendan_brow_surprisedbrow"
             attribute thinking "brendan_brow_closedbrow"
 
-        group eyesparkles auto:
+        group hatlessbrow auto if_any ["contest"]:
             attribute neutralbrow default
+            attribute sad "brendan_hatlessbrow_sadbrow"
+            attribute angry "brendan_hatlessbrow_angrybrow"
+            attribute happy "brendan_hatlessbrow_happybrow"
+            attribute surprised "brendan_hatlessbrow_surprisedbrow"
+            attribute thinking "brendan_hatlessbrow_closedbrow"
+
+        group eyesparkles auto:
             attribute noshine null
-            attribute sad "brendan_brow_sadbrow"
-            attribute angry "brendan_brow_angrybrow"
-            attribute happy "brendan_brow_happybrow"
-            attribute surprised "brendan_brow_surprisedbrow"
-            attribute thinking "brendan_brow_closedbrow"
 
         group mouth auto:
             attribute neutralmouth default
@@ -1469,6 +1537,14 @@ init:
         group sweat auto
 
         group wrinkles auto
+
+        always "brendan_eyesparkles_neutraleyesparkles" if_not ["noeyes", "noshine", "happybrow", "closedbrow", "closedeyes", "deadeyes", "deadbrow", "happyeyes", "thinking", "happy", "sad2eyes", "sad2brow", "winkeyes", "winkbrow", "upeyes", "upbrow", "downeyes", "downbrow", "angry2eyes", "angry2brow", "angryeyes", "angrybrow", "angry", "wince", "annoyedbrow", "annoyedeyes"] 
+        always "brendan_eyesparkles_sad2eyesparkles" if_not ["noshine"] if_any ["sad2brow", "sad2brow"]
+        always "brendan_eyesparkles_winkeyesparkles" if_not ["noshine"] if_any ["winkbrow", "winkbrow", "wince"]
+        always "brendan_eyesparkles_upeyesparkles" if_not ["noshine"] if_any ["upbrow", "upbrow"]
+        always "brendan_eyesparkles_downeyesparkles" if_not ["noshine"] if_any ["downbrow", "downbrow"]
+        always "brendan_eyesparkles_angryeyesparkles" if_not ["noshine"] if_any ["angry", "angrybrow", "angryeyes"]
+        always "brendan_eyesparkles_annoyedeyesparkles" if_not ["noshine"] if_any ["annoyedbrow", "annoyedeyes"]
 
     image side brendan = LayeredImageProxy("brendan", Transform(xpos=0.08, yanchor=0.35, xzoom=-1))
 
@@ -1594,7 +1670,8 @@ init:
             attribute surprised "may_mouth_surprisedmouth"
             attribute thinking "may_mouth_frownmouth"
 
-        group blush auto
+        group blush auto:
+            attribute lightblush "sonia_blush_blush"
 
         always "may_eyesparkles_neutralbrow" if_not ["noshine", "sad2brow", "happybrow", "closedbrow", "closedeyes", "deadeyes", "happyeyes", "thinking", "happy", "sad2eyes", "angry2eyes", "angry2brow", "playfuleyes", "playfulbrow", "flirtbrow", "angrybrow", "deadeyes", "deadbrow"] 
         always "may_eyesparkles_sadbrow" if_any ["sadbrow"] if_not ["noshine"]
@@ -1736,6 +1813,7 @@ init:
 
         group clothes auto:
             attribute neutral default
+            attribute bunny null
 
         group hair auto
 
@@ -1768,6 +1846,7 @@ init:
             attribute winkbrow "whitney_eyes_winkeyes"
             attribute wince "whitney_eyes_winkeyes"
             attribute scaredbrow "whitney_eyes_feareyes"
+            attribute neutralbrow "whitney_eyes_neutraleyes"
 
         group eyebrows auto:
             attribute neutraleyebrows default
@@ -1792,6 +1871,7 @@ init:
             attribute winkbrow "whitney_eyebrows_playfuleyebrows"
             attribute wince "whitney_eyebrows_sadeyebrows"
             attribute scaredbrow "whitney_eyebrows_surprisedeyebrows"
+            attribute neutralbrow "whitney_eyebrows_neutraleyebrows"
 
         group mouth auto:
             attribute neutralmouth default
@@ -1811,7 +1891,8 @@ init:
         group anger auto:
             attribute angry "whitney_anger_anger"
 
-        group blush auto
+        group blush auto:
+            attribute blush "whitney_blush_lightblush"
 
         group hat auto
 
@@ -1866,6 +1947,7 @@ init:
         group eyes auto:
             attribute neutraleyes default
             attribute noeyes null
+            attribute neutralbrow "sabrina_eyes_neutraleyes"
             attribute disappointed "sabrina_eyes_closedeyes"
             attribute disappointedbrow "sabrina_eyes_closedeyes"
             attribute closedbrow "sabrina_eyes_closedeyes"
@@ -1887,6 +1969,7 @@ init:
 
         group eyebrows auto:
             attribute neutraleyebrows default
+            attribute neutralbrow "sabrina_eyebrows_neutraleyebrows"
             attribute closedbrow "sabrina_eyebrows_neutraleyebrows"
             attribute disappointed "sabrina_eyebrows_neutraleyebrows"
             attribute disappointedbrow "sabrina_eyebrows_neutraleyebrows"
@@ -1991,6 +2074,7 @@ init:
         group eyes auto:
             attribute neutraleyes default
             attribute noeyes null
+            attribute neutralbrow "cheren_eyes_neutraleyes"
             attribute disappointed "cheren_eyes_disappointedeyes"
             attribute disappointedbrow "cheren_eyes_disappointedeyes"
             attribute closedbrow "cheren_eyes_disappointedeyes"
@@ -2011,6 +2095,7 @@ init:
 
         group eyebrows auto:
             attribute neutraleyebrows default
+            attribute neutralbrow "cheren_eyebrows_neutraleyebrows"
             attribute closedbrow "cheren_eyebrows_neutraleyebrows"
             attribute disappointed "cheren_eyebrows_neutraleyebrows"
             attribute disappointedbrow "cheren_eyebrows_neutraleyebrows"
@@ -2136,6 +2221,7 @@ init:
         group eyes auto:
             attribute neutraleyes default
             attribute noeyes null
+            attribute neutralbrow "bianca_eyes_neutraleyes"
             attribute disappointed "bianca_eyes_closedeyes"
             attribute disappointedbrow "bianca_eyes_closedeyes"
             attribute closedbrow "bianca_eyes_closedeyes"
@@ -2157,6 +2243,7 @@ init:
 
         group eyebrows auto:
             attribute neutraleyebrows default
+            attribute neutralbrow "bianca_eyebrows_neutraleyebrows"
             attribute closedbrow "bianca_eyebrows_neutraleyebrows"
             attribute disappointed "bianca_eyebrows_neutraleyebrows"
             attribute disappointedbrow "bianca_eyebrows_neutraleyebrows"
@@ -2222,6 +2309,7 @@ init:
             attribute happybrow "dawn_eyes_happyeyes"
             attribute surprisedbrow "dawn_eyes_surprisedeyes"
             attribute neutralbrow "dawn_eyes_neutraleyes"
+            attribute sad2brow "dawn_eyes_sad2eyes"
 
         group eyebrows auto:
             attribute neutraleyebrows default
@@ -2236,6 +2324,7 @@ init:
             attribute happybrow "dawn_eyebrows_happyeyebrows"
             attribute surprisedbrow "dawn_eyebrows_surprisedeyebrows"
             attribute neutralbrow "dawn_eyebrows_neutraleyebrows"
+            attribute sad2brow "dawn_eyebrows_sadeyebrows"
 
         group mouth auto:
             attribute neutralmouth default
@@ -2270,6 +2359,7 @@ init:
         group eyes auto:
             attribute neutraleyes default
             attribute noeyes null
+            attribute neutralbrow "nate_eyes_neutraleyes"
             attribute disappointed "nate_eyes_closedeyes"
             attribute disappointedbrow "nate_eyes_closedeyes"
             attribute closedbrow "nate_eyes_closedeyes"
@@ -2287,11 +2377,16 @@ init:
             attribute happybrow "nate_eyes_happyeyes"
             attribute confusedbrow "nate_eyes_neutraleyes"
             attribute playfulbrow "nate_eyes_playfuleyes"
+            attribute flirtbrow "nate_eyes_playfuleyes"
             attribute unamusedbrow "nate_eyes_playfuleyes"
             attribute winkbrow "nate_eyes_winkeyes"
+            attribute upbrow "nate_eyes_upeyes"
+            attribute wince "nate_eyes_winkeyes"
+            attribute sigh "nate_eyes_closedeyes"
 
         group eyebrows auto:
             attribute neutraleyebrows default
+            attribute neutralbrow "nate_eyebrows_neutraleyebrows"
             attribute closedbrow "nate_eyebrows_neutraleyebrows"
             attribute disappointed "nate_eyebrows_neutraleyebrows"
             attribute disappointedbrow "nate_eyebrows_neutraleyebrows"
@@ -2310,8 +2405,12 @@ init:
             attribute confused "nate_eyebrows_confusedeyebrows"
             attribute confusedbrow "nate_eyebrows_confusedeyebrows"
             attribute playfulbrow "nate_eyebrows_playfuleyebrows"
+            attribute flirtbrow "nate_eyebrows_playfuleyebrows"
             attribute unamusedbrow "nate_eyebrows_unamusedeyebrows"
             attribute winkbrow "nate_eyebrows_neutraleyebrows"
+            attribute upbrow "nate_eyebrows_neutraleyebrows"
+            attribute wince "nate_eyebrows_sadeyebrows"
+            attribute sigh "nate_eyebrows_neutraleyebrows"
 
         group mouth auto:
             attribute neutralmouth default
@@ -2322,10 +2421,12 @@ init:
             attribute surprised "nate_mouth_surprisedmouth"
             attribute thinking "nate_mouth_frownmouth"
             attribute confused "nate_mouth_talking2mouth"
+            attribute sigh "nate_mouth_talking2mouth"
 
         group tears auto
 
-        group sweat auto
+        group sweat auto:
+            attribute wince "nate_sweat_sweat"
 
         group anger auto:
             attribute angry "nate_anger_anger"
@@ -2339,10 +2440,10 @@ init:
         group eyeshine auto:
             attribute noshine null
 
-        always "nate_eyesparkles" if_not ["noshine", "sad2brow", "happybrow", "closedbrow", "closedeyes", "deadeyes", "happyeyes", "thinking", "happy", "sad2eyes", "angry2eyes", "angry2brow", "playfuleyes", "playfulbrow", "winkeyes", "winkbrow", "unamusedbrow", "unamusedeyes", "upeyes", "upbrow"] 
+        always "nate_eyesparkles" if_not ["noshine", "sad2brow", "happybrow", "closedbrow", "closedeyes", "deadeyes", "happyeyes", "thinking", "happy", "sad2eyes", "angry2eyes", "angry2brow", "playfuleyes", "playfulbrow", "winkeyes", "winkbrow", "unamusedbrow", "unamusedeyes", "upeyes", "upbrow", "wince", "sigh"] 
         always "nate_eyesparkles_sadeyes" if_any ["sad2eyes", "sad2brow"] if_not ["noshine"]
-        always "nate_eyesparkles_playfuleyes" if_any ["playfuleyes", "playfulbrow", "unamusedbrow", "unamusedeyes"]
-        always "nate_eyesparkles_winkeyes" if_any ["winkeyes", "winkbrow"]
+        always "nate_eyesparkles_playfuleyes" if_any ["playfuleyes", "playfulbrow", "unamusedbrow", "unamusedeyes", "flirtbrow", "flirteyes"]
+        always "nate_eyesparkles_winkeyes" if_any ["winkeyes", "winkbrow", "wince"]
         always "nate_eyesparkles_upeyes" if_any ["upeyes", "upbrow"]
 
         group shadow auto
@@ -2370,7 +2471,9 @@ init:
 
         group eyes auto:
             attribute neutraleyes default
+            attribute neutralbrow "rosa_eyes_neutraleyes"
             attribute sad "rosa_eyes_sadeyes"
+            attribute sad2eyes "rosa_eyes_sideeyes"
             attribute sadbrow "rosa_eyes_sadeyes"
             attribute angry "rosa_eyes_angryeyes"
             attribute angrybrow "rosa_eyes_angryeyes"
@@ -2383,9 +2486,12 @@ init:
             attribute closedbrow "rosa_eyes_closedeyes"
             attribute winkbrow "rosa_eyes_winkeyes"
             attribute sad2brow "rosa_eyes_sideeyes"
+            attribute confused "rosa_eyes_neutraleyes"
+            attribute wince "rosa_eyes_winkeyes"
 
         group eyebrows auto:
             attribute neutraleyebrows default
+            attribute neutralbrow "rosa_eyebrows_neutraleyebrows"
             attribute sad "rosa_eyebrows_sadeyebrows"
             attribute sadbrow "rosa_eyebrows_sadeyebrows"
             attribute angry "rosa_eyebrows_angryeyebrows"
@@ -2399,19 +2505,25 @@ init:
             attribute closedbrow "rosa_eyebrows_neutraleyebrows"
             attribute winkbrow "rosa_eyebrows_neutraleyebrows"
             attribute sad2brow "rosa_eyebrows_sadeyebrows"
+            attribute confused "rosa_eyebrows_confusedeyebrows"
+            attribute wince "rosa_eyebrows_sadeyebrows"
 
         group mouth auto:
             attribute neutralmouth default
-            attribute sad "rosa_mouth_sadmouth"
+            attribute sad "rosa_mouth_talking2mouth"
             attribute angry "rosa_mouth_angrymouth"
             attribute happy "rosa_mouth_happymouth"
             attribute surprised "rosa_mouth_surprisedmouth"
             attribute thinking "rosa_mouth_frownmouth"
-            attribute talking2mouth "rosa_mouth_sadmouth"
+            attribute confused "rosa_mouth_talking2mouth"
 
-        group blush auto
+        group blush auto:
+            attribute blush "rosa_blush_lightblush"
 
-        group sweat auto
+        group sweat auto:
+            attribute wince "rosa_sweat_sweat"
+
+        group pout auto
 
         group animeeffect auto
 
@@ -2427,6 +2539,8 @@ init:
         group body auto:
             attribute neutral "bea_body_neutral" default
             attribute uniform "bea_body_uniform" 
+
+        group blush auto
 
         group brow auto:
             attribute neutralbrow default
@@ -2546,13 +2660,57 @@ init:
             attribute swim "nessa_body_neutral"
             attribute uniform "nessa_body_uniform" 
 
-        group brow auto:
-            attribute neutralbrow default
-            attribute sad "nessa_brow_sadbrow"
-            attribute angry "nessa_brow_angrybrow"
-            attribute happy "nessa_brow_happybrow"
-            attribute surprised "nessa_brow_surprisedbrow"
-            attribute thinking "nessa_brow_closedbrow"
+        group eyes auto:
+            attribute neutraleyes default
+            attribute noeyes null
+            attribute neutralbrow "nessa_eyes_neutraleyes"
+            attribute disappointed "nessa_eyes_closedeyes"
+            attribute disappointedbrow "nessa_eyes_closedeyes"
+            attribute closedbrow "nessa_eyes_closedeyes"
+            attribute sad "nessa_eyes_sadeyes"
+            attribute happy "nessa_eyes_happyeyes"
+            attribute surprised "nessa_eyes_surprisedeyes"
+            attribute surprisedbrow "nessa_eyes_surprisedeyes"
+            attribute thinking "nessa_eyes_closedeyes"
+            attribute angrybrow "nessa_eyes_angryeyes"
+            attribute sadbrow "nessa_eyes_sadeyes"
+            attribute sad2brow "nessa_eyes_sadeyes"
+            attribute angry "nessa_eyes_angryeyes"
+            attribute angry2brow "nessa_eyes_angry2eyes"
+            attribute closedbrow "nessa_eyes_closedeyes"
+            attribute happybrow "nessa_eyes_happyeyes"
+            attribute confusedbrow "nessa_eyes_neutraleyes"
+            attribute playfulbrow "nessa_eyes_flirteyes"
+            attribute winkbrow "nessa_eyes_winkeyes"
+            attribute wince "nessa_eyes_winkeyes"
+            attribute scaredbrow "nessa_eyes_feareyes"
+            attribute flirtbrow "nessa_eyes_flirteyes"
+
+        group eyebrows auto:
+            attribute neutraleyebrows default
+            attribute neutralbrow "nessa_eyebrows_neutraleyebrows"
+            attribute closedbrow "nessa_eyebrows_neutraleyebrows"
+            attribute disappointed "nessa_eyebrows_neutraleyebrows"
+            attribute disappointedbrow "nessa_eyebrows_neutraleyebrows"
+            attribute sad "nessa_eyebrows_sadeyebrows"
+            attribute happy "nessa_eyebrows_happyeyebrows"
+            attribute surprised "nessa_eyebrows_surprisedeyebrows"
+            attribute surprisedbrow "nessa_eyebrows_surprisedeyebrows"
+            attribute thinking "nessa_eyebrows_neutraleyebrows"
+            attribute angrybrow "nessa_eyebrows_angryeyebrows"
+            attribute sadbrow "nessa_eyebrows_sadeyebrows"
+            attribute sad2brow "nessa_eyebrows_sadeyebrows"
+            attribute angry2brow "nessa_eyebrows_angryeyebrows"
+            attribute angry "nessa_eyebrows_angryeyebrows"
+            attribute closedbrow "nessa_eyebrows_neutraleyebrows"
+            attribute happybrow "nessa_eyebrows_happyeyebrows"
+            attribute confused "nessa_eyebrows_surprisedeyebrows"
+            attribute confusedbrow "nessa_eyebrows_surprisedeyebrows"
+            attribute playfulbrow "nessa_eyebrows_flirteyebrows"
+            attribute winkbrow "nessa_eyebrows_flirteyebrows"
+            attribute wince "nessa_eyebrows_sadeyebrows"
+            attribute scaredbrow "nessa_eyebrows_surprisedeyebrows"
+            attribute flirtbrow "nessa_eyebrows_flirteyebrows"
 
         group mouth auto:
             attribute neutralmouth default
@@ -2561,6 +2719,9 @@ init:
             attribute happy "nessa_mouth_happymouth"
             attribute surprised "nessa_mouth_surprisedmouth"
             attribute thinking "nessa_mouth_frownmouth"
+            attribute confused "nessa_mouth_talkingmouth"
+
+        group blush auto
 
     image side nessa = LayeredImageProxy("nessa", Transform(xpos=0.08, yanchor=0.35))
     image side nessa night = LayeredImageProxy("nessa", Transform(xpos=0.08, yanchor=0.35, matrixcolor=nightmatrix))
@@ -2590,7 +2751,10 @@ init:
             attribute happy "hilda_mouth_happymouth"
             attribute surprised "hilda_mouth_surprisedmouth"
             attribute thinking "hilda_mouth_frownmouth"
-            attribute talking2mouth "hilda_mouth_smirkmouth"
+            attribute smirkmouth "hilda_mouth_talkingmouth"
+
+        group blush auto:
+            attribute blush null
 
         group sweat auto
 
@@ -2793,6 +2957,7 @@ init:
         group eyes auto:
             attribute neutraleyes default
             attribute noeyes null
+            attribute neutralbrow "erika_eyes_neutraleyes"
             attribute disappointed "erika_eyes_closedeyes"
             attribute disappointedbrow "erika_eyes_closedeyes"
             attribute closedbrow "erika_eyes_closedeyes"
@@ -2815,6 +2980,7 @@ init:
 
         group eyebrows auto:
             attribute neutraleyebrows default
+            attribute neutralbrow "erika_eyebrows_neutraleyebrows"
             attribute closedbrow "erika_eyebrows_neutraleyebrows"
             attribute disappointed "erika_eyebrows_neutraleyebrows"
             attribute disappointedbrow "erika_eyebrows_neutraleyebrows"
@@ -2869,8 +3035,8 @@ init:
 
         group shadow auto
 
-    image side erika = LayeredImageProxy("erika", Transform(xpos=0.09, yanchor=0.35))
-    image side erika night = LayeredImageProxy("erika", Transform(xpos=0.09, yanchor=0.35, matrixcolor=nightmatrix))
+    image side erika = LayeredImageProxy("erika", Transform(xpos=0.09, yanchor=0.37))
+    image side erika night = LayeredImageProxy("erika", Transform(xpos=0.09, yanchor=0.37, matrixcolor=nightmatrix))
 
     layeredimage janine:
         zoom 0.5
@@ -2895,6 +3061,7 @@ init:
         group eyes auto if_not ["koga"]:
             attribute neutraleyes default
             attribute noeyes null
+            attribute neutralbrow "janine_eyes_neutraleyes"
             attribute disappointed "janine_eyes_closedeyes"
             attribute disappointedbrow "janine_eyes_closedeyes"
             attribute closedbrow "janine_eyes_closedeyes"
@@ -2918,6 +3085,7 @@ init:
 
         group eyebrows auto if_not ["koga"]:
             attribute neutraleyebrows default
+            attribute neutralbrow "janine_eyebrows_neutraleyebrows"
             attribute closedbrow "janine_eyebrows_neutraleyebrows"
             attribute disappointed "janine_eyebrows_neutraleyebrows"
             attribute disappointedbrow "janine_eyebrows_neutraleyebrows"
@@ -3087,7 +3255,8 @@ init:
         ypos 1.0
 
         group body auto:
-            attribute neutral "klara_body_neutral" default
+            attribute neutral "klara_body_neutralcoat" default
+            attribute coat "klara_body_neutralcoat"
 
         group shadow auto
 
@@ -3159,6 +3328,10 @@ init:
         group body auto:
             attribute neutral "melody_body_neutral" default
 
+        group shadow auto
+
+        group pissed auto
+
         group blush auto
 
         group brow auto:
@@ -3171,11 +3344,11 @@ init:
             attribute surprised "melody_brow_surprisedbrow"
             attribute surprisedeyes "melody_brow_surprisedbrow"
             attribute surprisedeyebrows "melody_brow_surprisedbrow"
-            
+
             attribute happy "melody_brow_happybrow"
             attribute happyeyes "melody_brow_happybrow"
             attribute happyeyebrows "melody_brow_happybrow"
-            
+
             attribute angry "melody_brow_angrybrow"
             attribute angryeyes "melody_brow_angrybrow"
             attribute angryeyebrows "melody_brow_angrybrow"
@@ -3190,12 +3363,13 @@ init:
             attribute angry "melody_mouth_angrymouth"
             attribute surprised "melody_mouth_surprisedmouth"
             attribute confused "melody_mouth_talking2mouth"
+            attribute frownmouth "melody_mouth_neutralmouth"
 
         group glasses auto:
             attribute up default
             attribute noglasses null
-    
-    image side melody = LayeredImageProxy("melody", Transform(xpos=0.08, yanchor=0.35))
+
+    image side melody = LayeredImageProxy("melody", Transform(xpos=0.08, yanchor=0.35)) 
 
     layeredimage shauna:
         zoom 0.5
@@ -3534,6 +3708,62 @@ init:
 
     image side hexmaniac = LayeredImageProxy("hexmaniac", Transform(xpos=0.08, yanchor=0.35))
 
+    layeredimage silhouettebunny:
+        zoom 0.5
+        xalign 0.5
+        yanchor 0.6
+        ypos 1.0
+
+        group brow auto:
+            attribute neutralbrow null default
+            attribute happy null
+            attribute happybrow null
+            attribute surprisedbrow null
+            attribute closedbrow null
+            attribute sad null
+
+        group mouth auto:
+            attribute neutralmouth null default
+            attribute happy null
+            attribute happymouth null
+            attribute angry null
+            attribute sad null
+            attribute sadmouth null
+
+        always "silhouettebunny_body_neutral"
+
+        group outfit auto:
+            attribute bunny null
+
+    image silhouettebunny2 = LayeredImageProxy("silhouettebunny")
+    image silhouettebunny3 = LayeredImageProxy("silhouettebunny")
+
+    layeredimage deoxysa:
+        zoom 0.7
+        xalign 0.5 
+        yanchor 0.6
+        ypos 1.0
+        
+        always "images/Pokemon/fulldeoxysa.webp"
+
+    layeredimage deoxysd:
+        zoom 0.7
+        xalign 0.5 
+        yanchor 0.6
+        ypos 1.0
+        
+        always "images/Pokemon/fulldeoxysd.webp"
+    
+    layeredimage deoxyss:
+        zoom 0.7
+        xalign 0.5
+        yanchor 0.6
+        ypos 1.0
+        
+        always "images/Pokemon/fulldeoxyss.webp"
+
+    
+
     #STAFF AFTER THIS POINT
 
     layeredimage miriam:
@@ -3571,7 +3801,8 @@ init:
         yanchor 0.6
         ypos 1.0
         group body auto:
-            attribute neutral "kris_body_neutral" default
+            attribute neutral default
+            attribute uniform "kris_body_neutral"
 
         group brow auto:
             attribute neutralbrow default
@@ -3589,9 +3820,10 @@ init:
             attribute happy "kris_mouth_happymouth"
             attribute surprised "kris_mouth_surprisedmouth"
             attribute thinking "kris_mouth_angrymouth"
-            attribute frownmouth "kris_mouth_disappointedmouth"
 
-        always "kris_glasses_glasses"
+        group glasses auto:
+            attribute glasses default
+            attribute noglasses null
 
     image side kris = LayeredImageProxy("kris", Transform(xpos=0.08, yanchor=0.35))
 
@@ -3843,6 +4075,7 @@ init:
             attribute angry2 "bertha_eyebrows_angryeyebrows"
             attribute angry3 "bertha_eyebrows_angryeyebrows"
             attribute angry4 "bertha_eyebrows_angryeyebrows"
+            attribute angrybrow "bertha_eyebrows_angryeyebrows"
             attribute happy "bertha_eyebrows_happyeyebrows"
             attribute happy2 "bertha_eyebrows_happyeyebrows"
             attribute surprised "bertha_eyebrows_surprisedeyebrows"
@@ -3862,6 +4095,7 @@ init:
             attribute angry2 "bertha_eyes_angryeyes"
             attribute angry3 "bertha_eyes_angryeyes"
             attribute angry4 "bertha_eyes_angryeyes"
+            attribute angrybrow "bertha_eyes_angryeyes"
             attribute happy "bertha_eyes_happyeyes"
             attribute happy2 "bertha_eyes_happyeyes"
             attribute surprised "bertha_eyes_surprisedeyes"
@@ -4200,7 +4434,6 @@ init:
         xalign 0.5
         yanchor 0.6
         ypos 1.0
-        xzoom -1
 
         group body auto:
             attribute neutral "bruno_body_neutral" default
@@ -4248,7 +4481,6 @@ init:
         xalign 0.5
         yanchor 0.6
         ypos 1.0
-        xzoom -1
 
         group body auto:
             attribute neutral "alder_body_neutral" default
@@ -4294,6 +4526,8 @@ init:
             attribute norm2 "alder_mouth_talkingmouth"
             attribute norm3 "alder_mouth_frownmouth"
             attribute norm4 "alder_mouth_talking2mouth"
+
+    image side alder = LayeredImageProxy("alder", Transform(xpos=0.08, yanchor=0.35))
 
     layeredimage lance:
         zoom 0.5
@@ -4501,6 +4735,38 @@ init:
         
     image side shauntal = LayeredImageProxy("shauntal", Transform(xpos=0.08, yanchor=0.35))
 
+    layeredimage caitlin:
+        zoom 0.5
+        xalign 0.5
+        yanchor 0.6
+        ypos 1.0
+
+        always "caitlin_body"
+
+        always "caitlin_hair"
+
+        always "caitlin_clothes_neutral"
+
+        group brow auto:
+            attribute neutralbrow default
+            attribute sad "femthug_brow_sadbrow"
+            attribute angry "femthug_brow_angrybrow"
+            attribute happy "femthug_brow_happybrow"
+            attribute surprised "femthug_brow_surprisedbrow"
+            attribute thinking "femthug_brow_closedbrow"
+
+        group mouth auto:
+            attribute neutralmouth default
+            attribute sad "femthug_mouth_sadmouth"
+            attribute angry "femthug_mouth_angrymouth"
+            attribute happy "femthug_mouth_happymouth"
+            attribute surprised "femthug_mouth_surprisedmouth"
+            attribute thinking "femthug_mouth_frownmouth"
+
+        always "caitlin_bangs_bangs"
+        
+    image side caitlin = LayeredImageProxy("caitlin", Transform(xpos=0.08, yanchor=0.35))
+
     layeredimage lace:
         zoom 0.5
         xalign 0.5
@@ -4520,6 +4786,8 @@ init:
         ypos 1.0
 
         always "oldman_body_neutral"
+
+        group blush auto
 
         group brow auto:
             attribute neutralbrow default
@@ -4541,8 +4809,6 @@ init:
         group alcohol auto
 
         group canecover auto
-
-        group blush auto
 
     layeredimage lisia:
         zoom 0.5
@@ -4664,9 +4930,6 @@ init:
         always "phobos_accessories_silverring"
         always "phobos_accessories_lunatonering"
 
-        group hair auto:
-            attribute hair default
-
         group clothes auto:
             attribute neutral default
 
@@ -4694,6 +4957,7 @@ init:
             attribute playfulbrow "phobos_eyes_playfuleyes"
             attribute winkbrow "phobos_eyes_winkeyes"
             attribute unamusedbrow "phobos_eyes_playfuleyes"
+            attribute unamusedeyes "phobos_eyes_playfuleyes"
 
         group eyebrows auto:
             attribute neutraleyebrows default
@@ -4752,6 +5016,29 @@ init:
         
         group shadow auto
 
+        group hair auto:
+            attribute hair default
+
+    layeredimage eternity:
+        zoom 0.55
+        xalign 0.5
+        yanchor 0.6
+        ypos 1.0
+
+        always "eternity_body_armor2"
+
+        group eyes auto
+
+        always "eternity_helmet_helmet"
+    
+    layeredimage eternityeye:
+        zoom 0.55
+        xalign 0.5
+        yanchor 0.6
+        ypos 1.0
+
+        always "eternity_eyes_pinprickeyes"
+
     layeredimage rowan:
         zoom 0.5
         xalign 0.5
@@ -4779,12 +5066,44 @@ init:
             attribute happy "rowan_mouth_happymouth"
             attribute surprised "rowan_mouth_surprisedmouth"
             attribute thinking "rowan_mouth_neutralmouth"
+            attribute frownmouth "rowan_mouth_neutralmouth"
 
         group coat auto:
             attribute coat default
             attribute nocoat null
 
     image side rowan = LayeredImageProxy("rowan", Transform(xpos=0.08, yanchor=0.35))
+
+    layeredimage sycamore:
+        zoom 0.5
+        xalign 0.5
+        yanchor 0.6
+        ypos 1.0
+
+        always "sycamore_body_neutral"
+        always "sycamore_outfit_interior"
+
+        group brow auto:
+            attribute neutralbrow default
+            attribute sad "sycamore_brow_sadbrow"
+            attribute angry "sycamore_brow_angrybrow"
+            attribute happy "sycamore_brow_happybrow"
+            attribute surprised "sycamore_brow_surprisedbrow"
+            attribute thinking "sycamore_brow_closedbrow"
+
+        group mouth auto:
+            attribute neutralmouth default
+            attribute sad "sycamore_mouth_sadmouth"
+            attribute angry "sycamore_mouth_angrymouth"
+            attribute happy "sycamore_mouth_happymouth"
+            attribute surprised "sycamore_mouth_surprisedmouth"
+            attribute thinking "sycamore_mouth_neutralmouth"
+
+        group blush auto
+
+        group coat auto
+
+    image side sycamore = LayeredImageProxy("sycamore", Transform(xpos=0.08, yanchor=0.35))
 
     layeredimage cynthia:
         zoom 0.5
@@ -5054,7 +5373,7 @@ init:
         matrixcolor TintMatrix(GetLiberaColor(False))
 
     layeredimage libpikachu:
-        zoom 0.3
+        zoom 0.35
         xalign 0.5
         yanchor 1.0
         ypos 1.0
@@ -5071,6 +5390,9 @@ init:
 
         group glow2:
             attribute glowing "libpikachuglow2"
+
+        group ears auto:
+            attribute neutralears default
 
         group eyes auto:
             attribute neutraleyes default
@@ -5114,11 +5436,99 @@ init:
 
         group shadow auto
  
-    image side libpikachu = LayeredImageProxy("libpikachu", Transform(xpos=0.05, yanchor=0.9))
-    image side libpikachu night = LayeredImageProxy("libpikachu", Transform(xpos=0.05, yanchor=0.9, matrixcolor=nightmatrix))
+    image side libpikachu = LayeredImageProxy("libpikachu", Transform(xpos=0.06, yanchor=0.8))
+    image side libpikachu night = LayeredImageProxy("libpikachu", Transform(xpos=0.06, yanchor=0.8, matrixcolor=nightmatrix))
+
+    python:
+        def cospikachuformat(what, name, group, variant, attribute, image, image_format, **kwargs):
+            if image is None:
+                if attribute is None:
+                    raise Exception("Can't find an attribute name to format {}.".format(what))
+
+                parts = [ "libpikachu" ]
+
+                if group is not None:
+                    parts.append(group)
+
+                if variant is not None:
+                    parts.append(variant)
+
+                parts.append(attribute)
+
+                image = "_".join(parts)
+
+            if isinstance(image, basestring) and (image_format is not None):
+                image = image_format.format(name="libpikachu", image=image)
+
+            return image
+
+
+    layeredimage cospikachu:
+        format_function cospikachuformat
+        zoom 0.35
+        xalign 0.5
+        yanchor 1.0
+        ypos 1.0
+
+        always "libpikachu_tail_female2tail"
+        always "libpikachu_body_regularbody"
+        always "libpikachu_ears_downwardregularears"
+
+        group glow1:
+            attribute glowing "libpikachuglow1"
+
+        group glow2:
+            attribute glowing "libpikachuglow2"
+
+        group eyes auto:
+            attribute neutraleyes default
+            attribute sad "libpikachu_eyes_sadeyes"
+            attribute happy "libpikachu_eyes_happyeyes"
+            attribute surprised "libpikachu_eyes_surprisedeyes"
+            attribute thinking "libpikachu_eyes_closedeyes"
+            attribute angrybrow "libpikachu_eyes_angryeyes"
+            attribute sadbrow "libpikachu_eyes_sadeyes"
+            attribute sad2brow "libpikachu_eyes_sad2eyes"
+            attribute angry "libpikachu_eyes_angryeyes"
+            attribute closedbrow "libpikachu_eyes_closedeyes"
+            attribute happybrow "libpikachu_eyes_happyeyes"
+
+        group mouth auto:
+            attribute neutralmouth default
+            attribute sad "libpikachu_mouth_sadmouth"
+            attribute happy "libpikachu_mouth_happymouth"
+            attribute angry "libpikachu_mouth_angrymouth"
+            attribute surprised "libpikachu_mouth_surprisedmouth"
+            attribute thinking "libpikachu_mouth_frownmouth"
+
+        group tears auto
+
+        group sweat auto
+
+        group tired auto
+
+        group anger auto:
+            attribute angry "libpikachu_anger_anger"
+
+        group blush auto
+
+        group sparks auto
+
+        group cry auto
+
+        always "libpikachu_eyesparkles2" if_not ["sad2brow", "happybrow", "closedbrow", "closedeyes", "deadeyes", "happyeyes", "thinking", "happy", "sad2eyes", "playfuleyes", "playfulbrow", "dizzyeyes", "dittoeyes", "winkeyes", "winkbrow"] 
+        always "libpikachu_eyesparkles_sad2eyes" if_any ["sad2eyes", "sad2brow"]
+        always "libpikachu_eyesparkles2_playfuleyes" if_any ["playfuleyes", "playfulbrow"]
+        always "libpikachu_eyesparkles2_winkeyes" if_any ["winkeyes", "winkbrow"]
+
+        group shadow auto
+ 
+    image side cospikachu = LayeredImageProxy("cospikachu", Transform(xpos=0.05, yanchor=0.9))
+    image side cospikachu night = LayeredImageProxy("cospikachu", Transform(xpos=0.05, yanchor=0.9, matrixcolor=nightmatrix))
+
 
     layeredimage starterportraitfull:
-        always "[starter_id]"
+        always "Pokemon/[starter_id].webp"
 
     image side starterportrait = LayeredImageProxy("starterportraitfull", Transform(xanchor=1.0, yanchor=0.95, ypos=1.0, xpos=1.0))
 
@@ -5269,3 +5679,65 @@ init:
     image slowpoke = "Pokemon/79.webp"
     image gslowpoke = "Pokemon/79.1.webp"
     image mismagius = "Pokemon/429.webp"
+
+init python:
+    portraitassetlist = [asset.name for asset in os.scandir(os.path.join(config.searchpath[0], "images", "expressions"))]
+    ###############
+
+    def GroupExpression(expr, layer="master", include=None, exclude=None, transition=None, append=False):
+        """
+        Apply the same expression attributes to all currently-shown sprites.
+
+        Args:
+            expr (str | iterable): e.g. "surprisedbrow frownmouth"
+            layer (str): which layer to check; default "master"
+            include (iterable|None): only apply to these tags
+            exclude (iterable|None): skip these tags
+            transition: a transition object to use afterward (e.g., dissolve or dis)
+            append (bool): if True, append attrs to current ones; if False, replace
+
+        Usage examples:
+            $ apply_expr("surprisedbrow frownmouth", transition=dis)
+            $ apply_expr(["angrybrow", "openmouth"], include=["may","mallow"])
+            $ apply_expr("wink", append=True)   # keep current attrs, add wink
+        """
+        # Normalize attrs
+        attrs_new = expr.split() if isinstance(expr, str) else list(expr)
+
+        # Gather currently showing tags on the target layer.
+        try:
+            tags = list(renpy.get_showing_tags(layer))
+        except Exception:
+            tags = []
+
+        # Filter set
+        if include is not None:
+            tags = [t for t in tags if t in include]
+        ex = set()
+        if exclude:
+            if (isinstance(exclude, str)):
+                exclude = [exclude]
+            ex |= set(exclude)
+        tags = [t for t in tags if t not in ex and t in portraitassetlist]
+
+        if not tags:
+            return
+
+        for tag in tags:
+            if append:
+                try:
+                    curr = list(renpy.get_attributes(tag, layer=layer) or [])
+                except Exception:
+                    curr = []
+                # Avoid duplicates, then append new attrs
+                applied = [a for a in curr if a not in attrs_new] + attrs_new
+            else:
+                applied = list(attrs_new)
+
+            # Re-show the same tag with the target attributes.
+            name = tuple([tag] + applied)
+            renpy.show(name, layer=layer, tag=tag)
+
+        # Single transition after all updates (matches "with dis" effect).
+        if transition is not None:
+            renpy.with_statement(transition)

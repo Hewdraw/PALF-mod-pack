@@ -26,7 +26,7 @@ oak @talking2mouth "{size=40}Ahem!{/size}{w=0.5} Good morning, class!"
 
 pause 1.0
 
-oak @talkingmouth "That's better. Now, what's gotten everyone so excited? I haven't seen this much movement in the Student Body since before the elections."
+oak @talkingmouth "That's better. Now, what's gotten everyone so excited? I haven't seen this much movement in the student body since before the elections."
 
 show may uniform with dis:
     xpos 0.25

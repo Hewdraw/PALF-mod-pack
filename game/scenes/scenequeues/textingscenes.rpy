@@ -1,7 +1,76 @@
 label textingscenequeue:
 
+label rosafollowupbunnyrecruitscene:#remember there's a copy of this scene in 010611secondhomeroom.rpy
+    if (not HasEvent("Rosa", "BunnyRecruit") and HasEvent("Rosa", "HalfBunnyRecruit") and (HasEvent("Nate", "BunnyRecruit") + HasEvent("Iono", "BunnyRecruit") + HasEvent("Sonia", "BunnyRecruit") + min(1, GetRelationshipRank("Rosa") / 2.0) >= 3)):        
+        $ AddEvent("Rosa", "BunnyRecruit")
+    
+        stop music fadeout 1.5
+        queue music "audio/music/joinavenue_start.ogg" noloop
+        queue music "audio/music/joinavenue_loop.ogg"
+
+        show screen songsplash("Join Avenue", "Zame")
+
+        if (HasEvent("Rosa", "PromisedNessaText")):
+            red @thinking "Hm[ellipses] after today's recruitment, I think we can make sure the party is secure for Rosa. I said I'd text Nessa, so[ellipses]"
+
+        elif (HasEvent("Rosa", "PromisedSoniaText")):
+            red @thinking "Hm[ellipses] after today's recruitment, I think we can make sure the party is secure for Rosa. I said I'd text Sonia, so[ellipses]"
+
+        elif (HasEvent("Rosa", "PromisedRaihanText")):
+            red @thinking "Hm[ellipses] after today's recruitment, I think we can make sure the party is secure for Rosa. I said I'd text Raihan, so[ellipses]"
+
+        else:
+            red @thinking "Hm[ellipses] after today's recruitment, I think we can make sure the party is secure for Rosa. I said I'd let Sabrina know, so[ellipses]"
+
+        pause 1.0
+
+        redmind "There, text sent."
+
+        show rosa behind phone_A:
+            zoom 0.8 ypos 0.95
+        with fadeinbottom
+
+        rosa @talkingmouth "Hey, [first_name]!"
+
+        red @talkingmouth "Oh, hey, Rosa! I thought you couldn't use your phone?"
+
+        if (HasEvent("Rosa", "PromisedNessaText")):
+            rosa @happy "Didn't you notice? I'm using Nessa's phone! She got your text!"
+
+        elif (HasEvent("Rosa", "PromisedSoniaText")):
+            rosa @happy "Didn't you notice? I'm using Sonia's phone! She got your text!"
+
+        elif (HasEvent("Rosa", "PromisedRaihanText")):
+            rosa @happy "Didn't you notice? I'm using Raihan's phone! He got your text!"
+
+        else:
+            rosa @happy "Didn't you notice? I'm using Nessa's phone! Sabrina heard your, uh, your 'thought!'"
+
+            if (not IsContacted("Nessa")):#should be impossible, but just in case
+                $ BecomeContacted("Nessa")
+
+        red @talkingmouth "Gotcha. So, we're good? You'll be able to go to the party, then?"
+
+        rosa @talkingmouth "I think so. It really sounds like you thought this through pretty thoroughly."
+        rosa @sadbrow talkingmouth "And[ellipses] I {i}really{/i} appreciate that. I know it's a hassle."
+
+        $ ValueChange("Rosa", 1, 0.5)
+
+        red @happy "Don't worry about it! I just want you to be able to have fun with us, like everyone else."
+        red @talkingmouth "There won't be any fancy movie-people there, or anything, so it's probably a much more low-key party than you're used to, but I hope you still have fun."
+
+        rosa @talkingmouth "Trust me, that sounds like the best kind of party right now. The stage lights get blinding, after a while."
+
+        red @happy "I can imagine."
+        red @talkingmouth "Anyway, that's great to hear! We'll see you there. And don't worry, if anything changes, or one of our security people has to drop out, I'll let you know beforehand."
+        red @sadbrow talkingmouth "Everyone's going to go into this knowing {i}exactly{/i} what they're getting into. Promise."
+
+        rosa @happy "Aw. Thanks so much for your support!"
+
+        return
+
 label gardeniatextingscene:
-    if (not IsContacted("Gardenia") and IsAfter(24, 4, 2004) and IsPresent("Gardenia")):
+    if (IsAfter(24, 4, 2004) and IsPresent("Gardenia") and not HasEvent("Gardenia", "GardeniaFirstText")):
         python:
             triggergardenia = False
             for item in elementitems.keys():
@@ -11,34 +80,43 @@ label gardeniatextingscene:
                     if (mon.Item == item):
                         triggergardenia = True
         if (triggergardenia):
-            $ texted = True
-            show phone_B
-            show phone_A
-            show gardenia behind phone_A:
-                zoom 0.95
-            with fadeinbottom
-
-            gardenia @happy "Hey, partner!"
-
-            red @confused "Huh? Gardenia? How'd you get this number?"
-
-            gardenia @talkingmouth "Oh, I paid Nate to tell me!"
-
-            red @closedbrow talking2mouth "I really need to have a talk with Nate about how callous he is about other people's personal information."
-
-            gardenia @talkingmouth "Yeah, it's pretty awful of him. {w=0.5}{nw}"
-
             python:
                 gotfromdungeon = True
                 for teacher in classtaught:
                     if (HasEvent(teacher, 3.1)):
                         gotfromdungeon = False
                         break
+                texted = True
+                AddEvent("Gardenia", "GardeniaFirstText")
+            show phone_B
+            show phone_A
+            show gardenia behind phone_A:
+                zoom 0.95
+            with fadeinbottom
+            
+            gardenia @happy "Hey, partner!"
 
-            if (gotfromdungeon):
-                extend @happy "Anyway! A little birdie told me that you recently acquired a certain item in the great wilderness!"
+            if (IsContacted("Gardenia")):
+                red @talkingmouth "Hey, Gardenia. What's up?"
+
+                if (gotfromdungeon):
+                    gardenia @happy "A little birdie told me that you recently acquired a certain item in the great wilderness!"
+                else:
+                    gardenia @happy "A little birdie told me that you recently acquired a certain item in one of your elective classes!"
+
             else:
-                extend @happy "Anyway! A little birdie told me that you recently acquired a certain item in one of your elective classes!"
+                red @confused "Huh? Gardenia? How'd you get this number?"
+
+                gardenia @talkingmouth "Oh, I paid Nate to tell me!"
+
+                red @closedbrow talking2mouth "I really need to have a talk with Nate about how callous he is about other people's personal information."
+
+                gardenia @talkingmouth "Yeah, it's pretty awful of him. {w=0.5}{nw}"
+
+                if (gotfromdungeon):
+                    extend @happy "Anyway! A little birdie told me that you recently acquired a certain item in the great wilderness!"
+                else:
+                    extend @happy "Anyway! A little birdie told me that you recently acquired a certain item in one of your elective classes!"
 
             gardenia @angrybrow happymouth "And that set off my 'ooh, business opportunity' sense."
             
@@ -91,7 +169,7 @@ label gardeniatextingscene:
 
             red @talkingmouth "And what about if I wanted to give these items as gifts?"
 
-            gardenia @happy "Just find whoever you're trying to give the gift to during your free time and hand it off. Quick and easy. Doesn't even take any time."
+            gardenia @happy "Do you really need to be told this one? After you hang out with someone, just hand it off."
 
             red @talkingmouth "Cool. Thanks for the, uh, business advice."
 
@@ -108,7 +186,8 @@ label gardeniatextingscene:
 
             red @closedbrow talking2mouth "I really hope she's joking."
 
-            $ BecomeContacted("Gardenia")
+            if (not IsContacted("Gardenia")):
+                $ BecomeContacted("Gardenia")
 
             show blank2 with Dissolve(2.0)
 

@@ -2,6 +2,7 @@ label after_load:
 scene onlayer arrowlayer
 scene onlayer undermaster
 python:
+    config.allow_skipping = True
     RealignTextbox() # assuring the alignment of the textbox is correct if, for some unfortunate circumstance, the game reloads during a contest
     changemade = False
 
@@ -53,6 +54,26 @@ python:
         print("Adding new battlehistory key {}".format(key.replace("Instructor ", "")))
         changemade = True
 
+    deletethese = []
+    for keyname in CurrentPersondex():
+        if (keyname not in defaultpersondex):
+            deletethese.append(keyname)
+
+    for keyname in deletethese:
+            print("deleting " + keyname + " from persondex")
+            del CurrentPersondex()[keyname]
+            changemade = True
+
+    deletethese = []
+    for keyname in CurrentPersondex():
+        if (keyname not in defaultpersondex):
+            deletethese.append(keyname)
+
+    for keyname in deletethese:
+            print("deleting " + keyname + " from persondex")
+            del CurrentPersondex()[keyname]
+            changemade = True
+
     if ("battlehistory" in globals() and not WonBattle("BrendanMay2") and "mayhaslarvesta" in globals() and not mayhaslarvesta):
         print("fixing brendan/may discontinuity")
         changemade = True
@@ -76,11 +97,6 @@ python:
     if ("Kris" in CurrentPersondex().keys()):
         print("deleting Kris")
         del CurrentPersondex()["Kris"]
-        changemade = True
-
-    if (playercharacter == None and CurrentPersondex()["Yellow"]["Value"] != len(claimedforeverals)):
-        print("resetting yellow foreverals value")
-        CurrentPersondex()["Yellow"]["Value"] = len(claimedforeverals)
         changemade = True
 
     if (randseedtime == None):
@@ -346,6 +362,26 @@ python:
         GetTrainerTeam("Ethan", "Pichu", False).Id = 172.1
         changemade = True
 
+    if (GetTrainerTeam("Yellow", "Pichu", False) != None and GetTrainerTeam("Yellow", "Pichu", False).Id == 172):
+        print("updating Yellow's Pichu")
+        GetTrainerTeam("Yellow", "Pichu", False).Id = 172.1
+        changemade = True
+
+    if (GetTrainerTeam("Yellow", "Pichu", False) != None and GetTrainerTeam("Yellow", "Pichu", False).GetNickname() != "Chuchu"):
+        print("updating Yellow's Pichu's nickname")
+        GetTrainerTeam("Yellow", "Pichu", False).Nickname = "Chuchu"
+        changemade = True
+
+    if (GetTrainerTeam("Yellow", "Rattata", False) != None and GetTrainerTeam("Yellow", "Rattata", False).GetNickname() != "Ratty"):
+        print("updating Yellow's Rattata's nickname")
+        GetTrainerTeam("Yellow", "Rattata", False).Nickname = "Ratty"
+        changemade = True
+
+    if (GetTrainerTeam("Gardenia", "Phantump", False) != None and GetTrainerTeam("Gardenia", "Phantump", False).GetLevel() != 8):
+        print("updating Gardenia's Phantump")
+        GetTrainerTeam("Gardenia", "Phantump", False).Level = 8
+        changemade = True
+
     if (IsAfter(26, 5, 2004) and not HasLocation("Cafe")):
         print("adding cafe to dateabase")
         RecordKnownLocations("Leaf", "Cafe")
@@ -456,6 +492,19 @@ python:
             print("setting mayhaslarvesta to false, since player has larvesta")
             changemade = True
 
+        if ('inventorymetadata' in globals() and Item.TechnicalMachineCase in inventorymetadata):
+            removables = []
+            for move in inventorymetadata[Item.TechnicalMachineCase]:
+                if not isinstance(move, str):
+                    removables.append(move)
+                    inventorymetadata[Item.TechnicalMachineCase].append(move.Name)
+                    print("converting " + move.Name + " tm data to string form")
+                    changemade = True
+            for move in removables:
+                inventorymetadata[Item.TechnicalMachineCase].remove(move)
+                print("remove " + move.Name + " tm data from inventory metadata checker")
+                changemade = True
+
         abilities = GetAbilities(mon.Id)
         if ('pikachuobj' in globals() and mon == pikachuobj):
             abilities = ["Freelectric"]
@@ -484,28 +533,10 @@ python:
                 changemade = True
 
             if (name == "Tia"):
-                if (mon.GetLevel() > AimLevel() + 10):
+                if (playercharacter == None and mon.GetLevel() > AimLevel() + 10):
                     print("downgrading the level of Tia's {} from {} to 1".format(mon.GetNickname(), mon.GetLevel()))
                     mon.UpdateLevel(1, False, True, False)
                     changemade = True
-
-    if (money + investment + bank >= 200000):#FIX THIS: Remove this eventually
-        changemade = True
-        print("normalizing money amounts")
-        money = math.floor(money / 10.0)
-        bank = math.floor(bank / 10.0)
-        investment = min(investment, money)
-        changemade = True
-
-    performedbankreplacement = False
-    if (not HasEvent("Gardenia", "BankReplacement") and bank == 0 and investment != 0):
-        performedbankreplacement = True
-        newmoney = math.ceil(investment / 5)
-        money += newmoney
-        investment -= newmoney
-        AddEvent("Gardenia", "BankReplacement")
-        print("Performing the gardenia bank replacement")
-        changemade = True
 
     if ("melody_name" in globals() and melody_name in [None, "first_name"]):
         melody_name = first_name
@@ -527,7 +558,7 @@ python:
         print("adding silver2 event")
         changemade = True
 
-    if (HasEvent("Skyla", "Skyla1Part2") and not IsContacted("Skyla")):
+    if (playercharacter == None and HasEvent("Skyla", "Skyla1Part2") and not IsContacted("Skyla")):
         CurrentPersondex()["Skyla"]["Contact"] = True
         print("adding skyla's contact info after her skyla1part2")
         changemade = True
@@ -567,6 +598,126 @@ python:
         print("setting dungeon to none")
         changemade = True
 
+    if (IsContacted("Gardenia") and not HasEvent("Gardenia", "Gardenia1")):
+        AddEvent("Gardenia", "GardeniaFirstText")
+        print("retconning in gardenia's first text")
+        changemade = True
+
+    if (playercharacter == None and CurrentPersondex()["Yellow"]["Value"] != len(claimedforeverals)):
+        print("resetting yellow foreverals value")
+        CurrentPersondex()["Yellow"]["Value"] = len(claimedforeverals)
+        changemade = True
+
+    # adding the locations the player should know
+    if 'knownareas' not in globals():
+        knownareas = []
+        print("knownareas being set")
+        changemade = True
+    if ("fields" not in knownareas and IsAfter(17, 4, 2004)):
+        knownareas.append("fields")
+        print("added fields to the known locations")
+        changemade = True
+    if ("mountain" not in knownareas and not IsBefore(18, 5, 2004)):
+        knownareas.append("mountain")
+        print("added mountain to the known locations")
+        changemade = True
+    if ("catacombs" not in knownareas and HasEvent("Professor Oak", "FoundCatacombs")):
+        knownareas.append("catacombs")
+        print("added catacombs to the known locations")
+        changemade = True
+    if ("alley" not in knownareas and punkwins > 0):
+        knownareas.append("alley")
+        print("added alley to the known locations")
+        changemade = True
+    if ("seaport" not in knownareas and (seaportunlocked or not IsBefore(1, 5, 2004))):
+        knownareas.append("seaport")
+        print("added seaport to the known locations")
+        changemade = True
+    if ("unhallowed holt" not in knownareas and HasEvent("Instructor Will", "Rescued")):
+        knownareas.append("unhallowed holt")
+        print("added unhallowed holt to the known locations")
+        changemade = True
+    if ("shattered glades" not in knownareas and HasEvent("Tia", "Rescued")):
+        knownareas.append("shattered glades")
+        print("added shattered glades to the known locations")
+        changemade = True
+    if ("windswept woods" not in knownareas and HasEvent("Sabrina", "Rescued")):
+        knownareas.append("windswept woods")
+        print("added windswept woods to the known locations")
+        changemade = True
+
+    if ('smalltalks' not in globals()):
+        smalltalks = []
+        print("created smalltalks")
+        changemade = True
+
+    if ('badgeslist' not in globals()):
+        badgeslist = []
+        print("created badgelist")
+        changemade = True
+
+    if (len(badgeslist) == 0 and (WonBattle("Raihan1") or WonBattle("Raihan2"))):
+        badgeslist.append("Dragon Badge")
+        print("added dragon badge to badgelist")
+        changemade = True
+
+    if (HasEvent("Yellow", "AgreePartner")):
+        AddEvent("Yellow", "AcceptPartner")
+        RemoveEvent("Yellow", "AgreePartner")
+        print("replacing agreepartner with acceptpartner for yellow")
+        changemade = True
+
+    if (HasEvent("Klara", "AgreePartner")):
+        AddEvent("Klara", "AcceptPartner")
+        RemoveEvent("Klara", "AgreePartner")
+        print("replacing agreepartner with acceptpartner for klara")
+        changemade = True
+
+    if (HasEvent("Yellow", "AcceptPartner") and HasEvent("Klara", "AcceptPartner")):
+        print("Game believes player partnered with both Yellow and Klara.")
+        if (HasEvent("Klara", "BrokeBond")):
+            RemoveEvent("Klara", "AcceptPartner")
+            print("removing partnership with klara due to breaking bond")
+        else:
+            RemoveEvent("Yellow", "AcceptPartner")
+            print("removing partnership with yellow as default")
+        changemade = True
+
+    if (not IsDate(12, 6, 2004) and HasEvent("Game", "AutoBunny")):
+        RemoveEvent("Game", "AutoBunny")
+        print("removing autobunny after the bunny party date")
+        changemade = True
+
+    if (not IsDate(13, 6, 2004) and HasEvent("Game", "AutoContest")):
+        RemoveEvent("Game", "AutoContest")
+        print("removing autocontest after the contest date")
+        changemade = True
+
+    if (not IsDate(13, 6, 2004) and HasEvent("Yellow", "AutoContest")):
+        RemoveEvent("Yellow", "AutoContest")
+        print("removing autocontest for yellow after the contest date")
+        changemade = True
+
+    if (IsAfter(11, 6, 2004) and playercharacter == None and not IsNamed("Professor Sycamore")):
+        BecomeNamed("Professor Sycamore")
+        print("naming professor augustine sycamore")
+        changemade = True
+
+    if (playercharacter == None and 'oldpersondex' in globals() and oldpersondex):
+        oldpersondex = None
+        print("deleting oldpersondex not being used")
+        changemade = True
+
+    if ('showscrimblo' not in globals()):
+        showscrimblo = False
+        print("setting showscrimblo to false")
+        changemade = True
+
+    if (HasEvent("Professor Oak", "KecleonTest")):
+        changemade = True
+        print("removing extraneous kecleontest event")
+        RemoveEvent("Professor Oak", "KecleonTest")
+
     incompatibleversion = False
     if ('version' not in globals() or version == None):
         version = config.version
@@ -581,19 +732,15 @@ python:
         changemade = True
 
     if (changemade):
-        renpy.block_rollback()
+        renpy.block_rollback(True)
 
     pkmnlocked = -1
     randcount = randcount % 1000000
 
     if (incompatibleversion):
         renpy.say(None, "This game was saved on a greater version--please upgrade your game build to at least version [version].")
-        renpy.block_rollback()
+        renpy.block_rollback(True)
         MainMenu(confirm=False)()
-
-    if (performedbankreplacement):
-        renpy.say(None, "The economy of Kobukan has been rebalanced. [newmoney] of your investment with Gardenia has been returned. The rest is invested in Gardenia's market, which is separate from the mechanic of the bank. [bluecolor]Talk with her for more details.{/color}")
-        renpy.block_rollback()
 
 if persistent.sceneviewer:
     call sceneviewerafterload from after_load_sceneviewer
@@ -642,7 +789,9 @@ label notfoundlabel:
         while (renpy.call_stack_depth() > 1):
             renpy.pop_call()
 
-        if (jumpto not in globals()):
+        renpy.block_rollback(True)
+
+        if ('jumpto' not in globals()):
             jumpto = "day"
         
         jumptoyear = "01"
@@ -669,6 +818,9 @@ init python:#eventually, you're going to want to delete these old variables in t
     class MapTile:
         pass
 
+    def oakstalltestbrain():
+        pass
+
     def rescuescenes():
         pass
 
@@ -691,6 +843,9 @@ init python:#eventually, you're going to want to delete these old variables in t
         pass
 
     def possessedtiadialog():
+        pass
+
+    def possessedwilldialog():
         pass
 
     def adjust_digits(digits):
@@ -734,4 +889,13 @@ init python:#eventually, you're going to want to delete these old variables in t
         return betatesting()
 
     def betatesting():
+        if ('betatestingoverride' not in globals() or betatestingoverride == False):
+            return False
         return (isinstance(config.version, str) and "BETA" in config.version or config.developer)
+
+    def ReportRequest():
+        location = renpy.get_filename_line() 
+        filename = os.path.basename(location[0]) # Extract just the filename
+        line_num = location[1]
+
+        renpy.say(None, f"{redcolor}Missing event. Please screenshot and report in the discord. {filename}:{line_num}")

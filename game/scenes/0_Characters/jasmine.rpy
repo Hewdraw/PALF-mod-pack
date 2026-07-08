@@ -856,11 +856,13 @@ label Jasmine2:
 
     if (not HasEvent("Nurse Miriam", "KnowsName") and IsNamed("Nurse Miriam")):
         $ rescuedstring = ""
-        if (rescuedtia and rescuedsabrina):
+        if (rescuedwill and rescuedtia):
+            $ rescuedstring = "Instructor Will, and our student, Tia"
+        elif (rescuedtia and rescuedsabrina):
             $ rescuedstring = "my student, Tia, and Sabrina"
         elif (rescuedwill and rescuedsabrina):
             $ rescuedstring = "Instructor Will and his student, Sabrina"
-        elif (rescuedsabrina and rescuedwill):
+        elif (rescuedtia and rescuedsabrina):
             $ rescuedstring = "Instructor Will's students, Tia and Sabrina"
         elif (rescuedtia):
             $ rescuedstring = "my student, Tia"
@@ -963,7 +965,7 @@ label Jasmine2:
         "Nothing. What were you saying?":
             $ AddEvent("Jasmine", "SickAvoid")
 
-            jasmine @sadeyebrows talkingmouth "...Nothing? That's a very kind 'nothing.', [first_name]."
+            jasmine @sadeyebrows talkingmouth "...Nothing? That's a very kind 'nothing,' [first_name]."
 
     pause 1.5
 
@@ -973,7 +975,7 @@ label Jasmine2:
 
     jasmine -sadbrow -frownmouth @surprisedbrow talking2mouth "The water--{w=0.5}oh, no."
     jasmine @happy tiredhappy "I don't have the means to test that, yet. I'm certain Instructor Byron will, though."
-    jasmine @talkingmouth "Rather, I learned who the S.S. Ironsides belongs to."
+    jasmine @talkingmouth "Rather, I learned who the S.S. Iron Whale belongs to."
 
     red @talking2mouth "Yeah?"
 

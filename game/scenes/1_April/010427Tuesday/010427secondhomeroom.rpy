@@ -104,7 +104,7 @@ if (GetRelationshipRank("Nessa") > 0 and not HasEvent("Nessa", "DateDeny")):
 
     red @talkingmouth "Nah. She actually specifically said that she didn't have time for anything serious, so, you know, she manages expectations well."
 
-    leaf @closedbrow talkingmouth "Okay, great. Because that was going to make this conversation way more awkward."
+    leaf @closedbrow talkingmouth "Okay, great. Because that was going to make this conversation {i}way{/i} more awkward."
 
 else:
     red @talkingmouth "Nope."

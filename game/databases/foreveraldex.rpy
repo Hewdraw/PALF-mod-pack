@@ -65,6 +65,8 @@ init python:
         return [entry[FVLMacros.FVLName] for entry in foreveraldex if entry[FVLMacros.FVLLevel] < 11]
 
     foreveraldex = []
+    
+
     #Name, species ids, Trainer, Level, Type, typedata, movesimparted, Description, 
     foreveraldex.append(["Clobbopus Foreveral", [852], "Bea", 3, ForeveralTypes.AddType, ["Water"], ["Aqua Jet", "Bulk Up"], "Adds Water-type"])
     foreveraldex.append(["Tyrogue Everal", [236], "Bea", 3, ForeveralTypes.Training, [], ["Power-Up Punch", "Low Kick"], "Using punching moves increases Defense EVs. Using kicking moves increases Attack EVs"])
@@ -91,11 +93,11 @@ init python:
     foreveraldex.append(["Cubone Everal", [104], "Flannery", 3, ForeveralTypes.AddProficiency, ["Fire", "Ghost"], ["Shadow Punch", "Flame Charge"], "Gains Proficiency from Ghost and Fire-types or give Pikachu STAB and resistance to the same"])
 
     foreveraldex.append(["Darmanitan Diveral", [555, 555.2], "Flannery", 5, ForeveralTypes.FormSwap, [555, 555.2], ["Fire Punch", "Ice Punch"], "Swap between Unovan/Galarian forms"])
-    foreveraldex.append(["Heatmor Foreveral", [631], "Flannery", 5, ForeveralTypes.MoveBoost, ["Fire Lash"], ["Leech Life", "Giga Drain"], "Boosts Fire Lash. Power: 80 -> 90. Effect: Lowers Defense. {i}Also heals the user, by 50% of the damage dealt{/i}"])
+    foreveraldex.append(["Heatmor Foreveral", [631], "Flannery", 5, ForeveralTypes.MoveBoost, ["Fire Lash"], ["Leech Life", "Giga Drain"], "Boosts Fire Lash. Power: 90. Effect: Lowers Defense. {i}Also heals the user, by 50% of the damage dealt{/i}"])
     foreveraldex.append(["Marowak Diveral", [105, 105.1], "Flannery", 5, ForeveralTypes.FormSwap, [105, 105.1], ["Shadow Bone", "Bone Rush", "Bonemerang", "Bone Club"], "Swap between Kantonian/Alolan forms"])
 #
     foreveraldex.append(["Snorunt Everal", [361], "Hilbert", 3, ForeveralTypes.AddProficiency, ["Ghost"], ["Hex", "Powder Snow"], "Gains Proficiency from Ghost-type or give Pikachu STAB and resistance to the same. Male Snorunt can become Froslass"])
-    foreveraldex.append(["Dhelmise Foreveral", [781], "Hilbert", 3, ForeveralTypes.MoveBoost, ["Anchor Shot"], ["Aqua Jet", "Aqua Cutter"], "Boosts Anchor Shot. Power: 80 -> 90. Effect: Prevents opponent from switching. {i}Also lowers the opponent's Speed by one stage{/i}"])
+    foreveraldex.append(["Dhelmise Foreveral", [781], "Hilbert", 3, ForeveralTypes.MoveBoost, ["Anchor Shot"], ["Anchor Shot", "Aqua Cutter"], "Boosts Anchor Shot. Power: 80 -> {i}60{/i}. Effect: Prevents opponent from switching. {i}In first move slot: User gains Steel-type, including out of battle{/i}"])
     foreveraldex.append(["Piplup Everal", [393], "Hilbert", 3, ForeveralTypes.AddProficiency, ["Steel"], ["Bubble", "Mirror Shot"], "Gains Proficiency from Steel-type or give Pikachu STAB and resistance to the same"])
 
     foreveraldex.append(["Bergmite Everal", [712], "Hilbert", 5, ForeveralTypes.AddProficiency, ["Rock"], ["Rock Throw", "Icy Wind"], "Gains Proficiency from Rock-type or give Pikachu STAB and resistance to the same"])
@@ -127,7 +129,7 @@ init python:
     foreveraldex.append(["Mareep Everal", [179], "Leaf", 3, ForeveralTypes.AddProficiency, ["Dragon"], ["Dragon Breath", "Cotton Guard"], "Gain Proficiency from Dragon-type, or give Pikachu STAB and resistance to the same"])
 #
     foreveraldex.append(["Makuhita Everal", [296], "May", 3, ForeveralTypes.AddProficiency, ["Electric"], ["Thunder Punch", "Charge"], "Gain Proficiency from Electric-type, or give Pikachu STAB and resistance to the same"])
-    foreveraldex.append(["Burmy Everal", [412], "May", 3, ForeveralTypes.AddProficiency, ["Steel", "Grass", "Ground", "Flying"], ["Shore Up", "Camouflage"], "Gains Proficiency from Steel, Grass, Ground, and Flying classes, or gives Pikachu STAB and resistance to the same"])
+    foreveraldex.append(["Burmy Everal", [412, 412.1, 412.2], "May", 3, ForeveralTypes.AddProficiency, ["Steel", "Grass", "Ground", "Flying"], ["Shore Up", "Camouflage"], "Gains Proficiency from Steel, Grass, Ground, and Flying classes, or gives Pikachu STAB and resistance to the same"])
     foreveraldex.append(["Spidops Foreveral", [918], "May", 3, ForeveralTypes.MoveBoost, ["Silk Trap"], ["Silk Trap", "Sticky Web"], "Boosts Silk Trap. Effect: Blocks damaging moves and lowers speed of foes that make contact. {i}Also blocks status moves{/i}"])
 
     foreveraldex.append(["Heracross Megaveral", [214], "May", 5, ForeveralTypes.Mega, [Item.Heracronite, 214.1], ["Arm Thrust", "Pin Missile"], "Generates Heracronite at start of turn"])
@@ -138,7 +140,7 @@ init python:
     foreveraldex.append(["Seel Everal", [86], "Misty", 3, ForeveralTypes.AddProficiency, ["Ice"], ["Bubble Beam", "Powder Snow"], "Gain Proficiency from Ice-type, or give Pikachu STAB and resistance to the same"])
     foreveraldex.append(["Azurill Everal", [298], "Misty", 3, ForeveralTypes.AddProficiency, ["Water"], ["Aqua Jet", "Bounce"], "Gain Proficiency from Water-type, or give Pikachu STAB and resistance to the same"])
 
-    foreveraldex.append(["Frillish Everal", [592], "Misty", 5, ForeveralTypes.Scaling, ["Jellicent", 40], ["Hex", "Will-O-Wisp"], "Base stats scale to Jellicent at level 40"])
+    foreveraldex.append(["Frillish Everal", [592, 592.1], "Misty", 5, ForeveralTypes.Scaling, ["Jellicent", 40], ["Hex", "Will-O-Wisp"], "Base stats scale to Jellicent at level 40"])
     foreveraldex.append(["X-sire Diveral", [195, 980], "Misty", 5, ForeveralTypes.FormSwap, [195, 980], ["Waterfall", "Poison Jab"], "Swap between Quagsire and Clodsire"])
     foreveraldex.append(["Castform Foreveral", [351], "Misty", 5, ForeveralTypes.MoveBoost, ["Sunny Day", "Rain Dance", "Hail", "Snowscape"], ["Sunny Day", "Rain Dance", "Hail", "Snowscape"], "Boosts Sunny Day, Rain Dance, Hail, and Snowscape. Effect: Sets up weather. {i}In first move slot: activates automatically on switch-in for three PP{/i}"])
 #
@@ -188,7 +190,7 @@ init python:
 
     foreveraldex.append(["Absol Megaveral", [359], "Silver", 7, ForeveralTypes.Mega, [Item.Absolite, 359.1], ["Night Slash", "Spirit Break"], "Generates Absolite at start of turn"])
     foreveraldex.append(["Croagunk Everal", [453], "Silver", 7, ForeveralTypes.Scaling, ["Toxicroak", 37], ["Poison Jab", "Karate Chop"], "Base stats scale to Toxicroak at level 37"])
-    foreveraldex.append(["Koffing Everal", [109], "Silver", 7, ForeveralTypes.AddProficiency, ["Fairy"], ["Fairy Wind", "Poison Gas"], "Gain Proficiency from Fairy-type, or give Pikachu STAB and resistance to the same"])
+    foreveraldex.append(["Impidimp Everal", [859], "Silver", 7, ForeveralTypes.Scaling, ["Morgrem", 32], ["Karate Chop", "Poison Fang"], "Base stats scale to Morgrem at level 32"])
 #
     foreveraldex.append(["Ducklett Foreveral", [580], "Skyla", 3, ForeveralTypes.AddAbility, ["Regenerator"], ["U-turn", "Flip Turn"], "Grants Regenerator"])
     foreveraldex.append(["Nincada Everal", [290], "Skyla", 3, ForeveralTypes.AddProficiency, ["Flying", "Ghost"], ["Dig", "Fly"], "Gain Proficiency from Flying and Ghost-types, or give Pikachu STAB and resistance to the same"])
@@ -196,7 +198,7 @@ init python:
 
     foreveraldex.append(["Gligar Foreveral", [207], "Skyla", 5, ForeveralTypes.AddAbility, ["Poison Heal"], ["Magnitude", "Wing Attack"], "Grants Poison Heal"])
     foreveraldex.append(["Farfetch'd Diveral", [83, 83.1], "Skyla", 5, ForeveralTypes.FormSwap, [83, 83.1], ["Wing Attack", "Karate Chop"], "Swap between Kantonian/Galarian forms"])
-    foreveraldex.append(["Noctowl Foreveral", [164], "Skyla", 5, ForeveralTypes.AddType, ["Psychic"], ["Hypnosis", "Dream Eater"], "Adds Psychic-type"])
+    foreveraldex.append(["Noctowl Foreveral", [164], "Skyla", 5, ForeveralTypes.AddType, ["Psychic"], ["Hypnosis", "Dream Eater"], "Adds Psychic-type"])#So, I considered adding a HootHoot EVL to lead into this, but I've decided this is a treat for the Normal/Flying specialists--we've got a bunch of Psychic options already, anyway.
 #
     foreveraldex.append(["Yamper Foreveral", [835], "Sonia", 3, ForeveralTypes.AddAbility, ["Fluffy"], ["Bite", "Attract"], "Grants Fluffy"])
     foreveraldex.append(["Togedemaru Foreveral", [777], "Sonia", 3, ForeveralTypes.AddAbility, ["Rough Skin"], ["Spiky Shield", "Wide Guard"], "Grants Rough Skin"])
@@ -206,12 +208,12 @@ init python:
     foreveraldex.append(["Boltund Foreveral", [836], "Sonia", 5, ForeveralTypes.AddAbility, ["Speed Boost"], ["Electro Ball", "Baton Pass"], "Grants Speed Boost"])
     foreveraldex.append(["Turtonator Foreveral", [776], "Sonia", 5, ForeveralTypes.AddAbility, ["Aftermath"], ["Mind Blown", "Explosion"], "Grants Aftermath"])
 #
-    foreveraldex.append(["Noibat Foreveral", [714], "Tia", 3, ForeveralTypes.AddSTAB, ["Normal"], ["Uproar", "Disarming Voice"], "Grants Normal-type STAB"])
+    foreveraldex.append(["Noibat Everal", [714], "Tia", 3, ForeveralTypes.Scaling, ["Noivern", 48], ["Uproar", "Disarming Voice"], "Base stats scale to Noivern at level 48"])
     foreveraldex.append(["Mime Jr. Everal", [439], "Tia", 3, ForeveralTypes.AddProficiency, ["Ice"], ["Draining Kiss", "Powder Snow"], "Gain Proficiency from Ice-type, or give Pikachu STAB and resistance to the same"])
     foreveraldex.append(["Trapinch Everal", [328], "Tia", 3, ForeveralTypes.AddProficiency, ["Bug", "Dragon"], ["Bug Bite", "Dragon Breath"], "Gain Proficiency from Dragon and Bug-types, or give Pikachu STAB and resistance to the same"])
 
-    foreveraldex.append(["Baltoy Everal", [343], "Tia", 5, ForeveralTypes.Scaling, ["Claydol", 36], ["Iron Defense", "Amnesia"], "Base stats scale to Claydol at level 36"])
-    foreveraldex.append(["Claydol Foreveral", [344], "Tia", 5, ForeveralTypes.AddAbility, ["Solid Rock"], ["Recover", "Rapid Spin"], "Grants Solid Rock"])
+    foreveraldex.append(["Solunatone Diveral", [337, 338], "Tia", 5, ForeveralTypes.FormSwap, [337, 338], ["Cosmic Power", "Stored Power"], "Swap between Lunatone/Solrock"])
+    foreveraldex.append(["Smoochum Everal", [238], "Tia", 5, ForeveralTypes.Scaling, ["Jynx", 30], ["Teeter Dance", "Feather Dance"], "Base stats scale to Jynx at level 30"])#On evolution, give Jynx Dancer!
     foreveraldex.append(["Mr. Mime Diveral", [122, 122.2], "Tia", 5, ForeveralTypes.FormSwap, [122, 122.1], ["Draining Kiss", "Powder Snow"], "Swap between Kantonian/Galarian forms"])
 #
     foreveraldex.append(["Munchlax Foreveral", [446], "Whitney", 3, ForeveralTypes.AddAbility, ["Harvest"], ["Slack Off", "Uproar"], "Grants Harvest"])
@@ -230,7 +232,7 @@ init python:
     foreveraldex.append(["Diggersby Foreveral", [660], "Jasmine", 5, ForeveralTypes.AddAbility, ["Mold Breaker"], ["Extreme Speed", "Dig"], "Grants Mold Breaker"])
     foreveraldex.append(["Skarmory Foreveral", [227], "Jasmine", 5, ForeveralTypes.MoveBoost, ["Steel Wing"], ["Steel Wing", "Roost"], "Boosts Steel Wing. Power: 70 -> 90. Effect: {i}Has a 30% chance of boosting Defense and Special Defense{/i}"])
 #
-    foreveraldex.append(["Tyrunt Everal", [696], "Raihan", 3, ForeveralTypes.Scaling, ["Tyrantrum", 39], ["Ice Fang", "Thunder Fang"], "Base stats scale to Tyrantrum at level 39"])
+    foreveraldex.append(["Dwebble Everal", [557], "Raihan", 3, ForeveralTypes.Scaling, ["Crustle", 34], ["Accelerock", "U-turn"], "Base stats scale to Crustle at level 34"])
     foreveraldex.append(["Minior Foreveral", [774], "Raihan", 3, ForeveralTypes.MoveBoost, ["Shell Smash"], ["Shell Smash", "Power Gem"], "Boosts Shell Smash. Effect: Decreases defense to increase offense. {i}Will always move last{/i}"])
     foreveraldex.append(["Dreepy Everal", [885], "Raihan", 3, ForeveralTypes.Scaling, ["Drakloak", 50], ["Shadow Sneak", "Dragon Rage"], "Base stats scale to Drakloak at level 50"])
 #
@@ -252,10 +254,10 @@ init python:
 #
     foreveraldex.append(["Turtwig Everal", [387], "Erika", 3, ForeveralTypes.AddProficiency, ["Ground"], ["Bite", "Withdraw"], "Gain Proficiency from Ground-type, or give Pikachu STAB and resistance to the same"])
     foreveraldex.append(["Grotle Everal", [388], "Erika", 3, ForeveralTypes.AddProficiency, ["Ground"], ["Crunch", "Iron Defense"], "Gain Proficiency from Ground-type, or give Pikachu STAB and resistance to the same"])
-    foreveraldex.append(["Foongus Everal", [590], "Erika", 3, ForeveralTypes.Scaling, ["Amoonguss", 39], ["Rain Dance", "Moonlight"], "Base stats scale to Amoonguss at level 39"])
+    foreveraldex.append(["Koffing Everal", [109], "Erika", 3, ForeveralTypes.AddProficiency, ["Fairy"], ["Fairy Wind", "Misty Terrain"], "Gain Proficiency from Fairy-type, or give Pikachu STAB and resistance to the same"])
 #
     foreveraldex.append(["Frosmoth Foreveral", [873], "Grusha", 3, ForeveralTypes.AddAbility, ["Fluffy"], ["Snowscape", "Aurora Veil"], "Grants Fluffy"])
-    foreveraldex.append(["Archen Everal", [566], "Grusha", 3, ForeveralTypes.Scaling, ["Archeops", 37], ["Wing Attack", "Rock Throw"], "Base stats scale to Archeops at level 37"])
+    foreveraldex.append(["Murkrow Foreveral", [198], "Grusha", 3, ForeveralTypes.AddType, ["Ghost"], ["Shadow Claw", "Destiny Bond"], "Adds Ghost-type"])
     foreveraldex.append(["Drifloon Foreveral", [425], "Grusha", 3, ForeveralTypes.AddType, ["Fire"], ["Flame Burst", "Will-O-Wisp"], "Adds Fire-type"])
 #
     foreveraldex.append(["Budew Everal", [406], "Brendan", 3, ForeveralTypes.Scaling, ["Roselia", 15], ["Mega Drain", "Acid Spray"], "Base stats scale to Roselia at level 15"])
@@ -276,11 +278,17 @@ init python:
 #
     foreveraldex.append(["Mimi-X-chu Diveral", [778, 25], "Iono", 3, ForeveralTypes.FormSwap, [778, 25], ["Volt Tackle", "Shadow Sneak"], "Swap between Mimikyu and Pikachu"])
     foreveraldex.append(["X-rigus Diveral", [563, 867], "Iono", 3, ForeveralTypes.FormSwap, [563, 867], ["Shadow Claw", "Bulldoze"], "Swap between Cofagrigus and Runerigus"])
-    foreveraldex.append(["Voltorb Everal", [100], "Iono", 3, ForeveralTypes.AddProficiency, ["Grass"], ["Grass Knot", "Synthesis"], "Gain Proficiency from Grass-type, or give Pikachu STAB and resistance to the same"])
+    foreveraldex.append(["Grubbin Everal", [736], "Iono", 3, ForeveralTypes.AddProficiency, ["Electric"], ["Mean Look", "Electroweb"], "Gain Proficiency from Electric-type, or give Pikachu STAB and resistance to the same"])
 #
     foreveraldex.append(["Eevee Diveral", [133], "Blue", 11, ForeveralTypes.AddAbility, ["Tetra Element"], ["Leaf Blade", "Flare Blitz", "Surf", "Thunderbolt", "Ice Beam", "Moonblast", "Foul Play", "Psychic"], "Grants Tetra Element. Its power is imperfect"])
     foreveraldex.append(["Pichu Everal", [172], "Ethan", 11, ForeveralTypes.Scaling, ["Pichu", 100], ["Zippy Zap", "Floaty Fall", "Splishy Splash"], "Base stats scale based on destined defeats by the opponent. Its power is imperfect"])
     foreveraldex.append(["Wimpod Foreveral", [767], "Klara", 5, ForeveralTypes.AddAbility, ["Intimidate"], ["First Impression", "U-turn", "Flip Turn", "Aqua Jet"], "Grants Intimidate. Its power is imperfect"])
-    foreveraldex.append(["Vespiquen Uneveral", [416], "Klara", 11, ForeveralTypes.MoveBoost, ["Attack Order", "Defend Order", "Heal Order"], ["Attack Order", "Defend Order", "Heal Order"], "Boosts Attack Order. Effect: High crit rate. \n{i}Also boosts allied Beedrill's offense.{/i}\nBoosts Defense Order. Effect: Raises defenses. \n{i}Also summons allied Beedrill.{/i}\nBoosts Heal Order. Effect: Heals self. \n{i}Also heals allied Beedrill.{/i}\nForces unevolution. Its power is imperfect"])
+    foreveraldex.append(["Vespiquen Uneveral", [416], "Klara", 11, ForeveralTypes.MoveBoost, ["Attack Order", "Defend Order", "Heal Order"], ["Attack Order", "Defend Order", "Heal Order"], "Boosts Attack Order. Effect: High crit rate. \n{i}Also boosts allied Beedrill's offense.{/i}\nBoosts Defense Order. Effect: Raises defenses. \n{i}Also summons allied Beedrill in the wild.{/i}\nBoosts Heal Order. Effect: Heals self. \n{i}Also heals allied Beedrill.{/i}\nForces unevolution. Its power is imperfect"])
+    foreveraldex.append(["Vespiquen Uneveral V3", [416], "???", 11, ForeveralTypes.AddAbility, ["Queenly Majesty"], ["Attack Order", "Defend Order", "Heal Order"], "Grants Queenly Majesty.\nForces unevolution. Its power is imperfect"])
     foreveraldex.append(["Dodrio Overal", [85], "???", 11, ForeveralTypes.AddAbility, ["Thrice Denied"], ["Frustration", "Drill Peck", "Acupressure", "Tri Attack"], "Grants Thrice Denied.\nPermits attacking three times per turn at different priorities.\nCuts direct damage taken to a third.\nForces evolution. Its power is imperfect"])
+    foreveraldex.append(["Dodrio Overal V3", [85], "???", 11, ForeveralTypes.AddAbility, ["Super Luck"], ["Frustration", "Drill Peck", "Acupressure", "Tri Attack"], "Grants Super Luck.\nForces evolution. Its power is imperfect"])
+    foreveraldex.append(["Wugtrio Triveral", [961], "???", 11, ForeveralTypes.FormSwap, [961, 51, 51.2], ["Triple Dive", "Dig", "Metal Claw"], "Swap between Wugtrio, Dugtrio, and Alolan Dugtrio, without limit. Its power is imperfect"])
+    foreveraldex.append(["Tatsugiri Megaveral", [978, 978.1, 978.2], "???", 11, ForeveralTypes.Mega, [Item.Tatsugirinite, 978.4], ["Water Pulse", "Outrage"], "Forces Mega Evolution.\nIts power is imperfect"])
+    foreveraldex.append(["Iron Jugulis Eterneveral", [993], "???", 11, ForeveralTypes.AddAbility, ["Eternity's Weapon"], ["Frustration", "Hyper Beam", "Outrage", "Fly"], "Grants the holder a final attack before breaking. Its power is imperfect"])
+    foreveraldex.append(["Pikachu Foreveral", [25.3], "???", 11, ForeveralTypes.AddAbility, ["Cosplay"], ["Meteor Mash", "Icicle Crash", "Draining Kiss", "Electric Terrain", "Flying Press"], "Grants Cosplay.\nPermits changing of style instantly. Its power is imperfect"])
 

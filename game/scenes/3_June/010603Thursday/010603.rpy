@@ -35,7 +35,7 @@ if (HasEvent("Yellow", "AcceptPartner")):
     else:
         blue -happybrow @angrybrow angrymouth "It was {i}your{/i} half of the performance that made you lose. You looked stupid as hell, standing there like a lump in that ratty old vest."
 
-elif (HasEvent("Professor Oak", "ParticipateMDTryouts")):
+elif (IsCoordinator()):
     red uniform @confused "Uh, yeah, hi. Also here. I was also there last night?"
 
     blue -happybrow @talking2mouth "Yeah, so what? You should just be happy you weren't in the same round as Yellow. You would've lost, hard. You looked stupid as hell, standing there like a lump in that ratty old vest."
@@ -63,7 +63,7 @@ blue @talking2mouth closedbrow "Whatever. You'll deal with it, and pull some bul
 
 hide blue with dis
 
-if (not (HasEvent("Yellow", "AcceptPartner") or HasEvent("Professor Oak", "ParticipateMDTryouts") or HasEvent("Professor Oak", "WatchMDTryouts"))):
+if (not (HasEvent("Yellow", "AcceptPartner") or IsCoordinator() or HasEvent("Professor Oak", "WatchMDTryouts"))):
     red @confused "Was Yellow really that good?"
 
     leaf @sadbrow talkingmouth "Blue might've been overselling her a bit."

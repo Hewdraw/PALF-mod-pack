@@ -513,7 +513,7 @@ label fairy_class_39:
     valerie @surprised "You know, this means I'm only missing a single pattern. Perhaps someday I'll train all twenty!"
     valerie @talkingmouth "But I'm more than happy to wait. For now, I'd like to know my newest Vivillon better."
     valerie happy "He's got quite a Brave nature--I find that so admirable! I can't wait to see how he fits into the flock."
-    narrator "valerie's smile is worth a dozen rare Vivillon..."
+    narrator "Valerie's smile is worth a dozen rare Vivillon..."
     return
 
 label fairy_class_40:

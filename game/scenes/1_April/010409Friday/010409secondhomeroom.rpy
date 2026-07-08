@@ -545,8 +545,7 @@ if (WonBattle("Blue2")):
     show leaf -happy with dis:
         alpha 1.0 xpos 240+350
     
-    show blue angry at dissolveaway:
-        xpos 240+800
+    hide blue angry with dis
     
     $ renpy.music.play(startercry, channel="altcry", loop=None)
     starter "[starter_species_name]!"
@@ -697,8 +696,7 @@ else:
 
     leaf "So don't look sad, alright, you guys?"
     
-    show blue angry at dissolveaway:
-        xpos 240+800
+    hide blue angry with dis
     
     $ renpy.music.play(startercry, channel="altcry", loop=None)
     starter "[starter_species_name]..."

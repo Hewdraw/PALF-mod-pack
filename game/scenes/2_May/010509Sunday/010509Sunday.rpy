@@ -226,7 +226,7 @@ drayden "Come now. I'm not so old I could fail to see the sadness you wear. Is t
 
 janine @sadbrow talkingmouth "I... don't think so. I mean, there is {i}one{/i} thing, but..."
 
-drayden @surprised "Oh? Something to pull the Captain of our esteemed battle team out of the dumps? Please, go ahead."
+drayden @surprised "Oh? Something to pull the Captain of our esteemed Battle Team out of the dumps? Please, go ahead."
 
 janine @talking2mouth "I shouldn't... I mean, it's a hassle, and it might cost some money, too..."
 

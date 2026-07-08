@@ -17,10 +17,10 @@ label Sonia1:
     sonia @happy "And the best part, Ness, is I feel like I'm {i}really{/i} succeeding this time!"
 
     if (IsBefore(4, 10, 2004)):
-        nessa @talkingmouth "Don't get too far ahead of yourself. We're not even halfway through the year yet."
+        nessa @talking2mouth "Don't get too far ahead of yourself. We're not even halfway through the year yet."
 
     else:
-        nessa @talkingmouth "Yeah. I think you are. You made it more than halfway, which was always a sticking point for you, right? Good job."
+        nessa @talking2mouth "Yeah. I think you are. You made it more than halfway, which was always a sticking point for you, right? Good job."
 
     pause 0.5
 
@@ -29,9 +29,9 @@ label Sonia1:
     red @happy "Hey-o. Hope I'm not interrupting anything."
 
     if (not HasEvent("Nessa", "DateDeny")):
-        nessa @talkingmouth "Nah. Sunny, remember that guy I told you about? The one who took me on a date to a pit in the middle of the fields?"
+        nessa @talking2mouth "Nah. Sunny, remember that guy I told you about? The one who took me on a date to a pit in the middle of the fields?"
     else:
-        nessa @talkingmouth "Nah. Sunny, remember that guy I told you about? The one who turned me down, then took me to a pit in the middle of the fields?"
+        nessa @talking2mouth "Nah. Sunny, remember that guy I told you about? The one who turned me down, then took me to a pit in the middle of the fields?"
 
     sonia @confused "No, really?"
 
@@ -43,12 +43,12 @@ label Sonia1:
         else:
             sonia @confused "...You might've mentioned that your friend was my teammate--the one that Cheren said had mind control, to boot."#@confused
 
-        nessa @closedbrow talkingmouth "...Yeah, well, I didn't."
+        nessa @closedbrow talking2mouth "...Yeah, well, I didn't."
 
     if (not HasEvent("Nessa", "DateDeny")):
         sonia @happy "Well, I'm very happy to see you've found someone, Ness."
 
-        nessa @closedbrow talkingmouth "Slow down there. It's just a casual thing."
+        nessa @closedbrow talking2mouth "Slow down there. It's just a casual thing."
 
         sonia @sadbrow talkingmouth "Oh. There I go, rushing into assumptions again."
 
@@ -62,15 +62,15 @@ label Sonia1:
 
     red @talkingmouth "Yeah. Nessa cares a lot about you."
 
-    nessa -surprisedbrow @closedbrow talkingmouth "Okay, [first_name], that's enough."
+    nessa -surprisedbrow @closedbrow talking2mouth "Okay, [first_name], that's enough."
 
     red @happy "Oops!"
 
-    nessa @closedbrow talkingmouth "I need to go prep some stuff for science club. See you lat--"
+    nessa @closedbrow talking2mouth "I need to go prep some stuff for science club. See you lat--"
 
     sonia @confusedbrow happymouth "Wait, {i}science{/i} club?"
 
-    nessa @talkingmouth "Yeah. It's a blow-off club. We mostly just sit around and study rocks. But it's a good place to hang out and kill time."
+    nessa @talking2mouth "Yeah. It's a blow-off club. We mostly just sit around and study rocks. But it's a good place to hang out and kill time."
 
     sonia frownmouth @sadbrow talking2mouth "Ness, you know how I feel about geologists..."
 
@@ -80,7 +80,7 @@ label Sonia1:
 
     $ ValueChange("Nessa", 3, 0.25)
 
-    nessa @talkingmouth "Good seeing you, [first_name]."
+    nessa @talking2mouth "Good seeing you, [first_name]."
 
     hide nessa with dis
 
@@ -450,7 +450,7 @@ label Sonia2:
     if (not HasEvent("Lieutenant Surge", 1)):
         sonia @talkingmouth "It's something they teach in Electric-type classes."
 
-    elif (classstats["Electric"] < 50):
+    elif (GetElective("Electric") < 50):
         sonia @talkingmouth "Instructor Surge will teach it later in his Electric-type class."
 
     else:

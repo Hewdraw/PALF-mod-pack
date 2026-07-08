@@ -68,7 +68,7 @@ show sabrina with dis
 
 sabrina @talking2mouth "Frienergy?"
 
-if (classstats["Psychic"] + classstats["Ghost"] > 0):
+if (GetElective("Psychic") + GetElective("Ghost") > 0):
     red @surprised "Ah, shit, no! Sabrina, stop! Don't read my mind!"
 
     pause 2.0

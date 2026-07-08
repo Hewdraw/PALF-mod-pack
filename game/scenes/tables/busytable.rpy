@@ -151,14 +151,14 @@ menu:
             nate @talkingmouth "And then I said, 'where are my pants?' And the crazy part, is he'd kept them for a whole year!"
             skyla @talkingmouth "Seriously? Why didn't he, like, just send them to you through the mail?"
             rosa @talkingmouth "I mean, it sounds like he just {i}stole{/i} your pants... on purpose. I've had that happen to me before..."
-            nessa @talkingmouth "Yeah, I've had someone steal my {i}bathwater{/i} before. There're real weirdoes out there."
+            nessa @talking2mouth "Yeah, I've had someone steal my {i}bathwater{/i} before. There're real weirdoes out there."
 
             red uniform @surprised "So, uh, how did he get the pants in the first place?"
 
             nate @happy "Well, that's a long story that can be summarized as 'the drinking age in Orre is 16!'"
 
         elif (randnum < 0.4):
-            nessa @talkingmouth "So you're a pilot? That's pretty crazy. I didn't realize you could be a pilot at our age."
+            nessa @talking2mouth "So you're a pilot? That's pretty crazy. I didn't realize you could be a pilot at our age."
             nate @talkingmouth "Yeah, it's amazing what kinda jobs kids like us can fall into nowadays."
             skyla @talkingmouth "Well, it's not much harder than getting a driver's license. Becoming a pilot is easy, actually. The hard part is getting people to trust you."
             rosa @talkingmouth "Huh, I feel like I could get people to trust I know how to fly much more easily than I could {i}actually{/i} learn to fly..."
@@ -169,7 +169,7 @@ menu:
 
         elif (randnum < 0.6):
             rosa @talkingmouth "I'm surprised I hadn't heard of you before, Nessa. We're in similar industries, and you're so gorgeous."
-            nessa @talkingmouth "Thanks. But modeling is a much smaller field than acting. I'm just pebbles at the foot of your mountain."
+            nessa @talking2mouth "Thanks. But modeling is a much smaller field than acting. I'm just pebbles at the foot of your mountain."
             nate @talkingmouth "I'm not sure that's true. I could probably name way more models than I could actors."
             skyla @winkbrow talkingmouth "I think that may say more about you than it does about their fields."
             
@@ -179,7 +179,7 @@ menu:
 
         elif (randnum < 0.8):
             skyla @talkingmouth "So what's it like being a model?"
-            nessa @talkingmouth "Pretty much like being like you. Except I get paid to be hot, and you're doing it for free."
+            nessa @talking2mouth "Pretty much like being like you. Except I get paid to be hot, and you're doing it for free."
             nate @talkingmouth "Yeah, you should never do something for free if someone'll pay you for it! Everyone at this table should become a model."
             rosa @talkingmouth "I think that's against my contract, actually..."
             
@@ -188,14 +188,14 @@ menu:
             skyla @winkbrow talkingmouth "Take your shirt off, and I'll let you know."
 
         else:
-            nessa @talkingmouth "Hey, Nate, how are you always so loaded?"
+            nessa @talking2mouth "Hey, Nate, how are you always so loaded?"
             nate @talkingmouth "Hah, what do you mean? I live off instant food and water, just like anyone else."
             skyla @talkingmouth "Sure, but you've got a super-fancy phone I've never seen before, and I've never seen you hesitate to buy {i}anything{/i}."
             rosa @talkingmouth "Also, you're constantly telling us that you're loaded. That's the main thing."
             
             red uniform @closedbrow talking2mouth "You don't strike me as a guy with a rich family..."
 
-            nessa @talkingmouth "I'm just going to assume you sell Slowpoke Tails behind the bleachers and leave it at that."
+            nessa @talking2mouth "I'm just going to assume you sell Slowpoke Tails behind the bleachers and leave it at that."
 
         narrator "You chat happily as lunch passes."
 

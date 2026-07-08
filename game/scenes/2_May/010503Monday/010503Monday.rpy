@@ -1131,7 +1131,7 @@ skyla frownmouth @angry "Hey! I heard that! Can't you see that [first_name] didn
 silver @angry "No, we don't all have that luxury. And I'd remind you that {i}this isn't a goddamn comic.{/i} I stuck my neck out for that man, and... this is what happened?"
 
 skyla @angrybrow talkingmouth "He's a victim in this situation."
-skyla @talkingmouth "He needs saving just as much as any of the rest of us."
+skyla @talkingmouth "He needs saving just as much the rest of us."
 
 silver @talkingmouth "You're delusional. You think a guy who can cut through the effort the rest of us have to put in is going to feel anything over this?"
 silver @angry "Believe me, it's {i}very{/i} easy to stop caring that people hate you."
@@ -2314,11 +2314,11 @@ bluemind @frownmouth "No."
 
 blue @talkingmouth "What level is it?"
 
-leaf @talking2mouth "Sixteen..."
+leaf @talking2mouth "Fifteen..."
 
 pause 1.0
 
-blue @talkingmouth "No. I can't increase a Pokémon's level by thirty-nine levels in, like, thirty hours."
+blue @talkingmouth "No. I can't increase a Pokémon's level by forty levels in, like, thirty hours."
 
 pause 1.0
 

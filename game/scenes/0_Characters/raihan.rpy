@@ -126,6 +126,8 @@ if (WonBattle("Raihan1") or WonBattle("Raihan2")):
 
         raihan @closedbrow talking2mouth "But what's past is buried, and you buried me."
 
+    $ badgeslist.append("Dragon Badge")
+
     raihan @talkingmouth "Fair play, mate."
 
     red @sadbrow talkingmouth "I don't... I don't know if I can accept this."
@@ -194,7 +196,7 @@ raihan @talkingmouth "...Trade you for more info on your Pikachu?"
 
 red @talkingmouth "Sure."
 
-raihan @talkingmouth "Started taking 'em after I became a Gym Leader. Actually, if you scroll back far enough on my RotoPhoto account, you can see my first few pictures."
+raihan @talkingmouth "Started taking 'em after I became a Gym Leader. Actually, if you scroll back far enough on my RotoPhotos account, you can see my first few pictures."
 raihan @closedbrow happymouth "Blurry, out-of-focus... shoddy work. I was a total amateur back then. Didn't even have a custom photography lens, I was just using a bog-standard Rotom phone at the time."
 raihan @talkingmouth "I've got a granddad. Right ferocious fellow. Takes battling seriously. More than anything else."
 raihan @talkingmouth "He asked me to take a picture of myself after my battle with Leon."
@@ -336,7 +338,7 @@ raihan @talkingmouth "...Heh. Well, you've seen me in battle. You know how unchi
 
 red @confusedeyebrows talkingmouth "Is the roaring you do in battle a marketing thing?"
 
-raihan @talkingmouth "Sort of. Did it once in battle without really thinking about it. Got, like, seventy messages on my RotoPhoto account the next day telling me how sexy it was."
+raihan @talkingmouth "Sort of. Did it once in battle without really thinking about it. Got, like, seventy messages on my RotoPhotos account the next day telling me how sexy it was."
 raihan @closedbrow talking2mouth "The Great Raihan {i}always{/i} listens to fan feedback."
 raihan @sad "Though sometimes my Gym Trainers need to drag me out of my office to take on other challengers. Busy managing my accounts, or planning my next run at Leon." 
 raihan @happy "Heh, but it's fun. And I've never left a challenger waiting for more than ten minutes."

@@ -100,7 +100,7 @@ label prologue:
 
         menu:
             "The one and only.":
-                red @happybrow talkingmouth "The one and only."
+                red @happy "The one and only."
                 pass
 
             "What kind of name is that?":
@@ -310,7 +310,7 @@ label prologue:
 
     pause 2.0
 
-    red angrybrow sadmouth "...No, I didn't."
+    red sadbrow talkingmouth "...No, I didn't."
 
     $ renpy.music.queue("Audio/Music/Littleroot_Start.ogg", channel='music', loop=False, fadein=1.0, tight=None)
     $ renpy.music.queue("Audio/Music/Littleroot_Loop.ogg", channel='music', loop=True, fadein=0.0, tight=None)
@@ -489,7 +489,7 @@ label prologue:
     mom sadeyes sadeyebrows @talkingmouth "Looks like [pika_name] loves you as well."
     
     red @happy "Hey, buddy, don't look so sad!{w=0.5} I'll send for you as soon as I'm allowed to. I'm just not allowed to bring any of my personal Pokémon with me right away."
-    red @talkingmouth "Keep Mom company for me in the meantime, will ya? Here, I'll give you one of [first_name]'s famous headpats to tide you over 'til then."
+    red @talkingmouth "Keep Mom company for me in the meantime, will ya? Here, I'll give you one of my famous headpats to tide you over 'til then."
     
     $ renpy.music.play("Audio/Pokemon/pikachu_sad2.ogg", channel="altcry", loop=None)
     pikachu @sad "Pika... piiiikaaaa."
@@ -843,16 +843,16 @@ label prologue:
 
         menu:
             "Yep, that was it.":
-                red happyeyes talkingmouth "Yep, that was it."
+                red happy "Yep, that was it."
                 pass
 
             "Ooh, wait, here's an even better one.":
-                red happyeyes talkingmouth "Ooh, wait, here's an even better one."
+                red happy "Ooh, wait, here's an even better one."
                 jump bluename
 
     blue @angry "It doesn't make sense! It's not clever, or catchy, or... It was so stupid! Why did everyone call me that?!"
 
-    red -happyeyes -happyeyebrows -talkingmouth @talkingmouth "I guess the humor is just a bit too highbrow for you, [blue_name]."
+    red -happy @talkingmouth "I guess the humor is just a bit too highbrow for you, [blue_name]."
 
     blue @closedbrow happymouth "You wouldn't know 'highbrow' if it hit you with a shovel."
     blue @angry "You're a country hick who saw a Champion on TV one day and deluded yourself into thinking you had a chance! Now, I've got {i}way{/i} more important stuff to do than hang around with a clown like you, so I'm out of here."
@@ -991,7 +991,7 @@ label prologue:
     
     pause 2.0
 
-    red surprised "A chocolate bar?"
+    red @confused "A chocolate bar?"
         
     silver sadbrow @talkingmouth "It's a Rage Candy Bar.{w=0.5} ...Yeah. A chocolate bar. They're from Johto."
     

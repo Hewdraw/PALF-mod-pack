@@ -130,11 +130,11 @@ red @closedbrow talking2mouth "You know everyone, right? Do you know a girl name
 
 if (persondex["Gardenia"]["Value"] <= 3):
     red @talkingmouth "I met her once or twice, but don't know a whole lot about her."
-elif (classstats["Ghost"] > 7 and classstats["Grass"] > 7):
+elif (GetElective("Ghost") > 7 and GetElective("Grass") > 7):
     red @talkingmouth "She's in my ghost and grass classes, but I've only seen her a couple times outside of class."
-elif (classstats["Ghost"] > 7):
+elif (GetElective("Ghost") > 7):
     red @talkingmouth "She's in my ghost class, but I've only seen her a couple times outside of class."
-elif (classstats["Grass"] > 7):
+elif (GetElective("Grass") > 7):
     red @talkingmouth "She's in my grass class, but I've only seen her a couple times outside of class."
 elif (persondex["Gardenia"]["Value"] > 3):
     red @talkingmouth "I've actually met up with her quite a few times, but I'm just not sure where she spends her free time."

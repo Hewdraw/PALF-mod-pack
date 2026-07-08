@@ -74,3 +74,8 @@
 
         def SetPerformed(self):
             self.Performed = True
+
+        def Print(self):
+            print("Action: " + str(self.ActionType) + " | User: " + str(self.User) + " | Move: " + str(self.Move) + " | Targets: " + str(self.Targets) + " | Turn: " + str(self.Turn) + " | Succeeded: " + str(self.Succeeded))
+            print("Target Slots: " + str(self.GetTargetSlots()))
+            print("Move Owners: " + str(self.MoveOwners))

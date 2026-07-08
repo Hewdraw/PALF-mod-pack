@@ -42,35 +42,6 @@ if (not HasEvent("Instructor Ramos", 1)): #first class
     $ AddEvent("Instructor Ramos", 1)
     $ renpy.pause(1.0, hard=True)
 
-    show leaf uniform happy:
-        xpos 0.25 alpha 0.0
-        ease 0.5 alpha 1.0
-
-    pause 0.5
-
-    show brendan uniform happy:
-        xpos 0.75 alpha 0.0
-        ease 0.5 alpha 1.0
-
-    ethan uniform surprised "Hey, we know those guys!"
-    ethan @closedbrow talking2mouth "Looks like they want us to sit next to them."
-    show leaf surprisedbrow frownmouth with dis
-    show brendan surprisedbrow frownmouth with dis
-    red uniform @closedeyes talkingmouth "Then they should've sat closer to each other. Let's sit in the middle. As a compromise." 
-
-    show leaf:
-        alpha 1.0 xpos 0.25 
-        ease 0.5 xpos 0.15 alpha 0.0
-
-    show brendan:
-        alpha 1.0 xpos 0.75
-        ease 0.5 xpos 0.85 alpha 0.0
-
-    pause 1.0
-
-    hide leaf
-    hide brendan
-
     show ramos:
         xpos 900 alpha 0.0
         parallel:
@@ -99,7 +70,7 @@ if (not HasEvent("Instructor Ramos", 1)): #first class
         
     $ renpy.pause(3.0, hard=True)
 
-    ethan surprised "That's our teacher?{w=0.5} Is he going to be okay?{w=0.5} He's slowly shuffling his way to the front and his legs look like they're going to give out any second."
+    ethan uniform surprised "That's our teacher?{w=0.5} Is he going to be okay?{w=0.5} He's slowly shuffling his way to the front and his legs look like they're going to give out any second."
 
     hide ramos
     
@@ -159,7 +130,7 @@ if (not HasEvent("Instructor Ramos", 1)): #first class
     ramos "Oh, Shuckles, looks like we ain't got no time left.{w=0.5} I reckon I shouldn't keep yeh longer than I hafta."
     ramos "Class dismissed. Y'all run along now!"
     ethan surprised "...Uh-oh. I'm suddenly really worried about this class."
-elif (not HasEvent("Instructor Ramos", 2.1) and classstats["Grass"] >= 10):#Bark Up
+elif (not HasEvent("Instructor Ramos", 2.1) and GetElective("Grass") >= 10):#Bark Up
     show ramos with Dissolve(2.0)
     if (not HasEvent("Instructor Ramos", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -265,7 +236,7 @@ elif (not HasEvent("Instructor Ramos", 2.1) and classstats["Grass"] >= 10):#Bark
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide ramos with dis
-elif (not HasEvent("Instructor Ramos", 3.1) and classstats["Grass"] >= 20):#Miracle Seed
+elif (not HasEvent("Instructor Ramos", 3.1) and GetElective("Grass") >= 20):#Miracle Seed
     show ramos with Dissolve(2.0)
     if (not HasEvent("Instructor Ramos", 3)):
         $ renpy.pause(1.0, hard=True)
@@ -344,7 +315,7 @@ elif (not HasEvent("Instructor Ramos", 3.1) and classstats["Grass"] >= 20):#Mira
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide ramos with dis
-elif (not HasEvent("Instructor Ramos", 4.1) and classstats["Grass"] >= 30):#Magical Leaf
+elif (not HasEvent("Instructor Ramos", 4.1) and GetElective("Grass") >= 30):#Magical Leaf
     show ramos with Dissolve(2.0)
     if (not HasEvent("Instructor Ramos", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -455,6 +426,7 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+            hide ramos with dis
             jump aftertutoring
         else:
             jump aftergrasssetup
@@ -470,6 +442,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ newmon.LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide ramos with dis
         jump endclass
 else:
     ramos @sad "Y'playing some sort of joke, sprout? That Pokémon can't learn [taughtmove]!"

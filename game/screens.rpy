@@ -141,6 +141,21 @@ screen say(who, what):
     if (who != None and si != Null and who in [pokedexlookup(sidemonnum, DexMacros.Name), starter_name] and not hideside and (not showredonly or who.lower() == first_name.lower() or who == "You" and playercharacter == None)):
         add si
 
+screen smalltalk(lines):
+    style_prefix "say"
+
+    # to display, set the variable 'smalltalks' before a dialogue line. the format will be lists/tuples of two items inside a list.
+    # example: smalltalks = [("Red", "Hello world"), ("Blue", "Lorem ipsum")]
+    hbox:
+        xanchor 1.0
+        xpos 0.78
+        ypos 0.86
+        for tup in lines:
+            add GetChibi(tup[0]) zoom 0.2
+            null width 8
+            text "\"{}\"".format(tup[1]) size 24 xmaximum 200 yalign 0.5
+            null width 25
+
 ## Make the namebox available for styling through the Character object.
 init python:
     config.character_id_prefixes.append('namebox')
@@ -349,6 +364,9 @@ init python:
         if (renpy.get_screen("main_menu")):
             renpy.invoke_in_new_context(renpy.say, None, "You cannot save in the title screen!")
             return
+        if (dungeon != None):
+            renpy.invoke_in_new_context(renpy.say, None, "You cannot save in a dungeon!")
+            return
         else:
             renpy.save("quicksave")
             renpy.notify("Quicksave successful!")
@@ -465,12 +483,12 @@ init -2 python:
 
 init python:
     def GetChibi(char):
-        if (char == "Professor Cherry"):
+        if (playercharacter != None and char == first_name or char == "Red"):
+            char = "red"
+        elif (char == "Professor Cherry"):
             char = "kris"
         elif (char in ["Gramps", "Professor Oak", "Samuel", "Sam", "Old Man Oak"]):
             char = "oak"
-        elif (playercharacter != None and char == first_name or char == "Red"):
-            char = "red"
         charname = char.lower()
         if (charname == "iono"):
             if (GetScenes(["Iono"])[0][1]):
@@ -672,7 +690,7 @@ screen database(calling=False, limittype=None):
                     if ("Sex" in person.keys()):
                         if (person["Sex"] == Genders.Male):
                             $ gendersymbol = "{color=#4287f5}♂"
-                        else:
+                        elif (person["Sex"] == Genders.Female):
                             $ gendersymbol = "{color=#ff00b7}♀"
                     
                     $ valueceil = GetCharacterLevel(char)
@@ -701,8 +719,8 @@ screen database(calling=False, limittype=None):
         add "BG/Blank2.webp" alpha 0.6
         for char in SortDatabase():
             $ person = persondex[char]
-            $ pointvalue = person["Value"]
-            if (person["Named"] and (calling and person["Contact"] or (pointvalue != 0 or GetMood(char) != 0)) and (not calling or person["Contact"]) and (limittype == None or limittype in GetCharTypes(char))):
+            $ pointvalue = GetValue(char)
+            if (IsNamed(char) and (pointvalue != 0 or GetMood(char) != 0) and (not calling or IsContacted(char)) and (limittype == None or limittype in GetCharTypes(char))):
                 $ xvalue = yvalue % 6
                 $ ybuffer = math.floor(yvalue / 6) * 105
                 $ xbuffer = 280 + math.floor(xvalue * 365 * xzoomvalue)
@@ -723,7 +741,7 @@ screen database(calling=False, limittype=None):
                 if ("Sex" in person.keys()):
                     if (person["Sex"] == Genders.Male):
                         $ gendersymbol = "{color=#2b00ff}♂"
-                    else:
+                    elif (person["Sex"] == Genders.Female):
                         $ gendersymbol = "{color=#ff00b7}♀"
                     
                 $ valueceil = GetCharacterLevel(char)
@@ -1007,7 +1025,7 @@ screen wallet():
             ypadding 10
             xpadding 15
             background Frame("GFX/DateTimeBanner.webp") at Transform(xzoom=-1)
-            $ moneyamount = '${:,}'.format(math.floor(money * (1 if playercharacter == None else 12 * ((1 if playercharacter != "Leaf" else 2) + (hash(playercharacter) % 100) / 100)) - (200 if HasEvent("Ethan", "Spent200") and playercharacter == "Ethan" else 0)))
+            $ moneyamount = '${:,}'.format(math.floor(money * (1 if playercharacter == None else 12 * ((1 if playercharacter != "Leaf" else 2) + (hash(playercharacter) % 100) / 100)) - (200 if playercharacter == "Ethan" and HasEvent("Ethan", "Spent200") else 0)))
             text moneyamount size 28 color "#1c1c1c" at Transform(xzoom=-1) alt ""
 
 screen inventorywidget():
@@ -1212,7 +1230,7 @@ screen foreveralinfo(foreveral):
                 xysize (1106, 423)
                 
                 if entry[FVLMacros.FVLLevel] < 11:
-                    $ fvlreqstr = "Reach a bond level of {} and rank {} with{}".format(entry[FVLMacros.FVLLevel], (entry[FVLMacros.FVLLevel]-1) // 2, "..." if entry[FVLMacros.FVLTrainer] in persondex.keys() and persondex[entry[FVLMacros.FVLTrainer]]["Named"] else " a certain trainer.")
+                    $ fvlreqstr = "Reach a bond level of {} and rank {} with{}".format(entry[FVLMacros.FVLLevel], (entry[FVLMacros.FVLLevel]-1) // 2, "..." if entry[FVLMacros.FVLTrainer] in persondex.keys() and IsNamed(entry[FVLMacros.FVLTrainer]) else " a certain trainer.")
 
                     text fvlreqstr:
                         ypos position(-230, 1.0) # This ensures this text is always just over the chibi.
@@ -1223,7 +1241,7 @@ screen foreveralinfo(foreveral):
                         color "#000"
                         font "fonts/pkmndp.ttf"
 
-                    add (GetChibi(entry[FVLMacros.FVLTrainer]) if entry[FVLMacros.FVLTrainer] in persondex.keys() and persondex[entry[FVLMacros.FVLTrainer]]["Named"] else "images/chibis/quest.webp"):
+                    add (GetChibi(entry[FVLMacros.FVLTrainer]) if entry[FVLMacros.FVLTrainer] in persondex.keys() and IsNamed(entry[FVLMacros.FVLTrainer]) else "images/chibis/quest.webp"):
                         yalign 1.0
                         ysize 235
                         fit "contain"
@@ -3190,6 +3208,7 @@ screen help():
 ## https://www.renpy.org/doc/html/screen_special.html#confirm
 
 screen confirm(message, yes_action, no_action):
+    zorder 1000
 
     modal True
 
@@ -3633,13 +3652,14 @@ screen battleui():
                 if (trainer.HasMons() and not trainer.GetIsPokemon()):
                     for j, mon in enumerate(trainer.GetTeam()):
                         $ hasstatus = mon.HasNormalStatus() or mon.HasStatus("confused")
-                        add "GUI/pixelpokeball_indicator.webp" xpos 380 + j * 40 ypos 20 + 40 * i matrixcolor (SaturationMatrix(0) if mon.GetHealth() <= 0 else (HueMatrix(90) * SaturationMatrix(2.0) if hasstatus else IdentityMatrix()))
+                        add "GUI/pixelpokeball_indicator.webp" xpos 380 + j * 40 ypos 20 + 40 * i matrixcolor (SaturationMatrix(0) if mon.GetHealth() <= 0 else (HueMatrix(90) * SaturationMatrix(3.0) if hasstatus else IdentityMatrix()))
 
             for i, trainer in enumerate(EnemyTrainers()):
                 if (trainer.HasMons() and not trainer.GetIsPokemon()):
                     for j, mon in enumerate(trainer.GetTeam()):
-                        $ hasstatus = mon.HasNormalStatus() or mon.HasStatus("confused")
-                        add "GUI/pixelpokeball_indicator.webp" xpos 1920 - 420 - j * 40 xzoom -1 ypos 20 + 40 * i matrixcolor (SaturationMatrix(0) if mon.GetHealth() <= 0 else (HueMatrix(90) * SaturationMatrix(2.0) if hasstatus else IdentityMatrix()))
+                        if (not mon.HasStatus("recruited")):
+                            $ hasstatus = mon.HasNormalStatus() or mon.HasStatus("confused")
+                            add "GUI/pixelpokeball_indicator.webp" xpos 1920 - 420 - j * 40 xzoom -1 ypos 20 + 40 * i matrixcolor (SaturationMatrix(0) if mon.GetHealth() <= 0 else (HueMatrix(90) * SaturationMatrix(3.0) if hasstatus else IdentityMatrix()))
 
             $ ylevels = 0
             if (CurrentWeather != None):
@@ -3655,9 +3675,13 @@ screen battleui():
             #left side, your stuff
             $ ylevels = 0
             for i, mon in enumerate(FriendlyBattlers()):
-                $ health = mon.GetHealth()
-                $ maxhealth = mon.GetStat(Stats.Health)
-                $ ybuffer = i * 106 + ylevels * 35
+                python:
+                    health = mon.GetHealth()
+                    maxhealth = mon.GetStat(Stats.Health)
+                    ybuffer = i * 106 + ylevels * 35
+                    finalformid = (mon.GetId() if mon.Id != 25.2 else 25.2)
+                    if (finalformid in [25.3, 25.1]):
+                        finalformid = 25
 
                 imagebutton:
                     xanchor .03
@@ -3665,7 +3689,7 @@ screen battleui():
                     idle Transform("GUI/frame_pbattlestat.webp", matrixcolor=InvertMatrix(0), yzoom=0.8)
                     hover Transform("GUI/frame_pbattlestat.webp", matrixcolor=InvertMatrix(), yzoom=0.8)
                     if uifuckery < 1:
-                        action ([Show("pokedexdata", dexid = None, formid = mon.GetId() if mon.Id != 25.2 else 25.2, outOfContextDex = True)] if mon.Id not in unknownmons else NullAction())
+                        action ([Show("pokedexdata", dexid = None, formid = finalformid, outOfContextDex = True)] if mon.Id not in unknownmons else NullAction())
 
                 text mon.GetNickname() pos (17, 30 + ybuffer) size 35 - (1.5 * max(0, (count_non_brace_chars(mon.GetNickname()) - 10)))
 
@@ -3711,14 +3735,14 @@ screen battleui():
 
                 if (mon.IsTerad()):
                     add "GUI/frame_pbattlestat.webp" xanchor .1 ypos (i + 1) * 105 + 10 + ylevels * 35 at Transform(yzoom=0.3)
-                    text "{gradient2=3-#f00-#0f0-11-#0f0-#00f-11-#00f-#f00-11}Terastallized {/gradient2}" + mon.GetTeraType() xpos 15 ypos (i + 1) * 105 + 10 + ylevels * 35 + 8
+                    text "{gradient2=3-#f00-#0f0-33-#0f0-#00f-33-#00f-#f00-33}Terastallized {/gradient2}" + mon.GetTeraType() xpos 15 ypos (i + 1) * 105 + 10 + ylevels * 35 + 8
                     $ ylevels += 1
 
                 for status in mon.GetStatusKeys():
                     if (status[0] != "." or betatesting()):
                         add "GUI/frame_pbattlestat.webp" xanchor .1 ypos (i + 1) * 105 + 10 + ylevels * 35 at Transform(yzoom=0.3)
                         if (status in ["diveralized", "mega evolved", "minigigamaxed"]):
-                            text "{gradient2=3-#f00-#0f0-11-#0f0-#00f-11-#00f-#f00-11}" + status.title() + "{/gradient2}" xpos 15 ypos (i + 1) * 105 + 10 + ylevels * 35 + 8
+                            text "{gradient2=3-#f00-#0f0-33-#0f0-#00f-33-#00f-#f00-33}" + status.title() + "{/gradient2}" xpos 15 ypos (i + 1) * 105 + 10 + ylevels * 35 + 8
                         else:
                             text status.title() + ("" if not betatesting() else " | " + str(mon.GetStatusCount(status))) xpos 15 ypos (i + 1) * 105 + 10 + ylevels * 35 + 8
                         $ ylevels += 1
@@ -3785,14 +3809,16 @@ screen battleui():
 
                     if (mon.IsTerad()):
                         add "GUI/frame_pbattlestat.webp" xanchor .9 xpos 1.0 ypos (i + 1) * 105 + 10 + ylevels * 35 at Transform(yzoom=0.3)
-                        text "{gradient2=3-#f00-#0f0-11-#0f0-#00f-11-#00f-#f00-11}Terastallized {/gradient2}" + mon.GetTeraType() xpos 1920-15 xanchor 1.0 ypos (i + 1) * 105 + 10 + ylevels * 35 + 8
+                        text "{gradient2=3-#f00-#0f0-33-#0f0-#00f-33-#00f-#f00-33}Terastallized {/gradient2}" + mon.GetTeraType() xpos 1920-15 xanchor 1.0 ypos (i + 1) * 105 + 10 + ylevels * 35 + 8
                         $ ylevels += 1
 
                     for status in mon.GetStatusKeys():
                         if (status[0] != "." and status != "illusion") or betatesting():
                             add "GUI/frame_pbattlestat.webp" xanchor .9 xpos 1.0 ypos (i + 1) * 105 + 10 + ylevels * 35 at Transform(yzoom=0.3)
                             if (status in ["diveralized", "mega evolved", "minigigamaxed"]):
-                                text "{gradient2=3-#f00-#0f0-11-#0f0-#00f-11-#00f-#f00-11}" + status.title() + "{/gradient2}" xpos 1920-15 xanchor 1.0 ypos (i + 1) * 105 + 10 + ylevels * 35 + 8
+                                text "{gradient2=3-#f00-#0f0-33-#0f0-#00f-33-#00f-#f00-33}" + status.title() + "{/gradient2}" xpos 1920-15 xanchor 1.0 ypos (i + 1) * 105 + 10 + ylevels * 35 + 8
+                            elif (status == "forecasting"):
+                                text "Using " + mon.GetMoveNames()[0] xpos 1920-15 xanchor 1.0 ypos (i + 1) * 105 + 10 + ylevels * 35 + 8
                             else:
                                 text ("" if not betatesting() else str(mon.GetStatusCount(status)) + " | " ) + status.title() xpos 1920-15 xanchor 1.0 ypos (i + 1) * 105 + 10 + ylevels * 35 + 8
                             $ ylevels += 1
@@ -3825,13 +3851,15 @@ screen battleui():
             if (not renpy.get_screen("dungeonbattleui")):
                 use dungeonbattleui(dungeon)
             
-
-define longtext = "{gradient2=3-#f00-#0f0-11-#0f0-#00f-11-#00f-#f00-11}{size=60} Terastallize! {/size}{/gradient2}"
+define battleui_gradient = "{gradient2=3-#f00-#0f0-33-#0f0-#00f-33-#00f-#f00-33}"
+define battleui_gradient_end = "{/gradient2}"
 define shorttext = "Terastallize"
-define longlibtext = "{gradient2=3-#f00-#0f0-11-#0f0-#00f-11-#00f-#f00-11}{size=60} Liberize! {/size}{/gradient2}"
-define longdivtext = "{gradient2=3-#f00-#0f0-11-#0f0-#00f-11-#00f-#f00-11}{size=60} Diveralize! {/size}{/gradient2}"
-define longmegatext = "{gradient2=3-#f00-#0f0-11-#0f0-#00f-11-#00f-#f00-11}{size=60} Mega Evolve! {/size}{/gradient2}"
-define longminigigatext = "{gradient2=3-#f00-#0f0-11-#0f0-#00f-11-#00f-#f00-11}{size=60} Minigigamax! {/size}{/gradient2}"
+define longtext             = battleui_gradient + "{size=60} Terastallize! {/size}"  + battleui_gradient_end
+define longlibtext          = battleui_gradient + "{size=60} Liberize! {/size}"      + battleui_gradient_end
+define longdivtext          = battleui_gradient + "{size=60} Diveralize! {/size}"    + battleui_gradient_end
+define longmegatext         = battleui_gradient + "{size=60} Mega Evolve! {/size}"   + battleui_gradient_end
+define longminigigatext     = battleui_gradient + "{size=60} Minigigamax! {/size}"   + battleui_gradient_end
+define longtetraelementtext = battleui_gradient + "{size=60} Tetra Element! {/size}" + battleui_gradient_end
 
 screen battle(currentMon=None):    
     if (not renpy.get_screen("battleui")):
@@ -3868,29 +3896,36 @@ screen battle(currentMon=None):
             
 
 screen battlebuttons(showteraoption, hasdiveral, currentMon):
-    if (currentMon != None):
+    if (currentMon != None and 'pikachuobj' in globals()):
         if (showteraoption):
             textbutton "[terabuttontext]" action Return(value='tera') text_font "fonts/pkmndp.ttf" xmaximum 360 text_xalign .5 text_size 60 text_color "#4b4b4b" top_padding 17 style "menu_choice_button" hovered SetVariable('terabuttontext', (longtext if not currentMon.IsTerad() else shorttext)) unhovered SetVariable('terabuttontext', (shorttext if not currentMon.IsTerad() else longtext))
-        if (movesdodged.count("Dragon Pulse") >= 4 and dawnbattle):
+        if (movesdodged.count("Dragon Pulse") >= 4 and HasEvent("Dawn", "LiberationBattle")#King One: The Tyrant of Self
+            or currentMon == pikachuobj and (HasEvent("Lawrence", "LiberationBattle") or HasEvent("Lawrence", "LiberationBattle2"))):#King Two: The Tyrant of Weakness
             textbutton "[longlibtext]" action Return(value='lib') text_font "fonts/pkmndp.ttf" xmaximum 360 text_xalign .5 text_size 60 text_color "#4b4b4b" top_padding 17 style "menu_choice_button"
         if (hasdiveral and GimmickCost > 0):
             textbutton "[longdivtext]" action Return(value='div') text_font "fonts/pkmndp.ttf" xmaximum 360 text_xalign .5 text_size 60 text_color "#4b4b4b" top_padding 17 style "menu_choice_button"
-        if ((not currentMon.HasItem(None)) and ItemHasTag(currentMon.GetItem(), "megastone") and currentMon.GetItemName()[-3:] == "ite" and (ItemHasTag(currentMon.GetItem(), currentMon.GetSpeciesname()) or currentMon.Id == 25.2) and GimmickCost > 0):
+        if ((not currentMon.HasItem(None)) and ItemHasTag(currentMon.GetItem(), "megastone") and currentMon.GetItemName()[-3:] == "ite" and (ItemHasTag(currentMon.GetItem(), currentMon.GetSpeciesName()) or currentMon.Id == 25.2) and GimmickCost > 0):
             textbutton "[longmegatext]" action Return(value='mega') text_font "fonts/pkmndp.ttf" xmaximum 360 text_xalign .5 text_size 60 text_color "#4b4b4b" top_padding 17 style "menu_choice_button"
-        if ((not currentMon.HasItem(None)) and ItemHasTag(currentMon.GetItem(), "megastone") and "Minigiga" in currentMon.GetItemName() and (ItemHasTag(currentMon.GetItem(), currentMon.GetSpeciesname()) or currentMon.Id == 25.2) and GimmickCost > 0):
+        if ((not currentMon.HasItem(None)) and ItemHasTag(currentMon.GetItem(), "megastone") and "Minigiga" in currentMon.GetItemName() and (ItemHasTag(currentMon.GetItem(), currentMon.GetSpeciesName()) or currentMon.Id == 25.2) and GimmickCost > 0):
             textbutton "[longminigigatext]" action Return(value='giga') text_font "fonts/pkmndp.ttf" xmaximum 360 text_xalign .5 text_size 60 text_color "#4b4b4b" top_padding 17 style "menu_choice_button"
-    if (betatesting()):
-        textbutton "Devwin" action Return(value='devwin') text_font "fonts/pkmndp.ttf" xmaximum 270 text_xalign .5 text_size 60 text_color "#295272" text_hover_color "#256799" style "menu_choice_button"
-        textbutton "Devlose" action Return(value='devlose') text_font "fonts/pkmndp.ttf" xmaximum 270 text_xalign .5 text_size 60 text_color "#295272" text_hover_color "#256799" style "menu_choice_button"
-        textbutton "DevKO" action Return(value='devko') text_font "fonts/pkmndp.ttf" xmaximum 270 text_xalign .5 text_size 60 text_color "#295272" text_hover_color "#256799" style "menu_choice_button"
+        if (currentMon.Id == 133 and currentMon.GetId() == 133 and currentMon.HasAbility("Tetra Element", False)):
+            textbutton "[longtetraelementtext]" action Return(value='tetra') text_font "fonts/pkmndp.ttf" xmaximum 360 text_xalign .5 text_size 60 text_color "#4b4b4b" top_padding 17 style "menu_choice_button"
+    if (HasEvent("Lawrence", "LiberationBattle2")):
+        textbutton " Call " action Return(value='call') text_font "fonts/pkmndp.ttf" xmaximum 270 text_xalign .5 text_size 60 text_color "#83591b" text_hover_color "#f2a634" style "menu_choice_button"
     textbutton " Fight " action Return(value='fight') text_font "fonts/pkmndp.ttf" xmaximum 270 text_xalign .5 text_size 60 text_color "#9b5151" text_hover_color "#d03b3d" style "menu_choice_button"
     textbutton "  Bag  " action [Return(value='bag'), SetVariable("itemdesc", " ")] text_font "fonts/pkmndp.ttf" xmaximum 270 text_xalign .5 text_size 60 text_color "#826926" text_hover_color "#c98022" style "menu_choice_button"
     textbutton "Pokémon" action Return(value='pokemon') text_font "fonts/pkmndp.ttf" xmaximum 270 text_xalign .5 text_size 60 text_color "#437128" text_hover_color "#459426" style "menu_choice_button"
     if (dungeon == None):
+        if (betatesting()):
+            textbutton "Devwin" action Return(value='devwin') text_font "fonts/pkmndp.ttf" xmaximum 270 text_xalign .5 text_size 60 text_color "#295272" text_hover_color "#256799" style "menu_choice_button"
+            textbutton "Devlose" action Return(value='devlose') text_font "fonts/pkmndp.ttf" xmaximum 270 text_xalign .5 text_size 60 text_color "#295272" text_hover_color "#256799" style "menu_choice_button"
+            textbutton "DevKO" action Return(value='devko') text_font "fonts/pkmndp.ttf" xmaximum 270 text_xalign .5 text_size 60 text_color "#295272" text_hover_color "#256799" style "menu_choice_button"
+            textbutton "DevFaint" action Return(value='devfaint') text_font "fonts/pkmndp.ttf" xmaximum 270 text_xalign .5 text_size 60 text_color "#295272" text_hover_color "#256799" style "menu_choice_button"
         textbutton "  Run  " action Return(value='run') text_font "fonts/pkmndp.ttf" xmaximum 270 text_xalign .5 text_size 60 text_color "#295272" text_hover_color "#256799" style "menu_choice_button"
     elif (dungeon.GetFoundStairs()):
         textbutton " Ascend! " action Return(value='ascend') text_font "fonts/AncientModernTales.ttf" xmaximum 270 text_xalign .5 text_size 60 text_color "#295272" text_hover_color "#256799" style "menu_choice_button"
     elif (betatesting()):
+        textbutton "DevKO" action Return(value='devko') text_font "fonts/pkmndp.ttf" xmaximum 270 text_xalign .5 text_size 60 text_color "#295272" text_hover_color "#256799" style "menu_choice_button"
         textbutton "DevAscend" action Return(value='ascend') text_font "fonts/AncientModernTales.ttf" xmaximum 270 text_xalign .5 text_size 60 text_color "#295272" text_hover_color "#256799" style "menu_choice_button"
     if (len(CurrentActions) > 0):
         textbutton " Back " action Return(value='back') text_font "fonts/pkmndp.ttf" xmaximum 270 text_xalign .5 text_size 60 text_color "#000" text_hover_color "#f0f" style "menu_choice_button"
@@ -4060,6 +4095,7 @@ init python:
         return " ".join(contesteffects)
 
 screen movedata(move, vertoffset = 0):
+    #FIX THIS: It'd be cool if the move could tell if it's on a mon with a fvl that affects the move's power/effect
     zorder 20
 
     frame:
@@ -4242,7 +4278,7 @@ screen battlemoves(pkmn):
 
 screen rememberablemoves(pkmn):
     $ rememberablemoves = GetRememberableMoves(pkmn)
-    $ knowledgebonus = max(1, round(personalstats["Knowledge"] / 6))
+    $ knowledgebonus = max(min(personalstats["Knowledge"], 1), round(personalstats["Knowledge"] / 6))
 
     textbutton "Due to your [knowledgecolor]Knowledge{/color}, your Pokémon can be taught moves [IntToWord(knowledgebonus)] level[('' if knowledgebonus == 1 else 's')] early." xminimum 300 yalign .2 xalign .5 text_xalign .5 text_size 40 text_color "#000" background Frame("gui/button/choice_idle_background.webp")
 
@@ -4390,6 +4426,22 @@ screen switch(trainer, hideback = False):
 ##############################################################################
 # Calendar
 #
+init python:
+    def togglebetatesting():
+        global betatestingoverride, haseventoverride, relationshiprankoverride, bondvalueoverride, classstatoverride
+        if ('betatestingoverride' not in globals()):
+            betatestingoverride = False
+        if ('haseventoverride' not in globals()):
+            haseventoverride = None
+        if ('relationshiprankoverride' not in globals()):
+            relationshiprankoverride = None
+        if ('bondvalueoverride' not in globals()):
+            bondvalueoverride = None
+        if ('classstatoverride' not in globals()):
+            bondvalueoverride = None
+        betatestingoverride = not betatestingoverride
+        haseventoverride = relationshiprankoverride = bondvalueoverride = classstatoverride = None
+
 screen currentdate():
     if not inbattle:
         use partyviewer()
@@ -4432,13 +4484,44 @@ screen currentdate():
                                 xpadding 15
                                 background Frame("GFX/DateTimeBanner.webp")
                                 text "Silver's grunts are ready to rumble!  " size 28 color "#1c1c1c" alt ""
-
-                if (freeroaming and renpy.get_screen("map_UI") and IsAfter(20, 5, 2004) and betatesting()):
+                
+                if (isinstance(config.version, str) and ("BETA" in config.version or config.developer) and 'betatestingoverride' in globals()):
                     frame:
                         ypadding 10
                         xpadding 15
                         background Frame("GFX/DateTimeBanner.webp")
-                        textbutton "CONTEST TESTER <CLICK>" text_size 28 text_color "#1c1c1c" alt "" action Jump("testcontest")
+                        textbutton "Betatesting: " + str(betatestingoverride) text_size 28 text_color "#1c1c1c" alt "" action Function(togglebetatesting)
+                    
+                    if (betatesting()):
+                        if ('haseventoverride' in globals()):
+                            frame:
+                                ypadding 10
+                                xpadding 15
+                                background Frame("GFX/DateTimeBanner.webp")
+                                textbutton "HasEvents: " + str(haseventoverride) text_size 28 text_color "#1c1c1c" alt "" action CycleVariable("haseventoverride", [True, False]) alternate SetVariable("haseventoverride", None)
+                        
+                        if ('relationshiprankoverride' in globals()):
+                            frame:
+                                ypadding 10
+                                xpadding 15
+                                background Frame("GFX/DateTimeBanner.webp")
+                                textbutton "BondRank: " + str(relationshiprankoverride) text_size 28 text_color "#1c1c1c" alt "" action CycleVariable("relationshiprankoverride", [0, 1, 2, 3, 4, 5]) alternate SetVariable("relationshiprankoverride", None)
+                        
+                        if ('bondvalueoverride' in globals()):
+                            frame:
+                                ypadding 10
+                                xpadding 15
+                                background Frame("GFX/DateTimeBanner.webp")
+                                textbutton "BondValue: " + str(bondvalueoverride) text_size 28 text_color "#1c1c1c" alt "" action CycleVariable("bondvalueoverride", [0, 10, 50, 100, 999]) alternate SetVariable("bondvalueoverride", None)
+                        
+                        if ('classstatoverride' in globals()):
+                            frame:
+                                ypadding 10
+                                xpadding 15
+                                background Frame("GFX/DateTimeBanner.webp")
+                                textbutton "Classstats: " + str(classstatoverride) text_size 28 text_color "#1c1c1c" alt "" action CycleVariable("classstatoverride", [0, 100]) alternate SetVariable("classstatoverride", None)
+
+                if (freeroaming and renpy.get_screen("map_UI") and IsAfter(20, 5, 2004) and betatesting()):
                     frame:
                         ypadding 10
                         xpadding 15
@@ -4762,7 +4845,7 @@ screen newtabledescriptions(description, npcs):
         add GetCharacterSprite(character, uniform=True) xpos xposition + 0.05 
 
         if (character not in ["Melody", "Iono"]):
-            text "{size=80}{color=" + charcolor + "}" + (character if character in persondex.keys() and persondex[character]["Named"] else "???").replace(" ", "\n") + "\n{/color}{size=40}Lv." + str(valueceil) + ", EXP: " + ('{color=#ff0000}' if value < 1 else "") + str(value) + ("\n{/color}{size=30}" + moodtoword(mood) + " (" + str(mood) + ")" if nature != TrainerNature.Special else "\n{/color}{size=30}Stable") xpos xposition color "#fff" outlines [ (absolute(10), "#000", absolute(0), absolute(0)) ] at Transform(rotate=-15)
+            text "{size=80}{color=" + charcolor + "}" + (character if character in persondex.keys() and IsNamed(character) else "???").replace(" ", "\n") + "\n{/color}{size=40}Lv." + str(valueceil) + ", EXP: " + ('{color=#ff0000}' if value < 1 else "") + str(value) + ("\n{/color}{size=30}" + moodtoword(mood) + " (" + str(mood) + ")" if nature != TrainerNature.Special else "\n{/color}{size=30}Stable") xpos xposition color "#fff" outlines [ (absolute(10), "#000", absolute(0), absolute(0)) ] at Transform(rotate=-15)
         elif (character == "Iono"):
             text "{size=80}{gradient=#EE8FB5-#1d8fc5}Iono\n{/gradient}{size=40}Lv." + str(valueceil) + ", EXP: " + ('{color=#ff0000}' if value < 1 else "") + str(value) + ("\n{/color}{size=30}" + moodtoword(mood) + " (" + str(mood) + ")" if nature != TrainerNature.Special else "\n{/color}{size=30}Stable") xpos xposition color "#fff" outlines [ (absolute(10), "#000", absolute(0), absolute(0)) ] at Transform(rotate=-15)
         elif (character == "Melody"):
@@ -4847,7 +4930,7 @@ screen tabledescriptions(description, npcs):
             else:
                 add character.lower() + " uniform" xpos xposition + 0.05 matrixcolor finalmatrix
 
-        text "{size=80}{color=" + charcolor + "}" + (character if character in persondex.keys() and persondex[character]["Named"] else "???").replace(" ", "\n") + "\n{/color}{size=40}Lv." + str(valueceil) + ", EXP: " + ('{color=#ff0000}' if value < 1 else "") + str(value) xpos xposition color "#fff" outlines [ (absolute(10), "#000", absolute(0), absolute(0)) ] at Transform(rotate=-15)
+        text "{size=80}{color=" + charcolor + "}" + (character if character in persondex.keys() and IsNamed(character) else "???").replace(" ", "\n") + "\n{/color}{size=40}Lv." + str(valueceil) + ", EXP: " + ('{color=#ff0000}' if value < 1 else "") + str(value) xpos xposition color "#fff" outlines [ (absolute(10), "#000", absolute(0), absolute(0)) ] at Transform(rotate=-15)
 
     textbutton description xalign 0.5 ypos 0.65 xmaximum 1500 text_color "#000" background Frame("gui/button/choice_idle_background.webp") xpadding 80
 
@@ -4859,7 +4942,7 @@ init python:
             libtypes.remove(element)
         else:
             libtypes.append(element)
-            if (len(libtypes) > (2 if dawnbattle else libtypesnum)):#libtypesnum set to 2 if dawnbattle
+            if (len(libtypes) > (2 if HasEvent("Game", "LiberationBattle") else libtypesnum)):#libtypesnum set to 2 if liberationbattle
                 libtypes = libtypes[:len(libtypes) - 1]
                 renpy.show_screen("liberizemessage", "You do not have the freedom to\nliberize into another type{w=0.5}\nyet.")
             else:
@@ -4991,7 +5074,7 @@ screen map_people(people, location):
         $ charcolor = GetCharColor(person)
         $ finalmatrix = TintMatrix(charcolor) * BrightnessMatrix(1.0) * ContrastMatrix(0.0)
         $ personsprite = Transform(GetChibi(person), zoom=0.2, xalign=0.5)
-        if (persondex[person]["Named"]):
+        if (IsNamed(person)):
             add personsprite at ([hovering, fadechibis] if GetScenes([person])[0][1] else fadechibis) xpos math.floor(centerpos[0]) ypos math.floor(centerpos[1])
         else:
             add personsprite at ([hovering, fadechibis] if GetScenes([person])[0][1] else fadechibis) xpos math.floor(centerpos[0]) ypos math.floor(centerpos[1]) matrixcolor finalmatrix
@@ -5007,20 +5090,22 @@ screen map_confirm(location):
                 if (IsAfter(19, 5, 2004)):
                     textbutton "{b}Go to Cooking Club{/b}" xminimum 800 text_xalign 0.5 text_color "#000" text_hover_color "#f0f" style "menu_choice_button" text_font "fonts/pkmndp.ttf" action [Hide("map_confirm", Dissolve(0.5)), Return("CookingClub")]
         
-        if (location == "Student Center"):
+        elif (location == "Student Center"):
             textbutton "{b}Heal Party{/b}" xminimum 800 text_xalign 0.5 text_color "#000" text_hover_color "#f0f" style "menu_choice_button" text_font "fonts/pkmndp.ttf" action [Hide("map_confirm", Dissolve(0.5)), Function(HealParty)]
         
-        if (location == "Baseball Field"):
+        elif (location == "Baseball Field"):
             if ("Gardenia" in GetCharsInPlace("Baseball Field") and not IsBefore(25, 4, 2004) and (getRWDay(0) == "Sunday" or getRWDay(0) == "Saturday" or timeOfDay == "Evening")):
                 textbutton "{b}Talk Business{/b}" xminimum 800 text_xalign 0.5 text_color "#000" text_hover_color "#f0f" style "menu_choice_button" text_font "fonts/pkmndp.ttf" action [Hide("map_confirm", Dissolve(0.5)), Return("Business")]
             if ("Whitney" in GetCharsInPlace("Baseball Field") and IsAfter(26, 5, 2004) and not HasEvent("Whitney", "FrenzBee")):
                 textbutton "{b}The Bees...?{/b}" xminimum 800 text_xalign 0.5 text_color "#000" text_hover_color "#f0f" style "menu_choice_button" text_font "fonts/pkmndp.ttf" action [Hide("map_confirm", Dissolve(0.5)), Return("Bees")]
         
-        if (location == "Battle Hall"):
+        elif (location == "Battle Hall"):
             if ("Janine" in GetCharsInPlace("Battle Hall") and not IsBefore(26, 4, 2004) and (getRWDay(0) == "Sunday" or getRWDay(0) == "Saturday" or timeOfDay == "Evening")):
                 textbutton "{b}Check Levels{/b}" xminimum 800 text_xalign 0.5 text_color "#000" text_hover_color "#f0f" style "menu_choice_button" text_font "fonts/pkmndp.ttf" action [Hide("map_confirm", Dissolve(0.5)), Return("LevelCheck")]
             if (HasEvent("Professor Oak", "LeftCatacombs") and not IsNamed("Iono")):
                 textbutton "{b}Meet up with I-Balls{/b}" xminimum 800 text_xalign 0.5 text_color "#000" text_hover_color "#f0f" style "menu_choice_button" text_font "fonts/pkmndp.ttf" action [Hide("map_confirm", Dissolve(0.5)), Return("GatherDC")]
+            if (IsAfter(6, 6, 2004) and IsBefore(13, 6, 2004) and not HasEvent("Game", "Contest3")):
+                textbutton "{b}Go to the Contest Coliseum{/b}" xminimum 800 text_xalign 0.5 text_color "#000" text_hover_color "#f0f" style "menu_choice_button" text_font "fonts/pkmndp.ttf" action [Hide("map_confirm", Dissolve(0.5)), Return("ContestScene")]
             if (GetRelationshipRank("Cheren") >= 2):
                 textbutton "Explore the Catacombs" xminimum 800 text_xalign 0.5 text_color "#000" text_hover_color "#f0f" style "menu_choice_button" text_font "fonts/pkmndp.ttf" action [Hide("map_confirm", Dissolve(0.5)), Return("Catacombs")]
             if (GetItemCount(Item.B5) > 0):
@@ -5029,12 +5114,12 @@ screen map_confirm(location):
                 textbutton "{b}Use the Better Balloon Bot Battle Bundle (B5 Plus){/b}" xminimum 800 text_xalign 0.5 text_color "#000" text_hover_color "#f0f" style "menu_choice_button" text_font "fonts/pkmndp.ttf" action [Hide("map_confirm", Dissolve(0.5)), Return("B5Plus")]
 
         
-        if (location == "Garden" and "Professor Cherry" in GetCharsInPlace("Garden") and GetRelationshipRank("Professor Cherry") != 0):
+        elif (location == "Garden" and "Professor Cherry" in GetCharsInPlace("Garden") and GetRelationshipRank("Professor Cherry") != 0):
             textbutton "{b}Check Critical Capture Rate{/b}" xminimum 800 text_xalign 0.5 text_color "#000" text_hover_color "#f0f" style "menu_choice_button" text_font "fonts/pkmndp.ttf" action [Hide("map_confirm", Dissolve(0.5)), Return("CriticalCheck")]
         
         for chartuple in GetScenes(GetCharsInPlace(location)):
             $ charname = chartuple[0]
-            if (persondex[charname]["Named"]):
+            if (IsNamed(charname)):
                 $ hasscene = chartuple[1]
                 $ nextscene = GetNextScene(charname)
                 $ posttext = ""
@@ -5043,7 +5128,7 @@ screen map_confirm(location):
                 textbutton ("{b}[[RANK UP!]{/b} " if hasscene else "") + ">Find " + charname + posttext xminimum 800 text_xalign 0.5 text_color "#000" text_hover_color GetCharColor(chartuple[0]) style "menu_choice_button" text_font "fonts/pkmndp.ttf" action [Hide("map_confirm", Dissolve(0.5)), Return(chartuple[0])]
         textbutton "Back" xminimum 800 text_xalign 0.5 text_color "#000" text_hover_color "#f0f" style "menu_choice_button" text_font "fonts/pkmndp.ttf" action [Hide("map_confirm", Dissolve(0.5)), Return ("Back")]
 
-screen evolution(oldid, newid, liberize=False):
+screen evolution(oldid, newid, liberize=False, force=False):
     modal True
     $ oldimage = "images/Pokemon/" + str(oldid) + ".webp"
     $ newimage = "images/Pokemon/" + str(newid) + ".webp"
@@ -5055,7 +5140,7 @@ screen evolution(oldid, newid, liberize=False):
         add "images/Pokemon/25.2-2.webp" xzoom -1 at evolvein
     add oldimage xzoom (-1 if liberize else 1) at evolveaway
 
-    if (not liberize):
+    if (not (liberize or force)):
         hbox:
             yalign .95
             xalign .5
@@ -5244,6 +5329,8 @@ label pokemonextraoptions(pkmn):
             if (newnick == ""):
                 $ newnick = pokedexlookup(pkmn.GetId(), DexMacros.Name)
             $ pkmn.Nickname = newnick
+            if (pkmn == starterobj):
+                $ starter_name = pkmn.GetNickname()
             "The Pokémon has been renamed to [pkmn.GetNickname()]."
         
         "View its Pokédex entry.":
@@ -5488,14 +5575,39 @@ screen pokedexdata(dexid, formid = None, outOfContextDex = False, callingFromBox
         if (type2 != None):
             types.append(type2)
         for element in types:
-            typesstring += "{color=" + GetTypeColor(element) + "}" + element + "{/color}" + "   |   "
+            typesstring += GetTypeEssentiarum(element) + " {color=" + GetTypeColor(element) + "}" + element + "{/color}" + "   |   "
         typesstring = typesstring[:-7]
         
         # formes
-        prevForme = round(formid - .1, 1) if not (dexid == 25 and usingforeverals) else round(formid - .2, 1) # Libpikachu forme is .2
-        nextForme = round(formid + .1, 1) if not (dexid == 25 and usingforeverals) else round(formid + .2, 1) # floating point errors. floating point effin errors.
+        if math.floor(formid - .1) == math.floor(formid):
+            prevForme = round(formid - .1, 1) if not (dexid == 25 and usingforeverals) else round(formid - .2, 1) # Libpikachu forme is .2
+        else:
+            prevForme = None
+        if math.floor(formid + .1) == math.floor(formid):
+            nextForme = round(formid + .1, 1) if not (dexid == 25 and usingforeverals) else round(formid + .2, 1) # floating point errors. floating point effin errors.
+        else:
+            nextForme = None
         contestCategory = PokedexEntry(formid)[DexMacros.ContestTrait] if PokedexEntry(formid)[DexMacros.ContestTrait] else PokedexEntry(dexid)[DexMacros.ContestTrait]
-        unhandledforms = [493, 773, 774] # Arceus, Silvally and Minior's forms are unhandled
+        unhandledforms = [493, 676, 773, 774] # Arceus, Furfrou, Silvally, and Minior's forms are unhandled
+
+        # habitats
+        habitats = {}
+        for habitat, pool in wildpools.items():
+            if habitat == "infested basement":
+                continue # the infested basement is just a simulation where you don't actually catch mons
+            if formid in pool.GetEncounterPool().keys():
+                habitats[habitat] = (pool.GetDexBackground(), pool.GetLevelRange()[0], pool.GetLevelRange()[-1])
+                for basemon, evodata in pool.GetEvoPool().items():
+                    if formid == basemon:
+                        habitats[habitat] = (pool.GetDexBackground(), pool.GetLevelRange()[0], evodata[0] - 1) # if the mon spawns in a zone together with its evolution, the level range's max bound will be displayed as the level before evolution
+                continue
+            for minlevel, evomon in pool.GetEvoPool().values():
+                if formid == evomon:
+                    habitats[habitat] = (pool.GetDexBackground(), minlevel, pool.GetLevelRange()[-1])
+    python:
+        # sorting the habitats in the order they appear in the code, aka from first discoverable
+        habitatnames = sorted(habitats.keys(), key=lambda x: habitatorder[x])
+    default showinghabitat = 0 # the currently shown habitat
     
     hbox:
         xalign 0.5 
@@ -5512,7 +5624,7 @@ screen pokedexdata(dexid, formid = None, outOfContextDex = False, callingFromBox
                 hbox:
                     yalign 0.0 xalign 0.5
                     text "{b}" + str(dexid) + " - {font=fonts/DejaVuSans.ttf}" + speciesname + "{/font}" color "#000" size 50 prefer_emoji False
-                    if speciesname in [mon.GetSpeciesname() for mon in (playerparty if playercharacter != None else AllPokemon())]:
+                    if speciesname in [mon.GetSpeciesName() for mon in (playerparty if playercharacter != None else AllPokemon())]:
                         null width 20
                         add "GUI/Pokeball_indicator.webp" yalign 0.5
                 text pokedexentry[DexMacros.Species] xalign 0.5 yalign 1.0 color "#000" size 30
@@ -5633,7 +5745,7 @@ screen pokedexdata(dexid, formid = None, outOfContextDex = False, callingFromBox
                     if GetPreevo(formid) != None:
                         hbox:
                             xalign 0.5
-                            use pokedexevorequirements(mon = formid, preevo = True, outOfContextDex = outOfContextDex)
+                            use pokedexevorequirements(mon = formid, preevo = True, outOfContextDex = outOfContextDex, callingFromBox = callingFromBox)
                     else:
                         text "This Pokémon has no preevolution." xalign .5 yalign .5 color "#000"
                 
@@ -5683,11 +5795,43 @@ screen pokedexdata(dexid, formid = None, outOfContextDex = False, callingFromBox
                 if not renderedpokemon in ["wip.webp", "25.2.webp"]:
                     textbutton "{font=fonts/DejaVuSans.ttf}{size=-5}✧{/size}{/font}" xalign 1.0 yalign 1.0 action SetScreenVariable("shiny", -1 if shiny != -1 else 1) text_xalign 0.5 text_size 50 text_color ("#000" if shiny == -1 else "#ffc000") text_hover_color "#f0f" style "menu_choice_button" text_font "fonts/pkmndp.ttf" ymaximum 60 xmaximum 60
             
+            # habitats
+            fixed:
+                xsize 450
+                ysize 150
+                if habitats != {}:
+                    $ habitatname = habitatnames[showinghabitat]
+                    $ bg = habitats[habitatname][0]
+                    $ levelrange = "(lv. {}-{})".format(habitats[habitatname][1], habitats[habitatname][2]) if (habitats[habitatname][1] != habitats[habitatname][2]) else "(lv. {})".format(habitats[habitatname][1])
+                    if habitatname in knownareas:
+                        add Transform(bg, size=(450, 253)) crop(0, 84, 450, 150)
+                    else:
+                        add Transform(bg, size=(450, 253)) crop(0, 84, 450, 150) matrixcolor SaturationMatrix(0.0) blur 3
+                elif formid == 132: # special treatment for Ditto
+                    add "blank2" crop(0, 84, 450, 150)
+                frame:
+                    background Transform("pokedex_background", matrixcolor=OpacityMatrix(0.7 if habitats != {} or formid == 132 else 1.0))
+                    xsize 450
+                    ysize 150
+                    text "{b}Habitats{/b}" xalign 0.5 yalign 0.15 color "#000" size 45
+                    if formid == 132:
+                        text "Any" color "#fff" outlines [(absolute(3), "#000", absolute(0), absolute(0))] xalign 0.5 yalign 0.85 size 30
+                    elif habitats == {}:
+                        text "Unknown" color "#fff" outlines [(absolute(3), "#000", absolute(0), absolute(0))] xalign 0.5 yalign 0.85 size 30
+                    elif habitatname in knownareas:
+                        text "{} {}".format(habitatname.title(), levelrange) color "#fff" outlines [(absolute(3), "#000", absolute(0), absolute(0))] xalign 0.5 yalign 0.85 size 30
+                    else:
+                        text "???" color "#fff" outlines [(absolute(3), "#000", absolute(0), absolute(0))] xalign 0.5 yalign 0.85 size 30
+                    if showinghabitat > 0:
+                        textbutton "←" action SetScreenVariable("showinghabitat", showinghabitat - 1) text_color "#2b2b2b" text_hover_color "#fff" text_size 45 xalign 0.0 yalign 0.5
+                    if showinghabitat < len(habitats) - 1:
+                        textbutton "→" action SetScreenVariable("showinghabitat", showinghabitat + 1), renpy.restart_interaction text_color "#2b2b2b" text_hover_color "#fff" text_size 45 xalign 1.0 yalign 0.5
+
             # learnable moves
             frame:
                 background "pokedex_background"
                 xsize 450
-                ysize 550
+                ysize 400
                 if showmoves == "level":
                     textbutton "{b}Level moves{/b}" action SetVariable("showmoves", "level") text_xalign .5 xmaximum 225 xalign 0.0 yalign 0.0 text_size 40 text_color "#000" text_hover_color "#f0f" style "menu_choice_button" text_font "fonts/pkmndp.ttf"
                     textbutton "Tutor moves" action SetVariable("showmoves", "tutor") text_xalign .5 xmaximum 215 xalign 1.0 yalign 0.0 text_size 40 text_color "#000" text_hover_color "#f0f" style "menu_choice_button" text_font "fonts/pkmndp.ttf"
@@ -5699,7 +5843,7 @@ screen pokedexdata(dexid, formid = None, outOfContextDex = False, callingFromBox
                     mousewheel True
                     draggable True
                     scrollbars "vertical"
-                    ysize 455
+                    ysize 305
                     yalign 1.0
                     
                     vbox:
@@ -5740,7 +5884,7 @@ screen pokedexevorequirements(mon, preevo = False, outOfContextDex = False, call
                 if requirement[0] == "UsedItem":
                     evotext += "when exposed to " + arg
                 if requirement[0] == "Place":
-                    evotext += "in \"" + arg + "\""
+                    evotext += "in: " + arg
                 if requirement[0] == "Friendship":
                     evotext += "with high friendship"
                 if requirement[0] == "Trade":
@@ -5797,7 +5941,7 @@ screen pokedexevorequirements(mon, preevo = False, outOfContextDex = False, call
                     evotext += arg
                 
                 if requirement[0] == "Unimplemented":
-                    evotext = "     the evolution of this Pokémon is coming soon "
+                    evotext = "     you don't quite remember how this Pokémon evolves "
                     break
                 evotext += " "
         if mon == 292:

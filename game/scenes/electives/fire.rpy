@@ -7,11 +7,9 @@ scene map
 show blank2:
     alpha 0.8
 
-show classroom with dis
-
-show fireclass:
-    alpha 0.0 xalign 0.5 yalign 1.0
-    ease 0.5 alpha 1.0
+show classroom 
+show fireclass
+with dis
 
 $ location = "fire"
 $ passedclass = False
@@ -41,45 +39,33 @@ if (not HasEvent("Instructor Blaine", 1)): #first class
     $ AddEvent("Instructor Blaine", 1)
     $ renpy.pause(1.0, hard=True)
 
-    show may uniform happy:
-        alpha 0.0 xpos 900
-        ease 0.5 alpha 1.0
+    show may uniform happy with dis:
+        xpos 900
 
-    show serena uniform behind may:
-        alpha 0.0 xpos 500
-        pause 0.5
-        ease 0.5 alpha 1.0
+    show serena uniform behind may with dis:
+        xpos 500
 
     redmind "Oh, looks like May and Serena are here."
 
-    show may:
-        alpha 1.0 xpos 900
-        ease 0.5 alpha 0.0
-
-    show serena:
-        alpha 1.0 xpos 500
-        pause 0.5
-        ease 0.5 alpha 0.0
+    hide may
+    hide serena 
+    with dis
 
     pause 0.75
 
-    show flannery uniform tired:
-        alpha 0.0 zoom 0.7 xpos 0.75
-        ease 0.5 alpha 1.0
+    show flannery uniform tired with dis:
+        xpos 0.75
 
     redmind "And... there's Flannery, near the back.{w=0.5} She doesn't seem to notice me yet."
 
-    show flannery:
-        alpha 1.0 xpos 0.75
-        ease 0.5 alpha 0.0
+    hide flannery with dis
 
     pause 1.0
 
     hide flannery
 
-    show blaine:
-        xpos 900 alpha 0.0
-        ease 1.25 xpos 800 alpha 1.0
+    show blaine with dis:
+        ease 1.25 xpos 800
 
     if (not IsDate(5, 4, 2004)):
         blaine "Ah, it looks like we've got some new faces! Ethan and [first_name], I believe? I hope you're excited to be in my class!"
@@ -98,9 +84,7 @@ if (not HasEvent("Instructor Blaine", 1)): #first class
     $ BecomeNamed("Instructor Blaine")
     blaine happy "You can call me Blaine--or Dr. Katsura, if you must.{w=0.5} I've been researching Fire Pokémon for almost half a century."
 
-    show blaine:
-        alpha 1.0 xpos 800
-        ease 0.5 alpha 0.0
+    hide blaine with dis
     
     pause 0.5
 
@@ -127,9 +111,7 @@ if (not HasEvent("Instructor Blaine", 1)): #first class
     pause 0.5
     narrator "You are jolted from your doziness by a sharp kick to the back of the knee."
 
-    show serena uniform at leftside:
-        alpha 0.0
-        ease 0.5 alpha 1.0
+    show serena uniform at leftside with dis
 
     red @talkingmouth "Uh... what's up, Serena?"
 
@@ -187,17 +169,15 @@ if (not HasEvent("Instructor Blaine", 1)): #first class
 
         pause 0.5
 
-        show flanintro:
-            alpha 1.0
-            ease 0.75 alpha 0.0
+        hide flanintro with dis
             
         $ renpy.pause(0.75, hard=True)
 
         $ PlaySound("Wood Kick.ogg")
         
-        show flannery furious veins uniform:
-            alpha 0.0 xpos -270 ypos 1.1 zoom 1.2
-            ease 0.25 alpha 1.0 xpos 300 ypos 1.0
+        show flannery furious veins uniform with dis:
+            xpos -270 ypos 1.1 zoom 1.2
+            ease 0.25 xpos 300 ypos 1.0
 
         flannery "Wh--I DON'T SNORE!"
             
@@ -251,17 +231,15 @@ if (not HasEvent("Instructor Blaine", 1)): #first class
 
         pause 0.5
 
-        show flanintro:
-            alpha 1.0
-            ease 0.75 alpha 0.0
+        hide flanintro with dis
             
         $ renpy.pause(0.75, hard=True)
 
         $ PlaySound("Wood Kick.ogg")
         
-        show flannery surprisedbrow frownmouth uniform:
-            alpha 0.0 xpos -270 ypos 1.1 zoom 1.2
-            ease 0.25 alpha 1.0 xpos 300 ypos 1.0
+        show flannery surprisedbrow frownmouth uniform with dis:
+            xpos -270 ypos 1.1 zoom 1.2
+            ease 0.25 xpos 300 ypos 1.0
 
         flannery "Oh, what? What happened? I just closed my eyes for a second, and..."
         
@@ -296,7 +274,7 @@ if (not HasEvent("Instructor Blaine", 1)): #first class
     blaine "Hmm, looks like our time is up.{w=0.5} Just this once I'll spare you any homework. Class is dismissed!"
 
     hide flanintro
-elif (not HasEvent("Instructor Blaine", 2.1) and classstats["Fire"] >= 10):#Steady Flame
+elif (not HasEvent("Instructor Blaine", 2.1) and GetElective("Fire") >= 10):#Steady Flame
     show blaine with dis
     if (not HasEvent("Instructor Blaine", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -404,7 +382,7 @@ elif (not HasEvent("Instructor Blaine", 2.1) and classstats["Fire"] >= 10):#Stea
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide blaine with dis
-elif (not HasEvent("Instructor Blaine", 3.1) and classstats["Fire"] >= 20):#Charcoal
+elif (not HasEvent("Instructor Blaine", 3.1) and GetElective("Fire") >= 20):#Charcoal
     show blaine with dis
     if (not HasEvent("Instructor Blaine", 3)):
         $ renpy.pause(1.0, hard=True)
@@ -490,7 +468,7 @@ elif (not HasEvent("Instructor Blaine", 3.1) and classstats["Fire"] >= 20):#Char
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide blaine with dis
-elif (not HasEvent("Instructor Blaine", 4.1) and classstats["Fire"] >= 30):#Flame Charge
+elif (not HasEvent("Instructor Blaine", 4.1) and GetElective("Fire") >= 30):#Flame Charge
     show blaine with dis
     if (not HasEvent("Instructor Blaine", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -651,6 +629,7 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+            hide blaine with dis
             jump aftertutoring
         else:
             jump afterfiresetup
@@ -666,6 +645,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ newmon.LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide blaine with dis
         jump endclass
 else:
     blaine @sad "Current research indicates that [taughtmove] and that Pokémon species are incompatible. Sorry, m'boy."

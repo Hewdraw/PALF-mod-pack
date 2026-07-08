@@ -24,18 +24,18 @@ label day010402:
 
     $ BecomeNamed("Falkner")
     
-    falkner @talking2mouth "We've met. I'm Falkner, and we work together on the Student Council.{w=0.5} ...Though work may be too strong a word, in his case."
+    falkner @talking2mouth "We've met. I'm Falkner, and we work together on the Student Council. [ellipses]Though work may be too strong a word, in his case."
 
     red closedeyes angryeyebrows talking2mouth "I've been hearing that a lot about Brawly, but he seems great, to me."
 
     falkner @closedbrow happymouth "I'm sure he appreciates that."
     falkner @talkingmouth "In any case, suites are first-come, first-serve. If you have permission from the school to dorm with someone in particular, let me know. Otherwise, I can assign you a suite."
-    falkner @sadbrow talking2mouth "...I can also ensure that you don't dorm with someone you'd rather not spend a year with."
+    falkner @sadbrow talking2mouth "[ellipses]I can also ensure that you don't dorm with someone you'd rather not spend a year with."
 
     red happy "If you could make sure I don't dorm with 'Blue Oak,' then I'm good with anyone else!"
 
-    falkner @closedbrow talking2mouth "Very well. You'll be in Dorm... 151. Carry on down this hallway, take a left at the Tranquill Wing's exit and continue diagonally past the skywalk." 
-    falkner @talkingmouth "After you drop off your luggage, you may want to head to the lobby. To... 'mingle.'"
+    falkner @closedbrow talking2mouth "Very well. You'll be in Dorm[ellipses] 151. Carry on down this hallway, take a left at the Tranquill Wing's exit and continue diagonally past the skywalk." 
+    falkner @talkingmouth "After you drop off your luggage, you may want to head to the lobby. To[ellipses] 'mingle.'"
     
     red @talkingmouth "Will do.{w=0.5} Thanks!"
 
@@ -93,7 +93,7 @@ show hall_A2:
 
 redmind "I must've left the area where the dorms are, though. When I was there, there were tons of students around, but now it's just me."
 redmind happy "Well. If I just pick a direction and run, then, I bet I'll find my way back to where I was!"
-redmind -happy "Just going to tighten my laces, and then..."
+redmind -happy "Just going to tighten my laces, and then[ellipses]"
 
 pause 1.0
 
@@ -103,7 +103,7 @@ show hall_A2:
 
 pause 1.0
 
-redmind sadeyes sadeyebrows frownmouth "Actually... Maybe I should hold off. I don't want to knock a vase over or anything. They look expensive."
+redmind sadeyes sadeyebrows frownmouth "Actually[ellipses] Maybe I should hold off. I don't want to knock a vase over or anything. They look expensive."
 
 show hall_A2:
     xpos -530 ypos 1120 zoom 0.8
@@ -124,7 +124,7 @@ $ renpy.music.queue("Audio/Music/Pallet Town A.ogg", channel='music', loop=True,
 show hall_A2:
     xpos -100 ypos 1100 zoom 0.7
 
-red closedeyes talking2mouth "Geez, talk about heart attacks..."
+red closedeyes talking2mouth "Geez, talk about heart attacks[ellipses]"
 
 show leaf -surprisedbrow -frownmouth -surprised frownmouth with dis
 
@@ -132,8 +132,8 @@ red happy "Sorry, you scared the hell out of me! You make a habit of skulking up
 
 leaf @talking2mouth "{i}I'm{/i} the one skulking?{w=0.5} Do you have {i}any{/i} idea where you are?"
 
-red -happy @talking2mouth "Um..."
-red @talking2mouth "Just... just a random set of dorms, right?"
+red -happy @talking2mouth "Um[ellipses]"
+red @talking2mouth "Just[ellipses] just a random set of dorms, right?"
 
 show hall_A2:
     xalign 0.0 xpos -100 ypos 1100
@@ -144,7 +144,7 @@ show leaf flirt with dis:
     xpos 0.5 ypos 1.0
     ease 1.0 xpos 0.6 ypos 1.1
 
-red @sad2eyes talking2mouth "Oh, wait, there's something on the sign here..."
+red @sad2eyes talking2mouth "Oh, wait, there's something on the sign here[ellipses]"
 
 show leaf happy with dis
     
@@ -190,8 +190,8 @@ show leaf:
     xpos 0.5 ypos 1.0
     ease 1.0 zoom 1.2 ypos 1.1 xpos 0.6
 
-red -angrybrow closedeyes @talkingmouth "I... don't have one of those."
-red @talkingmouth "Though, now that you mention it, I vaguely remember some other students carrying around some small leaflets... Damn. Guess I missed the boat on that one."
+red -angrybrow closedeyes @talkingmouth "I[ellipses] don't have one of those."
+red @talkingmouth "Though, now that you mention it, I vaguely remember some other students carrying around some small leaflets[ellipses] Damn. Guess I missed the boat on that one."
 
 leaf surprisedbrow sadmouth "You {i}seriously{/i} went all this time without a map?{w=0.5} And then you made it all the way here from the main hall?"
 
@@ -205,7 +205,7 @@ show leaf happy:
 extend -happy @happy " Ha ha ha!"
 $ renpy.music.set_volume(1.0, delay=0.0, channel="ctc")
     
-red @closedbrow talking2mouth "You're not winning any points with me, personality-wise, right now..."
+red @closedbrow talking2mouth "You're not winning any points with me, personality-wise, right now[ellipses]"
 
 leaf -fullblush @flirtbrow talkingmouth "Oh, so I'm winning points in other ways? Maybe it's my fashion sense?"
 
@@ -266,7 +266,7 @@ leaf @talking2mouth "Oh, stop whining. Just stay here!"
 
 $ PlaySound("GenericDoorClose.ogg")
 
-redmind @thinking "...She just went into the women's restroom."
+redmind @thinking "[ellipses]She just went into the women's restroom."
 redmind @confusedbrow frownmouth "[ellipses]"
 redmind "This is going to be so dumb."
 
@@ -319,12 +319,12 @@ if (profanity):
             
             leaf angry "You got memory problems? I {i}just{/i} checked!"
 
-            red @surprisedeyes surprisedeyebrows talking2mouth "Yeah, but... someone could've come in since then. I mean, we've been watching the door, but there's windows on the inside."
+            red @surprisedeyes surprisedeyebrows talking2mouth "Yeah, but[ellipses] someone could've come in since then. I mean, we've been watching the door, but there's windows on the inside."
             
             show leafintro_mad with dis:
                 alpha 1.0
 
-            red @winkeyes sadeyebrows sweat talking2mouth "So someone could've, like... {cps=20}climbed up from outside, and... {cps=15}gone in there..."
+            red @winkeyes sadeyebrows sweat talking2mouth "So someone could've, like[ellipses] {cps=20}climbed up from outside, and[ellipses] {cps=15}gone in there[ellipses]"
             
             leaf @angrysmilemouth angrybrow "[ellipses]"
             leaf @angry "{cps=12}{i}Through the window?!{/i}"
@@ -378,12 +378,12 @@ else:
             
             leaf angry "You got memory problems? I {i}just{/i} checked!"
 
-            red @surprisedeyes surprisedeyebrows talking2mouth "Yeah, but... someone could've come in since then. I mean, we've been watching the door, but there's windows on the inside."
+            red @surprisedeyes surprisedeyebrows talking2mouth "Yeah, but[ellipses] someone could've come in since then. I mean, we've been watching the door, but there's windows on the inside."
             
             show leafintro_mad with dis:
                 alpha 1.0
 
-            red @winkeyes sadeyebrows sweat talking2mouth "So someone could've, like... {cps=20}climbed up from outside, and... {cps=15}gone in there..."
+            red @winkeyes sadeyebrows sweat talking2mouth "So someone could've, like[ellipses] {cps=20}climbed up from outside, and[ellipses] {cps=15}gone in there[ellipses]"
             
             leaf @angrysmilemouth angrybrow "[ellipses]"
             leaf @angry "{cps=12}{i}Through the window?!{/i}"
@@ -428,7 +428,7 @@ leaf @sarcastic "Just be good and sit there. I'll be right back."
 $ PlaySound("GenericDoorClose.ogg")
 show bathroom_dark with splitfadefaster
 
-redmind @sadeyes sadeyebrows frownmouth "I really... didn't think this is what Kobukan was going to be like.{w=0.5} Shut up in the women's bathroom,{nw}"
+redmind @sadeyes sadeyebrows frownmouth "I really[ellipses] didn't think this is what Kobukan was going to be like.{w=0.5} Shut up in the women's bathroom,{nw}"
 $ PlaySound("fading_footsteps.ogg")
 extend @closedbrow sweat frownmouth " and the girl who did it is running away."
 
@@ -472,8 +472,8 @@ pause 1.0
     
 leaf @happy "If I recall, you really need it."
 
-red @talkingmouth "Thanks, I guess. I'm not sure any of that really needed to be done, but you did it... {w=0.5}{nw}"
-extend @sadeyebrows sadeyes talkingmouth "well...?"
+red @talkingmouth "Thanks, I guess. I'm not sure any of that really needed to be done, but you did it[ellipses] {w=0.5}{nw}"
+extend @sadeyebrows sadeyes talkingmouth "well[ellipses]?"
 
 leaf @talking2mouth flirtbrow "You'd be a lot cuter if you'd ended that sentence after 'thanks.'"
 
@@ -482,29 +482,27 @@ red @sad2eyes sweat talkingmouth "I'll keep that in mind the next time a girl sh
 show leaf at getfurther
 
 leaf closedbrow happymouth "You'll thank me. Trust me, I know {i}all{/i} about navigating social intrigue." 
-leaf -happymouth @talking2mouth "But you know, despite everything that happened, it was...{w=0.6} kind of.{w=0.25}.{w=0.25}."
+leaf -happymouth @talking2mouth "But you know, despite everything that happened, it was[ellipses]{w=0.6} kind of.{w=0.25}.{w=0.25}."
 
 $ renpy.pause(2.0, hard=True)
 
-leaf sadbrow blush -frownmouth @talkingmouth "...a lot of fun.{w=0.5} Probably the most fun I've had in a while."
+leaf sadbrow blush -frownmouth @talkingmouth "[ellipses]a lot of fun.{w=0.5} Probably the most fun I've had in a while."
 leaf -sadbrow @happy "Let's do this again sometime!"
 
 show leaf:
     alpha 1.0 ypos 1.0 zoom 1.0
 
-red @closedeyes talkingmouth "I'm going to do my best to avoid that, but if I can't... {w=0.5}{nw}"
+red @closedeyes talkingmouth "I'm going to do my best to avoid that, but if I can't[ellipses] {w=0.5}{nw}"
 extend @happy "sure."
 
-show leaf happy with dis:
-    xpos 0.5 zoom 1.0 ypos 1.0
-    ease 1.5 xpos 1.0 zoom 1.35 ypos 1.5
+$ MoveOutSmart("leaf")
 
 pause 2.0
 
 hide leaf
 hide leafintro_A
 
-redmind "...She seemed nice."
+redmind "[ellipses]She seemed nice."
 
 window hide
 $ renpy.pause(1.5, hard=True)
@@ -530,7 +528,7 @@ redmind @thinking "Huh. So this is my room."
 
 pause 1.0
 
-redmind @thinking "For the next year..."
+redmind @thinking "For the next year[ellipses]"
 
 pause 1.0
 
@@ -550,7 +548,7 @@ show dorm_empty_A:
     zoom 1.18 xpos -170 ypos -180 xanchor 0 yanchor 0
     ease 0.4 zoom 1.0 xpos 0 ypos 0
 
-TempCharacter("{color=#c1861e}Young Voice{/color}") "{gradualsize=20-36}...cutting it a bit close, though.{/gradualsize}"
+TempCharacter("{color=#c1861e}Young Voice{/color}") "{gradualsize=20-36}[ellipses]cutting it a bit close, though.{/gradualsize}"
 
 show ethan with dis:
     xpos 1.5
@@ -580,7 +578,7 @@ Character("{color=#cf0000}[first_name]{/color} & {color=#c1861e}???{/color}") "\
 
 show ethan surprisedbrow frownmouth with dis
 show red surprisedbrow frownmouth with dis
-Character("{color=#cf0000}[first_name]{/color} & {color=#c1861e}???{/color}") "\"...\""
+Character("{color=#cf0000}[first_name]{/color} & {color=#c1861e}???{/color}") "\"[ellipses]\""
 
 show ethan angrybrow surprisedmouth with dis
 show red angrybrow surprisedmouth with dis
@@ -606,18 +604,18 @@ red @talkingmouth "Cool. Nice to meet you. My name's [first_name] [last_name]."
 
 ethan @talkingmouth "So, hey, what's your story?"
 
-red @talkingmouth "Well, I'm from Pallet Town in Kanto. {w=0.5}...That's pretty much it."
+red @talkingmouth "Well, I'm from Pallet Town in Kanto. {w=0.5}[ellipses]That's pretty much it."
 
 ethan @talking2mouth "Pallet? Oh, I know that place! That's where Professor Oak lives, right? I went to his lab once on a field trip. I'm from New Bark Town in Johto."
 
-red @surprised "...Sorry, Professor Oak? You mean Sam?"
+red @surprised "[ellipses]Sorry, Professor Oak? You mean Sam?"
 
 ethan @confusedeyebrows talking2mouth "You're kidding, right? Yeah, sure, maybe he's a bit old, but he's a world-famous Pokémon researcher. He's a bit more than 'Sam.'"
 
 red @talkingmouth "Huh."
 red -surprisedbrow -frownmouth -surprised @sadbrow talkingmouth "To me, he was just my neighbor."
 
-ethan @talkingmouth "Wow, you lived next to him? Wait..."
+ethan @talkingmouth "Wow, you lived next to him? Wait[ellipses]"
 ethan @surprised "Shit, I remember you! You nearly ran our teacher over while we were walking through the center of town!"
 
 red @happy "I don't remember that, but that sounds like me, alright!"
@@ -643,9 +641,9 @@ show ethan surprisedbrow frownmouth with dis
 
 red @talkingmouth "Oh, it's a Pokémon from Hoenn. Normal-type. Has two big ears that can both receive and emit sound. Most of them are completely immune to sound-based attacks."
 
-ethan @surprised "Dude... you just know that?"
+ethan @surprised "Dude[ellipses] you just know that?"
 
-red @sadeyes sadeyebrows talkingmouth "Well... yeah. I've studied a bit."
+red @sadeyes sadeyebrows talkingmouth "Well[ellipses] yeah. I've studied a bit."
 
 ethan -surprisedbrow -frownmouth @happy "Pretty impressive, [first_name]. I think I know who I'm going to want to have as a study partner."
 
@@ -689,7 +687,7 @@ calem @angrybrow talking2mouth "One may be surprised. I've been told that I'm gi
 
 pause 1.0
 
-ethan -surprisedbrow -frownmouth -surprised @confused "Dude. 'Given to pretention'...?"
+ethan -surprisedbrow -frownmouth -surprised @confused "Dude. 'Given to pretention'[ellipses]?"
 
 calem smilemouth @closedbrow talking2mouth "Yes, I suppose that's a self-demonstrating flaw."
 
@@ -738,7 +736,7 @@ show calem angrybrow
 show ethan angry
 with dis
 
-hilbert @sadbrow talkingmouth "...I don't remember asking. And I definitely don't care."
+hilbert @sadbrow talkingmouth "[ellipses]I don't remember asking. And I definitely don't care."
 
 show hilbert:
     xpos 0.75
@@ -765,7 +763,7 @@ red @thinking "[ellipses]"
 
 $ BecomeNamed("Hilbert")
 
-hilbert @closedbrow talkingmouth "...Hilbert."
+hilbert @closedbrow talkingmouth "[ellipses]Hilbert."
 hilbert @sadbrow talkingmouth "And I'm taking the bed over there."
 
 show hilbert:
@@ -776,10 +774,10 @@ pause 1.0
 
 show ethan -surprisedbrow -frownmouth -surprised with dis
 
-calem -surprisedbrow -frownmouth -surprised smilemouth @closedbrow talkingmouth "{size=30}That was going to be my bed... {/size}Well, whatever. Nicely handled, [first_name]."
+calem -surprisedbrow -frownmouth -surprised smilemouth @closedbrow talkingmouth "{size=30}That was going to be my bed[ellipses] {/size}Well, whatever. Nicely handled, [first_name]."
 
 ethan @happy "Yeah, that was pretty cool!"
-ethan @sad "...I guess we're spending the next year with Hindenburg, then, huh..."
+ethan @sad "[ellipses]I guess we're spending the next year with Hindenburg, then, huh[ellipses]"
 
 calem @closedbrow talking2mouth "{size=30}Fairly certain it was 'Hilbert.'{/size}"
 calem @talkingmouth sadbrow "Anyway, with a school as prestigious as this, I can understand if someone isn't in a particular mood to forge friendships."
@@ -787,7 +785,7 @@ calem @talking2mouth angrybrow "The competitive nature of our environment is abs
 
 ethan @happy "Right? It's like, okay dude, we get that you were the toughest guy in your high school. You can chill out."
 
-red @wince talking2mouth "Well, hopefully whoever our last dormmate is is... not like that."
+red @wince talking2mouth "Well, hopefully whoever our last dormmate is is[ellipses] not like that."
 
 pause 1.0
 
@@ -795,7 +793,7 @@ $ PlaySound("Door_Open1.ogg")
 
 pause 1.0
 
-calem angrybrow -smilemouth @surprisedbrow talkingmouth "{i}En parlant du loup...{/i}"
+calem angrybrow -smilemouth @surprisedbrow talkingmouth "{i}En parlant du loup[ellipses]{/i}"
 
 ethan @happy "You said it, Calamari!"
 
@@ -831,7 +829,7 @@ show calem surprisedbrow with dis
 
 brendan surprisedbrow frownmouth @surprised "Bro! You and I, we're kindred spirits. I can tell!"
 
-red @confused "Oh yeah...?"
+red @confused "Oh yeah[ellipses]?"
 
 brendan -surprisedbrow -frownmouth -surprised @happy "Your thighs, man! They're hella toned. You run a lot, right?"
 
@@ -870,7 +868,7 @@ show ethan:
 
 stop music fadeout 1.0
 
-hilbert @sadbrow talkingmouth "...Pathetic."
+hilbert @sadbrow talkingmouth "[ellipses]Pathetic."
 
 show brendan:
     xpos 0.8
@@ -906,11 +904,11 @@ red @angrybrow frownmouth "[ellipses]"
 
 ethan @surprised "Wait, [first_name]? Do you know what he's talking about?"
 
-red -angrybrow @sadeyes talking2mouth "...Kobukan Academy has an enforced 80%% graduation rate. The students in the bottom 20%% aren't permitted to graduate. You're allowed to try again, but..."
+red -angrybrow @sadeyes talking2mouth "[ellipses]Kobukan Academy has an enforced 80%% graduation rate. The students in the bottom 20%% aren't permitted to graduate. You're allowed to try again, but[ellipses]"
 
 show brendan surprisedbrow frownmouth with dis
 
-red @closedeyes talking2mouth "...But you aren't eligibile for financial aid if you ever failed to graduate, so in practice, if you don't graduate once, you never will, unless you're ridiculously wealthy."
+red @closedeyes talking2mouth "[ellipses]But you aren't eligibile for financial aid if you ever failed to graduate, so in practice, if you don't graduate once, you never will, unless you're ridiculously wealthy."
 calem @sad "This is possible only due to Kobukan's unique one-year curriculum. If Kobukan were a standard three-year program, then students would spend far more time and money before being told they're not permitted to graduate."
 
 show ethan sadbrow frownmouth
@@ -951,7 +949,7 @@ red @happy "Heck yeah. Don't worry. I may have just met you, Ethan, but I bet th
 
 stop music fadeout 1.0
 
-ethan -frownmouth @sadbrow talkingmouth "Alright..."
+ethan -frownmouth @sadbrow talkingmouth "Alright[ellipses]"
 
 queue music "Audio/Music/SoaringIllusions_Intro.ogg" noloop
 queue music "Audio/Music/SoaringIllusions.ogg"
@@ -967,8 +965,8 @@ $ renpy.music.set_volume(0.3, delay=3.0, channel="music")
 
 show flashback with Dissolve(2.0)
 
-redmind @thinking "I knew those stats before, but... even though I somehow got in, I'm still in the bottom tenth percentile."
-redmind @thinking "If I want to make it through the year, I'm going to need to work harder than I ever have before..."
+redmind @thinking "I knew those stats before, but[ellipses] even though I somehow got in, I'm still in the bottom tenth percentile."
+redmind @thinking "If I want to make it through the year, I'm going to need to work harder than I ever have before[ellipses]"
 redmind @happy "But that's fine! I'm going to be a Champion someday, and I always knew I'd have to work insanely hard to make that happen. Might as well start now!"
 
 $ renpy.music.set_volume(1.0, delay=1.0, channel="music")
@@ -1007,7 +1005,7 @@ pause 1.0
 
 show brendan sadbrow frownmouth at rightside with dis
 
-brendan @talking2mouth "Huh... I don't see her."
+brendan @talking2mouth "Huh[ellipses] I don't see her."
 
 show ethan at leftside with dis
 
@@ -1062,7 +1060,7 @@ show ethan at getcloser:
 
 ethan surprisedbrow frownmouth @surprised "{size=30}Holy shit, she's so cute!{/size}"
 red @sad2eyes angryeyebrows talking2mouth "{size=30}Yeah, and she's our dormmate's girlfriend, so keep it in your pants.{/size}"
-ethan -surprisedbrow -frownmouth @sadbrow talkingmouth "{size=30}Er... of course, hah hah...{/size}"
+ethan -surprisedbrow -frownmouth @sadbrow talkingmouth "{size=30}Er[ellipses] of course, hah hah[ellipses]{/size}"
 
 show ethan at getfurther:
     xpos 0.6
@@ -1077,15 +1075,15 @@ may -happybrow @happy "Oh, you know about it? Yep, that's right!"
 
 brendan @surprisedbrow talking2mouth "Huh, you know about May's old man?"
 
-ethan @surprised "Old man...? Wait, you mean...!"
+ethan @surprised "Old man[ellipses]? Wait, you mean[ellipses]!"
 
 may @sadbrow talkingmouth "Yep! May Birch is my full name."
 
-ethan @closedbrow talking2mouth sweat "Huh. [first_name] knows Professor Oak, Brendan knows Professor Birch, I know Professor Elm..."
+ethan @closedbrow talking2mouth sweat "Huh. [first_name] knows Professor Oak, Brendan knows Professor Birch, I know Professor Elm[ellipses]"
 
-calem @closedbrow talking2mouth "...It might be worth mentioning that I worked as Professor Sycamore's intern for a couple years."
+calem @closedbrow talking2mouth "[ellipses]It might be worth mentioning that I worked as Professor Sycamore's intern for a couple years."
 
-ethan @confused "What the heck...?{w=0.5} So we all, except for Hickey, have a personal connection with a prominent Professor from our region?"
+ethan @confused "What the heck[ellipses]?{w=0.5} So we all, except for Hickey, have a personal connection with a prominent Professor from our region?"
 
 brendan @closedbrow talkingmouth "I mean, we don't know whether he does or not. Probably wouldn't tell us, anyway."
 
@@ -1093,7 +1091,7 @@ may @sadbrow talkingmouth "What're you talking about?"
 
 calem @thinking "[ellipses]"
 
-brendan @closedbrow talkingmouth "I wonder if...{w=0.5} nah, it's nothing."
+brendan @closedbrow talkingmouth "I wonder if[ellipses]{w=0.5} nah, it's nothing."
 brendan @talking2mouth "Anyway, babe, how's your suite? You got some dudes as cool as the guys I ended up with?"
 
 may @angrybrow happymouth "Well, they're a bit less dude-ish, but yeah, I think they're some pretty cool people!"
@@ -1104,7 +1102,7 @@ may -angrybrow @happy "Oh, I just love the randomness of it! Even if we could pi
 
 brendan @happy "Yeah, May always loved leaving things up to chance! Heck, the first time I asked her out, she decided whether or not to accept on a coinflip!"
 
-may @sadbrow talkingmouth "...I wouldn't mind if you stopped telling people that..."
+may @sadbrow talkingmouth "[ellipses]I wouldn't mind if you stopped telling people that[ellipses]"
 
 calem @surprised "!"
 
@@ -1246,12 +1244,12 @@ roxanne @surprised ".{w=0.25}.{w=0.25}.{w=0.5}{nw}"
 queue music "Audio/Music/Kalos_Start.ogg" noloop
 queue music "Audio/Music/Kalos_Loop.ogg"
 
-roxanne @happy "...{fast}Oh, there we go!"
+roxanne @happy "[ellipses]{fast}Oh, there we go!"
 
-redmind -angrybrow @closedbrow frownmouth "I don't think she's aware half the people in this room are still brain dead on the floor after that uproar..."
+redmind -angrybrow @closedbrow frownmouth "I don't think she's aware half the people in this room are still brain dead on the floor after that uproar[ellipses]"
 redmind @wince frownmouth "If my ears had eyes, they'd be crying."
     
-wally @sadbrow surprised2mouth sweat "Ah... my ears...{w=0.5} What was that? Some kind of hazing ritual?!"
+wally @sadbrow surprised2mouth sweat "Ah[ellipses] my ears[ellipses]{w=0.5} What was that? Some kind of hazing ritual?!"
 
 grusha @wince "{i}Tranquilo, tranquilízate.{/i} Take deep breaths. It's fine. {size=30}It's fine.{/size}"
     
@@ -1260,11 +1258,11 @@ show flannery furious veins:
     ease 0.25 xpos 0.5 ypos 1.0
 
 show whitney surprisedbrow sadmouth:
-    xpos 0.75 ypos 1.6 rotate -15.0
+    xpos 0.75 ypos 1.8 rotate -15.0
     pause 0.75
     ease 0.25 xpos 0.65 ypos 1.0 rotate -15.0
 
-flannery "{size=45}I'LL KILL YOU!{/size}{w=0.75}{nw}"
+flannery "{size=45}I'LL THRASH YOU!{/size}"
 
 $ BecomeNamed("Flannery")
 
@@ -1343,8 +1341,8 @@ pause 2.5
 sabrina neutralpowered poweredbrow "[ellipses]"
 
 show sabrina neutralpowered poweredbrow:
-    xpos 0.75 alpha 1.0
-    ease 1.5 xpos 1.5 alpha 0.0
+    xpos 0.75
+    ease 1.5 xpos 1.5
 
 $ renpy.pause(1.75, hard=True)
 
@@ -1355,7 +1353,7 @@ hide sabrina
 
 roxanne @angry "{size=44}Come on now, we're on a schedule! GET MOVING!{/size}"
 
-red @talking2mouth "Eeesh. I only met Roxanne for a moment, but I'm not exactly... endeared by her, right now."
+red @talking2mouth "Eeesh. I only met Roxanne for a moment, but I'm not exactly[ellipses] endeared by her, right now."
 
 show ethan sad:
     ypos 2.0 xpos 0.5 rotate 10.0
@@ -1365,7 +1363,7 @@ pause 1.0
 
 $ ethanmisname = False
 
-ethan "Who's... Roxanne?"
+ethan "Who's[ellipses] Roxanne?"
 
 $ ethanmisname = True
 
@@ -1379,7 +1377,7 @@ show ethan closedbrow sadmouth:
     ypos 1.2 xpos 0.75 rotate 10.0
     ease 2.0 ypos 2.0 xpos 0.75 rotate 0.0
 
-ethan "Ohhhhh..."
+ethan "Ohhhhh[ellipses]"
 
 window hide
 
@@ -1416,7 +1414,7 @@ show calem:
     xpos 0.65
     ease 0.25 xpos 0.25
 
-calem smilemouth @sadbrow talkingmouth "...Personal space, please."
+calem smilemouth @sadbrow talkingmouth "[ellipses]Personal space, please."
 ethan @surprised "Huh? Oh, uh, sure."
 
 show brendan angrybrow frownmouth:
@@ -1451,7 +1449,7 @@ show roxspeech with Dissolve(2.0):
 
 roxanne uniform @talkingmouth "I am Roxanne, and to start I would like to thank the academy staff here for allowing the council to hold this special event."
 roxanne @closedbrow talkingmouth "I hope you will all make the most out of this occasion and grant me the opportunity to officially welcome every one of you to this prestigious establishment."
-roxanne @happy "Everyone...{w=0.5} welcome to the Kobukan Academy of Advanced Pokémon Arts & Sciences."
+roxanne @happy "Everyone[ellipses]{w=0.5} welcome to the Kobukan Academy of Advanced Pokémon Arts & Sciences."
 roxanne @teachingmouth "While we are calling this event an orientation, I'd like to ask for your patience in this initial assembly before you all return to socializing or attending your personal agendas."
 
 redmind @thinking "It's coming.{w=0.5} This is gonna be one of those long, insomnia-curing speeches."
@@ -1467,7 +1465,7 @@ hide ethan
 hide may
 hide brendan
 
-red @closedbrow talking2mouth "...They said all this on the website."
+red @closedbrow talking2mouth "[ellipses]They said all this on the website."
 
 calem @happy "It could still be a nice refresher for those who came in less-informed."
     
@@ -1475,7 +1473,7 @@ roxanne @closedbrow talkingmouth "{color=#0048ff}The first period of each day is
 
 brendan @surprised "Two hours?!"
 calem @closedbrow talking2mouth "I know. Two hours is hardly enough time to cover all the material."
-may @sad "Especially since we only have a year..."
+may @sad "Especially since we only have a year[ellipses]"
 ethan @surprised "Uh, that's not what he was implying, guys."
 red @happy "I spent two hours in Mt. Moon with no repels once. Can't be any worse than that."
 ethan @angry "Oh, god, Zubat everywhere, right? You know, they're an invasive species--Kanto has a lot to answer for, for letting them cross the border and mess up Johto like they have."
@@ -1508,9 +1506,9 @@ red @surprised "8 PM?{w=0.5} That's--"
 show roxspeechmad with dis:
     zoom 1.0 xalign 0.5
 
-brawly uniform @angrybrow talking2mouth "Yeah, 8 PM! That's way too early! I mean, seriously, it was a {i}pain{/i} last year, and the fact we're {i}keeping it is ridiculous! I mean, c'mon, the evening only {i}starts{/i} at 8 PM!"
+brawly uniform @angrybrow talking2mouth "Yeah, 8 PM! That's way too early! I mean, seriously, it was a {i}pain{/i} last year, and the fact we're {i}keeping{/i} it is ridiculous! I mean, c'mon, the evening only {i}starts{/i} at 8 PM!"
 
-roxanne @angrybrow talking2mouth "{i}Ahem{/i}... And don't think you can just sneak out, either!{w=0.5} There are security cameras in every room in every building."
+roxanne @angrybrow talking2mouth "{i}Ahem{/i}[ellipses] And don't think you can just sneak out, either!{w=0.5} There are security cameras in every room in every building."
 
 roxanne @closedbrow talking2mouth "Unless you have a special notice from a staff member, student council member, or someone empowered to give permission by the same, there will be no exceptions to--"
 
@@ -1518,13 +1516,13 @@ brawly @angrybrow talking2mouth "Yeah, yeah, I know about the cameras. I just th
 
 falkner uniform @talking2mouth "We all have to follow the rules, Brawly."
 
-brawly @sad "I mean... yeah, I know we already tried, but we could talk to Drayden again about it, and maybe--"
+brawly @sad "I mean[ellipses] yeah, I know we already tried, but we could talk to Drayden again about it, and maybe--"
 
 roxanne @angry "Will you {i}be quiet?!{/i} We're in the middle of an assembly right now!"
 
 roxanne @closedbrow angrymouth "If you have a problem with the way this school is run, throwing our dirty laundry out on the auditorium floor in front of everyone is hardly the way to deal with it. Have some decorum!"
 
-redmind @sad "Oh, poor Brawly. To get tongue-lashed like this in front of the entire auditorium..."
+redmind @sad "Oh, poor Brawly. To get tongue-lashed like this in front of the entire auditorium[ellipses]"
 
 falkner @closedbrow talkingmouth "Roxanne. Your speech."
 
@@ -1534,7 +1532,7 @@ show roxspeechmad:
     alpha 1.0
     ease 0.33 alpha 0.0
 
-roxanne @closedbrow frownmouth "{i}Ahem{/i}... Where was I?"
+roxanne @closedbrow frownmouth "{i}Ahem{/i}[ellipses] Where was I?"
 roxanne @happy "Oh, yes. As I was saying, it is a privilege to be a part of this great school we call Kobukan Academy.{w=0.4} Now is the opportunity of a lifetime to open a new door!"
 
 calem @surprised "She switched gears that easily?{w=0.5} That's formidable."
@@ -1588,7 +1586,7 @@ calem @closedbrow talking2mouth "Well, I guess that's something, too."
 calem @talkingmouth "But I'm more focused on the class scheduling part."
 calem @closedbrow talkingmouth "We're completely set on the room situation so there's nothing left for us to do there."
 
-calem @talking2mouth "It'll be tough picking two type electives out of eighteen. {color=#0048ff}And we'll have different instructors and classmates depending on the types we choose...{/color}"
+calem @talking2mouth "It'll be tough picking two type electives out of eighteen. {color=#0048ff}And we'll have different instructors and classmates depending on the types we choose[ellipses]{/color}"
 calem @talkingmouth "Even though we have the freedom to swap between electives at any time, many students will choose instead to focus on two or three types for the entire year."
 
 redmind @thinking "That might work for other students, but if I want to become a Champion, {color=#0048ff}I should probably swap between electives depending on what kind of Pokémon I'm trying to raise.{/color}"
@@ -1649,7 +1647,7 @@ brendan @talking2mouth "One of her dormmates."
 brendan @talkingmouth "I met up with all of them before I actually got to our room! {nw}{w=0.5}"
 extend @sadbrow talking2mouth "What,{w=0.5} uh,{w=0.5} what were their names, again?"
 
-may sadbrow frownmouth @talking2mouth "...You weren't listening?"
+may sadbrow frownmouth @talking2mouth "[ellipses]You weren't listening?"
 
 brendan sadbrow @talkingmouth "N-no, I totally was!{w=0.5} I'm just, uh, so bad with names.{w=0.5} Isn't that right, Erick?"
 
@@ -1665,7 +1663,7 @@ with dis
 
 calem @closedbrow talking2mouth "Let's get back on topic. May, what are your dormmates' names?"
 
-may @closedbrow talkingmouth "Well... there's me, Leaf, then a girl from Unova named Hilda--"
+may @closedbrow talkingmouth "Well[ellipses] there's me, Leaf, then a girl from Unova named Hilda--"
 
 show orientation with hpunch
 
@@ -1715,7 +1713,7 @@ show brendan:
     ease 0.5 xpos 0.4
 
 brendan angrybrow @angry "Hey, man, back off."
-may sadbrow @sad "Y-yeah...? Hilda's her name. Um, do you know her?"
+may sadbrow @sad "Y-yeah[ellipses]? Hilda's her name. Um, do you know her?"
 hilbert sadbrow "[ellipses]"
 hilbert @sadbrow talkingmouth "Probably not. It's a common name."
 hilbert @closedbrow talkingmouth "Nevermind."
@@ -1724,9 +1722,9 @@ show hilbert:
     xpos 0.2
     ease 1.0 xpos -0.5
 
-calem @closedbrow talkingmouth "...What an unpleasant man. Let him serve as a reminder of how not to react. Please, May, continue."
+calem @closedbrow talkingmouth "[ellipses]What an unpleasant man. Let him serve as a reminder of how not to react. Please, May, continue."
 
-may @sadbrow talkingmouth "U-uh... well, after Hilda is this Kalosian girl named Serena--"
+may @sadbrow talkingmouth "U-uh[ellipses] well, after Hilda is this Kalosian girl named Serena--"
 
 show brendan surprisedbrow frownmouth with dis:
     xpos 0.4 xzoom 1
@@ -1759,7 +1757,7 @@ show brendan happy with dis
 
 may @happy "Oh, yes! They kinda make her look like a Hoothoot. She laughed when I said that."
 
-calem @closedbrow sadmouth "...That cannot be. {size=30}She's not meant to...{/size}"
+calem @closedbrow sadmouth "[ellipses]That cannot be. {size=30}She's not meant to[ellipses]{/size}"
 
 show may sadbrow frownmouth with dis
 show brendan sadbrow frownmouth with dis
@@ -1769,13 +1767,13 @@ pause 1.0
 
 red sadeyebrows sadeyes talking2mouth "Hey. Calem. You good?"
 
-calem @talkingmouth "Yes... except for the sinking realization that I made the hardest decision of my life for absolutely naught."
+calem @talkingmouth "Yes[ellipses] except for the sinking realization that I made the hardest decision of my life for absolutely naught."
 
-ethan @confused "...Translation?"
+ethan @confused "[ellipses]Translation?"
 
 calem @closedbrow talkingmouth "One often meets their destiny on the road to avoid it."
 
-ethan @unamusedbrow talking2mouth "Calamari. Dude. None of us know what that means."
+ethan @unamusedbrow talking2mouth "Calamari. Dude. English or Japanese. I don't speak poetry."
 
 show brendan surprisedbrow frownmouth with dis:
     xpos 0.2 xzoom -1
@@ -1799,7 +1797,7 @@ serena @talkingmouth "Excuse me. Is that you, Calem?"
 
 $ BecomeNamed("Serena")
 
-redmind @surprisedbrow frownmouth "{cps=*0.2}...{/cps}Well, she certainly fits the description May gave, vague as it was. With those sunglasses and that accent, I'm pretty sure that's Serena."
+redmind @surprisedbrow frownmouth "{cps=*0.2}[ellipses]{/cps}Well, she certainly fits the description May gave, vague as it was. With those sunglasses and that accent, I'm pretty sure that's Serena."
 
 calem -closedbrow @talkingmouth "Oh, hello, Serena."
 
@@ -1824,7 +1822,7 @@ show brendan:
     pause 1.0
     ease 1.0 xpos -0.5
 
-calem @closedbrow talkingmouth "Uh..."
+calem @closedbrow talkingmouth "Uh[ellipses]"
 calem @happybrow talkingmouth "I had no idea you were enrolled here."
 
 serena @talkingmouth "Same for me.{w=0.5}{nw}" 
@@ -1842,7 +1840,7 @@ pause 1.0
 
 serena @sadbrow talkingmouth "Oh? And who might you be?"
 
-red @happy "Me? Oh, uh, I'm [first_name], and..."
+red @happy "Me? Oh, uh, I'm [first_name], and[ellipses]"
 
 menu:   
     "With those glasses, I bet people mistake you for a Hoothoot.":
@@ -1855,7 +1853,7 @@ menu:
 
         show calem -surprisedbrow smilemouth with dis
 
-        serena @closedbrow frownmouth "Hee... Hee..."
+        serena @closedbrow frownmouth "Hee[ellipses] Hee[ellipses]"
 
         redmind -talkingmouth -frownmouth @confusedbrow frownmouth "She's either crying or laughing."
 
@@ -1867,7 +1865,7 @@ menu:
         serena @talkingmouth "Would you believe me if I told you they were a present from my mother?"
         serena @happy "Everyone thinks they're silly-looking, but I think they're adorable!"
 
-        redmind @closedbrow sweat "Nailed it."
+        redmind @closedbrow sweat neutralmouth "Nailed it."
         
     "It's a pleasure to meet you.":        
         red @happy "It's a pleasure to meet you."
@@ -1904,7 +1902,7 @@ red @talkingmouth "And she's gone."
 
 pause 1.0
 
-red @angrybrow talking2mouth "...And, so, apparently, is everyone else."
+red @angrybrow talking2mouth "[ellipses]And, so, apparently, is everyone else."
 
 pause 1.0
 
@@ -1956,7 +1954,7 @@ show calem:
 
 pause 2.0
 
-redmind @thinking "Alright, time to find that lobby! Let's see... if I just start running in a random direction, then..."
+redmind @thinking "Alright, time to find that lobby! Let's see[ellipses] if I just start running in a random direction, then[ellipses]"
 
 show hall_A2b at sepia with dis
 show flashback with dis
@@ -1976,20 +1974,20 @@ hide hall_A2b
 hide flashback
 hide blank with dis
 
-redmind "Oh, great, now there's two of them in my head. Fine, I'll use the brochure!"
+redmind @upeyes sadeyebrows neutralmouth "Oh, great, now there's two of them in my head. Fine, I'll use the brochure!"
 red surprisedbrow frownmouth @surprisedbrow "[ellipses]"
 redmind thinking "Huh. This is actually super-easy to follow. Maybe that girl had a point."
 red angrybrow happymouth "Okay! Lobby time. Let's go!"
 
 $ renpy.pause(1.0, hard=True)
 
+scene hall_B behind blank2:
+    xpos 960 xalign 0.5 ypos 1080 yalign 1.0 zoom 0.9
+    ease 0.5 zoom 0.95
+
 show blank2:
     alpha 1.0
     ease 1.5 alpha 0.0
-
-show hall_B behind blank2:
-    xpos 960 xalign 0.5 ypos 1080 yalign 1.0 zoom 0.9
-    ease 0.5 zoom 0.95
 
 $ renpy.pause(0.5, hard=True)
 
@@ -2044,7 +2042,7 @@ menu:
         misty @talkingmouth "I'm fine."
         
         misty @angry "I'm fine!{w=0.6} It's fine!"
-        misty @closedbrow talkingmouth "Just try to not run over any more girls on the way to... {w=0.5}{nw}"
+        misty @closedbrow talkingmouth "Just try to not run over any more girls on the way to[ellipses] {w=0.5}{nw}"
         extend @sadbrow talkingmouth "wherever you're going."
         
         hide misty with dis
@@ -2052,7 +2050,7 @@ menu:
         stop music fadeout 2.0
         
         redmind @thinking "Yeah. Okay. Tear my head off, then strut out without even giving your name. Nice."
-        redmind @sad2eyes frownmouth "Ugh, groveling like that left a bad taste in my mouth..."
+        redmind @sad2eyes frownmouth "Ugh, groveling like that left a bad taste in my mouth[ellipses]"
 
     "You ran into me!":
         show misty surprisedbrow frownmouth with dis
@@ -2060,16 +2058,33 @@ menu:
 
         $ ValueChange("Misty", -1, 0.5)
 
-        misty "You...{w=0.7}{nw}"
+        misty @talkingmouth "You[ellipses]{w=0.7}{nw}"
         extend angry " JERK!"
+
+        misty @angry "You think you can talk to me like that? No way! Get out your Poké Balls!"
+
+        red @upbrow talking2mouth "Believe me, I'd love to, except I don't have any Pokémon with me."
+
+        misty @surprisedbrow talkingmouth "Huh? Why not?"
+
+        red @confused "Seriously? We're not allowed to bring Pokémon with us into Kobukan--not until we get our school-assigned starters."
+        red @closedbrow talking2mouth "It's all right there on the website."
+
+        misty "[ellipses]"
+
+        redmind @unamusedbrow frownmouth "[ellipses]And now she's even angrier."
+
+        misty @angrymouth "You--you--!"
         
         show misty angry:
             zoom 1.0 ypos 1.0 xpos 960
             ease 0.5 zoom 1.25 ypos 1.2 xpos 720
         
         $ renpy.pause(1.0, hard=True)
-        $ PlaySound("Slap.ogg")
+        $ PlaySound("thud.ogg")
         pause 0.1
+
+        misty "Move!"
         
         show misty angry:
             xpos 720 ypos 1.2 zoom 1.25 rotate 0
@@ -2085,8 +2100,6 @@ menu:
         
         show hall_B at hall_move2
         
-        redmind @closedbrow frownmouth "Ow."
-        
         show misty angry:
             zoom 1.25 xpos 360 ypos 1.0 alpha 1.0
             parallel:
@@ -2099,11 +2112,12 @@ menu:
         
         pause 1.0
         
-        red @angry "Ugh. Has anyone ever told you... {size=40}you don't take criticism too well?!{/size}"
+        redmind @unamusedbrow frownmouth "Called her out for running into me, then she almost did it again storming off."
+        redmind @sad2eyes sadeyebrows smirkmouth "Gotta wear a helmet around that girl, huh?"
 
     "My bad, but tone it down.":
         show misty surprisedbrow -angrymouth with dis
-        red @talkingmouth "I was just figuring out what to say. So, sorry, alright? No need to blow up like that. Now, are you okay?"
+        red @sadbrow talkingmouth "I was just figuring out what to say. So, sorry, alright? No need to blow up like that. Now, are you okay?"
         
         $ ValueChange("Misty", 1, 0.5)        
             
@@ -2112,7 +2126,7 @@ menu:
         misty @talkingmouth "I'm fine."
         
         misty @angry "I'm fine!{w=0.6} It's fine!"
-        misty @closedbrow talkingmouth "Just try to not run over any more girls on the way to...{w=0.5}{nw}"
+        misty @closedbrow talkingmouth "Just try to not run over any more girls on the way to[ellipses]{w=0.5}{nw}"
         extend -closedbrow -angrymouth @angry " wherever you're going."
         
         hide misty with dis
@@ -2140,7 +2154,7 @@ show lounge:
     zoom 1.1 ypos -100 alpha 1.0
     ease 0.75 zoom 1.0 ypos 0
 
-redmind "I don't see any of my dormmates around here...{w=0.5} but that's fine. I think I'd like to start a conversation with someone new, anyway."
+redmind "I don't see any of my dormmates around here[ellipses]{w=0.5} but that's fine. I think I'd like to start a conversation with someone new, anyway."
 
 show lounge:
     zoom 1.0
@@ -2183,16 +2197,16 @@ show blue:
     zoom 1.0 ypos 1.0
     ease 0.5 zoom 1.25 ypos 1.1 xpos 600
 
-blue @surprisedbrow talkingmouth "Did you sneak in just to follow me around?! That's creepy as shit! Someone told me that a guy who looked like you was here, but I thought she was wrong... but you really {i}are{/i} that desperate!"
+blue @surprisedbrow talkingmouth "Did you sneak in just to follow me around?! That's creepy as shit! Someone told me that a guy who looked like you was here, but I thought she was wrong[ellipses] but you really {i}are{/i} that desperate!"
 blue frownmouth angrybrow @angry "You better scram before I call security on your ass!"
 
-red @talkingmouth "Give me a break.{w=0.5} I've got an invitation, just like you, [blue_name]."
+red @talkingmouth "Give me a break.{w=0.5} I've got an acceptance letter, just like you, [blue_name]."
 
 show blue:
     zoom 1.25 ypos 1.1 xpos 600
     ease 0.5 zoom 1.0 ypos 1.0 xpos 720
 
-blue sweat @surprisedbrow angrymouth "You...{w=0.5} got an invitation?"
+blue sweat @surprisedbrow angrymouth "You[ellipses]{w=0.5} got an acceptance letter?"
 
 show blue surprisedbrow frownmouth with dis
 red @closedbrow sweat "Yeah, last month.{w=0.5} Actually, we thought it was yours, at first, but--"
@@ -2206,7 +2220,7 @@ blue -sweat @angrybrow talking2mouth "Bullshit! Let me see it!"
 show letter at itemgive
 
 red @upbrow talking2mouth "Sure, if it'll make you feel better."
-red @angrybrow talking2mouth "...But don't even think about so much as folding it roughly."
+red @angrybrow talking2mouth "[ellipses]But don't even think about so much as folding it roughly."
 
 hide letter with dis
 
@@ -2222,10 +2236,10 @@ show blue:
     zoom 1.25 ypos 1.1 xpos 600
     ease 0.5 zoom 1.0 ypos 1.0 xpos 720
 
-blue sad "This means...{w=0.5} then why didn't Gramps...?"
-blue @talkingmouth "...That makes no sense.{w=0.5}{nw}"
-blue angry "...That makes no sense.{fast} Why are you here? You're the last guy in the world that should be in here!"
-red angrybrow "...And yet I am, just as much as you are. So what does that say about you?"
+blue sad "This means[ellipses]{w=0.5} then why didn't Gramps[ellipses]?"
+blue @talkingmouth "[ellipses]That makes no sense.{w=0.5}{nw}"
+blue angry "[ellipses]That makes no sense.{fast} Why are you here? You're the last guy in the world that should be in here!"
+red angrybrow "[ellipses]And yet I am, just as much as you are. So what does that say about you?"
 blue @talkingmouth "You're such a waste of space, it's disgusting that Gramps recommended you.{w=0.5} He must've just felt bad that you didn't have any friends!"
 
 show blue closedbrow:
@@ -2255,7 +2269,7 @@ show cheren with dis
 
 cheren @disappointed "On the behalf of my classmate, I'd like to apologize for his disastrous conduct."
 red @happy "Hah, what? You don't need to apologize for [blue_name]. It's him, and only him, that's responsible for how he acts."
-cheren @sad "Nevertheless, to have some of your first moments at this prestigious academy marred by that man's atrocious manners..."
+cheren @sad "Nevertheless, to have some of your first moments at this prestigious academy marred by that man's atrocious manners[ellipses]"
 red @happy "It's fine, really. I know how to roll with the punches."
 red @confused "Anyway, I appreciate your concern, but, uh, how are you involved in this? You're a normal student, right?"
 cheren @talkingmouth "For now. I aim to join the Student Council shortly, though."
@@ -2266,7 +2280,7 @@ cheren @closedbrow talking2mouth "However, a month after the year begins, a new 
 red @confused "Wow, so you only have a month to start up a campaign, and get people to vote for you?"
 cheren @sad "That's the sum of it, yes."
 red @happy "Well, what are your positions? Convince this voter."
-cheren surprisedbrow frownmouth @surprised "Oh? Er, then... my positions, yes..."
+cheren surprisedbrow frownmouth @surprised "Oh? Er, then[ellipses] my positions, yes[ellipses]"
 
 pause 2.0
 
@@ -2274,7 +2288,7 @@ red @sadeyes sadeyebrows talkingmouth "You good?"
 
 pause 1.0
 
-cheren -surprisedbrow -frownmouth -surprised @disappointedbrow happymouth "{i}...Absolutely.{/i}"
+cheren -surprisedbrow -frownmouth -surprised @disappointedbrow happymouth "{i}[ellipses]Absolutely.{/i}"
 
 pause 1.0
 
@@ -2283,7 +2297,7 @@ cheren @disappointedbrow talking2mouth "Furthermore, the benefits granted by ten
 cheren @closedbrow talkingmouth "Even further more, financial aid ought to be dispersed towards those who need it most, not those who are most well-connected."
 cheren @angry "Finally, the number of highly suspicious stories about how this school decides admission must be looked into, resolved, and, if necessary, terminated."
 
-redmind @surprisedbrow frownmouth "...Oh, crap, this guy's intense."
+redmind @surprisedbrow frownmouth "[ellipses]Oh, crap, this guy's intense."
 redmind @frownmouth closedbrow "And I think he's looking into something that could cause some serious problems for me."
 red @confused "That's pretty ambitious. Does the Student Council have the authority to do all that? A lot of it sounds like stuff the staff would want to handle themselves."
 cheren @closedbrow talkingmouth sweat "It certainly is. But what is politics, if not the wresting of power from those who wish to hold it evermore?"
@@ -2293,7 +2307,7 @@ cheren @angrybrow happymouth "But I assure you, if you elect me to the Student C
 pause 2.0
 
 cheren @disappointed "Oh, and also, we'll put five-ply toilet paper in the washrooms."
-cheren @upeyes talking2mouth "That's a very popular request amongst a certain lobby, so{cps=*0.2}..."
+cheren @upeyes talking2mouth "That's a very popular request amongst a certain lobby, so{cps=*0.2}[ellipses]"
 
 pause 1.0
 
@@ -2309,8 +2323,8 @@ cheren happy "I very much appreciate your support. Good day."
 
 hide cheren with dis
 
-redmind thinking "...Well, he seems nice. I'm worried about what he might find, though. But... given what he says he wants to do, surely he won't actually make enough progress to find anything out about me, right?"
-redmind sadeyes sadeyebrows "{cps=*0.2}Right...?{/cps}"
+redmind thinking "[ellipses]Well, he seems nice. I'm worried about what he might find, though. But[ellipses] given what he says he wants to do, surely he won't actually make enough progress to find anything out about me, right?"
+redmind sadeyes sadeyebrows "{cps=*0.2}Right[ellipses]?{/cps}"
 
 $ renpy.music.stop(channel='crowd', fadeout=2.0)
 
@@ -2350,7 +2364,7 @@ misty @closedbrow talkingmouth "Tch. Whatever. I won't hold it against you."
 $ renpy.pause(1.5, hard=True)
 
 $ BecomeNamed("Misty")
-misty @surprisedbrow talkingmouth "...Well? Introduce yourself. I'm Misty."
+misty @surprisedbrow talkingmouth "[ellipses]Well? Introduce yourself. I'm Misty."
 
 if (persondex["Misty"]["Value"] > 0):
     red @happy "I'm [first_name]. Nice to meet you."
@@ -2370,7 +2384,7 @@ else:
 misty @sadbrow sweat talkingmouth "I'm not implying it's weird or anything, honest!"
 
 redmind @unamusedbrow frownmouth "Go on. Keep digging."
-misty -sweat surprised @sad "{size=30}{i}Ugh, why am I always so...{/i}{/size}"
+misty -sweat surprised @sad "{size=30}{i}Ugh, why am I always so[ellipses]{/i}{/size}"
 
 red @closedbrow talking2mouth "You're going to have to speak up a bit. You started trailing off on that last sentence."
 
@@ -2378,7 +2392,7 @@ misty -surprisedbrow -frownmouth -surprised @angry "I didn't say anything!"
 
 pause 1.0
 
-redmind @thinking "Tch, she's tenser than a coiled spring. I'm not sure if this conversation is even worth the minefield, but..."
+redmind @thinking "Tch, she's tenser than a coiled spring. I'm not sure if this conversation is even worth the minefield, but[ellipses]"
 
 menu:
     "Do you live here?":
@@ -2394,12 +2408,12 @@ menu:
         
         misty @talkingmouth "I guess I can trust you.{w=0.75}{nw}"
         misty @angrybrow talkingmouth "Just be sure to watch where you're going when classes start!"
-        redmind @thinking "You can drop that anytime, you know..."
+        redmind @thinking "You can drop that anytime, you know[ellipses]"
         
     "How was your day?":
         red -angrybrow -talking2mouth @talkingmouth "So, how was your first day here?"
         misty @talkingmouth "Other than you tackling me to the ground?{w=0.5} Just peachy."
-        redmind @thinking "You can drop that anytime, you know..."
+        redmind @thinking "You can drop that anytime, you know[ellipses]"
 
     "Is that a Cerulean outfit?":
         show misty happy with dis        
@@ -2428,7 +2442,7 @@ show misty surprisedbrow frownmouth with dis
 red @happy "Anyway, I need to unpack my stuff. I shouldn't keep holding you up."
 
 red @talkingmouth "Here, let me take your bags in for you. To make up for earlier."
-red @surprised "...Huh. These are some awfully fancy bags. And what does that name tag say? Something about a Gym...?"
+red @surprised "[ellipses]Huh. These are some awfully fancy bags. And what does that name tag say? Something about a Gym[ellipses]?"
 
 misty angry "Don't touch those!"
 
@@ -2470,9 +2484,9 @@ red @unamusedbrow frownmouth "[ellipses]"
 if (persondex["Misty"]["Value"] == 2):
     redmind @happy "Nope, you're not turning me off that easily. I'm gonna be your friend, and there's nothing you can do about it."
 elif (persondex["Misty"]["Value"] == -1):
-    redmind @unamusedbrow frownmouth "...Ugh. I'm so done with her."
+    redmind @unamusedbrow frownmouth "[ellipses]Ugh. I'm so done with her."
 else:
-    redmind @unamusedbrow frownmouth "I sense I've committed some sort of faux pas..."
+    redmind @unamusedbrow frownmouth "I sense I've committed some sort of faux pas[ellipses]"
 
 hide misty
 
@@ -2488,8 +2502,8 @@ $ renpy.pause(2.5, hard=True)
 
 hide blank2
 
-redmind @thonk "...?"
-redmind @thinking "Something... is off."
+redmind @thonk "[ellipses]?"
+redmind @thinking "Something[ellipses] is off."
 redmind @thonk "It's like one of those games I played as a kid where I tried to spot the difference between two similar pictures."
 redmind @thonk "Something is definitely out of place, but I can't put my finger on it."
 
@@ -2500,12 +2514,12 @@ show brendan at rightside with dis
 show ethan at centerside with dis
 
 calem @talkingmouth "Is something wrong, [first_name]?"
-red @confused "I'm... not sure."
+red @confused "I'm[ellipses] not sure."
 calem @talkingmouth "Have you been drinking water? With all the excitement, it's easy to forget.{w=0.5} Dehydration is a killer."
 brendan @surprised "Oh, crap. Does your head hurt? Stomachache, maybe?{w=0.5} Gimme a sec, I think May dropped some Lum Berries off in my bag!"
 
 red @confused "In your bag[ellipses]?"
-red @surprisedbrow talking2mouth "...bag."
+red @surprisedbrow talking2mouth "[ellipses]bag."
 
 pause 2.0
 
@@ -2535,7 +2549,7 @@ red @angry "{size=42}My bag is gone!{/size}"
 
 ethan @surprised "What? That black and yellow one, right?"
 
-calem @sadbrow talkingmouth "Yes, I saw it too. Where was it last...?"
+calem @sadbrow talkingmouth "Yes, I saw it too. Where was it last[ellipses]?"
 
 red @sad "Damn it, I need that! It's got pretty much everything except my clothes in it!"
 
@@ -2543,14 +2557,14 @@ brendan angrybrow @angry "Someone must've stolen it! I'll battle that asshole in
 
 calem -surprisedbrow @talkingmouth "Be calm. Only us five and the staff can get in here."
 
-red @confused "...Us {i}five?{/i}"
+red @confused "[ellipses]Us {i}five?{/i}"
 
-ethan @angry "Wait a minute... Hillenbrand isn't here!"
+ethan @angry "Wait a minute[ellipses] Hillenbrand isn't here!"
 
-calem @surprised "...That's truly baffling."
+calem @surprised "[ellipses]That's truly baffling."
 calem @closedbrow talkingmouth "In any case, he might not be, but all his luggage is. It doesn't make sense for him to abscond with your backpack and leave all his possessions here at our mercy."
 
-brendan @closedbrow sweat talking2mouth "Huh... that Roxanne chick. She said that there's a buncha security cameras, right?"
+brendan @closedbrow sweat talking2mouth "Huh[ellipses] that Roxanne chick. She said that there's a buncha security cameras, right?"
 
 red @angrybrow happymouth "Yeah, that's right! Good thinking. I'm going to the security office right now."
 
@@ -2560,7 +2574,7 @@ show calem sadbrow smilemouth with dis
 show ethan closedbrow frownmouth sweat with dis
 show brendan sadbrow frownmouth with dis
 
-red -angrybrow @sad "Er..."
+red -angrybrow @sad "Er[ellipses]"
 
 pause 1.0
 
@@ -2568,7 +2582,7 @@ calem @talking2mouth "Am I right in assuming that none of us know where the secu
 
 pause 1.0
 
-red @closedbrow talking2mouth "Yep... But..."
+red @closedbrow talking2mouth "Yep[ellipses] But[ellipses]"
 
 show ethan -sweat happy with dis
 show brendan happy with dis
@@ -2594,7 +2608,7 @@ $ PlaySound("Door_Slam.ogg")
 
 pause 2.0
 
-calem @sadbrow talkingmouth "That's... that's not how geometry works..."
+calem @sadbrow talkingmouth "That's[ellipses] that's not how geometry works[ellipses]"
 calem @sadbrow frownmouth "[ellipses]"
 calem happy "Oh, whatever. Wait up!"
 
@@ -2616,21 +2630,21 @@ $ renpy.music.play("Audio/hall_crowd.ogg", channel='crowd', loop=True, fadein=1.
 
 hide blank2 with splitfadefast
 
-red @talking2mouth "Wha... what's everyone yelling and shouting about?"
+red @talking2mouth "Wha[ellipses] what's everyone yelling and shouting about?"
 
 show face with dis:
     xpos 0.6
 
 face angrybrow @surprised "You again? Did you have something to do with this?"
 
-red @confused "...What?"
+red @confused "[ellipses]What?"
 
 show mace with dis:
     xpos 0.4
 
 hide brendan
 
-mace @talkingmouth "There was something skittering around the lobby a few minutes ago.{w=0.5} Whenever it touched someone, it blasted them with some kind of electricity. Though it seemed... buglike."
+mace @talkingmouth "There was something skittering around the lobby a few minutes ago.{w=0.5} Whenever it touched someone, it blasted them with some kind of electricity. Though it seemed[ellipses] buglike."
 
 red @talkingmouth "What could that be? A Galvantula? Or a Charjabug?"
 
@@ -2660,7 +2674,7 @@ else:
 show calem thinking with dis:
     xpos 0.25
 
-calem @closedbrow talkingmouth "...Interesting.{w=0.5} What did you say you packed in your bag again, [first_name]?"
+calem @closedbrow talkingmouth "[ellipses]Interesting.{w=0.5} What did you say you packed in your bag again, [first_name]?"
 
 show calem surprisedbrow frownmouth with dis
 
@@ -2673,14 +2687,14 @@ red @closedbrow talking2mouth "Which way did it go?"
 hide ethan
 show ethan with dis
 
-ethan @talkingmouth "I mean, the commotion's that way. I'd just follow the screaming. But if we don't hurry, campus police'll probably get to it, first... or another student."
+ethan @talkingmouth "I mean, the commotion's that way. I'd just follow the screaming. But if we don't hurry, campus police'll probably get to it, first[ellipses] or another student."
 
 brendan @angry "Aw, hell no. That's your bag, right, [first_name]?{w=0.5} If you let those other guys get it before you, there's no tellin' what's gonna happen to your stuff!"
 brendan @sad "I'm not entirely sure what's happenin' right now, but if something really weird {i}is{/i} in your bag, aren't you gonna be in huge trouble if they find out it's yours?"
 
-calem @talkingmouth sadbrow "Arguably, we'd be in more trouble for interfering in the operations of the school's security team..."
+calem @talkingmouth sadbrow "Arguably, we'd be in more trouble for interfering in the operations of the school's security team[ellipses]"
 
-ethan @surprised "Uh... I'll pass here. Whatever you think we should do is probably best."
+ethan @surprised "Uh[ellipses] I'll pass here. Whatever you think we should do is probably best."
      
 red @closedbrow sweat talking2mouth "Whatever's happening, that's still my bag out there, and I want it back."
 red @talkingmouth sad2eyes angryeyebrows "The situation's gone a little crazy, but that's all the more reason why I have to take care of it myself."
@@ -2708,7 +2722,7 @@ show text "{color=#ffffff}..{/color}" as text2:
         ease 0.0 alpha 1.0
         pause 0.5
         ease 0.0 alpha 0.0
-show text "{color=#ffffff}...{/color}" as text3:
+show text "{color=#ffffff}[ellipses]{/color}" as text3:
     alpha 0.0
     pause 1.0
     block:
@@ -2762,7 +2776,7 @@ $ renpy.pause(1.0, hard=True)
 
 show backpack
 
-redmind @thinking "Sure enough, my bag's darting between people's legs like it's some kind of small Pokémon.{w=0.5} The bigger problem, though, are all the people trying to grab it...!"
+redmind @thinking "Sure enough, my bag's darting between people's legs like it's some kind of small Pokémon.{w=0.5} The bigger problem, though, are all the people trying to grab it[ellipses]!"
 red @angry "Hey, stop! That's mine!"
 
 Character("Greedy Student") "\"No way, I saw it first!\""
@@ -2853,15 +2867,16 @@ show hall_B_night with vpunch
 $ renpy.pause(1.5, hard=True)
 
 stop music
+stop music channel "crowd" fadeout 3.0
 show flashback with dis
 
 $ renpy.music.queue("Audio/Music/RelicCastle_Start.ogg", channel='music', loop=None, tight=None)
 $ renpy.music.queue("Audio/Music/RelicCastle_Loop.ogg", channel='music', loop=True, tight=None)
 
-redmind @thinking "Okay. Something's in my bag. Almost certainly an electric type. Fast, small. Not powerful, but determined to do whatever it's doing..."
+redmind @thinking "Okay. Something's in my bag. Almost certainly an electric type. Fast, small. Not powerful, but determined to do whatever it's doing[ellipses]"
 redmind @thinking "Not a Rotom, because my bag's non-mechanical. It's staying on the ground, so it can't fly or levitate. It's able to see where it's going, so its head must be low to the ground--it runs on all fours."
 redmind @thinking "Less than twenty inches long. Base speed of--at this tilt--somewhere in the range of eighty to one hundred."
-redmind @thinking "Then... it could be a Pachirisu, a Minun, a Togedemaru, or even a--"
+redmind @thinking "Then[ellipses] it could be a Pachirisu, a Minun, a Togedemaru, or even a--"
 
 stop music
 hide flashback
@@ -2879,7 +2894,7 @@ stop music fadeout 1.0
 
 red @closedbrow talking2mouth ".{w=0.25}.{w=0.25}.{w=0.75}{nw}"
 extend @closedbrow talking2mouth "Huh?"
-red @confused "It's...{w=0.5} not doing anything."
+red @confused "It's[ellipses]{w=0.5} not doing anything."
 red @thonk "[ellipses]"
 red @happy "Well, why don't we just open you up and see what's happening here, huh?"
 
@@ -2893,7 +2908,7 @@ $ renpy.music.queue("Audio/Music/New_Adventure_Loop.ogg", channel='music', loop=
 
 $ renpy.pause(1.0, hard=True)
 
-red surprisedbrow frownmouth @surprised "This is...!{w=0.75}{nw}"
+red surprisedbrow frownmouth @surprised "This is[ellipses]!{w=0.75}{nw}"
 
 show redpika01:
     alpha 0.0 zoom 1.1 yalign 1.0 xalign 0.5
@@ -2901,21 +2916,21 @@ show redpika01:
 
 extend @talkingmouth ""
 
-red @talkingmouth "[pika_name]?!{w=0.5} What... How--"
+red @talkingmouth "[pika_name]?!{w=0.5} What[ellipses] How--"
 
 $ PlaySound("Pokemon/pikachu_happy3.ogg")
 
 hide pikachu
 
-pikachu happy_3 "Pipipi... Pika!"
+pikachu happy_3 "Pipipi[ellipses] Pika!"
 
 hide calem
 hide ethan
 hide brendan
 
-calem @sadbrow talking2mouth "...You brought a Pikachu?{w=0.5} You didn't mention that when I asked you what was in the bag."
+calem @sadbrow talking2mouth "[ellipses]You brought a Pikachu?{w=0.5} You didn't mention that when I asked you what was in the bag."
 
-red @surprised "No! I left him with my mom and...{w=0.25} how did you get here?{w=0.5} Did you stow away in my suitcase?!"
+red @surprised "No! I left him with my mom and[ellipses]{w=0.25} how did you get here?{w=0.5} Did you stow away in my suitcase?!"
 
 $ PlaySound("Pokemon/pikachu_excite5.ogg")
 
@@ -2924,11 +2939,11 @@ pikachu neutral_2 "Piii-kaaaa-chuuu!"
 red @angry "Didn't I tell you to stay with Mom? Does she even know you're here right now?{w=0.5} What if I'd put you in the baggage hold? You could've frozen, you furry idiot!"
 
 $ PlaySound("Pokemon/pikachu_sad.ogg")
-pikachu neutral_4 "P-Pika...{w=0.5}{nw}"
+pikachu neutral_4 "P-Pika[ellipses]{w=0.5}{nw}"
 $ PlaySound("Pokemon/pikachu_happy2.ogg")
 extend pikachu neutral_2b " Pikaaaaa!~"
 
-red @sad "...You wanted to see me that badly, huh?"
+red @sad "[ellipses]You wanted to see me that badly, huh?"
 red @happy "Oh, how could I say no to you?{w=0.5} Welcome back, [pika_name]!"
 
 $ PlaySound("Pokemon/pikachu_excite3.ogg")
@@ -2940,7 +2955,7 @@ pause 1.0
      
 stop music fadeout 2.0
 
-redmind @happy "Alright! All's well that ends well. Except for...{w=0.5}{nw}"
+redmind @happy "Alright! All's well that ends well. Except for[ellipses]{w=0.5}{nw}"
 extend @wince frownmouth " one problem."
 
 $ renpy.music.queue("Audio/Music/Littleroot_Start.ogg", channel='music', loop=False, fadein=1.0, tight=None)
@@ -2969,7 +2984,7 @@ show ethan with dis
 
 ethan frownmouth @angry "Yeah!{w=0.5} [first_name] didn't even know his Pikachu was in his bag."
 
-calem @sadbrow talkingmouth "That being the case, isn't it sensible to assume the fault here lies somewhere, perhaps... closer to home?"
+calem @sadbrow talkingmouth "That being the case, isn't it sensible to assume the fault here lies somewhere, perhaps[ellipses] closer to home?"
 
 brendan @closedbrow talking2mouth "Right?{w=0.5} What kinda security system do you have where someone can {i}accidentally{/i} bring a whole-ass Pikachu in here?"    
 
@@ -2985,7 +3000,7 @@ red @happy "Hey, guys, chill. Don't worry, I'll figure something out. Don't get 
 show calem sadbrow frownmouth with dis
 show brendan sadbrow frownmouth with dis
 
-ethan @sad "B-but..."
+ethan @sad "B-but[ellipses]"
 
 pause 1.0
 
@@ -3016,7 +3031,7 @@ $ renpy.music.queue("Audio/Music/DragonDenLoop.ogg", channel='music', loop=True,
 
 hilbert angrybrow @angry "{size=42}Pathetic.{/size}"
 
-security @talkingmouth "Y-young man...?"
+security @talkingmouth "Y-young man[ellipses]?"
 
 hilbert @closedbrow talkingmouth "I live in the dormitory this bag came from. I was there before anyone else. I saw everything."
 
@@ -3051,23 +3066,23 @@ show calem -surprisedbrow -frownmouth:
 $ renpy.music.queue("Audio/Music/New_Adventure_Start.ogg", channel='music', loop=None, tight=None)
 $ renpy.music.queue("Audio/Music/New_Adventure_Loop.ogg", channel='music', loop=True, tight=None)
 
-red @surprised "H-holy shit..."
+red @surprised "H-holy shit[ellipses]"
 
-ethan @talkingmouth "Dude.{w=0.5} Was Hillenbrand actually going easy on us before...?"
+ethan @talkingmouth "Dude.{w=0.5} Was Hillenbrand actually going easy on us before[ellipses]?"
 
 pause 1.0
 
-red @sad "Uh, if it makes you feel any better, Sir, I don't think you did that bad a job...?"
+red @sad "Uh, if it makes you feel any better, Sir, I don't think you did that bad a job[ellipses]?"
 red @thonk "[ellipses]"
 red @confused "Wait, where'd he go?"
 
 calem @closedbrow talkingmouth "Ran off that way.{w=0.5} Crying, I believe."
 
-red @confused "Well, I guess we should start heading back to our room?{w=0.5} It's getting close to curfew, and Cheren hasn't become president yet, so..."
+red @confused "Well, I guess we should start heading back to our room?{w=0.5} It's getting close to curfew, and Cheren hasn't become president yet, so[ellipses]"
 
 ethan @confused "Who?"
 
-red @happy "Oh, he's great. He's this guy who's running for Student Council, and..."
+red @happy "Oh, he's great. He's this guy who's running for Student Council, and[ellipses]"
 
 pause 1.5
 
@@ -3108,13 +3123,13 @@ hide blank2
 
 show mom surprisedbrow frownmouth with dis
 
-red @closedbrow talking2mouth "Ugh, Mom... you're lucky my roommate was there to cover for me or I would've been in big trouble!"
+red @closedbrow talking2mouth "Ugh, Mom[ellipses] you're lucky my roommate was there to cover for me or I would've been in big trouble!"
 
 mom @happy "{i}Oh, how{/i} is {i}your roommate?{w=0.5} Is he a nice boy? Where is he from? What does he look like?{/i}"
 
 hide hilbert
 
-red @happy "Well, actually, I have four of them. But the one who covered for me was called Hilbert. He's, uh... a character."
+red @happy "Well, actually, I have four of them. But the one who covered for me was called Hilbert. He's, uh[ellipses] a character."
 
 show mom -surprisedbrow -frownmouth with dis
 
@@ -3160,7 +3175,7 @@ brendan @angrybrow happymouth "Grass and Ground for me! I've got lots of experie
 
 pause 1.0
 
-brendan @happy "Oh, and Water, too! {i}Champion Wallace{/i} is teaching that class. Love that guy. His reign was the best Spring Break I ever had."
+brendan @happy "Oh, and Water, too! {i}Champion Wallace{/i} is teaching that class. He's my favorite Champion. His reign was the best Spring Break I ever had."
 
 calem @talkingmouth "Fighting, Flying, and Fairy are my preferences. I may dabble in another elective or two, for variety, but I imagine I'm largely set."
 
@@ -3172,8 +3187,7 @@ hilbert @sadbrow talkingmouth "It's Hilbert."
 hilbert @thinking "[ellipses]"
 hilbert @closedbrow talkingmouth "And I'll be in Steel, Ice, and Ghost."
 
-show hilbert at dissolveaway:
-    xpos 0.2
+hide hilbert with dis
 
 pause 2.0
 
@@ -3191,32 +3205,31 @@ show dorm_empty_B at vpunch
 pause 1.0
 
 
-hilbert @talkingmouth "It's nothing like that! Ice is the most powerful offensive type, and steel is the most powerful defensive type! Choosing those two is just logical, and Ghost covers their Fighting weaknesses!"
+hilbert @talkingmouth "It's nothing like that! Ice is the most powerful offensive type, and Steel is the most powerful defensive type! Choosing those two is just logical, and Ghost covers their Fighting weaknesses!"
 
 pause 1.0
 
 hilbert sadbrow talkingmouth "Tch. I don't need to explain myself to you."
 
-show hilbert at dissolveaway:
-    xpos 0.2
+hide hilbert with dis
 
 pause 2.0
 
 show calem thinking with dis
 show ethan thinking with dis
 
-brendan frownmouth @sadbrow talking2mouth "Is... is that true? Are Ice and Steel the best types?"
+brendan frownmouth @sadbrow talking2mouth "Is[ellipses] is that true? Are Ice and Steel the best types?"
 
 calem @talkingmouth closedbrow "That depends on what you're looking for. Certainly, Steel types are known for their high defenses, and Ice types are known for their strong elemental advantages."
 calem -closedbrow -thinking @talkingmouth "But Grass and Ground types can do many things that the average Steel type or Ice type entirely lacks."
 
 show brendan -frownmouth with dis
 
-ethan -thinking @happy "What he's saying is...{w=0.5} don't worry about it! No matter what you pick, you can't screw your education up {i}too{/i} badly."
+ethan -thinking @happy "What he's saying is[ellipses]{w=0.5} don't worry about it! No matter what you pick, you can't screw your education up {i}too{/i} badly."
 
 calem @talkingmouth "As long as you restrict yourself to two or three types, that is. It's certainly possible to 'screw yourself over' by spreading yourself too thinly."
 
-ethan @sad "Er...{w=0.5} yeah." 
+ethan @sad "Er[ellipses]{w=0.5} yeah." 
 ethan @happy "Hahaha.{w=0.5} I know that. Don't worry, I've got plans!"
 
 red @happy "So do I! My plan right now, though, is to go to sleep!"
@@ -3231,7 +3244,7 @@ red @confused "No, why?"
 
 stop music fadeout 2.0
 
-calem @sadbrow talkingmouth "I...{w=0.5} Well, where do you usually put him before you go to bed?"
+calem @sadbrow talkingmouth "I[ellipses]{w=0.5} Well, where do you usually put him before you go to bed?"
 
 queue music "Audio/Music/Opening_Intro.ogg" noloop
 
@@ -3247,18 +3260,15 @@ ethan @closedbrow talking2mouth sweat "If I ever try to put her in her Poké Bal
 brendan @surprised "Huh! Maybe I'm the weird one, then."
 brendan @happy sweat "Whatever. I'm gonna hit the hay now, dudes.{w=0.5} Night, [first_name], Calem, Ethan, Hilbert, and [pika_name]!"
 
-show brendan at dissolveaway:
-    xpos 0.6
+hide brendan with dis
 
 calem happy "Yes, goodnight, all."
 
-show calem at dissolveaway:
-    xpos 0.8
+hide calem with dis
 
 ethan happy "See y'all tomorrow!"
 
-show ethan at dissolveaway:
-    xpos 0.4
+hide ethan with dis
     
 red -sadeyebrows -sadeyes @talkingmouth "Goodnight, guys."
 red @happy "Let's get some sleep, [pika_name].{w=0.5} We've got plenty of things to do this weekend before classes start."
@@ -3276,7 +3286,7 @@ show relichall_B with dis
 redmind casual hatless night @closedeyes frownmouth "I'll admit. I'm a little scared that if I go to sleep now, I'll wake up and realize that getting into Kobukan Academy, which was always my dream, was just that--a dream."
 redmind @sadbrow frownmouth "But now I know it's real.{w=0.5} My subconscious isn't clever enough to have [pika_name] hitch a ride to Kobukan in my luggage. Even my wildest fantasies of getting into Kobukan didn't have that."
 redmind @happy "I'm glad he's here."
-redmind @thinking sweat "...But we {i}really{/i} need to work on his patience."
+redmind @thinking sweat "[ellipses]But we {i}really{/i} need to work on his patience."
 
 window hide
 

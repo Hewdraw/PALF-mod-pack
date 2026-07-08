@@ -299,7 +299,7 @@ janine @talking2mouth "So, as I said, trying something different. In previous ye
 janine @sad "We've failed to put any of our own in the National Tournament, the biggest Kobukan event, for four years." 
 janine @talking2mouth "If we fail again this year, this will be the longest Kobukan Academy has ever gone without placing a current student in the National Tournament."
 janine @closedbrow talking2mouth "Kobukan deserves better than that. Besides, there's no notable alumni who've declared they'll be launching a Kobukan league challenge this year. It's up to us."
-janine @talking2mouth "If necessary, I {i}will{/i} launch my own bid for the national tournament this year. I'm certain I could have made it last year--I just chose not to."
+janine @talking2mouth "If necessary, I {i}will{/i} launch my own bid for the National Tournament this year. I'm certain I could have made it last year--I just chose not to."
 
 hide blue 
 

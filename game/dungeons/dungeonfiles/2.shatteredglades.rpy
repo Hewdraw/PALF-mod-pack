@@ -63,18 +63,10 @@ python:
         endname = "Splintered Copse",#a string
         backgrounds = {"Night" : "midnightforest", "Default": "eveningforest"},#a dictionary of timeofdays to check against. If the current timeofday is not listed, then the "Default" value is picked.
         music = ("audio/music/duskforest.ogg"),#a tuple that contains one or two elements. If it contains two, the first is nolooped, and the second is looped. if it contains one, then it's looped
-        encounterpool = {# a dictionary encounterpool, in the same format as the ones for normal wildareas
-            pokedexlookupname("Makuhita", DexMacros.Id) : 5, 
-            pokedexlookupname("Mankey", DexMacros.Id) : 10, 
-            pokedexlookupname("Rowlet", DexMacros.Id) : 1,
-            pokedexlookupname("Meditite", DexMacros.Id) : 7,
-            pokedexlookupname("Paras", DexMacros.Id): 10,
-            pokedexlookupname("Foongus", DexMacros.Id): 7
-        },
+        encounterpool = wildpools["shattered glades"],# a dictionary encounterpool, in the same format as the ones for normal wildareas
         difficulty = 17,#an int, 1-100, indicating the dungeon's difficulty. Should be roughly equivalent to AimLevel()
         floors = 4,#the number of battles you need to win to go through the level
         floorlength = 5,#the number of turns a battle will last, at max, before you find the stairs
-        levelrange = range(12, 16),#a level range, set up the same way as normal wildarea level ranges
         startingmysteriosity=5,#the base chance that mysteriosity happenings will occur
         startingferocity=30,#the base chance that strong Pokémon will appear
         startinggenerosity=60,#the base chance that good things will happen

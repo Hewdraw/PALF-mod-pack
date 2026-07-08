@@ -43,23 +43,43 @@ else:
             $ courage = personalstats["Courage"]
             $ couragebonus = 0
             if (courage >= 10):
-                narrator "Due to your [couragecolor]courage{/color}, you can choose to pick a fight with an especially strong Ex-Rocket member."
+                if (GetRelationshipRank("Silver") >= 2):
+                    narrator "Due to your [couragecolor]courage{/color}, you can choose to pick a fight with an especially strong Ex-Rocket member."
+                
+                    menu:
+                        ">Pick a fight with a tough grunt" if (courage >= 10):
+                            $ couragebonus = 1
+                        ">Pick a fight with a very strong grunt" if (courage >= 20):
+                            $ couragebonus = 2
+                        ">Pick a fight with an elite grunt" if (courage >= 30):
+                            $ couragebonus = 3
+                        ">Pick a fight with an ex-Squad Head" if (courage >= 40):
+                            $ couragebonus = 4
+                        ">Pick a fight with an ex-Administrator" if (courage >= 50):
+                            $ couragebonus = 5
+                        ">Pick a fight with one of Giovanni's personal guard" if (courage >= 60):
+                            $ couragebonus = 6
+                        ">Don't get {i}too{/i} brave":
+                            pass
+                
+                else:
+                    narrator "Due to your [couragecolor]courage{/color}, you can choose to pick a fight with an especially strong thug."
 
-                menu:
-                    ">Pick a fight with a tough grunt" if (courage >= 10):
-                        $ couragebonus = 1
-                    ">Pick a fight with a very strong grunt" if (courage >= 20):
-                        $ couragebonus = 2
-                    ">Pick a fight with an elite grunt" if (courage >= 30):
-                        $ couragebonus = 3
-                    ">Pick a fight with an ex-Squad Head" if (courage >= 40):
-                        $ couragebonus = 4
-                    ">Pick a fight with an ex-Administrator" if (courage >= 50):
-                        $ couragebonus = 5
-                    ">Pick a fight with one of Giovanni's personal guard" if (courage >= 60):
-                        $ couragebonus = 6
-                    ">Don't get {i}too{/i} brave":
-                        pass
+                    menu:
+                        ">Pick a fight with a tough thug" if (courage >= 10):
+                            $ couragebonus = 1
+                        ">Pick a fight with a very strong thug" if (courage >= 20):
+                            $ couragebonus = 2
+                        ">Pick a fight with an elite thug" if (courage >= 30):
+                            $ couragebonus = 3
+                        ">Pick a fight with a leader thug" if (courage >= 40):
+                            $ couragebonus = 4
+                        ">Pick a fight with an ambitious thug" if (courage >= 50):
+                            $ couragebonus = 5
+                        ">Pick a fight with a tyrannic thug" if (courage >= 60):
+                            $ couragebonus = 6
+                        ">Don't get {i}too{/i} brave":
+                            pass
 
             show abandonedhouse
             if (HasEvent("Silver", "Overthrown")):
@@ -201,7 +221,10 @@ else:
             jump citysetup
 
         "Access Janine's PC":
-            $ currentbox = max(0, currentbox)
+            python:
+                currentbox = max(0, currentbox)
+                for mon in box:
+                    mon.Heal()
             show screen partymons
             call screen pokemonswap
             hide screen partymons

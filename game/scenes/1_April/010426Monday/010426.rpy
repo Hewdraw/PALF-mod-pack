@@ -259,7 +259,7 @@ while (HasEgg()):
 
         pause 1.0
 
-        red @talkingmouth "Yeah, I think I can feel some of that heat already..."
+        red uniform @sadbrow sweat talkingmouth "Yeah, I think I can feel some of that heat already..."
 
         hide may with dis
 
@@ -335,7 +335,7 @@ while (HasEgg()):
         $ LoseItem(Item.BonslyEgg)
 
         $ sidemonnum = 438
-        $ PlaySound("pokemon/cries/360.mp3")
+        $ PlaySound("pokemon/cries/438.mp3")
         $ eggshatched.append("Bonsly")
 
         sidemon "Bon... Bonsly..."

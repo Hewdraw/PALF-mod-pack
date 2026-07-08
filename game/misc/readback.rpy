@@ -6,7 +6,7 @@
 # voice_replay function added by backansi from Lemma soft forum.
 # required renpy 6.12 or higher.
 
-init -3 python:
+init 1 python:
     # config.game_menu.insert(1,( "text_history", u"Text History", ui.jumps("text_history_screen"), 'not main_menu'))
 
     # styles
@@ -46,7 +46,7 @@ init -3 python:
     # ends adding new config variables
     config.locked = True
     
-init -2 python:
+init 2 python:
 
     # Two custom characters that store what they said
     class ReadbackADVCharacter(ADVCharacter):
@@ -223,9 +223,14 @@ init -2 python:
     current_voice = None
     
     def store_say(who, what):
-        global readback_buffer, current_voice
+        global readback_buffer, current_voice, lastsmalltalks
         if preparse_say_for_store(what):
-            new_line = (preparse_say_for_store(who), preparse_say_for_store(what), current_voice)
+            smalltalkstring = ""
+            if (lastsmalltalks != []):
+                for tup in lastsmalltalks:
+                    smalltalkstring += "\n {b}{color=" + GetCharColor(tup[0]) + "}" + tup[0] + ":{/color}{/b} “" + tup[1] + "”"
+                lastsmalltalks = []
+            new_line = (preparse_say_for_store(who), preparse_say_for_store(what + smalltalkstring), current_voice)
             readback_buffer = readback_buffer + [new_line]
             readback_prune()
     
@@ -235,7 +240,11 @@ init -2 python:
 
     def store_current_line(who, what):
         global current_line, current_voice
-        current_line = (preparse_say_for_store(who), preparse_say_for_store(what), current_voice)
+        smalltalkstring = ""
+        if ('smalltalks' in globals() and smalltalks != []):
+            for tup in smalltalks:
+                smalltalkstring += "\n {b}{color=" + GetCharColor(tup[0]) + "}" + tup[0] + ":{/color}{/b} \"" + tup[1] + "\""
+        current_line = (preparse_say_for_store(who), preparse_say_for_store(what + smalltalkstring), current_voice)
 
     # remove text tags from dialogue lines 
     disallowed_tags_regexp = ""
@@ -244,7 +253,6 @@ init -2 python:
             disallowed_tags_regexp += "|"
         disallowed_tags_regexp += "{"+tag+"=.*?}|{"+tag+"}|{/"+tag+"}"
     
-    import re
     remove_tags_expr = re.compile(disallowed_tags_regexp) # remove tags undesirable in readback
     def preparse_say_for_store(input):
         global remove_tags_expr
@@ -328,6 +336,8 @@ screen text_history(**kwargs):
                             # if there's no voice just log a dialogue
                             if not line[2]:
                                 if (line[1][0] == "[" and line[1][-1] == "]"):
+                                    text line[1].replace("[", "[[")
+                                elif ("[" in line[1]):
                                     text line[1].replace("[", "[[")
                                 else:
                                     text line[1]

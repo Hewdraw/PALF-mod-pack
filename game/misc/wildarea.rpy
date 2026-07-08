@@ -6,6 +6,8 @@ python:
     if (isinstance(newloc, Dungeon)):
         dungeon = newloc
         newloc = newloc.GetName()
+    if newloc.lower() not in knownareas:
+        knownareas.append(newloc.lower())
     wildcount = 0
     location = newloc
     continualencounters = 0
@@ -53,7 +55,7 @@ elif (location == "catacombs"):
     else:
         scene catacombs5 with Dissolve(2.0)
 
-    if (not HasEvent("Professor Oak", "FoundCatacombs")):
+    if (not HasEvent("Professor Oak", "FoundCatacombs") and IsPresent(["Cheren", "Skyla", "Silver"])):
         call CatacombsIntro() from _call_CatacombsIntro
 
 if (dungeon == None):
@@ -228,23 +230,6 @@ init python:
             return wildcount + 1
         return 1
 
-    def GrabFromEncounterPool(encounterpool):
-        encounterlist = []
-        encountermax = 0
-        for entry, odds in encounterpool.items():
-            if (activerepel == None
-            or activerepel == "Repel" and odds < 10
-            or activerepel == "Super Repel" and odds < 7
-            or activerepel == "Max Repel" and odds < 5):
-                encounterlist.append((encountermax, entry))
-                encountermax += (odds * GetTreatBoost(entry))
-        encounterlist.append((9999, 0))
-        
-        randnum = RandInt(0, encountermax)
-        for i in range(len(encounterlist)):
-            if (randnum <= encounterlist[i + 1][0]):
-                return encounterlist[i][1]
-
     def GenerateRandomEvent(location, dungeon=None):
         global sidemonnum, sidemonnum2, sidemonnum3
         global activerepel
@@ -272,133 +257,12 @@ init python:
                 newpokemonnum = newpokemon.GetId()
 
             else:
-                encounterpool = {}
-                levelrange = range(3, 11)
-                evopool = {}
+                wildpool = wildpools[location]
+                encounterpool = wildpool.GetEncounterPool()
+                levelrange = wildpool.GetLevelRange()
+                evopool = wildpool.GetEvoPool()
 
-                if (location == "fields"):
-                    encounterpool = {
-                        263: 10,
-                        155: 3,
-                        399: 10,
-                        191: 10,
-                        835: 10,
-                        133: 1,
-                        919: 10,
-                        406: 7,
-                        29: 7,
-                        32: 7,
-                        333: 7,
-                        307: 7,
-                        401: 10,
-                        111: 5,
-                        710: 5,
-                        659: 10,
-                        967: 3,
-                        777: 7,
-                        764: 7
-                    }
-                elif (location == "alley"):
-                    levelrange = range(6, 13)
-                    encounterpool = {
-                        431: 10,
-                        725: 1,
-                        767: 10,
-                        412.2: 10,
-                        81: 10,
-                        351: 1,
-                        559: 7,
-                        568: 10,
-                        104: 7,
-                        629: 7,
-                        677: 7,
-                        917: 10,
-                        744: 3,
-                        353: 10,
-                        88.1: 10,
-                        714: 5,
-                        965: 5,
-                        439: 5
-                    }
-                elif (location == "seaport"):
-                    levelrange = range(9, 16)
-                    encounterpool = {
-                        190: 10,
-                        58: 7,
-                        223: 10,
-                        781: 1,
-                        602: 3,
-                        131: 1,
-                        852: 7,
-                        690: 7,
-                        194.1: 10,
-                        580: 10,
-                        976: 5,
-                        595: 7,
-                        688: 10,
-                        592: 5,
-                        592.1: 5,
-                        318: 7,
-                        885: 3,
-                        393: 3,
-                        298: 10
-                    }
-                elif (location == "mountain"):
-                    levelrange = range(14, 21)
-                    encounterpool = {
-                        234: 3,
-                        776: 1,
-                        86: 10,
-                        459: 10,
-                        74.1: 10,
-                        712: 7,
-                        739: 7,
-                        757: 7,
-                        220: 10,
-                        225: 7,
-                        337: 5,
-                        338: 5,
-                        872: 7,
-                        932: 10,
-                        425: 10,
-                        624: 3,
-                        996: 1,
-                        27.1: 7,
-                        703: 5
-                    }
-                elif (location == "catacombs"):
-                    levelrange = range(19, 26)
-                    encounterpool = {
-                        19.1 : 10,
-                        935 : 3,
-                        874 : 5,
-                        854 : 7,
-                        736 : 10,
-                        971 : 7,
-                        453 : 10,
-                        92 : 10,
-                        50.1 : 10,
-                        83.1 : 7,
-                        856 : 5,
-                        622 : 7,
-                        95 : 7,
-                        562.1 : 7,
-                        859 : 5,
-                        443 : 1,
-                        52.2 : 10,
-                        957 : 7,
-                        109 : 10,
-                        207 : 7
-                    }
-                    evopool = {
-                        19.1 : (20, 20.1),
-                        736 : (20, 737),
-                        92 : (25, 93),
-                        443 : (24, 444),
-                        957 : (24, 958)
-                    }
-
-                newpokemonnum = GrabFromEncounterPool(encounterpool)
+                newpokemonnum = wildpool.GrabFromEncounterPool()
                 randlevel = RandomChoice(levelrange)
 
                 if (newpokemonnum in evopool):

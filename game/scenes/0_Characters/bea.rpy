@@ -681,7 +681,7 @@ label Bea2:
     bea @angry "He'd brought in non-native Galarian Pokémon. He was a foreigner."
     bea @closedbrow angrymouth "For {i}this{/i} crime, he was brought to justice. But nothing else."
 
-    red @talking2mouth "...I guess he just got a slap on the wrist, then?"
+    red @talking2mouth "...I guess he just got a stiff warning, then?"
 
     bea @surprised "Hm?"
     bea @talking2mouth "No, no. Galar metes out {i}serious{/i} punishments for that sort of wrongdoing."

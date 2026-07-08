@@ -12,11 +12,11 @@ pause 1.0
 
 narrator "...You think about moving away from their conversation, but you're in line, and the Miltank ribeye looks {i}really{/i} good."
 
-hilda @talkingmouth "{size=30}I'm worried about you, Hilbert.{/size}"
+hilda @talking2mouth "{size=30}I'm worried about you, Hilbert.{/size}"
 
 hilbert @talkingmouth "There's nothing to be worried about."
 
-hilda @closedbrow talkingmouth "Don't give me that shit. You've been completely out of it for, like, three weeks now. Even {i}before{/i} the elections. And you're spending {i}way{/i} more time with that Nathan guy."
+hilda @closedbrow talking2mouth "Don't give me that shit. You've been completely out of it for, like, three weeks now. Even {i}before{/i} the elections. And you're spending {i}way{/i} more time with that Nathan guy."
 
 hilbert @sadbrow talkingmouth "It's just Nate. And of course I'm spending time with him. We're roommates."
 
@@ -30,7 +30,7 @@ hilda @sad "No, of course not, Hilbert, you {i}know{/i} I want that for you. But
 
 pause 0.5
 
-hilda @talkingmouth "...I've never seen you so focused. It's like you {i}know{/i} what you're doing. Like you have a plan, for the first time."
+hilda @talking2mouth "...I've never seen you so focused. It's like you {i}know{/i} what you're doing. Like you have a plan, for the first time."
 
 hilbert @sadbrow talkingmouth "...Ridiculous."
 
@@ -42,7 +42,7 @@ pause 2.0
 
 hilbert @sadbrow talkingmouth "...Sorry. That was unnecessary."
 
-hilda -sad frownmouth @closedbrow talkingmouth "...Yeah, maybe a bit. But I get how you feel."
+hilda -sad frownmouth @closedbrow talking2mouth "...Yeah, maybe a bit. But I get how you feel."
 
 pause 1.0
 
@@ -54,14 +54,14 @@ hilbert @talkingmouth "I don't feel. 'Feel' implies passion, or desire. My dream
 
 pause 1.0
 
-hilda @angrybrow talkingmouth "...I've heard that shit before. And you know what I think of it."
+hilda @angrybrow talking2mouth "...I've heard that shit before. And you know what I think of it."
 
 pause 0.5
 
 hilbert @sadbrow talkingmouth "...I'm bored of this conversation."
 
-hilda @closedbrow talkingmouth "Fine. I just wanted to tell you that I care about you, and I don't want you ramming your face headfirst into another pile of shit..."
-hilda @closedbrow talking2mouth "...Before you let me grab a shovel, anyway."
+hilda @closedbrow talking2mouth "Fine. I just wanted to tell you that I care about you, and I don't want you ramming your face headfirst into another pile of shit..."
+hilda @closedbrow talkingmouth "...Before you let me grab a shovel, anyway."
 
 hide hilbert 
 hide hilda 
@@ -131,11 +131,11 @@ menu:
 
         pause 0.5
 
-        hilda @talkingmouth "Ah, I guess you heard that, huh?"
+        hilda @talking2mouth "Ah, I guess you heard that, huh?"
 
         red uniform @sadbrow talkingmouth "Little bit?"
 
-        hilda @closedbrow talkingmouth "Man, I don't like airing our dirty laundry out in public like that."
+        hilda @closedbrow talking2mouth "Man, I don't like airing our dirty laundry out in public like that."
 
         red @talkingmouth "If it helps, at all, I think your patience is kinda... well, insane, honestly!"
         red @sadbrow happymouth "In a good way. If a bit self-injurious."
@@ -144,16 +144,16 @@ menu:
 
         pause 1.0
 
-        hilda @sadbrow talkingmouth "How've you been? We haven't had a real chance to reconnect since... well, since you went absolutely fucking ballistic during the Quarter Qlashes."
+        hilda @sadbrow talking2mouth "How've you been? We haven't had a real chance to reconnect since... well, since you went absolutely fucking ballistic during the Quarter Qlashes."
 
         red @happy "Absolutely ballistic is right. I'm alright. Answering a lot of questions other people have about my power, and my Pikachu."
         red @sadbrow talkingmouth "Anything I can answer for you?"
 
-        hilda @talkingmouth "Nah, I listened to your speech. I get the gist."
+        hilda @talking2mouth "Nah, I listened to your speech. I get the gist."
 
         red @closedbrow talking2mouth "Thank God."
 
-        hilda @talkingmouth "...But seriously, is there anything I can do for {i}you?{/i} Those elections... {i}damn.{/i} Shit went {i}south.{/i}"
+        hilda @talking2mouth "...But seriously, is there anything I can do for {i}you?{/i} Those elections... {i}damn.{/i} Shit went {i}south.{/i}"
 
         red @sadbrow talking2mouth "I'm still trying to get you to take more breaks and do stuff for yourself. I couldn't ask for anything."
 

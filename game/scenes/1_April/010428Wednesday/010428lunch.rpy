@@ -19,12 +19,12 @@ whitney @talking2mouth "Hilda was just asking me if I knew who the pineapple-hai
 
 red @confused "Pineapple-haired?"
 
-hilda @talkingmouth "Yeah, Whitney told me his name is Nathan. So who {i}is{/i} this guy?"
+hilda @talking2mouth "Yeah, Whitney told me his name is Nathan. So who {i}is{/i} this guy?"
 
 redmind @thonk "{i}Nathan?{/i}"
 red @talkingmouth "Um... he's just another student, as far as I know."
 
-hilda @closedbrow talking2mouth "You're Hilbert's roommate. Do you know why he's spending time with someone else?"
+hilda @closedbrow talkingmouth "You're Hilbert's roommate. Do you know why he's spending time with someone else?"
 
 whitney @angrybrow happymouth "Oh, are you jealous?"
 
@@ -34,7 +34,7 @@ hilda @sad "So, like, that must mean that Nate's got something on Hilbert, right
 tia @talkingmouth "Is it a bad thing, if Hilbert spends time with other people?"
 
 hilda @surprised "Huh? Well, no, I guess not. Hell, I've been trying to convince him to be more social for our entire lives."
-hilda @closedbrow talkingmouth "But... you know, him suddenly finding a new best friend is concerning."
+hilda @closedbrow talking2mouth "But... you know, him suddenly finding a new best friend is concerning."
 hilda @sad "There's... gotta be something that caused it, right?"
 
 tia @talkingmouth "Maybe, but I don't think him finding a new friend is something you need to worry about."
@@ -43,11 +43,11 @@ red @talkingmouth "I agree. I just battled them in gym class, and they seemed fi
 
 red @confused "Is your birthday coming up?"
 
-hilda @talkingmouth "Not for a long while. March 4th."
+hilda @talking2mouth "Not for a long while. March 4th."
 
 red @closedbrow talking2mouth "Beats me, then."
 
-hilda @talkingmouth "Shit. Guess I just have to ask Hilbert, then. But I don't want him to think that I'm not {i}encouraging{/i} new friendships..."
+hilda @talking2mouth "Shit. Guess I just have to ask Hilbert, then. But I don't want him to think that I'm not {i}encouraging{/i} new friendships..."
 
 whitney @talking2mouth "So... just out of curiosity, since I did that little favor for you, would you mind doing a favor for me?"
 
@@ -58,11 +58,11 @@ whitney @happy "Go ahead, Tia."
 
 tia lightblush sadbrow @happymouth "Um... my hat got ripped. Do you know how to repair it? My fingers aren't small enough..."
 
-hilda @closedbrow talking2mouth "Your fingers? You've gotta have way smaller fingers than me, at your size. But, hell yeah, that'd be a piece of cake. Just a bit of darning."
+hilda @closedbrow talkingmouth "Your fingers? You've gotta have way smaller fingers than me, at your size. But, hell yeah, that'd be a piece of cake. Just a bit of darning."
 
 tia @talkingmouth "Thank you!"
 
-hilda @talkingmouth "No problem."
+hilda @talking2mouth "No problem."
 
 red @talkingmouth "Hey, how'd your hat get a rip, though? I've seen how carefully you take care of it. What happened?"
 
@@ -76,7 +76,7 @@ whitney @surprisedmouth "Um, she said 'person,' but it was a Pokémon, wasn't it
 
 tia sadbrow frownmouth @talkingmouth "...Yes. But Pokémon are people."
 
-hilda @closedbrow talking2mouth "I mean... one of those Pokémon-rights organizations in Unova said that, but most people wouldn't agree."
+hilda @closedbrow talkingmouth "I mean... one of those Pokémon-rights organizations in Unova said that, but most people wouldn't agree."
 hilda @sad "They ended up being terrorists, anyway."
 
 pause 1.0

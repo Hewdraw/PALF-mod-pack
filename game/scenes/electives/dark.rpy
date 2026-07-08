@@ -109,9 +109,7 @@ if (not HasEvent("Instructor Karen", 1)): #first class
 
     karen "Tough question, right?"
     karen "Then let me put it this way.{w=0.5}"
-    $ renpy.music.set_volume(0.0, delay=0.0, channel="ctc")
-
-    karen "If you were going to compete at the Pokémon League, which Pokémon would you bring with you?"
+    extend " If you were going to compete at the Pokémon League, which Pokémon would you bring with you?"
 
     if (IsBefore(30, 4, 2004)):
         show cheren uniform with dis:
@@ -139,7 +137,7 @@ if (not HasEvent("Instructor Karen", 1)): #first class
         show hilda uniform with dis:
             xpos 1050 ypos 1.3
 
-        hilda @surprisedbrow talkingmouth "Uh, the strongest ones?"
+        hilda @surprisedbrow talking2mouth "Uh, the strongest ones?"
 
         if (IsDate(5, 4, 2004)):
             karen "Your name?"
@@ -155,7 +153,7 @@ if (not HasEvent("Instructor Karen", 1)): #first class
 
         karen "And why do you think that, Hilda?"
 
-        hilda @closedbrow talkingmouth "Why?{w=0.5} I mean... having the strongest Pokémon means you can beat the asses of the strongest foes, right? So you've got a better chance of winning."
+        hilda @closedbrow talking2mouth "Why?{w=0.5} I mean... having the strongest Pokémon means you can beat the asses of the strongest foes, right? So you've got a better chance of winning."
 
     else:
         Character("Unsuspecting Lout") "\"Duh, the strongest ones!\""
@@ -197,7 +195,7 @@ if (not HasEvent("Instructor Karen", 1)): #first class
 
     elif (IsPresent("Hilda", "Dark")):
         hilda @surprised "Then is it the type of Pokémon?{w=0.5} Their nature?"
-        hilda @closedbrow talking2mouth "Planning only gets you so far, so isn't the most foolproof way to get your victory just to make them stronger?"
+        hilda @closedbrow talkingmouth "Planning only gets you so far, so isn't the most foolproof way to get your victory just to make them stronger?"
         hilda @surprisedmouth "I mean, what else are you looking for, if not that?"
 
         show hilda surprisedbrow frownmouth 
@@ -322,7 +320,7 @@ if (not HasEvent("Instructor Karen", 1)): #first class
     karen @angrybrow talkingmouth "And maybe, if you're lucky, we get to some talk about Dark-type Pokémon!"
 
     hide karen with dis
-elif (not HasEvent("Instructor Karen", 2.1) and classstats["Dark"] >= 10):#Enshroud
+elif (not HasEvent("Instructor Karen", 2.1) and GetElective("Dark") >= 10):#Enshroud
     show karenbg with dis
     if (not HasEvent("Instructor Karen", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -413,12 +411,12 @@ elif (not HasEvent("Instructor Karen", 2.1) and classstats["Dark"] >= 10):#Enshr
     karen @talking2mouth "Let's begin. And remember, don't make it so obvious what your next move will be."
     $ hidebattleui=False
     $ mustswitch = False
-    $trainer1 = Trainer("red", TrainerType.Player, [playerparty[newindex]])
-    $trainer2 = Trainer("karen", TrainerType.Enemy, [
+    $ trainer1 = Trainer("red", TrainerType.Player, [playerparty[newindex]])
+    $ trainer2 = Trainer("karen", TrainerType.Enemy, [
         Pokemon(102, level=11, moves=[GetMove("Absorb"), GetMove("Hypnosis"), GetMove("Reflect"), GetMove("Leech Seed")], ability="Chlorophyll")
     ])
 
-    call Battle([trainer1, trainer2]) from _call_Battle_25
+    call Battle([trainer1, trainer2], uniforms=[True, False]) from _call_Battle_25
     $ battlehistory["Instructor Karen1"]  = _return
 
     show karen with dis
@@ -446,7 +444,7 @@ elif (not HasEvent("Instructor Karen", 2.1) and classstats["Dark"] >= 10):#Enshr
         redmind uniform @thinking "Oof. Not even a word... that was an embarrassing loss. Still, at least I learned something..."
 
     hide karen with dis
-elif (not HasEvent("Instructor Karen", 3.1) and classstats["Dark"] >= 20):#Black Glasses
+elif (not HasEvent("Instructor Karen", 3.1) and GetElective("Dark") >= 20):#Black Glasses
     show karen with dis
     if (not HasEvent("Instructor Karen", 3)):
         $ renpy.pause(1.0, hard=True)
@@ -502,7 +500,7 @@ elif (not HasEvent("Instructor Karen", 3.1) and classstats["Dark"] >= 20):#Black
         Pokemon("Houndour", level=21, moves=[GetMove("Bite"), GetMove("Smog"), GetMove("Howl"), GetMove("Ember")], ability="Flash Fire", item="Oran Berry")
     ])
 
-    call Battle([trainer1, trainer2]) from _call_Battle_76
+    call Battle([trainer1, trainer2], uniforms=[True, False]) from _call_Battle_76
     $ battlehistory["Instructor Karen2"]  = _return
 
     show karen with dis
@@ -535,7 +533,7 @@ elif (not HasEvent("Instructor Karen", 3.1) and classstats["Dark"] >= 20):#Black
         redmind uniform @thinking "Oof. Not even a word... that was an embarrassing loss. Still, at least I learned something..."
 
     hide karen with dis
-elif (not HasEvent("Instructor Karen", 4.1) and classstats["Dark"] >= 30):#Thief
+elif (not HasEvent("Instructor Karen", 4.1) and GetElective("Dark") >= 30):#Thief
     show karen with dis
     if (not HasEvent("Instructor Karen", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -593,7 +591,7 @@ elif (not HasEvent("Instructor Karen", 4.1) and classstats["Dark"] >= 30):#Thief
         Pokemon("Hitmontop", level=31, moves=[GetMove("Counter"), GetMove("Pursuit"), GetMove("Rolling Kick"), GetMove("Rapid Spin")], ability="Intimidate", item="Sitrus Berry")
     ])
 
-    call Battle([trainer1, trainer2]) from _call_Battle_77
+    call Battle([trainer1, trainer2], uniforms=[True, False]) from _call_Battle_77
     $ battlehistory["Instructor Karen3"]  = _return
 
     show karen with dis
@@ -653,6 +651,9 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+
+            hide karen with dis
+
             jump aftertutoring
         else:
             jump afterdarksetup
@@ -668,6 +669,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ newmon.LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide karen with dis
         jump endclass
 else:
     karen @angrybrow talking2mouth "Don't ask your Pokémon to do something impossible. This Pokémon can't learn [taughtmove]."

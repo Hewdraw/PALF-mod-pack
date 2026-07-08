@@ -7,8 +7,9 @@ scene hall_B
 show leaf
 with Dissolve(2.0)
 
-$ renpy.music.queue("Audio/Music/Cinnabar_Start.ogg", channel='music', loop=None, fadein=0.0, tight=None)
-$ renpy.music.queue("Audio/Music/Cinnabar_Loop.ogg", channel='music', loop=True, tight=None)
+stop music fadeout 1.5
+queue music "Audio/Music/Cinnabar_Start.ogg" noloop
+queue music "Audio/Music/Cinnabar_Loop.ogg"
     
 red @talkingmouth "Hey, Leaf."
 
@@ -166,7 +167,7 @@ red @closedbrow talking2mouth "Scientists?"
 
 leaf @happy "The best. They actually worked with Dr. Blaine. Who, I think, is a teacher at this school."
 
-if (classstats["Fire"] > 0):
+if (GetElective("Fire") > 0):
     red @talkingmouth "Yeah, I've taken my Fire-type elective with him."
 
     leaf @happy "Seriously? He used to come over to our house and give me candy. I should drop by his classroom."

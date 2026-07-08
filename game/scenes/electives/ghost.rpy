@@ -178,7 +178,7 @@ if (not HasEvent("Instructrice Fantina", 1)): #first class
     fantina happy @happy2 "{i}Au revoir{/i}, students!{w=0.5} Be certain to check the syllabus for required readings!"
 
     hide fantina with dis
-elif (not HasEvent("Instructrice Fantina", 2.1) and classstats["Ghost"] >= 10):#Deathless
+elif (not HasEvent("Instructrice Fantina", 2.1) and GetElective("Ghost") >= 10):#Deathless
     show fantina with dis
     if (not HasEvent("Instructrice Fantina", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -281,7 +281,7 @@ elif (not HasEvent("Instructrice Fantina", 2.1) and classstats["Ghost"] >= 10):#
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide fantina with dis
-elif (not HasEvent("Instructrice Fantina", 3.1) and classstats["Ghost"] >= 20):#Spell Tag
+elif (not HasEvent("Instructrice Fantina", 3.1) and GetElective("Ghost") >= 20):#Spell Tag
     show fantina with dis
     if (not HasEvent("Instructrice Fantina", 3)):
         $ renpy.pause(1.0, hard=True)
@@ -356,7 +356,7 @@ elif (not HasEvent("Instructrice Fantina", 3.1) and classstats["Ghost"] >= 20):#
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide fantina with dis
-elif (not HasEvent("Instructrice Fantina", 4.1) and classstats["Ghost"] >= 30):#Shadow Punch
+elif (not HasEvent("Instructrice Fantina", 4.1) and GetElective("Ghost") >= 30):#Shadow Punch
     show fantina with dis
     if (not HasEvent("Instructrice Fantina", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -478,6 +478,7 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+            hide fantina with dis
             jump aftertutoring
         else:
             jump afterghostsetup
@@ -493,6 +494,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ newmon.LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide fantina with dis
         jump endclass
 else:
     fantina @happy2 "Ohohoho! Not every actor can play every part, I am afraid..."

@@ -206,7 +206,7 @@ if (not HasEvent("Instructor Bertha", 1)): #first class
     narrator "An hour passes quickly as you munch away and take notes."
 
     hide bertha
-elif (not HasEvent("Instructor Bertha", 2.1) and classstats["Ground"] >= 10):#Burial Ground
+elif (not HasEvent("Instructor Bertha", 2.1) and GetElective("Ground") >= 10):#Burial Ground
     show bertha with dis
     if (not HasEvent("Instructor Bertha", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -335,7 +335,7 @@ elif (not HasEvent("Instructor Bertha", 2.1) and classstats["Ground"] >= 10):#Bu
     $ trainer2 = Trainer("bertha", TrainerType.Enemy, [
         Pokemon(304, level=11, moves=[GetMove("Tackle"), GetMove("Harden"), GetMove("Metal Claw"), GetMove("Rock Tomb")], ability="Rock Head")
     ])
-    call Battle([trainer1, trainer2]) from _call_Battle_34
+    call Battle([trainer1, trainer2], uniforms=[True, False]) from _call_Battle_34
     $ battlehistory["Instructor Bertha1"]  = _return
 
     show bertha with dis
@@ -358,7 +358,7 @@ elif (not HasEvent("Instructor Bertha", 2.1) and classstats["Ground"] >= 10):#Bu
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide bertha with dis
-elif (not HasEvent("Instructor Bertha", 3.1) and classstats["Ground"] >= 20):#Soft Sand
+elif (not HasEvent("Instructor Bertha", 3.1) and GetElective("Ground") >= 20):#Soft Sand
     show bertha with dis
     if (not HasEvent("Instructor Bertha", 3)):
         $ renpy.pause(1.0, hard=True)
@@ -420,7 +420,7 @@ elif (not HasEvent("Instructor Bertha", 3.1) and classstats["Ground"] >= 20):#So
     $ trainer2 = Trainer("bertha", TrainerType.Enemy, [
         Pokemon("Hippopotas", level=21, moves=[GetMove("Crunch"), GetMove("Dig"), GetMove("Sand Tomb"), GetMove("Yawn")], gender=Genders.Male, ability="Sand Stream", item="Oran Berry")
     ])
-    call Battle([trainer1, trainer2]) from _call_Battle_94
+    call Battle([trainer1, trainer2], uniforms=[True, False]) from _call_Battle_94
     $ battlehistory["Instructor Bertha2"]  = _return
 
     show bertha with dis
@@ -442,7 +442,7 @@ elif (not HasEvent("Instructor Bertha", 3.1) and classstats["Ground"] >= 20):#So
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide bertha with dis
-elif (not HasEvent("Instructor Bertha", 4.1) and classstats["Ground"] >= 30):#Bulldoze
+elif (not HasEvent("Instructor Bertha", 4.1) and GetElective("Ground") >= 30):#Bulldoze
     show bertha with dis
     if (not HasEvent("Instructor Bertha", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -484,7 +484,7 @@ elif (not HasEvent("Instructor Bertha", 4.1) and classstats["Ground"] >= 30):#Bu
     $ trainer2 = Trainer("bertha", TrainerType.Enemy, [
         Pokemon("Ducklett", level=31, moves=[GetMove("Roost"), GetMove("Air Slash"), GetMove("Bubble Beam"), GetMove("Aqua Ring")], ability="Keen Eye", item="Sitrus Berry")
     ])
-    call Battle([trainer1, trainer2]) from _call_Battle_95
+    call Battle([trainer1, trainer2], uniforms=[True, False]) from _call_Battle_95
     $ battlehistory["Instructor Bertha3"]  = _return
 
     show bertha with dis
@@ -540,6 +540,7 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+            hide bertha with dis
             jump aftertutoring
         else:
             jump aftergroundsetup
@@ -555,6 +556,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ newmon.LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide bertha with dis
         jump endclass
 else:
     bertha @sad2 "Oh, dearie me. I don't think that Pokémon can learn [taughtmove], youngster."

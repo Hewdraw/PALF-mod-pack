@@ -922,7 +922,7 @@ label Serena2:
 
     menu:
         "I would very much rather not.":
-            $ HasEvent("Serena", "RejectCalemDate")
+            $ AddEvent("Serena", "RejectCalemDate")
             
             red @talking2mouth "I'm not dating Calem so you can convince yourself that {i}you{/i} don't want to date him, Serena."
             red @sadbrow talkingmouth "He's a great guy. Considerate and witty. But this is weird, and I think you know, deep down, it's weird."
@@ -936,10 +936,10 @@ label Serena2:
             redmind @unamusedbrow unamusedmouth "I am {i}definitely{/i} being ignored."
 
         "Flattered. Sure.":
-            $ HasEvent("Serena", "AcceptCalemDate")
+            $ AddEvent("Serena", "AcceptCalemDate")
 
         "This is so stupid.":
-            $ HasEvent("Serena", "StupidCalemDate")
+            $ AddEvent("Serena", "StupidCalemDate")
 
             serena @angrybrow talkingmouth "Stupid? Or original?"
 

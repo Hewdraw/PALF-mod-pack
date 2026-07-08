@@ -171,7 +171,7 @@ label Dawn1:
 
     red @happy "Sorry. But you already said Instructor Melony knows about this. So I figure that it's her classroom, right?"
 
-    if (classstats["Ice"] == 0):
+    if (GetElective("Ice") == 0):
         red @surprised "I mean, I've never been to her class, but I'm pretty sure I can just look it up on the school website."
 
     dawn @closedbrow talking2mouth "Oh. Um... yes. {size=30}Good going, Dawn.{/size}"
@@ -199,7 +199,7 @@ label Dawn1:
 
     hide blank2 with splitfade
 
-    if (classstats["Ice"] > 0):
+    if (GetElective("Ice") > 0):
         red @surprised "Brr. I'll never get used to how cold Instructor Melony keeps her classroom. It's like the top of a mountain!"
     else:
         red @surprised "Brr. It's really chilly in here. It's like the top of a mountain!"

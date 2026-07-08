@@ -105,7 +105,7 @@ pause 1.0
 
 leaf @talkingmouth "So we're battling you two, huh?"
 
-hilda @talkingmouth "Yeah. Looks like I'm the only one here who's not on the Battle Team."
+hilda @talking2mouth "Yeah. Looks like I'm the only one here who's not on the Battle Team."
 hilda @sad "Shit. I'll try not to drag you down, Hilbert."
 
 hilbert @talkingmouth "You won't. I'm strong enough to win alone."
@@ -136,7 +136,7 @@ leaf @closedbrow talking2mouth "{size=30}Okay, we need to take him seriously. Fo
 hilbert @smilemouth "Hmph."
 hilbert @happymouth "Don't count out Hilda. If you spend too much time worrying about me, she'll clean up your messes."
 
-hilda @closedbrow talkingmouth "That {i}is{/i} what I'm best at."
+hilda @closedbrow talking2mouth "That {i}is{/i} what I'm best at."
 
 hilbert @talkingmouth "Let's do this. Prepare to battle."
 
@@ -173,7 +173,7 @@ red uniform @happy "Wow! You two are {i}seriously{/i} tough together. I don't th
 leaf @talking2mouth "You're telling me. You guys are seriously something else."
 
 hilda @happy "Really? You Battle Teamers think so much of us? Shit, I don't know what to say."
-hilda @talking2mouth "Thanks, I guess."
+hilda @talkingmouth "Thanks, I guess."
 
 hilbert @closedbrow talkingmouth "I've told you you're an excellent battler before. You wouldn't be so surprised if you just listened to me once in a while."
 
@@ -211,10 +211,10 @@ hilda @sad "God. Take the {i}worst{/i}, most {i}painful{/i} feeling you can..."
 hilbert @closedbrow talkingmouth "And multiply it by a railroad spike through the head."
 
 if (GetRelationshipRank("Bianca") > 0):
-    hilda @talkingmouth "Your conversation with her yesterday helped a little bit, [first_name], and I'm seriously thankful for that. Everyone in the dorm is."
+    hilda @talking2mouth "Your conversation with her yesterday helped a little bit, [first_name], and I'm seriously thankful for that. Everyone in the dorm is."
 
 else:
-    hilda @talkingmouth "Hearing from her old roomie last night helped, Leaf, and I'm seriously thankful for that. Everyone in the dorm is."
+    hilda @talking2mouth "Hearing from her old roomie last night helped, Leaf, and I'm seriously thankful for that. Everyone in the dorm is."
 
 hilbert @sadbrow talkingmouth "...Yeah."
 
@@ -229,13 +229,13 @@ hilda @surprised "Hm? What do you mean?"
 leaf @talking2mouth "Dawn's birthday is coming up this Saturday. Dawn mentioned that she hadn't ever had a party before, so I appointed myself Most Honorable Chairwoman of Parties."
 leaf -frownmouth @talkingmouth "What if we, like, invite Bianca to the party? Maybe... maybe she'll feel better? And we can invite the rest of the old Dorm 251, so all her friends are there."
 
-hilda -frownmouth @talking2mouth "That might work."
+hilda -frownmouth @talkingmouth "That might work."
 
 hilbert @closedbrow talkingmouth "I'm not sure Dawn would appreciate her birthday party being converted into a cheer-up-Bianca party, though."
 
 leaf @talking2mouth "It won't be. We'll keep everything very positive and low-key. I won't go overboard. It'll just be a good time for everyone to get together and feel better about... about whatever's bothering them."
 
-hilda @closedbrow talking2mouth "What about Dawn's friends, though? Shouldn't we invite some of them?"
+hilda @closedbrow talkingmouth "What about Dawn's friends, though? Shouldn't we invite some of them?"
 
 show leaf blush embarrassed with dis
 
@@ -277,7 +277,7 @@ red @happy "My bad. Don't let me stop your crazy train of thought."
 
 leaf @talking2mouth "Hilda. You'll be there to support Bianca, right?"
 
-hilda @talking2mouth "Hell yeah. I'll clear out my schedule, no matter what else is on it."
+hilda @talkingmouth "Hell yeah. I'll clear out my schedule, no matter what else is on it."
 
 show hilbert surprisedbrow with dis
 

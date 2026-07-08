@@ -1,3 +1,4 @@
+#SPRINGSDAY
 label day010424:
 
 $ timeOfDay = "Early Morning"
@@ -548,7 +549,7 @@ init python:
     def HasEgg(eggname = None):
         for item in inventory.keys():
             if (eggname == None):
-                if (ItemHasTag(item, "egg hunt")):
+                if (ItemHasTag(item, "egg")):
                     return True
             else:
                 if (eggname == GetItemName(item)):
@@ -557,7 +558,7 @@ init python:
     def NumEggs():
         value = 0
         for item in inventory.keys():
-            if (ItemHasTag(item, "egg hunt")):
+            if (ItemHasTag(item, "egg")):
                 value += 1
         return value
 
@@ -1914,7 +1915,7 @@ elif (_return == "Student Center"):
                 show tia happy with dis
                 
                 if (GetRelationship("Tia") != "Protector"):
-                    tia "That's a great idea! You're an awesome {font=fonts/sign.ttf}Trainer{/font}, so I bet you'll take good care of it!"
+                    tia "That's a great idea! You're an awesome [tiafont]Trainer{/font}, so I bet you'll take good care of it!"
 
                 bianca @surprised "...Oh, that makes things simple!" 
                 
@@ -1948,7 +1949,7 @@ elif (_return == "Pledge Hall"):
 
         hilda @angry "...Do you know how hard I work my ass off to study for my Rock elective? Gimme a goddamn break!"
 
-        nessa @talkingmouth "Green's not a good color on you. And explain why I should care you're overworking yourself? Seems like a you problem."
+        nessa @talking2mouth "Green's not a good color on you. And explain why I should care you're overworking yourself? Seems like a you problem."
 
         show nessa surprisedbrow frownmouth 
         show hilda surprisedbrow frownmouth
@@ -1980,18 +1981,18 @@ elif (_return == "Pledge Hall"):
 
         red @talking2mouth "So, you're arguing over... that egg?"
 
-        hilda @talkingmouth "Yeah. It's a Rock-type, and I want that for my team."
+        hilda @talking2mouth "Yeah. It's a Rock-type, and I want that for my team."
 
-        nessa @talkingmouth "...And I want that for {i}my{/i} team."
+        nessa @talking2mouth "...And I want that for {i}my{/i} team."
 
         hilda @angry "And she expects, because she's a model and gorgeous, that I'm just going to roll over and let her take the egg!"
 
         nessa @surprised "You know who I am?"
 
         hilda @sad "Yeah. I've seen you in a {i}lot{/i} of Hilbert's 'magazines.'"
-        hilda @angrybrow talkingmouth "But sorry, honey, you can't just three-quarters pose your way out of this one. I'm taking the egg."
+        hilda @angrybrow talking2mouth "But sorry, honey, you can't just three-quarters pose your way out of this one. I'm taking the egg."
 
-        nessa @angrybrow talkingmouth "Do you know how little I actually care about things? Anything? I care about {i}this.{/i} Why, now, of all times, are you getting in my way?"
+        nessa @angrybrow talking2mouth "Do you know how little I actually care about things? Anything? I care about {i}this.{/i} Why, now, of all times, are you getting in my way?"
 
         hilda @surprised "Getting in your way?! This has {i}nothing{/i} to do with you! You're so self-centered--I'm just picking up a goddamn egg because my team needs a 'mon that can use utility moves!"
 
@@ -2021,19 +2022,19 @@ elif (_return == "Pledge Hall"):
                 $ ValueChange("Nessa", 3, 0.75)
 
                 if (GetRelationship("Nessa") == "Friend"):
-                    nessa @talkingmouth "It's nice having a reliable friend who has my back. Reminds me of before."
+                    nessa @talking2mouth "It's nice having a reliable friend who has my back. Reminds me of before."
                 else:
-                    nessa @talkingmouth "See? Even [first_name] gets it. You lost all claim to the egg when you started the personal attacks."
+                    nessa @talking2mouth "See? Even [first_name] gets it. You lost all claim to the egg when you started the personal attacks."
 
                 hilda @angrymouth "Oh, so you think, just because it's two on one, that I'm going to lay down and let you take the egg?"
-                hilda @closedbrow talkingmouth "Sorry, sister, but you can't have {i}everything{/i} you want." 
-                hilda @angrybrow talkingmouth "And [first_name], I'm disappointed in you. I thought you had better taste, frankly."
+                hilda @closedbrow talking2mouth "Sorry, sister, but you can't have {i}everything{/i} you want." 
+                hilda @angrybrow talking2mouth "And [first_name], I'm disappointed in you. I thought you had better taste, frankly."
 
                 red @confused "Um. This isn't about taste."
 
                 hilda @closedbrow smirkmouth "Sure it isn't."
 
-                nessa @talkingmouth "Let's just battle. Winner decides who gets the egg."
+                nessa @talking2mouth "Let's just battle. Winner decides who gets the egg."
 
                 hilda @angry "I was going to say that!"
 
@@ -2063,8 +2064,8 @@ elif (_return == "Pledge Hall"):
                         ">Take the egg":
                             $ GetItem("Bonsly Egg", 1)
 
-                            nessa @closedbrow talkingmouth "Take care of it."
-                            nessa @talkingmouth "Hope I see it fully-evolved some day."
+                            nessa @closedbrow talking2mouth "Take care of it."
+                            nessa @talking2mouth "Hope I see it fully-evolved some day."
 
                         ">Insist Nessa take the egg":
                             $ ValueChange("Nessa", 3, 0.75)
@@ -2077,16 +2078,16 @@ elif (_return == "Pledge Hall"):
                             if (GetRelationship("Nessa") == "Friend"):
                                 red @talkingmouth "Maybe you did something you regret, a little bit. But you've got plenty of time to make it right, right? You'll focus on the big picture."
 
-                                nessa @closedbrow talkingmouth "...Thanks."
+                                nessa @closedbrow talking2mouth "...Thanks."
 
                             else:
-                                nessa @closedbrow talkingmouth "I bet you're just trying not to jeopardize our date... But whatever. Your reasons are your own. Thanks."
+                                nessa @closedbrow talking2mouth "I bet you're just trying not to jeopardize our date... But whatever. Your reasons are your own. Thanks."
 
                         ">Suggest giving the egg to Hilda":
                             $ AddEvent("Hilda", "HasBonsly")
                             pause 1.0
 
-                            nessa @closedbrow talkingmouth "Might as well. Don't want to burn that bridge. Not yet, anyway."
+                            nessa @closedbrow talking2mouth "Might as well. Don't want to burn that bridge. Not yet, anyway."
                             nessa @sad "...God, I don't like rolling back anything I say, though. You can't move forward when you're changing the past."
 
                             red @happy "I'll handle it."
@@ -2096,11 +2097,11 @@ elif (_return == "Pledge Hall"):
                             red @talkingmouth "Yeah, no problem."
 
                             if (GetRelationship("Nessa") == "Friend"):
-                                nessa @closedbrow talkingmouth "I guess you're trying not to jeopardize that second date, huh?"
-                                nessa @talkingmouth "You don't need to do that. But thank you, anyway."
+                                nessa @closedbrow talking2mouth "I guess you're trying not to jeopardize that second date, huh?"
+                                nessa @talking2mouth "You don't need to do that. But thank you, anyway."
 
                             else:
-                                nessa @talkingmouth "Thanks. Date's still on, then."
+                                nessa @talking2mouth "Thanks. Date's still on, then."
 
                                 red @confused "Hm?"
 
@@ -2117,12 +2118,12 @@ elif (_return == "Pledge Hall"):
                             red @talkingmouth "Two things. First, I just wanted to check in on you."
 
                             hilda @sad "Ugh, yeah. I'm fine. Shit, I don't know." 
-                            hilda @closedbrow talking2mouth "I guess I got a bit worked up there... It just felt... I mean, here's this wealthy, gorgeous, popular girl who's making a big deal about how she wanted the egg {i}I{/i} wanted."
-                            hilda @closedbrow talkingmouth "I just... saw red, I guess."                
+                            hilda @closedbrow talkingmouth "I guess I got a bit worked up there... It just felt... I mean, here's this wealthy, gorgeous, popular girl who's making a big deal about how she wanted the egg {i}I{/i} wanted."
+                            hilda @closedbrow talking2mouth "I just... saw red, I guess."                
 
                             pause 1.0
 
-                            hilda @talkingmouth "You said you had two things?"
+                            hilda @talking2mouth "You said you had two things?"
 
                             red @talkingmouth "Yeah. Here."
 
@@ -2133,7 +2134,7 @@ elif (_return == "Pledge Hall"):
 
                             red @talkingmouth "Yeah. Nessa felt badly about, uh, demanding the egg. So here, a peace offering."
 
-                            hilda -surprisedbrow -frownmouth -surprised @closedbrow talking2mouth "Hmph. Maybe I misjudged her. Still don't like her, though."
+                            hilda -surprisedbrow -frownmouth -surprised @closedbrow talkingmouth "Hmph. Maybe I misjudged her. Still don't like her, though."
 
                             hilda @smirkmouth "Thanks, though. Means a lot that you'd do that for me. I'll even forgive you for kicking my team's shit in."
 
@@ -2141,7 +2142,7 @@ elif (_return == "Pledge Hall"):
 
                             red @surprised "Actually, that reminds me. Where was the rest of your team when we battled in gym class?"
 
-                            hilda @talkingmouth "Ugh, I hadn't asked for them to be sent from home yet."
+                            hilda @talking2mouth "Ugh, I hadn't asked for them to be sent from home yet."
                             hilda @sad "I had to do it for Hilbert first, and the shipping company can only do so many Poké Balls in a single shipment. You know, in case something goes wrong."
                             hilda @closedbrow sadmouth "So then I had to wait three to five business days for their next shipment, and then the weekend came around, and that was a huge hassle, so... yeah."
 
@@ -2160,7 +2161,7 @@ elif (_return == "Pledge Hall"):
                     $ AddEvent("Hilda", "HasBonsly")
                     hilda @happy "Nice. Training paid off! Don't hold it against me, right?"
 
-                    nessa @angrybrow talkingmouth "I'll forget you even exist by tomorrow morning."
+                    nessa @angrybrow talking2mouth "I'll forget you even exist by tomorrow morning."
 
                     hide nessa
                     hide hilda
@@ -2184,7 +2185,7 @@ elif (_return == "Pledge Hall"):
                 else:
                     hilda "Uh, yeah, obviously."
 
-                nessa @talkingmouth "That's fine. You know what? I don't even care. Let's just battle. Winner decides who gets the egg."
+                nessa @talking2mouth "That's fine. You know what? I don't even care. Let's just battle. Winner decides who gets the egg."
 
                 nessa @angry "Oh, by the way, [first_name]? {i}This time{/i}, I'm battling seriously."
 
@@ -2208,14 +2209,14 @@ elif (_return == "Pledge Hall"):
 
                     hilda "{w=0.5}.{w=0.5}.{w=0.5}."
                     hilda @sad "I guess I got a bit worked up there... It just felt... I mean, here's this wealthy, gorgeous, popular girl who's making a big deal about how she wanted the egg {i}I{/i} wanted."
-                    hilda @closedbrow talkingmouth "I just... saw red, I guess."
+                    hilda @closedbrow talking2mouth "I just... saw red, I guess."
                     hilda @sad "Gah. I made an ass of myself. Thanks for backing me up, at least, but now I'm not sure if I should even have that egg... you want it?"
 
                     menu:
                         ">Take the egg":
                             $ GetItem("Bonsly Egg", 1)
 
-                            hilda @closedbrow talkingmouth "Take care of it."
+                            hilda @closedbrow talking2mouth "Take care of it."
                             hilda @smirkmouth "Don't get in any fights over it."
 
                         ">Insist Hilda take the egg":
@@ -2225,8 +2226,8 @@ elif (_return == "Pledge Hall"):
                             hilda @happy "Aw, even after that, you think I should have it? Thanks, [first_name]."
 
                             if (GetRelationship("Hilda") == "Caretaker"):
-                                hilda @closedbrow talking2mouth "I guess this is just another way you're doing stuff for me."
-                                hilda @talkingmouth "Which I don't hate. Just... be careful. Don't overdo it."
+                                hilda @closedbrow talkingmouth "I guess this is just another way you're doing stuff for me."
+                                hilda @talking2mouth "Which I don't hate. Just... be careful. Don't overdo it."
 
                                 red @confused "{i}You're{/i} telling {i}me{/i} not to over do it?"
 
@@ -2234,7 +2235,7 @@ elif (_return == "Pledge Hall"):
                             $ AddEvent("Nessa", "HasBonsly")
                             pause 1.0
 
-                            hilda @closedbrow talkingmouth "Yeah, fine. I guess. Go ahead."
+                            hilda @closedbrow talking2mouth "Yeah, fine. I guess. Go ahead."
                             hilda @sad "It's probably the mature thing to do... but, shit, I hate that."
 
                             red @happy "I'll handle it."
@@ -2244,13 +2245,13 @@ elif (_return == "Pledge Hall"):
                             red @talkingmouth "Yeah, no problem."
 
                             if (GetRelationship("Hilda") == "Caretaker"):
-                                hilda @closedbrow talking2mouth "I guess this is just another way you're doing stuff for me."
-                                hilda @talkingmouth "Which I don't hate. Just... be careful. Don't overdo it."
+                                hilda @closedbrow talkingmouth "I guess this is just another way you're doing stuff for me."
+                                hilda @talking2mouth "Which I don't hate. Just... be careful. Don't overdo it."
 
                                 red @confused "You're telling {i}me{/i} not to over do it?"
 
                             else:
-                                hilda @talkingmouth "Thanks."
+                                hilda @talking2mouth "Thanks."
                             
                             hide hilda with dis
 
@@ -2262,12 +2263,12 @@ elif (_return == "Pledge Hall"):
 
                             red @talkingmouth "Two things. First, that was an awesome Drednaw."
 
-                            nessa @talkingmouth "Yeah. She's a trooper. Moves slowly, and thinks things through, but when she decides to take action, she gets things done."
+                            nessa @talking2mouth "Yeah. She's a trooper. Moves slowly, and thinks things through, but when she decides to take action, she gets things done."
                             nessa @sad "I don't... I don't remember the last time she lost."
 
                             pause 1.0
 
-                            nessa @talkingmouth "You said you had two things?"
+                            nessa @talking2mouth "You said you had two things?"
 
                             red @talkingmouth "Yeah. Here."
 
@@ -2278,7 +2279,7 @@ elif (_return == "Pledge Hall"):
 
                             red @talkingmouth "Yeah. Hilda felt badly about, uh, blowing up at you. So here, a peace offering."
 
-                            nessa -surprisedbrow -frownmouth -surprised @talkingmouth "And you're her messenger?"
+                            nessa -surprisedbrow -frownmouth -surprised @talking2mouth "And you're her messenger?"
 
                             if (GetRelationship("Hilda") == "Caretaker"):
                                 red @talkingmouth "Amongst other things."
@@ -2290,17 +2291,17 @@ elif (_return == "Pledge Hall"):
                             else:
                                 red @talkingmouth "Besides, I didn't want to do anything to jeopardize our date. Thought you might reconsider after that battle."
 
-                            nessa @talkingmouth "...Nah. To be honest, I'm kind of impressed. I was outnumbered, but that doesn't matter most of the time."
+                            nessa @talking2mouth "...Nah. To be honest, I'm kind of impressed. I was outnumbered, but that doesn't matter most of the time."
 
-                            nessa @talkingmouth "Getting past my Drednaw is a pretty big achievement. So pat yourself on the back."
+                            nessa @talking2mouth "Getting past my Drednaw is a pretty big achievement. So pat yourself on the back."
 
                             $ ValueChange("Nessa", 3, 0.5)
 
-                            nessa @happybrow talkingmouth "And thanks for the egg."
+                            nessa @happybrow talking2mouth "And thanks for the egg."
 
                 else:
                     $ AddEvent("Nessa", "HasBonsly")
-                    nessa @talkingmouth "Hm. Guess I'm taking the egg, then. No hard feelings?"
+                    nessa @talking2mouth "Hm. Guess I'm taking the egg, then. No hard feelings?"
 
                     hilda @angry "Screw off!"
 
@@ -2673,7 +2674,7 @@ elif (_return == "Recreation Center"):
 
                 red @confused "My bad, but I could've just jumped into the water myself. I don't care if these clothes get wet."
 
-                skyla @closedbrow talkingmouth "Yeah, well, you didn't. You're lucky I'm forgiving. Some girls would slap you for that."
+                skyla @closedbrow talkingmouth "Yeah, well, you didn't. You're lucky I'm forgiving. Some girls would battle you for that."
 
                 show skyla -angrybrow -frownmouth with dis
 

@@ -134,7 +134,7 @@ if (council_campaigning):
 
     cheren @closedbrow talkingmouth "...So we should be on the same page."
 
-hilda @talkingmouth "It sounds like what you guys want to do is going to put you on the admin's shit list. Especially you, Cheren."
+hilda @talking2mouth "It sounds like what you guys want to do is going to put you on the admin's shit list. Especially you, Cheren."
 
 hilbert @closedbrow talkingmouth "Yeah. Even if you run a great campaign, if you're running on a platform the school doesn't like, they'll just shut you down."
 
@@ -162,7 +162,7 @@ serena @talkingmouth "I was thinking of perhaps a picnic of sorts.{w=0.5} I hear
 
 hilbert @talkingmouth "Why not just eat in the cafeteria?{w=0.5} It's cheaper, faster, and we don't have to worry about the wind blowing everything away."
 
-hilda @closedbrow talking2mouth veins "It's not the same, Hilbert..."
+hilda @closedbrow talkingmouth veins "It's not the same, Hilbert..."
 
 hilbert @sadbrow talkingmouth "You're right, it's not."
 hilbert @angry "Eating on a table is much better than eating on some dirt and grass."
@@ -214,12 +214,12 @@ menu:
         calem @sadmouth "One can be overexposed to romance."
         
         hilda @smirkmouth "Whatever.{w=0.5} It's about the, y'know, atmosphere, not the actual meal."
-        hilda @closedbrow talkingmouth "The cherry blossoms are in full bloom around this time of year, yeah? We didn't get that in Unova."
+        hilda @closedbrow talking2mouth "The cherry blossoms are in full bloom around this time of year, yeah? We didn't get that in Unova."
         
         hilbert @angrybrow talkingmouth "Then you can go outside and eat in the trees if you want."
         hilbert @closedbrow talkingmouth "Everyone who doesn't like a handful of dirt in their sandwich can stay here."
 
-        hilda @sadbrow talking2mouth "It was just a suggestion!"
+        hilda @sadbrow talkingmouth "It was just a suggestion!"
         
         calem @closedbrow talkingmouth "I still prefer eating on stable ground, but to each their own."
     
@@ -296,7 +296,7 @@ hilda @smirkmouth "I can't even imagine joining a club. I'll be way too busy.{w=
 
 hilbert @closedbrow talkingmouth"I can't play tennis."
 
-hilda @talkingmouth "No, I'm talking about if there are any clubs you're interested in."
+hilda @talking2mouth "No, I'm talking about if there are any clubs you're interested in."
 
 hilbert @talkingmouth "Hm.{w=0.25}.{w=0.25}."
 hilbert @talkingmouth "I'll be joining the Battle Team."
@@ -418,7 +418,7 @@ cheren @talkingmouth "You can thank the results and reputation of this school.{w
 serena @sadmouth closedbrow "I believe Diantha actually dropped out of Kobukan to focus on her movie career."
 serena @sadbrow happymouth "Perhaps that's a bad example. As for non-dropout Alumni..."
 
-hilda @talkingmouth "Let's see, there's Alder and Bruno teaching our gym class.{w=0.5} Instructor Koga, Steven Stone... uh..."
+hilda @talking2mouth "Let's see, there's Alder and Bruno teaching our gym class.{w=0.5} Instructor Koga, Steven Stone... uh..."
 
 bianca @happy "Don't forget Cynthia~!"
 

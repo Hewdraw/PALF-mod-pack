@@ -44,7 +44,7 @@ oak @talkingmouth "Finally, in this test... [bluecolor]you {i}will{/i} be able t
 oak @talkingmouth "Take out your pencils... and remember, [bluecolor]this is graded!{/color}"
 
 python:
-    oldpoisoncap = classstats["Poison"]
+    oldpoisoncap = GetElective("Poison")
     classstats["Poison"] = 100
     skorupiobj = Pokemon("Skorupi", level=40, moves=[GetMove("Cross Poison"), GetMove("Acupressure"), GetMove("Crunch"), GetMove("X-Scissor"),], ivs=[0, 0, 0, 0, 0, 0], ability="Battle Armor", nature=Natures.Adamant)
     skorupiobj.Experience = skorupiobj.CalculateAllExperienceNeededForLevel(41)
@@ -59,7 +59,7 @@ python:
         mon.ChangeStats(Stats.Speed, -6, mon)
 
 call Battle([trainer1, trainer2], clearstats=False, healParty=False, uniforms=[True, False], lockbag=True) from _call_Battle_131
-$ battlehistory["Oak9"] = _return
+$ RecordBattle("Oak9")
 $ classstats["Poison"] = oldpoisoncap
 
 $ renpy.transition(dissolve)
@@ -223,7 +223,7 @@ raihan -angrybrow @talkingmouth "Well, you're in luck! Because in just a few min
 show lisia talkingmouth with dis:
     xpos 0.33
 
-Character("Unassuming Lass") "\"That's {i}so{/i} cool. I'm a big fan of yours! But I read {i}all{/i} your RotoPhoto stories, and you didn't say anything about coming here?\""
+Character("Unassuming Lass") "\"That's {i}so{/i} cool. I'm a big fan of yours! But I read {i}all{/i} your RotoPhotos stories, and you didn't say anything about coming here?\""
 
 show lisia -talkingmouth with dis:
     xpos 0.33
@@ -397,7 +397,7 @@ menu:
 
         show stadium_empty with vpunch
 
-        nessa @sadbrow talkingmouth "{size=30}Rai, they haven't been territories for a couple hundred years.{/size}"
+        nessa @sadbrow talking2mouth "{size=30}Rai, they haven't been territories for a couple hundred years.{/size}"
 
         pause 1.0
 

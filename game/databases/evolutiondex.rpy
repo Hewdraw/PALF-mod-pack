@@ -241,7 +241,7 @@ init python:
     __addevo(204, 205, [("Level", 31)]) # Forretress
     __addevo(206, 982, [("LevelUp", None), ("KnowsMove", "Hyper Drill"), ("ChanceText", 0.99)]) # Dudunsparce Two-Segment
     __addevo(206, 982.1, [("LevelUp", None), ("KnowsMove", "Hyper Drill"), ("Chance", 0.01)], 1) # Dudunsparce Three-Segment
-    __addevo(207, 472, [("LevelUp", None), ("HasItem", Item.RazorClaw), ("TimeOfDay", "Night")]) # Gliscor
+    __addevo(207, 472, [("LevelUp", None), ("HasItem", Item.RazorFang), ("TimeOfDay", "Night")]) # Gliscor
     __addevo(209, 210, [("Level", 23)]) # Granbull
     __addevo(211.1, 904, [("LevelUp", None), ("KnowsMove", None), ("Unimplemented", None)]) # Overqwil - Not implemented
     __addevo(215, 461, [("LevelUp", None), ("HasItem", Item.RazorClaw), ("TimeOfDay", "Night")]) # Weavile

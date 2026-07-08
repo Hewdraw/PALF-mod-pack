@@ -19,6 +19,7 @@
             self.Number = number#1 for single battle, 2 for double, 3 for triple
             self.IsPokemon = isPokemon
             self.FaintedPokemonCount = 0#used for last respects
+            self.Skill = GetTrainerSkill(self.Name.title())
 
         def ResetFaintedPokemonCount(self):
             self.FaintedPokemonCount = 0
@@ -67,12 +68,12 @@
                     leads.remove(mon)
             return leads
 
-        def GetTeam(self, heal=False):
+        def GetTeam(self, heal=False, specific = None):
             if (self.Team == None):
                 if (self.Name == "red"):
                     self.Team = playerparty
                 else:
-                    self.Team = GetTrainerTeam(self.Name, None, heal)
+                    self.Team = GetTrainerTeam(self.Name, specific, heal)
             return self.Team
 
         def GetNumPkmn(self, numpkmn):
@@ -91,11 +92,11 @@
         def GetType(self):
             return self.Type
 
-        def ShiftTeam(self, swapto, swapfrom, force=False, positionswitch = False, selfforced=False):
+        def ShiftTeam(self, swapfrom, swapto, force=False, positionswitch = False, selfforced=False, preserveStatus=False):
             global switchedmon
             
-            swappingmon = self.GetTeam()[swapto]
-            swappingtomon = self.GetTeam()[swapfrom]
+            swappingmon = self.GetTeam()[swapfrom]
+            swappingtomon = self.GetTeam()[swapto]
             
             if (not positionswitch):
                 if (swappingtomon.GetHealth() <= 0):
@@ -110,8 +111,9 @@
                 if (swappingmon.HasNormalStatus() and swappingmon.HasAbility("Natural Cure")):
                     swappingmon.ClearStatus(None, all=True)    
                     
-                swappingmon.ClearStatus(None, volatiles=True)
-                swappingtomon.ClearStatus(None, volatiles=True)
+                if (not preserveStatus):
+                    swappingmon.ClearStatus(None, volatiles=True)
+                    swappingtomon.ClearStatus(None, volatiles=True)
 
             self.GetTeam()[swapto], self.GetTeam()[swapfrom] = self.GetTeam()[swapfrom], self.GetTeam()[swapto]
 
@@ -135,3 +137,20 @@
 
         def GetNumber(self):
             return self.Number
+
+        def GetSwitchables(self):
+            team = self.GetUnfaintedTeam()
+            switchables = []                
+            for mon in team:
+                if (mon not in GetBattlers(mon)):
+                    switchables.append(mon)
+                
+            return switchables
+
+        def GetTrainerSkill(self):
+            return self.GetSkill()
+
+        def GetSkill(self):
+            if (not hasattr(self, 'Skill')):
+                self.Skill = GetTrainerSkill(self.Name.title())
+            return self.Skill

@@ -213,7 +213,7 @@ janine @closedbrow talking2mouth "We have a limited amount of time, though. Even
 
 janine @closedbrow talking2mouth "Maybe, later on in the year, if some of you start dropping due to the Quarter Qlashes, we'll be able to focus more attention on those who are left. So we could teach more moves at one club meeting."
 
-lance @closedbrow talking2mouth "Do not count on that. It is the Battle Team's aim to get everyone through the fourth Quarter Qlash, and into the national tournament."
+lance @closedbrow talking2mouth "Do not count on that. It is the Battle Team's aim to get everyone through the fourth Quarter Qlash, and into the National Tournament."
 
 pause 1.0
 

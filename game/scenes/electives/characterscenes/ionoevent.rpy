@@ -5,7 +5,11 @@ if (IsAbsent("Iono", location.title()) or HasEvent("Iono", "ClassIntro")):
 
 $ AddEvent("Iono", "ClassIntro")
 
-narrator "The absolute {i}instant{/i} you step into the classroom..."
+if (HasEvent("Iono", "AfterClassIntro")):
+    narrator "The absolute {i}instant{/i} class is dismissed..."
+
+else:
+    narrator "The absolute {i}instant{/i} you step into the classroom..."
 
 show iono uniform nocoat surprisedbrow with vpunch
 
@@ -45,7 +49,11 @@ iono @talking2mouth "I don't want to be told my catastrophizing isn't valid, I w
 #We'll just address any reports people make. 
 #Fair enough -- but if you wanted, I could very easily note down which Ghost & Electric classes have the instructor arrive later. You could just reference them by number? BUT - only if you think it's worthwhile; I don't want to waste your time.
 
-red @happy "Sorry. That's not how I work. Now, c'mon, let's go to the Instructor before class."
+if (HasEvent("Iono", "AfterClassIntro")):
+    red @happy "Sorry. That's not how I work. Now, c'mon, let's go to the Instructor before next class."
+
+else:
+    red @happy "Sorry. That's not how I work. Now, c'mon, let's go to the Instructor before class."
 
 show iono surprised with dis:
     xpos 0.5 
@@ -125,7 +133,7 @@ else:#ghost
         fantina @sadbrow talkingmouth "Four years have I spent in Galar and Kobukan--and still my words fall short."
         fantina @angry "And the spelling! {i}Ça me rend fou!{/i}"
 
-    redmind @closedbrow smilemouth "[ellipses]There. That wasn't not so bad, is it?"
+    redmind uniform @closedbrow "[ellipses]There. That wasn't so bad, was it?"
 
     narrator "The conversation between the two seems like it might go on for a while[ellipses] you go back to your seat."
 

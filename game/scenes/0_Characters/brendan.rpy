@@ -211,7 +211,7 @@ label Brendan1:
 
     red @happy "What? Come on! You got into Kobukan. You can't be {i}that{/i} bad."
 
-    brendan @sadbrow talkingmouth "I'm as confused about that one as you are. I was pretty sure I'd blown the admittance exam."
+    brendan @sadbrow talkingmouth "I'm as confused about that one as you are. I was pretty sure I'd blown the entrance exam."
 
     brendan @talking2mouth "But, even if I'm not great now, I {i}really{/i} sucked when I was a kid. I mean, I was using Ground-type moves on Flying-types. That's how bad it was."
 
@@ -346,7 +346,7 @@ label Brendan1:
     red @talkingmouth "I appreciate you telling me about this." 
     red @happy "And I'm sure you'll put on the best contest performance ever!"
 
-    brendan @talkingmouth "Appreciate it, bro. Seriously. We're [bluecolor]tight{/color}, right?"
+    brendan @talkingmouth "Seriously. We're [bluecolor]tight{/color}, right?"
 
     red @talkingmouth "Thick as thieves."
 

@@ -81,7 +81,6 @@ oak @happy "So, without further ado, please take out your pencils, and remember 
 #use Magnitude to hit a foe in the middle of a dig turn
 
 python:
-    AddEvent("Professor Oak", "KecleonTest")
     trainer1 = Trainer("red", TrainerType.Player, [
         #smack down the skarmory
         Pokemon("Graveler", level=30, moves=["Smack Down", "Self-Destruct", "Fire Blast", "Rock Polish"], ivs=[0, 0, 0, 0, 0, 0], ability="Sturdy", nature=Natures.Serious),
@@ -230,7 +229,7 @@ leaf @talkingmouth "Alright, that's enough banter. We're here on a serious missi
 
 show yellow surprisedbrow frownmouth with dis
 
-if (HasEvent("Professor Oak", "ParticipateMDTryouts")):
+if (IsCoordinator()):
     leaf @talkingmouth "We're getting Yellow and [first_name] coordinator outfits. They'll need them, if they're going to be the number-one coordinator group in the world some day!"
     
     if (not HasEvent("Game", "WonMDTryouts")):
@@ -366,7 +365,7 @@ yellow @talkingmouth "[ellipses]Um. Should I go somewhere?"
 
 red @sadbrow talkingmouth "Not if you don't want to."
 
-if (HasEvent("Professor Oak", "ParticipateMDTryouts")):
+if (IsCoordinator()):
     yellow @sadbrow talking2mouth "I guess I should probably look for that coordinator outfit. I mean, that's half of why we're here."
 
 else:
@@ -505,7 +504,7 @@ leaf -surprisedbrow @angrybrow talkingmouth "I don't know what that is, but I ne
 
 blue -glancebrow  -frownmouth @closedbrow talking2mouth "Well, this has been a bust. Should we go back to campus?"
 
-if (HasEvent("Professor Oak", "ParticipateMDTryouts")):
+if (IsCoordinator()):
     yellow @talking2mouth "Hold on. We need to get [first_name] a Coordinator outfit, too, right?"
 
     blue @closedbrow talking2mouth "Shit, yeah. I keep trying to forget that he's a Coordinator now, too."
@@ -637,7 +636,7 @@ if (HasEvent("Professor Oak", "ParticipateMDTryouts")):
     $ renpy.music.play("Audio/Pokemon/pikachu_angry1.ogg", channel="altcry", loop=None)
     libpikachu @closedbrow frownmouth "Pika."
 
-    red @sadbrow talkingmouth "Leaf, c'mon, this costs more than... more than, like, {i}all{/i} my other clothes put together. I don't want to be dependent on you."
+    red @sadbrow talkingmouth "Leaf, c'mon, this costs more than[ellipses] more than, like, {i}all{/i} my other clothes put together. I don't want to be dependent on you."
 
     leaf @flirtbrow blush talkingmouth "[first_name], trust me when I say I'm {i}mostly{/i} doing this for me."
 
@@ -662,7 +661,7 @@ ethan @talkingmouth "Say no more. {i}Mrowr{/i}."
 
 blue "Huh? I don't get it. What's private? It's just clothes, right?"
 
-yellow @sadbrow talkingmouth "Um... yes, we'll, um, we'll go. Quickly."
+yellow @sadbrow talkingmouth "Um[ellipses] yes, we'll, um, we'll go. Quickly."
 
 show blue:
     xpos 0.2 xzoom 1
@@ -677,7 +676,7 @@ show yellow behind blue:
 
 blue @confusedbrow talkingmouth "No, seriously. What's going on? Did I miss something?"
 
-yellow @sadbrow talking2mouth "Um, Blue, when someone says 'private clothes,' that means, um..."
+yellow @sadbrow talking2mouth "Um, Blue, when someone says 'private clothes,' that means, um[ellipses]"
 
 show ethan playfuleyes neutraleyebrows
 pause 0.2
@@ -722,9 +721,13 @@ if (not HasEvent("Leaf", "AcceptedConfession")):
 
     red @happy "Seeya."
 
+    leaf @sadbrow talkingmouth "So, um, I'm going on a secret mission for Yellow--you can't know about it--but before that I have something else I need to do."
+
+    red @talkingmouth "I gathered."
+
     leaf @talking2mouth "Uh... you don't have to go, if you don't want to."
     leaf @happy "I'd appreciate your eye on an outfit I'm planning on buying, but, like, no pressure."
-    leaf @sadbrow talkingmouth "And, full, confession, the outfit's a bit, um... 'skimpy?'"
+    leaf @sadbrow talkingmouth "And, full, confession, the outfit's a bit, um[ellipses] 'skimpy?'"
     leaf @sadbrow talking2mouth "So, like, I'm not trying to seduce you by showing off my new outfit. I just, uh, feel a {i}tiny{/i} bit uncomfortable about it. Thought you might be able to help?"
 
     menu:
@@ -752,7 +755,7 @@ leaf @talkingmouth "To stand there and look pretty, and tell me {i}I{/i} look pr
 
 red @talkingmouth "You're always pretty, but you don't normally need me to tell you that. Something up?"
 
-leaf @sadbrow talkingmouth "Um, yeah. Well, no. It's... Klara's party has a theme."
+leaf @sadbrow talkingmouth "Um, yeah. Well, no. It's[ellipses] Klara's party has a theme."
 
 red @talking2mouth "Girls-only, right?"
 
@@ -788,9 +791,9 @@ redmind @frownmouth "I wonder if I could make a game to pass the time. 'Is there
 
 pause 1.0
 
-redmind @unamusedbrow unamusedmouth "And... I've lost already."
+redmind @unamusedbrow unamusedmouth "And[ellipses] I've lost already."
 
-redmind @poutmouth "Maybe if I narrow my field of vision? Like, if I squint...?"
+redmind @poutmouth "Maybe if I narrow my field of vision? Like, if I squint[ellipses]?"
 
 redmind @unamusedbrow unamusedmouth "[ellipses]Kinda? It's kinda working? I think I just need to squint some more--"
 
@@ -799,7 +802,7 @@ show blank2 with transeye
 pause 1.0
 
 redmind @closedbrow frownmouth "Nope, roll it back. That was too far. That was too much. You've closed your eyes now."
-redmind @closedbrow poutmouth "Although... if we're doing a literalist interpretation of the very loosely-defined rules of the game... maybe this is allowed?"
+redmind @closedbrow poutmouth "Although[ellipses] if we're doing a literalist interpretation of the very loosely-defined rules of the game[ellipses] maybe this is allowed?"
 
 pause 1.0
 
@@ -827,7 +830,7 @@ leaf @flirtbrow talkingmouth "Good to hear. You think I'll be popular at the par
 
 red @happy "All the boys at this girls-only party? Yeah, absolutely."
 
-leaf @closedbrow talkingmouth "Alright. I can't walk in these shoes, but it's not like I'm going to need to run anywhere, so... I'd call this a success."
+leaf @closedbrow talkingmouth "Alright. I can't walk in these shoes, but it's not like I'm going to need to run anywhere, so[ellipses] I'd call this a success."
 
 red @talking2mouth "It will take every molecule of my being to not ask for every sordid detail about that party."
 
@@ -842,7 +845,7 @@ if (HasEvent("Klara", "BrokeBond")):
 
     leaf @talkingmouth "True."
 
-leaf @closedbrow talkingmouth "Anyway, I'm... actually feeling pretty confident now, so, um, thanks. I appreciate you being here for me."
+leaf @closedbrow talkingmouth "Anyway, I'm[ellipses] actually feeling pretty confident now, so, um, thanks. I appreciate you being here for me."
 
 red @talkingmouth "I can pretty much guarantee that anytime you're in a bunny suit, I'll be there for you."
 
@@ -860,7 +863,12 @@ scene blank2 with splitfade
 
 pause 1.0
 
-narrator "Leaf changes, purchases the costume, then heads back to campus. You decide to wander around Inspira for a while longer before heading back..."
+if (not HasEvent("Leaf", "AcceptedConfession")):
+    narrator "Leaf changes, purchases the costume, then heads off alone on her special mission for Yellow. You press her for details, but she keeps quiet, true to her word."
+else:
+    narrator "Leaf changes, purchases the costume, then heads off alone on a special mission for Yellow. You press her for details, but she keeps quiet."
+
+narrator "You decide to wander around Inspira for a while longer before heading back[ellipses]"
 
 label afterevents:
 
@@ -884,8 +892,7 @@ $ timeOfDay = "Night"
 
 show screen currentdate with dis
 
-if (not skipnightscenes):
-    call nightscenequeue from _call_nightscenequeue_1
+call nightscenequeue from _call_nightscenequeue_1
 
 call texting() from _call_texting_29
 

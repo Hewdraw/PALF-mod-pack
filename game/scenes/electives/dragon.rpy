@@ -246,7 +246,7 @@ if (not HasEvent("Instructor Clair", 1)): #first class
     red @talkingmouth "We can't give up now.{w=0.5} It's way too early in the game for us to call it quits just yet."
 
     hide clair
-elif (not HasEvent("Instructor Clair", 2.1) and classstats["Dragon"] >= 10):#Legacy
+elif (not HasEvent("Instructor Clair", 2.1) and GetElective("Dragon") >= 10):#Legacy
     show clair with dis
     if (not HasEvent("Instructor Clair", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -349,7 +349,7 @@ elif (not HasEvent("Instructor Clair", 2.1) and classstats["Dragon"] >= 10):#Leg
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide clair with dis
-elif (not HasEvent("Instructor Clair", 3.1) and classstats["Dragon"] >= 20):#Dragon Fang
+elif (not HasEvent("Instructor Clair", 3.1) and GetElective("Dragon") >= 20):#Dragon Fang
     show clair with dis
     if (not HasEvent("Instructor Clair", 3)):
         $ renpy.pause(1.0, hard=True)
@@ -498,7 +498,7 @@ elif (not HasEvent("Instructor Clair", 3.1) and classstats["Dragon"] >= 20):#Dra
         redmind uniform @thinking "Oof... that was an embarrassing loss. Still, at least I learned something..."
 
     hide clair with dis
-elif (not HasEvent("Instructor Clair", 4.1) and classstats["Dragon"] >= 30):#Dragon Breath
+elif (not HasEvent("Instructor Clair", 4.1) and GetElective("Dragon") >= 30):#Dragon Breath
     show clair with dis
     if (not HasEvent("Instructor Clair", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -638,6 +638,9 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+
+            hide clair with dis
+
             jump aftertutoring
         else:
             jump afterdragonsetup
@@ -653,6 +656,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ playerparty[newindex].LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide clair with dis
         jump endclass
 else:
     clair @closedbrow talking2mouth "I very much doubt {i}that{/i} Pokémon could ever learn such a powerful draconic technique!"

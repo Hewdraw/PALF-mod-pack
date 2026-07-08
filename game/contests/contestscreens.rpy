@@ -121,7 +121,9 @@ screen ContestChoices(coordinator, startingmon):
                 imagebutton idle Transform("GUI/contest/performbutton_idle.webp", zoom=0.65) hover Transform("GUI/contest/performbutton_hover.webp", zoom=0.65) action [Hide("ContestUIAbove"), SetVariable("contestaction", "Perform"), SetVariable("contestmove", None), (Function(ContestNotify, "Your points are doubled this round!") if Turn == 5 else NullAction()), (Function(ContestNotify, "Your points are tripled this round!") if Turn == 10 else NullAction()), (Function(ContestNotify, "Spend energy for a big boost, or keep it for a smaller increase!") if coordinator.GetEnergy() > 0 else NullAction()), SetScreenVariable("spentenergy", 0)]
                 null width 20
                 imagebutton idle Transform("GUI/contest/switchbutton_idle.webp", zoom=0.65) hover Transform("GUI/contest/switchbutton_hover.webp", zoom=0.65) action [Hide("ContestUIAbove"), SetVariable("contestaction", "Switch"), SetVariable("contestmon", None)] hovered Function(ContestNotify, "You can switch without penalty before your first performance!")
-        
+                if (betatesting()):
+                    textbutton "DevSkip" action Jump("skiptoend")
+
         # Perform
         elif (contestaction == "Perform"):
             vbox:

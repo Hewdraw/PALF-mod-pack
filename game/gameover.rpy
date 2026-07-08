@@ -1,5 +1,7 @@
 label gameover:
 
+call clearscreens() from _call_clearscreens_275
+
 play sound "audio/shovel.ogg" fadein 30.0 loop
 
 show blank2:

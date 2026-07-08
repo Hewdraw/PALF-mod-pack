@@ -120,3 +120,21 @@ init 1 python:
                     current_line += 1
 
             return page_list
+
+    def InterpretLine(line):
+        match = re.search(r"\<(.*?)\|(.*?)\|(.*?)\>", line)
+        if match:
+            try:
+                condition, trueval, falseval = match.groups()
+                if (eval(condition)):
+                    line = line.replace(match.string, trueval)
+                else:
+                    line = line.replace(match.string, falseval)
+            except Exception as e:
+                return f"Error evaluating condition: {condition}, {e}"
+
+        line = line.replace("first_name", first_name)
+        if (len(line) > 1 and line[0]) == " ":
+            line = line[1:]
+
+        return line

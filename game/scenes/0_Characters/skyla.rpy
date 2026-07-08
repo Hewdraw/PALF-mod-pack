@@ -411,11 +411,11 @@ label Skyla1Part2:
     skyla @talking2mouth "I could, but I thought you might want to come with?"
 
     if (HasEvent("Instructor Winona", 2.1) and HasEvent("Burgh", 2.1)):
-        red @talkingmouth "Of course! I've been to both Instructor Winona and Instructor Burgh's classes pretty often already, so it's not like I'm going out of my way."
+        red @talkingmouth "Of course! I've been to both Instructor Winona and Burgh's classes pretty often already, so it's not like I'm going out of my way."
     elif (HasEvent("Instructor Winona", 2.1)):
-        red @talkingmouth "Of course! I've been Instructor Winona's classes a good few times already, so it's not like I'm going out of my way, for her, at least."
+        red @talkingmouth "Of course! I've been to Instructor Winona's classes a good few times already, so it's not like I'm going out of my way, for her, at least."
     elif (HasEvent("Burgh", 2.1)):
-        red @talkingmouth "Of course! I've been Instructor Burgh's classes a good few times already, so it's not like I'm going out of my way, for him, at least."
+        red @talkingmouth "Of course! I've been to Burgh's classes a good few times already, so it's not like I'm going out of my way, for him, at least."
     elif (not (IsNamed("Burgh") or IsNamed("Instructor Winona"))):
         red @talkingmouth "I don't think I know either of your type elective instructors, so this'd be a chance to meet some new members of the faculty."
     elif (not IsNamed("Burgh")):
@@ -773,7 +773,7 @@ label Skyla1PartsConclusion:
             skyla @talkingmouth "You'll come with me to Instructor Winona's class, right?"
 
         elif (HasEvent("Skyla", "Skyla1Part4")):
-            skyla @talkingmouth "You'll come with me to Instructor Burgh's class, right?"
+            skyla @talkingmouth "You'll come with me to Burgh's class, right?"
             
         red @happy "Yeah, sure thing."
 

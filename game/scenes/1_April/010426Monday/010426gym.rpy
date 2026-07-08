@@ -589,7 +589,7 @@ with Dissolve(2.0)
 
 pause 1.0
 
-show mace at leftside
+show mace uniform at leftside
 show face uniform at rightside
 with dis
 

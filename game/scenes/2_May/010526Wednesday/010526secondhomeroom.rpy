@@ -43,8 +43,8 @@ redmind uniform @thinking "I've never heard Sam talk about his Champion days so 
 redmind @sadbrow frownmouth "...If life was simpler back then, and he's now realizing how much effort it takes to be a teacher..."
 redmind @sad2eyes frownmouth "Well, he's over sixty. I can't imagine he wanted to sign up for an extremely difficult job at his age."
 
-if (classstats["Ground"] > 6 or classstats["Grass"] > 6):
-    if (classstats["Ground"] >= classstats["Grass"]):
+if (GetElective("Ground") > 6 or GetElective("Grass") > 6):
+    if (GetElective("Ground") >= GetElective("Grass")):
         redmind @sadbrow frownmouth "Of course, Instructor Bertha's quite a bit older..."
 
     else:
@@ -667,7 +667,7 @@ if (HasEvent("Leaf", "AcceptedConfession")):
     leaf @closedbrow talking2mouth "Alright, that's enough, joke's over."
 
     red @confused "Do you have her phone number? Or, like, do you know where she lives?"
-    red @sad2eyes sadeyebrows talking2mouth "That moustache did something to me. Do you think her RotoPhoto DMs are open?"
+    red @sad2eyes sadeyebrows talking2mouth "That moustache did something to me. Do you think her RotoPhotos DMs are open?"
 
     leaf @sarcastic "Dude. The joke's over."
 

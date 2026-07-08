@@ -120,7 +120,7 @@ python:
             mon.ApplyStatus("burned")
 
 call Battle([trainer1, trainer2], clearstats=False, gainexp=False, healParty=False, uniforms=[True, False], lockbag=True, lockluck=True, custombrain=oakkecleontestbrain, customswitchbrain=oakkecleontestswitchbrain) from _call_Battle_163
-$ RecordBattle("Oak12")
+$ RecordBattle("Oak11")
 $ RemoveEvent("Professor Oak", "KecleonTest")
 $ renpy.transition(dissolve)
 show screen currentdate
@@ -136,7 +136,7 @@ pause 2.0
 
 redmind uniform @confusedeyebrows frownmouth "Sam is just slowly leafing through the tests... it's impossible to tell what he's thinking."
 
-if (WonBattle("Oak12")):
+if (WonBattle("Oak11")):
     redmind @thinking "Well, at least I'm confident in my score."
 
 else:
@@ -204,7 +204,7 @@ pause 1.0
 
 leaf @talking2mouth "Huh. Is this how Yellow feels?"
 leaf @sadbrow talkingmouth "On the one hand, I totally don't want to do what he says, but now I'm curious about what's happening between you four..."
-$ dratinipronouns = "him" if GetTrainerTeam("Leaf", "Dratini") else "her"
+$ dratinipronouns = "him" if GetTrainerTeam("Leaf", "Dratini").Gender == Genders.Male else "her"
 leaf @closedbrow talking2mouth "And I guess he's been training my Dratini for a while. This would be a good time to check in on [dratinipronouns], anyway."
 
 red @happy "Sounds good. See you back at the dorm!"
@@ -591,10 +591,13 @@ red @confused "Oh. That's... weird."
 
 narrator "True to Yellow's word, when she presses the Foreveral to Chuchu, it refuses to make any sort of connection."
 
-$ sidemonnum = 172
+$ sidemonnum = 172.1
+$ sidemonoverride = "Chuchu"
 $ PlaySound("pokemon/cries/172.mp3")
 
-sidemon @talkingmouth "Chu..."
+sidemon "Chu..."
+
+$ sidemonoverride = None
 
 red @confused "Well, I'm stumped."
 

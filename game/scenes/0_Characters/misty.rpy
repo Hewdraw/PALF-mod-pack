@@ -346,11 +346,10 @@ label Misty1:
 
     misty angry "UGH! You {i}idiot!{/i} I thought you were going to take me seriously, but you're just making a big joke out of this, like everyone else!"
 
-    misty "You... {w=0.7}{nw}"
+    misty "Just... just move! You... {w=0.7}{nw}"
 
     show blank2 behind pool
 
-    $ PlaySound("Slap.ogg")
     pause 0.1
 
     show misty:
@@ -367,6 +366,10 @@ label Misty1:
 
     show pool at hall_move2
 
+    redmind @wince "And there she goes, storming off again."
+
+    pause 1.0
+
     red @closedbrow talking2mouth "...Okay. Yeah, that one was a little on me. Maybe not the time for a bad joke."
 
     show misty:
@@ -374,15 +377,13 @@ label Misty1:
 
     misty @angry "When you feel like taking me {i}seriously{/i}, give me a call, you {nw}"
 
-    $ PlaySound("Slap.ogg")
-
     show misty angry:
         xpos 0.25 ypos 1.0 zoom 1.0 rotate 0
         ease 0.2 xpos 0.5 ypos 1.1 zoom 1.33 rotate -3
 
     show pool at hall_move1
 
-    extend "{color=#0048ff}jerk{/color}!{w=1.0}{nw}"
+    extend "{color=#0048ff}jerk{/color}!{w=1.0} And MOVE!{nw}"
 
     show misty angry:
         xpos 0.5 ypos 1.1 zoom 1.33 rotate -3
@@ -390,7 +391,7 @@ label Misty1:
 
     show pool at hall_move2
 
-    red @angry "Now, see, that-- {size=40}{i}that{/i} was excessive!{/size}"
+    redmind @wince talking2mouth "She {i}really{/i} likes that word, huh?"
 
     pause 1.0
 
@@ -400,14 +401,7 @@ label Misty1:
 
     redmind @closedbrow frownmouth "Of course."
 
-    $ persondex["Misty"]["Relationship"] = "Jerk"
-    $ persondex["Misty"]["RelationshipRank"] = 1
-
-    $ renpy.music.set_volume(0.1, delay=0.0, channel="music")
-    $ PlaySound("sav.ogg")
-    $ renpy.music.set_volume(1.0, delay=1.0, channel="music")
-
-    narrator "Your heart shifts as you feel your relationship with Misty evolve from '{color=#0048ff}Classmate{/color}' to '{color=#0048ff}Jerk{/color}'!"
+    $ RelationshipRankUp("Misty", "Jerk", 1)
 
     pause 2.0
 
@@ -463,11 +457,9 @@ label Misty2:
 
     misty angry "UGH! You {i}idiot!{/i} I thought you were going to take me seriously, but you're just making a big joke out of this, like everyone else!"
 
-    misty "You... {w=0.7}{nw}"
+    misty "Just... just move! You... {w=0.7}{nw}"
 
     show blank2 behind pool
-
-    $ PlaySound("slap.ogg")
 
     pause 0.1
 
@@ -476,7 +468,6 @@ label Misty2:
         ease 0.2 xpos 0.25 ypos 1.1 zoom 1.33 rotate -3
 
     show pool at hall_move1
-    show flashback at hall_move1
 
     extend "jerk!{w=1.0}{nw}"
 
@@ -485,38 +476,33 @@ label Misty2:
         ease 0.4 xpos -0.5 ypos 1.0 zoom 1.25 rotate 0
 
     show pool at hall_move2
-    show flashback at hall_move2
+
+    redmind @wince "And there she goes, storming off again."
+
+    pause 1.0
 
     red @closedbrow talking2mouth "...Okay. Yeah, that one was a little on me. Maybe not the time for a bad joke."
 
     show misty:
-        xpos -0.5 ypos 1.0 zoom 1.25 rotate 0
+        ease 0.5 xpos 0.25
 
     misty @angry "When you feel like taking me {i}seriously{/i}, give me a call, you {nw}"
-
-    $ PlaySound("slap.ogg")
 
     show misty angry:
         xpos 0.25 ypos 1.0 zoom 1.0 rotate 0
         ease 0.2 xpos 0.5 ypos 1.1 zoom 1.33 rotate -3
 
     show pool at hall_move1
-    show flashback at hall_move1
 
-    extend "{color=#0048ff}jerk{/color}!{w=1.0}{nw}"
+    extend "{color=#0048ff}jerk{/color}!{w=1.0} And MOVE!{nw}"
 
     show misty angry:
         xpos 0.5 ypos 1.1 zoom 1.33 rotate -3
         ease 0.4 xpos 1.5 ypos 1.0 zoom 1.25 rotate 0
 
     show pool at hall_move2
-    show flashback at hall_move2
 
-    red @angry "Now, see, that-- {size=40}{i}that{/i} was excessive!{/size}"
-
-    pause 1.0
-
-    redmind @thonk "What did she just throw at me...?"
+    redmind @wince talking2mouth "She {i}really{/i} likes that word, huh?"
 
     pause 1.5
 
@@ -531,7 +517,7 @@ label Misty2:
 
     pause 2.0
 
-    redmind @confusedeyebrows frownmouth "It's amazing the difference that not screaming at me, or slapping me, makes."
+    redmind @confusedeyebrows frownmouth "It's amazing the difference that not screaming at me makes."
 
     red @happy "Hey, Misty!"
 
@@ -542,31 +528,22 @@ label Misty2:
     show flashback with Dissolve(1.0)
 
     show misty:
-        ease 10.0 ypos 1.3 zoom 1.4
+        ease 10.0 ypos 0.95 zoom 0.95
 
-    narrator "Time seems to slow down as Misty's telegraphed slap comes towards you. This time, however, you were expecting it."
-
-    if (GetRelationshipRank("Bea") > 0):
-        redmind @frownmouth angrybrow "Alright... what was it that Bea said when we were sparring? Stay aware of your feet, but keep your eye on your opponent's hands. Stepping back is an unbreakable defense. Keep your eye level steady, and..."
+    narrator "Time seems to slow down as Misty reels backwards. You can feel the disaster on the wind before you are consciously aware of it. And by the time you {i}are{/i} aware--it's too late."
 
     show misty surprisedbrow frownmouth -anger
     hide flashback
     with vpunch
 
     show misty:
-        xpos 0.5 ypos 1.4 zoom 1.0 rotate 0
-        linear 0.2 ypos 0.95 zoom 0.95 rotate 1
+        xpos 0.5 ypos 0.95 zoom 0.95 rotate 0
+        linear 0.2 ypos 0.9 zoom 0.9 rotate 1
 
-    misty "Huh?!"
-
-    red @happy "Dodged it!"
-
-    pause 0.5
-
-    red @surprised "Oh, hey, be careful! You're--"
+    red @surprised "Be careful! You're--"
 
     show misty:
-        xpos 0.5 ypos 0.95 zoom 0.95
+        xpos 0.5 ypos 0.9 zoom 0.9
         ease 0.3 rotate -90 ypos 1.5
 
     $ PlaySound("splash.ogg")
@@ -595,7 +572,7 @@ label Misty2:
     misty @closedbrow talkingmouth "For what?"
 
     menu:
-        "For pushing you into the pool.":
+        "For making you fall into the pool.":
             $ AddEvent("Misty", "ApologizedForPool")
             misty @angry "Idiot. I'm already in a swimsuit. That's {i}not{/i} what I want you to apologize for."
 
@@ -673,7 +650,7 @@ label Misty2:
     misty @angry anger "That was {i}your{/i} theory!"
 
     red @closedbrow talking2mouth "And then you were going to tell me about your parents."
-    red @unamusedbrow talking2mouth "But... instead, you slapped me twice and threw your phone number at me. Literally threw."
+    red @unamusedbrow talking2mouth "But... instead, you called me a jerk and threw your phone number at me. Literally threw."
 
     misty @talkingmouth "Yeah, I remember all this. What's your point?"
 
@@ -690,15 +667,15 @@ label Misty2:
             show misty sad2brow mediumblush with dis
 
             $ AddEvent("Misty", "WasSharp")
-            red @angrybrow talking2mouth "Misty. Cut it out. I'm here to help you. I care about you. If you keep yelling at me, slapping me, or pushing me away, then I'm leaving."
+            red @angrybrow talking2mouth "Misty. Cut it out. I'm here to help you. I care about you. If you keep yelling at me, storming out of conversations, or pushing me away, then I'm leaving."
             red @angrybrow talking2mouth "I'm sorry, but I'm not {i}that{/i} patient. If you want to keep having me as a friend, I need you to meet me at least a third of the way."
 
         ">Be kind":
             show misty sad2brow with dis
 
             $ AddEvent("Misty", "WasKind")
-            red @sadbrow talkingmouth "Misty... I'm sorry. I really want to help you, because I care about you. But if you keep yelling at me, slapping me, or pushing me away, then I can't do that. And it's not good for me to... spend time with someone who treats me like that."
-            red @sadbrow talkingmouth "You're a good person. I know this. And I {i}want{/i} to be your friend. But I can't cross the whole distance just to get slapped again. Please, meet me at least a third of the way."
+            red @sadbrow talkingmouth "Misty... I'm sorry. I really want to help you, because I care about you. But if you keep yelling at me, storming out of conversations, or pushing me away, then I can't do that. And it's not good for me to... spend time with someone who treats me like that."
+            red @sadbrow talkingmouth "You're a good person. I know this. And I {i}want{/i} to be your friend. But I can't cross the whole distance just to get have you call me a jerk again. Please, meet me at least a third of the way."
 
     misty -sad2brow -mediumblush @talkingmouth "...Okay."
 
@@ -827,7 +804,14 @@ label Misty2:
     misty @angry "Whenever they didn't place first, it was because {i}another{/i} coordinator cheated."
 
     if (IsBefore(28, 5, 2004)):
-        if (HasEvent("Klara", "AcceptCoordinatorClub")):#FIX THIS: If you have the chance to see more coordinator club meetings
+        if (HasEvent("Game", "Contest2")):
+            red @talkingmouth "...I saw you at a couple Coordinator Club meetings. You're a good singer."
+
+            $ ValueChange("Misty", 2)
+
+            misty @closedbrow talkingmouth "Yeah. They're alright. Mostly. Lisia clearly knows what she's doing."
+
+        elif (HasEvent("Klara", "AcceptCoordinatorClub")):
             red @talkingmouth "...I saw you during that Coordinator Club meeting. You're a good singer."
 
             $ ValueChange("Misty", 1)
@@ -1015,7 +999,7 @@ label Misty2Part2:
 
     show phone_msg1 behind phone_A with dis
         
-    $ title = Text("SHE GOT HANDS",size=30,font="fonts/consola_0.ttf",color="#313131")
+    $ title = Text("WEAR A HELMET",size=30,font="fonts/consola_0.ttf",color="#313131")
 
     image msg5 = Text("ur [bluecolor]not a jerk{/color}\njust an fyi",size=21,color="#ffffff",line_spacing=5,text_align=0.0)
 

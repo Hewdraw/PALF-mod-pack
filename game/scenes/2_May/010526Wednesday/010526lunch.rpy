@@ -164,6 +164,6 @@ hide leaf
 hide klara 
 with dis
 
-$ removelunchstudents = { "Leaf", "Klara" }
+$ removelunchstudents = removelunchstudents | { "Leaf", "Klara" }
 
 jump PickTable

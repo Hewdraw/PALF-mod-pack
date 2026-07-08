@@ -78,7 +78,7 @@ if (not HasEvent("Instructor Lenora", 1)): #first class
 
     redmind "The atmosphere in this room is really homey.{w=0.5} I haven't felt this relaxed in a classroom in a really long time."
 
-elif (not HasEvent("Instructor Lenora", 2.1) and classstats["Normal"] >= 10):#Simple World
+elif (not HasEvent("Instructor Lenora", 2.1) and GetElective("Normal") >= 10):#Simple World
     show lenora with dis
     if (not HasEvent("Instructor Lenora", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -140,7 +140,7 @@ elif (not HasEvent("Instructor Lenora", 2.1) and classstats["Normal"] >= 10):#Si
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide lenora with dis
-elif (not HasEvent("Instructor Lenora", 3.1) and classstats["Normal"] >= 20):#Silk Scarf
+elif (not HasEvent("Instructor Lenora", 3.1) and GetElective("Normal") >= 20):#Silk Scarf
     show lenora with dis
     if (not HasEvent("Instructor Lenora", 3)):
         $ renpy.pause(1.0, hard=True)
@@ -202,7 +202,7 @@ elif (not HasEvent("Instructor Lenora", 3.1) and classstats["Normal"] >= 20):#Si
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide lenora with dis
-elif (not HasEvent("Instructor Lenora", 4.1) and classstats["Normal"] >= 30):#Covet
+elif (not HasEvent("Instructor Lenora", 4.1) and GetElective("Normal") >= 30):#Covet
     show lenora with dis
     if (not HasEvent("Instructor Lenora", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -315,6 +315,7 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+            hide lenora with dis
             jump aftertutoring
         else:
             jump afternormalsetup
@@ -330,6 +331,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ newmon.LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide lenora with dis
         jump endclass
 else:
     lenora @sad "I can't teach that Pokémon that move, sorry."

@@ -1103,7 +1103,7 @@ falkner @sad "Admittedly, it was not a large one."
 
 brawly @sadbrow happymouth "But we still like the old school, y'know? And all our old friends left a month ago. So we... like... we wanna say goodbye."
 
-falkner @closedbrow happymouth "Of course, Roxanne's preferred method of saying 'hello' and 'farewell' is speeches. While Brawly and I's preferred method is... {w=0.5}{nw}" 
+falkner @closedbrow happymouth "Of course, Roxanne's preferred method of saying 'hello' and 'farewell' is speeches. While Brawly and my's preferred method is... {w=0.5}{nw}" 
 extend @happy "Well, listening to Roxanne's speeches."
 
 roxanne @sadbrow talkingmouth "Falkner..."
@@ -2481,10 +2481,10 @@ jasmine uniform @angry "Cheren! What you're saying just isn't possible!"
 
 cheren @angry "Isn't it? Do Espers not exist? Are their powers not known to take a great many forms?"
 
-if (classstats["Psychic"] >= 10):
+if (GetElective("Psychic") >= 10):
     cheren @angry "Has [first_name] not demonstrated {i}remarkable{/i} proficiency in his Psychic classes?"
 
-elif (classstats["Ghost"] >= 10):
+elif (GetElective("Ghost") >= 10):
     cheren @angry "Has [first_name] not demonstrated {i}remarkable{/i} proficiency in his Ghost classes?"
 
 if (GetRelationship("Sabrina") == "Friend"):

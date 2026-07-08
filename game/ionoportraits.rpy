@@ -257,27 +257,27 @@ init:
 
         #-----------------------------------------------------------
 
-        always "iono_over1_overcoatstreampony" if_all ["body1", "stream", "ponytail", "coat"]
-        always "iono_over1_overcoattwin" if_all ["body1", "twintail", "coat"]
-        always "iono_over1_overcoatuniformpony" if_all ["body1", "uniform", "ponytail", "coat"]
+        always "iono_over1_overcoatstreampony" if_all ["body1", "stream", "ponytail"]
+        always "iono_over1_overcoattwin" if_all ["body1", "twintail"]
+        always "iono_over1_overcoatuniformpony" if_all ["body1", "uniform", "ponytail"]
 
-        always "iono_over2_overcoatpony" if_all ["body2", "ponytail", "coat"]
-        always "iono_over2_overcoattwin" if_all ["body2", "twintail", "coat"]
+        always "iono_over2_overcoatpony" if_all ["body2", "ponytail"]
+        always "iono_over2_overcoattwin" if_all ["body2", "twintail"]
 
-        always "iono_over3_overcoatpony" if_all ["body3", "ponytail", "coat"]
-        always "iono_over3_overcoattwin" if_all ["body3", "twintail", "coat"]
+        always "iono_over3_overcoatpony" if_all ["body3", "ponytail"]
+        always "iono_over3_overcoattwin" if_all ["body3", "twintail"]
 
-        always "iono_over4_overcoatpony" if_all ["body4", "ponytail", "coat"]
-        always "iono_over4_overcoattwin" if_all ["body4", "twintail", "coat"]
+        always "iono_over4_overcoatpony" if_all ["body4", "ponytail"]
+        always "iono_over4_overcoattwin" if_all ["body4", "twintail"]
         
-        always "iono_over5_overcoatpony" if_all ["body5", "ponytail", "coat"]
-        always "iono_over5_overcoattwin" if_all ["body5", "twintail", "coat"]
+        always "iono_over5_overcoatpony" if_all ["body5", "ponytail"]
+        always "iono_over5_overcoattwin" if_all ["body5", "twintail"]
         
-        always "iono_over6_overcoatpony" if_all ["body6", "ponytail", "coat"]
-        always "iono_over6_overcoattwin" if_all ["body6", "twintail", "coat"]
+        always "iono_over6_overcoatpony" if_all ["body6", "ponytail"]
+        always "iono_over6_overcoattwin" if_all ["body6", "twintail"]
         
-        always "iono_over7_overcoatpony" if_all ["body7", "ponytail", "coat"]
-        always "iono_over7_overcoattwin" if_all ["body7", "twintail", "coat"]
+        always "iono_over7_overcoatpony" if_all ["body7", "ponytail"]
+        always "iono_over7_overcoattwin" if_all ["body7", "twintail"]
 
         group pink variant "front7" auto:
             attribute nomagnemite null

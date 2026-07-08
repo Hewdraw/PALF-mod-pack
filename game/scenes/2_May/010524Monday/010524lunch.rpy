@@ -129,7 +129,7 @@ hide misty with dis
 hide erika with dis
 hide blank2 with dis
 
-$ PlaySound("pokemon/ball sound 2.ogg")
+$ PlaySound("pokemon/ball sound.ogg")
 
 show slowpoke at backinpokeball:
     xpos 0.33 ypos 0.9 xzoom -1

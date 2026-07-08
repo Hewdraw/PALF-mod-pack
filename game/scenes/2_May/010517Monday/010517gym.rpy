@@ -65,7 +65,7 @@ show bianca:
         ease 0.3 ypos 1.0
         repeat
 
-bianca @talkingmouth "Same! It's super-super-super-cool that I get to battle alongside a member of the {i}actual{/i} battle team!"
+bianca @talkingmouth "Same! It's super-super-super-cool that I get to battle alongside a member of the {i}actual{/i} Battle Team!"
 
 red @talkingmouth "I think it's pretty cool that I get to battle alongside {i}you.{/i} What you said during the Quarter Qlashes was pretty brave."
 

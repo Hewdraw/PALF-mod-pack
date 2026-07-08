@@ -164,7 +164,7 @@ init python:
                 return "Good evening, [first_name]! Work continues in earnest on the Ironsides case. I'll let you know immediately if I get any leads!"
         elif (speaker == "Skyla"):
             if (HasEvent("Skyla", "Skyla2")):
-                if (GetMood("Skyla") < 0 and GetRelationshipRank("Skyla") >= 2):
+                if (GetMood("Skyla") < 0):
                     return "Talking with WES!!! Need to focus on MISSIONS!!! Talk LATER???!!!"
                 else:
                     return "Don't tell WES I kept my PHONE!!! I just wanted to be able to CHAT with YOU!!!"
@@ -178,11 +178,23 @@ init python:
                 return "✔️✔️ Read"
             else:
                 return "gd 2 her frm u. no updts. jst wnt 2 tlk? fn, fine. How was your day, or whatever?"
+        elif (speaker == "Iono"):
+            if (GetMood("Iono") < 0):
+                return "Busy."
+            else:
+                return "Hey! Join me for a refund speedrun stream in five?"
+        elif (speaker == "Sonia"):
+            if (GetMood("Sonia") < 0):
+                return "✔️✔️ Read"
+            else:
+                return "Um, hi. Sorry for not responding earlier. Hope it wasn't a bother. Are you alright?"
         else:
             return "THIS IS AN ERROR. PLEASE SCREENSHOT THIS AND REPORT ON THE DISCORD. [speaker], [calDate], [GetRelationshipRank(speaker)], [GetMood(speaker)]"
+        
 
 label texting():
 
+$ location = "school"
 $ texted = False
 $ texting = True
 
@@ -280,20 +292,26 @@ if (not textingscenetriggered):
 
     else:
         if (interaction != "Sabrina"):
-            $ interactionsprite = GetCharacterSprite(interaction, overridemood=min(GetMood(interaction), 0))
-            if (interaction == "Professor Cherry"):
-                $ interactionsprite = "kris"
-            
-            $ transforms = [flattener(interactionsprite), Transform(zoom=0.8, ypos=0.95)]
-            if (interaction == "Raihan"):
-                $ transforms.append(Transform(zoom=0.8, xalign=0.5, ypos=0.85))
-            elif (interaction == "Nessa"):
-                $ transforms.append(Transform(xalign=0.48))
-            elif (interaction == "Skyla"):
-                $ transforms.append(Transform(xalign=0.55))
-            
-            $ renpy.transition(dis)
-            $ renpy.show(interactionsprite, at_list=transforms, behind=["phone_A"])
+            python:
+                interactionsprite = GetCharacterSprite(interaction, overridemood=min(GetMood(interaction), 0))
+                if (interaction == "Professor Cherry"):
+                    interactionsprite = "kris"
+                
+                transforms = [flattener(interactionsprite), Transform(zoom=0.8, ypos=0.95)]
+                if (interaction == "Raihan"):
+                    transforms.append(Transform(zoom=0.8, xalign=0.5, ypos=0.85))
+                elif (interaction == "Nessa"):
+                    transforms.append(Transform(xalign=0.48))
+                elif (interaction == "Skyla"):
+                    transforms.append(Transform(xalign=0.55))
+                
+                renpy.transition(dis)
+                if (interaction != "Iono"):
+                    renpy.show(interactionsprite, at_list=transforms, behind=["phone_A"])
+
+            if (interaction == "Iono"):
+                show iono sneaky behind phone_A:
+                    zoom 0.87 ypos 0.8
 
             narrator "You want to text [interaction]?"
 
@@ -333,15 +351,18 @@ if (not textingscenetriggered):
 
                     else:
                         $ texted = True
-                        $ renpy.show(GetCharacterSprite(interaction))
+                        if (interaction != "Iono"):
+                            $ renpy.show(GetCharacterSprite(interaction))
 
                         red @happy "Just thought I'd text. How're you doing?"
 
                         python:
                             if (interaction == "Klara"):
                                 renpy.say(None, "Klara's response is not one that can be recounted in any manner approximating decent. Though it {i}is{/i} enjoyable, by most metrics.")
+                            elif (interaction == "Iono"):
+                                renpy.say("{gradient=#EE8FB5-#1d8fc5}Iono{/gradient}", GetDialog(interaction))
                             else:
-                                renpy.say("{color=" + GetCharColor(interaction) + "}" + interaction, GetDialog(interaction))
+                                renpy.say("{color=" + GetCharColor(interaction) + "}" + interaction + "{/color}", GetDialog(interaction))
                             
                             ValueChange(interaction, 1, 0.5)
 

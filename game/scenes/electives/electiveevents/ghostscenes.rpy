@@ -17,7 +17,7 @@ label ghost_class_02:
     fantina norm "For ghosts, HP is just another resource to be spent. Today, we will consider the move {b}Curse{/b}."
     fantina surprised "When a ghost uses Curse, it loses half of its HP. But the opponent must pay a cost {i}bien pire!{/i}"
     fantina norm2 "Every turn, one quarter of your foe's life will be sapped away. Only by switching out can it escape."
-    fantina happy "Curse deals twice as much damage as a simple burn. An affliction {i}par excellence{/i}!"
+    fantina happy "Curse deals four times as much damage as a simple burn. An affliction {i}par excellence{/i}!"
     narrator "Fantina remarks that a curse can be escaped--but not with one's stat boosts intact..."
     return
 
@@ -103,7 +103,7 @@ label ghost_class_09:
     fantina norm "However, the spirits--or feelings--of others may nest inside them. This is how Shuppet come to be."
     fantina surprised2 "It is not a doll's vengeance which moves them, but a child's guilt! A self-hatred which manifests as a Pokémon."
     fantina happy "Best they not meet their makers, {i}non{/i}? A trainer can help them find new purpose, and teach them love instead of vengeance."
-    narrator "Fantina recommends Mega Bannette for its Prankster ability..."
+    narrator "Fantina recommends Mega Banette for its Prankster ability..."
     return
 
 label ghost_class_10:

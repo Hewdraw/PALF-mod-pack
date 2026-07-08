@@ -105,11 +105,10 @@ init python:#brainaction makes the function return True or False, to determine w
     def oakkecleontestbrain(pkmn):
         return (pkmn.GetMoveNames()[0], [FriendlyBattlers()[0]])
 
-    def oakkecleontestswitchbrain(trainer):
-        for mon in trainer.GetUnfaintedTeam():
-            if (mon.GetNickname() == "Tangela"):
-                return mon
-        return None#this just means it's giving up trying to make a choice, not that you switch in "nothing"
+    def oakkecleontestswitchbrain(user, switch):
+        if switch.GetNickname() == "Tangela":
+            return 1000
+        return 0
 
     def combeebrain(pkmn):
         if (pkmn.GetId() == 416):
@@ -119,24 +118,21 @@ init python:#brainaction makes the function return True or False, to determine w
                 return ("Defend Order", [pkmn])
         return None
 
-    def gardeniafieldswitchbrain(trainer):
-        for mon in trainer.GetUnfaintedTeam():
-            if ("Phantump" not in mon.GetNickname()):#send out Phantump last
-                return mon
-        return None#this just means it's giving up trying to make a choice, not that you switch in "nothing"
+    def gardeniafieldswitchbrain(user, switch):
+        if switch.GetNickname() == "Phantump":#send out Phantump last
+            return -1000
+        return 0
 
-    def duplicaswitchbrain(trainer):
-        for mon in trainer.GetUnfaintedTeam():
-            if (mon.Moves[0].Name != "Kasa's Transform"):#send out special ditto last
-                return mon
-        return None#this just means it's giving up trying to make a choice, not that you switch in "nothing"
+    def duplicaswitchbrain(user, switch):
+        if switch.Moves[0].Name == "Kasa's Transform":#send out special ditto last
+            return -1000
+        return 0
 
-    def beaswitchbrain(trainer):
+    def beaswitchbrain(user, switch):
         tyrogueobj = GetTrainerTeam("Bea", "Tyrogue", heal=False)
-        falinksobj = GetTrainerTeam("Bea", "Falinks", heal=False)
-        if (tyrogueobj not in trainer.GetUnfaintedTeam() and falinksobj in trainer.GetUnfaintedTeam() and falinksobj not in Battlers()):
-            return falinksobj#send out falinks only after Hitmontop has fainted
-        return None#this just means it's giving up trying to make a choice, not that you switch in "nothing"
+        if tyrogueobj not in trainer.GetUnfaintedTeam() and switch.GetNickname() == "Falinks":
+            return -1000#send out falinks only after Hitmontop has fainted
+        return 0
 
     def flannerybattlebrain(pkmn):
         if (pkmn.GetNickname() == "Numel"):
@@ -172,3 +168,37 @@ init python:#brainaction makes the function return True or False, to determine w
 
             if (len(options) > 0):
                 return (random.choice(options), GetTargets(pkmn, Range.AllAdjacent))
+
+    def oakstalltestswitchbrain(user, switch):
+        switchdict = {
+            5 : "Slaking",
+            4 : "Chesnaught",
+            3 : "Staraptor",
+            2 : "Dugtrio",
+            1 : "Glimmora"
+        }
+        unfaintedcount = len(user.GetUnfaintedTeam())
+        if (unfaintedcount in switchdict and switchdict[unfaintedcount] == switch.GetNickname()):
+            return 1000
+        return -1000
+    
+    def sycamoreswitchbrain(user, switch):
+        if switch.GetNickname() == "Kangaskhan":
+            if (len(switch.GetUnfaintedTeam()) == 1):
+                return 1000
+            else:
+                return -1000
+        return 0
+
+    def phobosswitchbrain(user, switch):
+        if switch.GetNickname() == "Tatsugiri":
+            if (len(switch.GetUnfaintedTeam()) == 2 - ("Phobos3" in battlehistory)):
+                return 1000
+            else:
+                return -1000
+        elif switch.GetNickname() in ["Iron Jugulis", "???"]:
+            if (len(switch.GetUnfaintedTeam()) == 1 - ("Phobos3" in battlehistory)):
+                return 1000
+            else:
+                return -1000
+        return 0

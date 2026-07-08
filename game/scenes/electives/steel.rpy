@@ -130,7 +130,7 @@ if (not HasEvent("Instructor Byron", 1)): #first class
 
         $ BecomeNamed("Hilda")
 
-        hilda @talkingmouth "Hilda, Sir."
+        hilda @talking2mouth "Hilda, Sir."
 
         hilbert @talkingmouth "Hilbert."
 
@@ -145,7 +145,7 @@ if (not HasEvent("Instructor Byron", 1)): #first class
     byron "...That's what I thought."
     byron "But keep the noise level down!{w=0.5} Disrupting the class will affect your grade!"
 
-    hilda -angry @talkingmouth "Yes, Sir."
+    hilda -angry @talking2mouth "Yes, Sir."
 
     show hilbert_hildaintro:
         alpha 1.0
@@ -165,7 +165,7 @@ if (not HasEvent("Instructor Byron", 1)): #first class
     byron "Dismissed!"
 
     hide byron
-elif (not HasEvent("Instructor Byron", 2.1) and classstats["Steel"] >= 10):#Metallize
+elif (not HasEvent("Instructor Byron", 2.1) and GetElective("Steel") >= 10):#Metallize
     show byron with dis
     if (not HasEvent("Instructor Byron", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -277,7 +277,7 @@ elif (not HasEvent("Instructor Byron", 2.1) and classstats["Steel"] >= 10):#Meta
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide byron with dis
-elif (not HasEvent("Instructor Byron", 3.1) and classstats["Steel"] >= 20):#Iron Coat
+elif (not HasEvent("Instructor Byron", 3.1) and GetElective("Steel") >= 20):#Iron Coat
     show byron with dis
     if (not HasEvent("Instructor Byron", 3)):
         $ renpy.pause(1.0, hard=True)
@@ -355,7 +355,7 @@ elif (not HasEvent("Instructor Byron", 3.1) and classstats["Steel"] >= 20):#Iron
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide byron with dis
-elif (not HasEvent("Instructor Byron", 4.1) and classstats["Steel"] >= 30):#Metal Claw
+elif (not HasEvent("Instructor Byron", 4.1) and GetElective("Steel") >= 30):#Metal Claw
     show byron with dis
     if (not HasEvent("Instructor Byron", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -453,6 +453,7 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+            hide byron with dis
             jump aftertutoring
         else:
             jump aftersteelsetup
@@ -468,6 +469,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ newmon.LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide byron with dis
         jump endclass
 else:
     byron @surprised2 "Don't think that Pokémon can learn [taughtmove]..."

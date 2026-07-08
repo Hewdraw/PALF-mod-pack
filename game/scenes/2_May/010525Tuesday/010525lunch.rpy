@@ -76,11 +76,11 @@ if (GetRelationshipRank("Tia") > 0):
     tia @thinking "Does she have to say the whole thing every time?"
 
 else:
-    tia @thinking "{font=fonts/sign.ttf}Does she have to say the whole thing every time?{/font}"
+    tia @thinking "[tiafont]Does she have to say the whole thing every time?{/font}"
 
 lisia @talking2mouth "To prove to Phobos that the Coordinator Club deserves {i}just{/i} as much funding as the Battle Team."
 
-misty @closedbrow talking2mouth "That'll never happen. Kobukan's battle team is legendary. Besides, they've got the Tamamushi family bankrolling them now."
+misty @closedbrow talking2mouth "That'll never happen. Kobukan's Battle Team is legendary. Besides, they've got the Tamamushi family bankrolling them now."
 
 lisia @angrybrow happymouth "Exactly. They don't need the school's funding--they can just reach into Tamamushi's pockets! And I happen to know for a {i}fact{/i} that Phobos isn't overly fond of the Battle Team."
 lisia @closedbrow talking2mouth "I'm sure we can get him to divert some funding... but only if we prove to him we're worth it."

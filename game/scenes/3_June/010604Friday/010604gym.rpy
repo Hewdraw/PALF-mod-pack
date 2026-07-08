@@ -21,12 +21,12 @@ $ renpy.pause(2.0, hard=True)
 
 rowan @talking2mouth "Since we talked yesterday, I have done, for eighteen hours, that which I hate most, besides going to that blasted otolaryngologist. I know I'm going deaf, why must I pay you thousands to tell me?! Harrumph!"
 rowan @closedbrow talking2mouth "In any case... that which I hate most is research. But not any research--I have studied Pokémon evolution for forty years, and have no intention of stopping."
-rowan @angrybrow talking2mouth "What I hate is having to research {i}people{/i}. Arrogant, entitled, proud {i}people{/i}, whom fill this world with unnecessariness."
+rowan @angrybrow talking2mouth "What I hate is having to research {i}people{/i}. Arrogant, entitled, proud {i}people{/i}, who fill this world with unnecessariness."
 rowan @closedbrow talking2mouth "Pokémon are perhaps the sole sane life-forms on this planet--they did not fall into the foolhardiness of rumors, or reputation, or so-called {i}respect{/i}."
 
 pause 1.0
 
-rowan @closedbrow talking2mouth "This process was made {i}all the more{/i} difficult by the reoccurrence of one name. One name that has begun to irk me to no end."
+rowan @closedbrow talking2mouth "This process was made {i}all the more{/i} difficult by the reccurrence of one name. One name that has begun to irk me to no end."
 
 pause 1.0
 

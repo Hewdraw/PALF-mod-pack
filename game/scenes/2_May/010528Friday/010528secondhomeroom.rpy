@@ -75,7 +75,7 @@ hilbert @sadbrow talkingmouth "That seems... out-of-character."
 
 oak @surprised sweat "Oh!"
 oak @happy "Well, I'm afraid, Mr. VS, I'm not quite sure myself."
-oak @talkingmouth "However, your position on the battle team privileges you with a good opportunity to ask, no?"
+oak @talkingmouth "However, your position on the Battle Team privileges you with a good opportunity to ask, no?"
 
 hilbert @closedbrow talkingmouth "He doesn't talk about himself much."
 
@@ -643,7 +643,7 @@ ethan battleteam @closedbrow talking2mouth "Seconded."
 janine -smilemouth @closedbrow "{w=0.5}.{w=0.5}.{w=0.5}."
 janine -closedbrow @talking2mouth "Lance, what are our options?"
 
-lance @sadeyes talking2mouth "He and his niece both hate the Battle Team with a passion. However, he is only one boardmember, and none of the others would authorize him to take any action against it."
+lance @sadeyes talking2mouth "He and his niece both hate the Battle Team with a passion. However, he is only one board member, and none of the others would authorize him to take any action against it."
 lance @closedbrow talking2mouth "'Melody' is a different consideration... but as Phobos' pawn, she has no agency that Phobos does not."
 lance @talking2mouth "They cannot be safely ignored, but a wary eye should be adequate response at this time." 
 lance @sadeyes talking2mouth "His coordinating interest in the school is in far more danger than anything involving the Battle Team, so he has more to lose through rash action."

@@ -7,7 +7,7 @@ scene map
 show blank2:
     alpha 0.8
 
-show classroom with dis
+scene classroom with dis
 
 show elecclass:
     alpha 0.0 xalign 0.5 yalign 1.0
@@ -181,7 +181,8 @@ $ passedclass = False
 ############################################################################################################################################################################################################################
 $ renpy.pause(1.0, hard=True)
 
-call ionoevent from _call_ionoevent
+if (HasEvent("Lieutenant Surge", 1)):
+    call ionoevent from _call_ionoevent
 call soniaevent from _call_soniaevent
 call rosaevent from _call_rosaevent_1
 call nateevent from _call_nateevent
@@ -459,7 +460,7 @@ if (not HasEvent("Lieutenant Surge", 1)): #first class
         else:
             red happy "Think every day will be like this?"
 
-        rosa happybrow talkingmouth "No... I recognize an actor when I see one, and he was definitely putting a show."
+        rosa happybrow talkingmouth "No... I recognize an actor when I see one, and he was definitely putting on a show."
 
         if (not IsDate(5, 4, 2004)):
             red thinking "Geez, I didn't think he even noticed Ethan and I were new. And I was happy that way!"
@@ -490,7 +491,13 @@ if (not HasEvent("Lieutenant Surge", 1)): #first class
         hide sonia with dis
 
     hide surge
-elif (not HasEvent("Lieutenant Surge", 2.1) and classstats["Electric"] >= 10):#Energize
+
+    if (IsPresent("Iono", "Electric")):
+        $ AddEvent("Iono", "AfterClassIntro")
+
+        call ionoevent() from _call_ionoevent_2
+
+elif (not HasEvent("Lieutenant Surge", 2.1) and GetElective("Electric") >= 10):#Energize
     show surge with dis
     if (not HasEvent("Lieutenant Surge", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -596,7 +603,7 @@ elif (not HasEvent("Lieutenant Surge", 2.1) and classstats["Electric"] >= 10):#E
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide surge with dis
-elif (not HasEvent("Lieutenant Surge", 3.1) and classstats["Electric"] >= 20):#Magnet
+elif (not HasEvent("Lieutenant Surge", 3.1) and GetElective("Electric") >= 20):#Magnet
     show surge with dis
     if (not HasEvent("Lieutenant Surge", 3)):
         $ renpy.pause(1.0, hard=True)
@@ -679,7 +686,7 @@ elif (not HasEvent("Lieutenant Surge", 3.1) and classstats["Electric"] >= 20):#M
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide surge with dis
-elif (not HasEvent("Lieutenant Surge", 4.1) and classstats["Electric"] >= 30):#Shock Wave
+elif (not HasEvent("Lieutenant Surge", 4.1) and GetElective("Electric") >= 30):#Shock Wave
     show surge with dis
     if (not HasEvent("Lieutenant Surge", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -805,6 +812,9 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+
+            hide surge with dis
+
             jump aftertutoring
         else:
             jump afterelectricsetup
@@ -820,6 +830,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ playerparty[newindex].LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide surge with dis
         jump endclass
 else:
     surge @angry biganger "Are you special?! That Pokémon can't learn [taughtmove]!"

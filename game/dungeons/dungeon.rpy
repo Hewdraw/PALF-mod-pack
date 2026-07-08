@@ -11,13 +11,7 @@ init 5 python:
             endname = "Haunted Depths",#a string
             backgrounds = {"Night" : "midnightforest", "Default": "eveningforest"},#a dictionary of timeofdays to check against. If the current timeofday is not listed, then the "Default" value is picked.
             music = ("audio/music/duskforest.ogg"),#a tuple that contains one or two elements. If it contains two, the first is nolooped, and the second is looped. if it contains one, then it's looped
-            encounterpool = {# a dictionary encounterpool, in the same format as the ones for normal wildareas
-                pokedexlookupname("Pumpkaboo", DexMacros.Id): 5,
-                pokedexlookupname("Phantump", DexMacros.Id): 3,
-                pokedexlookupname("Rowlet", DexMacros.Id): 1,
-                pokedexlookupname("Shuppet", DexMacros.Id): 7,
-                pokedexlookupname("Paras", DexMacros.Id): 10,
-            },
+            encounterpool = wildpools["unhallowed holt"],# a dictionary encounterpool, in the same format as the ones for normal wildareas
             evopool = {},
             difficulty = 16,#an int, 1-100, indicating the dungeon's difficulty. Should be roughly equivalent to AimLevel()
             floors = 5,#the number of battles you need to win to go through the level
@@ -42,7 +36,7 @@ init 5 python:
             self.EndName = endname
             self.Backgrounds = backgrounds
             self.Music = music
-            self.EncounterPool = encounterpool
+            self.WildPool = encounterpool
             self.EvoPool = evopool
             self.Difficulty = difficulty
             self.Floors = floors
@@ -194,14 +188,17 @@ init 5 python:
             #min(1.0, self.GetFerocity() / (self.GetGenerosity() + self.GetFerocity() + self.GetMysteriosity()))#the odds that there's a ferocity surge in the flux
             return round(100 * (1 - min(1.0, self.GetGenerosity() / (self.GetGenerosity() + self.GetFerocity() + self.GetMysteriosity()))) * min(1.0, self.GetFerocity() / (self.GetGenerosity() + self.GetFerocity() + self.GetMysteriosity())))
 
+        def GetWildPool(self):
+            return self.WildPool
+
         def GetEncounterPool(self):
-            return self.EncounterPool
+            return self.GetWildPool().GetEncounterPool()
 
         def GetLevelRange(self):
-            return self.LevelRange
+            return self.GetWildPool().GetLevelRange()
 
         def GetEvoPool(self):
-            return self.EvoPool
+            return self.GetWildPool().GetEvoPool()
 
         def GetLastOutcome(self):
             return self.LastOutcome
@@ -273,7 +270,7 @@ init 5 python:
                 renpy.say(dn, "{} {} {} appeared for the wild Pokémon! {}".format(reinforcementsstr, cp(reinforcements, "reinforcement"), ("has" if reinforcements == 1 else "have"), returntext))
 
         def GeneratePokemon(self):
-            newpokemonnum = GrabFromEncounterPool(self.GetEncounterPool())
+            newpokemonnum = self.GetWildPool().GrabFromEncounterPool()
             upperbound = self.GetLevelRange()[-1]
             lowerbound = self.GetLevelRange()[0]
             randlevel, randlevelstr = self.BadMagnitude(lowerbound, upperbound) 

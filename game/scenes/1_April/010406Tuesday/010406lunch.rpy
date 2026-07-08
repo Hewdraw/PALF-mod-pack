@@ -23,7 +23,7 @@ show cafe at vpunch
 
 show hilda uniform angry at rightside
 
-hilda @talkingmouth "Hey! [first_name]. What the hell was that?"
+hilda @talking2mouth "Hey! [first_name]. What the hell was that?"
 
 red @confused "Uh... Hi, Hilda?"
 
@@ -41,7 +41,7 @@ may @talkingmouth "Hey, [first_name]! Is something wrong?"
 
 red @happy "Nah, just talking with Hilda. She's got some questions? I think?"
 
-hilda -angry @talkingmouth "Don't pretend you have no idea what just happened."
+hilda -angry @talking2mouth "Don't pretend you have no idea what just happened."
 
 red @talking2mouth "I will continue to not pretend to have no idea what just happened."
 
@@ -56,7 +56,7 @@ red @confused "Huh?"
 
 may @happy "Brendan told me that you let your Pokémon out in the dorm, and it was completely still! I wasn't sure I believed him, but now I do!"
 
-hilda @talkingmouth "Seriously. That was a brand new Pokémon. You can't train them to be that obedient. Literally, you {i}can't train them.{/i}"
+hilda @talking2mouth "Seriously. That was a brand new Pokémon. You can't train them to be that obedient. Literally, you {i}can't train them.{/i}"
 
 show cheren uniform at midleftside with dis
 
@@ -134,7 +134,7 @@ with dis
 
 red @talking2mouth closedbrow "I mean, that's just what Pokémon trainers {i}do{/i}, right?"
 
-hilda @talkingmouth "I mean... I guess."
+hilda @talking2mouth "I mean... I guess."
 brendan @talking2mouth "Yeah, but, bro, you make it look so easy..."
 cheren @sadmouth "Perhaps you're subconsciously applying some strategy that we haven't yet discovered."
 hilbert @talkingmouth "That's bullshit, and I do not believe you."
@@ -145,12 +145,13 @@ show hilbert:
 
 redmind @thinking "...Sigh. They're not really listening, huh?"
 
-hide may at centerside with dis
-hide brendan at leftside, dissolveaway 
-hide hilda at rightside with dis
-hide cheren at midleftside with dis
-hide leaf at farrightside with dis
-hide gardenia at midrightside with dis
+hide may
+hide brendan
+hide hilda
+hide cheren
+hide leaf
+hide Gardenia
+with dis
 
 redmind @thinking "I think Sam might be the only one who could answer this question for me... but I swear he's trying to avoid me."
 redmind @thinking "Maybe I'll be able to track him down after my next elective."

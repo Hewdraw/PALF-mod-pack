@@ -164,7 +164,7 @@ if (GetRelationship("Hilda") == "Caretaker"):
 
     red @happy "Ah. Guess you saw that stuff I did for you, then."
 
-    hilda @closedbrow talking2mouth "Yeah, you could say that. Copying my keys? Ironing my uniforms? Putting new de-scenter in my shoes?"
+    hilda @closedbrow talkingmouth "Yeah, you could say that. Copying my keys? Ironing my uniforms? Putting new de-scenter in my shoes?"
 
     red @talkingmouth "Oh, so I guess you didn't find the pasta yet?"
 
@@ -182,7 +182,7 @@ if (GetRelationship("Hilda") == "Caretaker"):
 
     red @happy "Yeah, but no-one asked {i}you{/i} to do any of it, either."
 
-    hilda @closedbrow talking2mouth "How do you even know this stuff needs to be done?"
+    hilda @closedbrow talkingmouth "How do you even know this stuff needs to be done?"
 
     red @sadbrow talkingmouth "No matter how much you threaten them to keep quiet to me, Dorm 251 is full of your friends. And they want you to take a break, too."
 
@@ -193,9 +193,9 @@ else:
 
     red surprised "Huh? Hilda?"
 
-    hilda -angry @closedbrow talking2mouth "Oh, it's you..."
+    hilda -angry @closedbrow talkingmouth "Oh, it's you..."
 
-    hilda @talkingmouth "Well, you better be warned that when I battle, I {i}really{/i} let loose."
+    hilda @talking2mouth "Well, you better be warned that when I battle, I {i}really{/i} let loose."
 
     red @happy "Sounds good. No need to hold back against me. Go wild."
 
@@ -243,17 +243,17 @@ if (GetRelationship("Hilda") == "Caretaker"):
 
     red @happy "It's cool."
 
-hilda @closedbrow talking2mouth "Hey, are you going to the Battle Team tryouts?"
+hilda @closedbrow talkingmouth "Hey, are you going to the Battle Team tryouts?"
 
 red @talkingmouth "Going to? I'll be {i}in{/i} them."
 
 hilda @surprised "No shit? Hilbert's mentioned them a couple times, but he didn't say you were going to be there."
 hilda @sad "I actually have something to do off-campus. I want to be there to watch Hilbert, but... I gotta go into the city."
-hilda @talkingmouth "Would you mind streaming a couple of his battles to me? I know this is a massive thing for him."
+hilda @talking2mouth "Would you mind streaming a couple of his battles to me? I know this is a massive thing for him."
 
 red @talkingmouth "'Course not. Not a problem. My phone's kinda crappy, so I can't promise it'll be smooth, but I'll try to hold it up for better service."
 
-hilda @talkingmouth "Cool. Thanks."
+hilda @talking2mouth "Cool. Thanks."
 
 pause 1.0
 
@@ -268,10 +268,10 @@ red @happy "Cool. I'll keep you informed."
 hilda @happy "Yeah, thanks."
 
 if (GetRelationship("Hilda") == "Caretaker"):
-    hilda @talkingmouth "But you better not use that phone number to try and take more of my jobs, got it?"
+    hilda @talking2mouth "But you better not use that phone number to try and take more of my jobs, got it?"
 
     red @confused "How would I even do that?"
 
-    hilda @closedbrow talkingmouth "Ugh, you'd find a way."
+    hilda @closedbrow talking2mouth "Ugh, you'd find a way."
 
 jump lunchtransition

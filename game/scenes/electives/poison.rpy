@@ -7,11 +7,9 @@ scene map
 show blank2:
     alpha 0.8
 
-show classroom with dis
-
-show poisontype:
-    alpha 0.0 xalign 0.5 yalign 1.0
-    ease 0.5 alpha 1.0
+show classroom 
+show poisontype
+with dis
 
 $ location = "poison"
 $ passedclass = False
@@ -55,7 +53,7 @@ if (not HasEvent("Instructor Koga", 1)): #first class
         alpha 0.3 matrixcolor TintMatrix("#424243")
         ease 1.0 alpha 1.0 matrixcolor TintMatrix("#fff")
     show smoke:
-        alpha 0.0 xpos 0.5 yalign 3.0
+        alpha 0.0 xcenter 0.5 yalign 3.0
         parallel:
             ease 3.0 yalign 0.5
         parallel:
@@ -141,25 +139,10 @@ if (not HasEvent("Instructor Koga", 1)): #first class
 
     hide kunai
 
-    show poisclass:
-        parallel:
-            xalign 0.0
-            ease 0.03 xpos -15
-            ease 0.03 xpos 15
-            ease 0.03 xpos 0
-            repeat 2
-        parallel:
-            yalign 0.0
-            ease 0.03 ypos -25
-            ease 0.03 ypos 25
-            ease 0.03 ypos 0
-            repeat 2
-
     koga @angrybrow talking2mouth "Fool. If you understood Pokémon, you would understand why I remained hidden."
     koga @talking2mouth "Surely one of you can imagine?"
     koga @talkingmouth "I will even give you a hint:{w=0.5} it is more important than strength, technique, or skill itself."
 
-    hide poisclass
     pause 1.5
 
     koga @closedbrow "Nobody knows? Well, then..."
@@ -178,7 +161,7 @@ if (not HasEvent("Instructor Koga", 1)): #first class
 
         koga @talking2mouth "Go on."
 
-        hilda @talkingmouth "Like, you analyze their weak points and capabilities beforehand so you don't have to make things up on the fly."
+        hilda @talking2mouth "Like, you analyze their weak points and capabilities beforehand so you don't have to make things up on the fly."
 
         pause 1.0
 
@@ -247,7 +230,7 @@ if (not HasEvent("Instructor Koga", 1)): #first class
     koga "Very well. You are dismissed."
 
     hide koga
-elif (not HasEvent("Instructor Koga", 2.1) and classstats["Poison"] >= 10):#Bad Breath
+elif (not HasEvent("Instructor Koga", 2.1) and GetElective("Poison") >= 10):#Bad Breath
     show koga with dis
     if (not HasEvent("Instructor Koga", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -330,7 +313,7 @@ elif (not HasEvent("Instructor Koga", 2.1) and classstats["Poison"] >= 10):#Bad 
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide koga with dis
-elif (not HasEvent("Instructor Koga", 3.1) and classstats["Poison"] >= 20):#Poison Barb
+elif (not HasEvent("Instructor Koga", 3.1) and GetElective("Poison") >= 20):#Poison Barb
     show koga with dis
     if (not HasEvent("Instructor Koga", 3)):
         $ renpy.pause(1.0, hard=True)
@@ -431,7 +414,7 @@ elif (not HasEvent("Instructor Koga", 3.1) and classstats["Poison"] >= 20):#Pois
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide koga with dis
-elif (not HasEvent("Instructor Koga", 4.1) and classstats["Poison"] >= 30):#Venoshock
+elif (not HasEvent("Instructor Koga", 4.1) and GetElective("Poison") >= 30):#Venoshock
     show koga with dis
     if (not HasEvent("Instructor Koga", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -558,6 +541,7 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+            hide koga with dis
             jump aftertutoring
         else:
             jump afterpoisonsetup
@@ -573,6 +557,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ newmon.LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide koga with dis
         jump endclass
 else:
     koga @closedbrow talking2mouth "Teaching that Pokémon [taughtmove] is beyond even my abilities."

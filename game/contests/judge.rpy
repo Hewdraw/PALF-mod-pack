@@ -1,6 +1,6 @@
 init python:
     class Judge:
-        def __init__(self, customcharacter, biases=None, customsex=None):
+        def __init__(self, customcharacter, biases=None, customsex=None, imageextras=None):
             self.CustomCharacter = customcharacter#the customcharacterobject that holds this character's stuff
             self.Name = customcharacter.name#a string that is the judge's name
             if (customsex == None):
@@ -14,18 +14,29 @@ init python:
 
             self.Biases = biases
 
+            if (imageextras == None):
+                self.ImageExtras = ""
+            elif (isinstance(imageextras, list)):
+                self.ImageExtras = " ".join(imageextras)
+            else:
+                self.ImageExtras = imageextras
+
             if (not self.Biases):
                 self.Biases = { ContestMoveType.Cute : 10, ContestMoveType.Beautiful : 10, ContestMoveType.Cool : 10, ContestMoveType.Clever : 10, ContestMoveType.Tough : 10 }
 
             self.LastSeekingDialog = []
 
         def GetImage(self):
-            return self.CustomCharacter.image + " " + self.GetMood()
+            return self.CustomCharacter.image + " " + self.GetMood() + " " + self.ImageExtras
 
         def GetMood(self):
             sparkspercentage = self.GetSparks() / self.GetJackpotLimit()
 
             returnable = ""
+            
+            if ("Entity" in self.Name):
+                return returnable
+            
             if (sparkspercentage >= 1):
                 returnable = "happy"
             elif (sparkspercentage >= .8):

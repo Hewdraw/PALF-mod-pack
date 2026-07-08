@@ -23,7 +23,7 @@ sonia @neutralbrow surprisedmouth "No! No, Gran knew! I called her!"
 
 nessa "{w=0.5}.{w=0.5}.{w=0.5}."
 nessa @closedbrow angrymouth "Well. That's {i}good.{/i}"
-nessa -angry frownmouth @talking2mouth "Still. You better have a good explanation for all this."
+nessa -angry frownmouth @talkingmouth "Still. You better have a good explanation for all this."
 
 pause 1.0
 
@@ -42,11 +42,11 @@ if (GetRelationshipRank("Nessa") > 0):
 
     red @happy "Sure am. I guess this is the infamous ghost Sonia, Nessa?"
 
-    nessa @closedbrow talking2mouth "Yes... the third of the Galarian Stars. Hmph."
+    nessa @closedbrow talkingmouth "Yes... the third of the Galarian Stars. Hmph."
 
     red @talkingmouth "Well, I'm sure there's a reasonable explanation for all of this. And let's not let quick feelings get in the way of a peaceful, long-term resolution, right?"
 
-    nessa @angrybrow talking2mouth "...Fine. I'm willing to hear it."
+    nessa @angrybrow talkingmouth "...Fine. I'm willing to hear it."
 
     sonia sad "I... I just...{w=0.5} I can't."
 
@@ -54,7 +54,7 @@ if (GetRelationshipRank("Nessa") > 0):
 
     sonia "I can't explain it. I'm sorry. I'm so sorry. I know I must seem like a proper prat, but I can't explain it."
 
-    nessa @talking2mouth "Just answer this for me, then. It's the twentieth. School started on the second. Did you seriously avoid me for eighteen days?"
+    nessa @talkingmouth "Just answer this for me, then. It's the twentieth. School started on the second. Did you seriously avoid me for eighteen days?"
 
     sonia @talking2mouth "No! Of course not, Ness."
 
@@ -67,7 +67,7 @@ if (GetRelationshipRank("Nessa") > 0):
 
     pause 1.0
 
-    nessa @talking2mouth "That dream's over."
+    nessa @talkingmouth "That dream's over."
 
     pause 1.0
 
@@ -99,24 +99,24 @@ if (GetRelationshipRank("Nessa") > 0):
 
     pause 1.0
 
-    nessa @closedbrow talking2mouth "{i}Sigh.{/i} Let's get you sorted for electives."
+    nessa @closedbrow talkingmouth "{i}Sigh.{/i} Let's get you sorted for electives."
 
     sonia -sad @surprisedmouth "Ness?"
 
-    nessa @talkingmouth "We need to get you signed up for your next classes. You'll need to sign up for clubs, too. And we need to get you out of this old coat you always wear and into a uniform."
+    nessa @talking2mouth "We need to get you signed up for your next classes. You'll need to sign up for clubs, too. And we need to get you out of this old coat you always wear and into a uniform."
     nessa @surprised "You're such a hoarder, you probably never threw your old one away, right?"
 
     sonia -frownmouth @happybrow talkingmouth "Ness!"
 
-    nessa @closedbrow talking2mouth "Yeah, yeah. Don't dally."
+    nessa @closedbrow talkingmouth "Yeah, yeah. Don't dally."
 
     pause 1.0
 
-    nessa @talkingmouth "Hey, [first_name]. Thanks for... making sure I didn't do something I'd regret."
+    nessa @talking2mouth "Hey, [first_name]. Thanks for... making sure I didn't do something I'd regret."
 
     red @talkingmouth "Nah, you're good. I just stood here. That was all you, Ness."
 
-    nessa @closedbrow talkingmouth "Don't {i}you{/i} start."
+    nessa @closedbrow talking2mouth "Don't {i}you{/i} start."
 
     $ ValueChange("Nessa", 3, 0.25, False)
     $ ValueChange("Sonia", 3, 0.75, True)
@@ -124,7 +124,7 @@ if (GetRelationshipRank("Nessa") > 0):
 else:
     redmind "Mmmm... no, I should probably stay away. I think I'll just avoid that table today."
 
-    nessa @angrybrow talking2mouth "...Well? I'm willing to hear it."
+    nessa @angrybrow talkingmouth "...Well? I'm willing to hear it."
 
     sonia sad "I... I just...{w=0.5} I can't."
 
@@ -145,7 +145,7 @@ else:
 
     pause 1.0
 
-    nessa @talking2mouth "That dream's over."
+    nessa @talkingmouth "That dream's over."
 
     pause 1.0
 
@@ -153,7 +153,7 @@ else:
 
     sonia @confused "P-pay?"
 
-    nessa @talking2mouth "Yeah. Kobukan's notoriously expensive. You're not a first-time student, so I don't see you getting any fee waivers. How are you going to pay in five months?"
+    nessa @talkingmouth "Yeah. Kobukan's notoriously expensive. You're not a first-time student, so I don't see you getting any fee waivers. How are you going to pay in five months?"
 
     sonia @sad "...Bloody hell."
 
@@ -165,16 +165,16 @@ else:
 
     pause 1.0
 
-    nessa @closedbrow talking2mouth "{i}Sigh.{/i} Let's get you sorted for electives."
+    nessa @closedbrow talkingmouth "{i}Sigh.{/i} Let's get you sorted for electives."
 
     sonia -sad @surprisedmouth "Ness?"
 
-    nessa @talkingmouth "We need to get you signed up for your next classes. You'll need to sign up for clubs, too. And we need to get you out of this old coat you always wear and into a uniform."
+    nessa @talking2mouth "We need to get you signed up for your next classes. You'll need to sign up for clubs, too. And we need to get you out of this old coat you always wear and into a uniform."
     nessa @surprised "You're such a hoarder, you probably never threw your old one away, right?"
 
     sonia -frownmouth @happybrow talkingmouth "Ness!"
 
-    nessa @closedbrow talking2mouth "Yeah, yeah. Don't dally."
+    nessa @closedbrow talkingmouth "Yeah, yeah. Don't dally."
 
 hide nessa
 hide sonia 

@@ -138,7 +138,7 @@ show starterportraitfull at pokeball:
     zoom max(1, (ReadHeight(starter_id) / 40.0))
 
 $ starterobj = Pokemon(starter_id, shinylock=False)
-$ playerparty.append(starterobj)
+$ playerparty = [starterobj]
 $ starter_species_name = playerparty[0].GetNickname()
 $ starter_preposition = ("a" if starter_species_name[0] not in ["A", "E", "I", "O", "U"] else "an")
 oak @happy "Congratulations, it's [starter_preposition] [starter_name]!"
@@ -368,21 +368,11 @@ show whitney surprisedbrow frownmouth with dis
 show flannery surprisedbrow frownmouth sweat with dis
 oak @talkingmouth "What are you all still standing around for?{w=0.5} Class is over! Go on home already!"
 
-show leaf:
-    alpha 1.0 xpos 0.6
-    ease 0.5 alpha 0.0
-
-show flannery:
-    alpha 1.0 xpos 0.2
-    ease 0.5 alpha 0.0
-
-show whitney:
-    alpha 1.0 xpos 0.4
-    ease 0.5 alpha 0.0
-
-show may:
-    alpha 1.0 xpos 0.8
-    ease 0.5 alpha 0.0
+hide leaf
+hide flannery
+hide whitney
+hide may 
+with dis
 
 $ renpy.music.stop(channel='crowd', fadeout=0.5)
 $ renpy.pause(0.5, hard=True)
@@ -637,7 +627,7 @@ leaf surprisedbrow frownmouth @surprised "Hold the front door. Is that freakin' 
 $ rosanamed = IsNamed("Rosa")
 
 if (rosanamed):
-    if (classstats["Electric"] > 0):
+    if (GetElective("Electric") > 0):
         red @confused "Huh? {w=0.5}{nw}" 
         extend @talkingmouth "Oh, yeah, it is. I mean, we took the Electric elective together before, right?"
 
@@ -1097,7 +1087,7 @@ show brendan:
     xpos 0.8
     ease 0.5 xpos 0.7
 
-show hilbert at dissolvein:
+show hilbert with dis:
     xpos 0.8
 
 hilbert @talkingmouth "You probably are."

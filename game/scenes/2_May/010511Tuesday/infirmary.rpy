@@ -209,12 +209,12 @@ elif (lastsaved == "Tia"):
 elif (lastsaved == "Sabrina"):
     rosa @angrybrow happymouth "Of course! We need to find our next mission, after all!"
 
-    nessa @talkingmouth "Oh, no. No more missions. We did {i}your{/i} thing, Rosa, now I'm going to teach you how to chill out."
+    nessa @talking2mouth "Oh, no. No more missions. We did {i}your{/i} thing, Rosa, now I'm going to teach you how to chill out."
 
     sonia @confusedbrow happymouth "C'mon, you know it was fun, right, Ness?"
 
     nessa @sadbrow happymouth "I'm not denying that, Sunny. But Sabrina needs calm."
-    nessa @talkingmouth "And that means no shenanigans for, like, a week. {i}At least{/i} a week."
+    nessa @talking2mouth "And that means no shenanigans for, like, a week. {i}At least{/i} a week."
 
     rosa @talkingmouth "Oh... okay."
 

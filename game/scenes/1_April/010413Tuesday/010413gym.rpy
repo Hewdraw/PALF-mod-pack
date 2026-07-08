@@ -259,8 +259,4 @@ red @happy "I won't tell her that."
 
 whitney @sadbrow talking2mouth "Thank you."
 
-show alder at leftside 
-show bruno at rightside
-with dis
-
 jump lunchtransition

@@ -178,8 +178,7 @@ if (not HasEvent("Sensei Marshal", 1)): #first class
 
     marshal "Of course, Bea-chan! I'll impart my {i}saikyo{/i} unto each and every one of you!"
 
-    show bea at dissolveaway:
-        xpos 0.75 
+    hide bea with dis
 
     show marshal:
         xpos 670 alpha 1.0
@@ -258,7 +257,7 @@ if (not HasEvent("Sensei Marshal", 1)): #first class
     marshal "{i}Sayonara!{/i} We will continue with our exercises next class!"
 
     hide marshal
-elif (not HasEvent("Sensei Marshal", 2.1) and classstats["Fighting"] >= 10):#Disabling Poke
+elif (not HasEvent("Sensei Marshal", 2.1) and GetElective("Fighting") >= 10):#Disabling Poke
     show marshal with dis
     if (not HasEvent("Sensei Marshal", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -352,7 +351,7 @@ elif (not HasEvent("Sensei Marshal", 2.1) and classstats["Fighting"] >= 10):#Dis
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide marshal with dis
-elif (not HasEvent("Sensei Marshal", 3.1) and classstats["Fighting"] >= 20):#Black Belt
+elif (not HasEvent("Sensei Marshal", 3.1) and GetElective("Fighting") >= 20):#Black Belt
     show marshal with dis
     if (not HasEvent("Sensei Marshal", 3)):
         $ renpy.pause(1.0, hard=True)
@@ -451,7 +450,7 @@ elif (not HasEvent("Sensei Marshal", 3.1) and classstats["Fighting"] >= 20):#Bla
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide marshal with dis
-elif (not HasEvent("Sensei Marshal", 4.1) and classstats["Fighting"] >= 30):#Force Palm
+elif (not HasEvent("Sensei Marshal", 4.1) and GetElective("Fighting") >= 30):#Force Palm
     show marshal with dis
     if (not HasEvent("Sensei Marshal", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -587,6 +586,9 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+
+            hide marshal with dis
+
             jump aftertutoring
         else:
             jump afterfightingsetup
@@ -602,6 +604,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ newmon.LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide marshal with dis
         jump endclass
 else:
     marshal @sad2 "This Pokémon lacks the fighting spirit required to master [taughtmove]!"

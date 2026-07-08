@@ -120,7 +120,7 @@ label water_class_10:
     wallace @happy "As for me, I don't mind leaving contests behind. There's only so much you can win without seeming a poor sport. Ahahahaha!"
     wallace @talkingmouth "Now I get to enjoy the fun part without all the stress. Cheering for Lisia; watching her mentor her own pupils... it's a fabulous time."
     wallace @surprisedbrow talking2mouth "Although, I do wonder if she's resting on her laurels... there are some rising contest stars she oughtn't take for granted!"
-    wallace happymouth "I know at least one of your classmates has impressive potential. And that Unovan girl, Yancy... her career is really taking off!"
+    wallace happymouth "I know at least one of your classmates has impressive potential. And that Unovan girl, Nancy... her career is really taking off!"
     narrator "Wallace regales the class with the gossip from the contest circuit..."
     return
 

@@ -480,8 +480,7 @@ menu:
         
         serena @happy "Splendid. I look forward to talking with you two about our meteoric rise to Student Councilhood. Calem, [first_name]."
 
-show serena at dissolveaway:
-    xpos 0.25
+hide serena with dis
 
 show calem:
     xpos 0.75
@@ -575,7 +574,7 @@ red @surprised "Er..."
 bianca @happymouth "So of course, I thought that was you, but before that I thought it was the other guy in the red hat but he just scowled at me and then I thought maybe it was the other other guy in the red hat, but then he said--"
 bianca -excitedeyes @happy "--he had no idea who Cheren was so now I'm asking you and I really hope you're the one because I'm getting really flustered talking to all these cute guys with red hats!"
 
-show calem uniform surprisedbrow at dissolvein:
+show calem uniform surprisedbrow with dis:
     xpos 0.25
 
 calem @sadbrow talkingmouth "Wait... why didn't you ask me?"
@@ -972,13 +971,8 @@ leaf happy "Ha ha ha!{w=0.5} Let's go, [first_name], we'll be late for our first
 
 window hide
 
-show leaf happy:
-    alpha 1.0 xpos 970
-    parallel:
-        ease 0.5 xpos 1120
-    parallel:
-        ease 0.5 alpha 0.0
-        
+hide leaf happy with dis
+
 $ renpy.pause(1.5, hard=True)
 
 redmind @thinking "Leaf, huh?{w=1} And [blue_name].{w=1} And me.{w=0.5} In the same room for two hours."
@@ -1383,8 +1377,8 @@ window hide
 $ PlaySound("ExitBuilding.ogg")
 
 show whitney surprisedbrow sadmouth uniform:
-    xpos 2000 ypos 1.1 alpha 0.0 rotate 10
-    ease 0.4 xpos 500 alpha 1.0
+    xpos 2000 ypos 1.1 alpha 1.0 rotate 10
+    ease 0.4 xpos 500
     ease 0.5 xpos 300
     pause 0.5
     ease 0.5 xpos 500 ypos 1.2 rotate 0
@@ -1616,7 +1610,6 @@ if persondex["Flannery"]["Value"] != -1:
 show flannery surprisedbrow frownmouth
 show whitney surprisedbrow frownmouth 
 with dis
-
 
 oak @talkingmouth "Keep it down back there!"
 

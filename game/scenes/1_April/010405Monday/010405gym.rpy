@@ -183,7 +183,7 @@ cheren @talking2mouth "Gyms were created as a way to gatekeep less strong Traine
     
 serena @talkingmouth "Quite. If we didn't have Gyms, any trainer could directly attempt to challenge the league, overwhelming its resources."
 
-hilda @closedbrow talking2mouth "Yeah, and they're a hell of a good wakeup call for people who think they can challenge the league without training!"
+hilda @closedbrow talkingmouth "Yeah, and they're a hell of a good wakeup call for people who think they can challenge the league without training!"
 
 hide hilda
 hide cheren
@@ -358,13 +358,8 @@ narrator "Despite Alder's assertion you were done with the 'boring boilerplate',
 hide blank2 with dis
 
 window hide
-$ renpy.music.set_volume(0.1, delay=1.0, channel="music")
 $ PlaySound("BellChime.ogg")
-
-$ renpy.music.stop(channel='misc', fadeout=1.0)
-
-$ renpy.pause(2.0, hard=True)
-$ renpy.music.set_volume(1.0, delay=1.0, channel="music")
+pause 2.0
 
 alder norm @happy2 "Okay, that's enough for one day, students. Believe me, I'd {i}love{/i} to jump into the battling myself, but the lectures must continue until morale improves!"
 

@@ -44,6 +44,10 @@ init python:
         return selected_move
     
     def Jams(soughtcontesttype, actualcontesttype):
+        if isinstance(soughtcontesttype, str):
+            soughtcontesttype = ContestStringToMacro(soughtcontesttype)
+        if isinstance(actualcontesttype, str):
+            actualcontesttype = ContestStringToMacro(actualcontesttype)
         if (soughtcontesttype == ContestMoveType.Cool):
             return actualcontesttype in [ContestMoveType.Clever, ContestMoveType.Cute]
         elif (soughtcontesttype == ContestMoveType.Beautiful):
@@ -88,12 +92,13 @@ init python:
 
         regioncheck = (pkmn.Id if override < 1 else override)
         if (pkmn.Id == 25.2):
-            regioncheck = 494
+            regioncheck = 494#this ends up being a kinda funny joke during the bunny contest...
 
-        hasregion = contestconditions["Region"][0] <= regioncheck and regioncheck <= contestconditions["Region"][-1]
-
-        hastrait = pokedexlookup(pkmn.Id, DexMacros.ContestTrait) in contestconditions["Traits"]
-
+        hasregion = regioncheck in contestconditions["Region"]
+        contesttrait = pokedexlookup(pkmn.Id, DexMacros.ContestTrait)
+        if (contesttrait == None):
+            contesttrait = pokedexlookup(math.floor(pkmn.Id), DexMacros.ContestTrait)
+        hastrait = ContestStringToMacro(contesttrait) in contestconditions["Traits"]
         traitsmatch = hastype + hasregion + hastrait
         traitsmatch += (traitsmatch - 1)#means you can win -1, 1, 3, or 5 points for popularity every round
 

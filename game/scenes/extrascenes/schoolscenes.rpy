@@ -176,7 +176,7 @@ label combeefrenzy:
         redmind @thinking "If I were to come here smelling like a Pokétreat Combee would like, then..."
             
         if (GetItemCount(Item.PicnicBasket) > 0 or GetItemCount(Item.BouffalantWings) > 0):
-            redmind @thonk "Hold, on, don't I have something like that on me, already?"
+            redmind @thonk "Hold on, don't I have something like that on me, already?"
 
     return
 
@@ -439,7 +439,7 @@ label RosaMagnetGet:
 
     elif (LoseItem(item)):
         $ itemname = GetItemName(item)
-        $ itemvalue = GetGiftValue(character, item)
+        $ itemvalue = GetGiftValue("Rosa", item)
         
         if (itemvalue >= 7):
             rosa @surprised "Woah, really?! That's way more valuable than this Magnet... thank you so much! I really, {i}really{/i} mean it!"

@@ -65,7 +65,7 @@ if (not IsNamed("Rosa")):
     red @talkingmouth "Uh... well, I mean..."
     
     rosa @talking2mouth "I'm just telling you something about myself. Why do I need to prove it?"
-    rosa @sadmouth sadbrow "It doesn't hurt you to believe it, even if I was lying, so why..."
+    rosa @talking2mouth sadbrow "It doesn't hurt you to believe it, even if I was lying, so why..."
     rosa @angry cry "Why do I always need to prove myself?!"
     
     show rosa:

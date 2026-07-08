@@ -321,7 +321,7 @@ if (not HasEvent("Instructor Winona", 1)): #first class
     winona @talkingmouth "That's all the time we have today. Remember to preview the material for our next class!"
 
     hide winona
-elif (not HasEvent("Instructor Winona", 2.1) and classstats["Flying"] >= 10):#Wing It
+elif (not HasEvent("Instructor Winona", 2.1) and GetElective("Flying") >= 10):#Wing It
     show winona with dis
     if (not HasEvent("Instructor Winona", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -408,7 +408,7 @@ elif (not HasEvent("Instructor Winona", 2.1) and classstats["Flying"] >= 10):#Wi
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide winona with dis
-elif (not HasEvent("Instructor Winona", 3.1) and classstats["Flying"] >= 20):#Sharp Beak
+elif (not HasEvent("Instructor Winona", 3.1) and GetElective("Flying") >= 20):#Sharp Beak
     show winona with dis
     if (not HasEvent("Instructor Winona", 3)):
         $ renpy.pause(1.0, hard=True)
@@ -492,7 +492,7 @@ elif (not HasEvent("Instructor Winona", 3.1) and classstats["Flying"] >= 20):#Sh
         redmind uniform @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide winona with dis
-elif (not HasEvent("Instructor Winona", 4.1) and classstats["Flying"] >= 30):#Pluck
+elif (not HasEvent("Instructor Winona", 4.1) and GetElective("Flying") >= 30):#Pluck
     show winona with dis
     if (not HasEvent("Instructor Winona", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -509,7 +509,7 @@ elif (not HasEvent("Instructor Winona", 4.1) and classstats["Flying"] >= 30):#Pl
 
         red @happy "Why did you decide to become a teacher?"
 
-        winona @happy "I come from Fortree city in Hoenn."
+        winona @happy "I come from Fortree City in Hoenn."
 
         pause 0.5 
 
@@ -617,6 +617,7 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+            hide winona with dis
             jump aftertutoring
         else:
             jump afterflyingsetup
@@ -632,6 +633,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ playerparty[newindex].LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide winona with dis
         jump endclass
 else:
     winona @sad "I'm very sorry. I don't think I know how to teach that Pokémon [taughtmove] yet."

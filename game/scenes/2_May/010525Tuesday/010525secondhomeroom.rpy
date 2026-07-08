@@ -478,7 +478,7 @@ lisia @talkingmouth "We're just about to discuss strategies for the Millennium D
 red @talking2mouth "Totally fine."
 
 serena -surprisedbrow -frownmouth @talkingmouth "If you would like to watch our practice performance, you can head out to the open-air stage. It's directly down the hallway."
-serena @talkingmouth "Grusha and Calem are there, I believe. To cheer on Jasmine and me."
+serena @talkingmouth "Grusha and Calem are there, I believe. To cheer on Jasmine and I."
 
 red @sadbrow talkingmouth "Sounds like a plan. Sorry for interrupting, everyone."
 
@@ -688,7 +688,7 @@ pause 0.5
 
 grusha -confusedeyebrows @closedbrow talking2mouth "Got a family history of psychosis?"
 
-red @talkingmouth "My grandpa thought we were still at war with Unova."
+red @talkingmouth "My grandpa thought Salazzle ran the government."
 
 grusha @sad2eyes talking2mouth "Not a good sign."
 
@@ -833,7 +833,7 @@ calem @talking2mouth "Fascinating. What a wonderful spirit of cooperation."
 
 grusha @shadow sweat surprised "Are we not going to acknowledge that Venetia just appeared out of thin air?!"
 
-calem @talkingmouth "It's amazing what they can do with special effects nowawdays, isn't it?"
+calem @talkingmouth "It's amazing what they can do with special effects nowadays, isn't it?"
 
 narrator "You and Yellow share a look."
 
@@ -910,7 +910,7 @@ grusha @sad2eyes talking2mouth "...I've been there before. When I still boarded,
 grusha @closedbrow talking2mouth "That's why you needed to keep an eye on which judges seemed most excited. If you managed to push a judge over the edge, they'd award you a ton of points."
 grusha @sad2eyes sadeyebrows "Of course, after they were satisfied, they'd want to see something else, so you couldn't rely on the same trick forever."
 
-calem @sad "Probably for the best. A contest where one performant does the same thing over and over sounds rather dull."
+calem @sad "Probably for the best. A contest where one performer does the same thing over and over sounds rather dull."
 
 grusha @closedbrow talking2mouth "I could have lived with it."
 
@@ -1017,6 +1017,9 @@ pause 0.5
 
 grusha @closedbrow talkingmouth "I'm just going to say it."
 grusha @sad2eyes sadeyebrows "I mean, we're all thinking it."
+
+pause 1.5
+
 grusha @closedbrow talking2mouth "They're trying very hard, and we should be proud of them."
 
 calem @surprised "Oh?"

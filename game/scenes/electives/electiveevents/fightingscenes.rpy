@@ -347,7 +347,7 @@ label fighting_class_26:
 label fighting_class_27:
     show marshal with dis
     marshal @angry "I find it {i}most curious{/i} that Bruno, not I, assists you all with gym class!"
-    marshal @sad "How could this have happened? Surely it was not Alder-{i}sensei{/i}'s choice! He knows I am his most dedicated {i}kohai{/i}!"
+    marshal @sad "How could this have happened? Surely it was not Alder-{i}sensei's{/i} choice! He knows I am his most dedicated {i}kohai{/i}!"
     marshal @sad "Could it be a matter of seniority? Of course the noble Alder would be mindful of this... but I curse the short years which make me Bruno's junior!"
     marshal @angry "Perhaps if I challenge him to a duel... The code of {i}bushido{/i} would {i}require{/i} Bruno to retire upon his loss."
     marshal @neutral "...And to perform {i}seppuku{/i}. But I'm willing to compromise on that part."
@@ -616,7 +616,7 @@ label fighting_class_x3:
     marshal norm "But... as I cannot... an opportunity exists for younger heroes."
     marshal angry "I throw down the gauntlet before you! Take up my {i}sashimono{/i}, and fight for your school and classmates!"
     marshal angry2 "Two frightened maidens quiver in the woods, with only a puny Esper to defend them. A champion of justice has no option but to act!"
-    narrator "Marshal's advice runs counter to Alder-{i}sensei{/i}'s..."
+    narrator "Marshal's advice runs counter to Alder-{i}sensei's{/i}..."
     return
 
 label fighting_class_x4:

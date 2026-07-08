@@ -86,20 +86,25 @@
         except:
             return False        
 
-    #I know this could be simplified, but I'm doing it like this for legibility
-    def IsGrounded(pkmn):
-        if (pkmn.HasStatus("smacked down") or BattlefieldExists("Gravity") or pkmn.HasStatus("roosted") or RunItemFunction("checkingGroundedStat", pkmn, ["grounded"])):
-            return True
-        if ("Flying" in pkmn.GetTypes() or pkmn.HasAbility("Levitate", False) or pkmn.HasStatus("levitating") or RunItemFunction("checkingGroundedStat", pkmn, ["ungrounded"])):
-            return False
-        return True
+    def IsGrounded(pkmn, is_flying_type=None):
+        if is_flying_type is None:
+            is_flying_type = "Flying" in pkmn.GetTypes()
 
-    def IsGroundedSimpleWorld(pkmn, flyingcheck):
-        if (pkmn.HasStatus("smacked down") or BattlefieldExists("Gravity") or pkmn.HasStatus("roosted") or RunItemFunction("checkingGroundedStat", pkmn, ["grounded"])):
+        if (
+            pkmn.HasStatus("ingrained")
+            or pkmn.HasStatus("smacked down")
+            or BattlefieldExists("Gravity")
+            or pkmn.HasStatus("roosted")
+            or RunItemFunction("checkingGroundedStat", pkmn, ["grounded"])
+        ):
             return True
-        if (flyingcheck or pkmn.HasAbility("Levitate", False) or pkmn.HasStatus("levitating") or RunItemFunction("checkingGroundedStat", pkmn, ["ungrounded"])):
-            return False
-        return True
+
+        return not (
+            is_flying_type
+            or pkmn.HasAbility("Levitate", False)
+            or pkmn.HasStatus("levitating")
+            or RunItemFunction("checkingGroundedStat", pkmn, ["ungrounded"])
+        )
 
     def GetImprisonedMoves(mon):
         imprisoningfoe = StatusOnFoes(mon, "imprisoning")
@@ -116,27 +121,77 @@
 
     def MoveValid(user, maybemove):
         name = maybemove.Name
-        return not (maybemove.PP == 0 and not ContinuingMove(user, name)
-            or (user.HasStatus(".lock on move") and user.GetStatusCount(".lock on move") != name)
-            or (user.HasStatus("taunted") and maybemove.Category == "Status") 
-            or (user.HasStatus("encored") and maybemove != GetLastMove(ActionLog, user, ignorefailures=True))
-            or (user.HasStatus("rollout") and name != "Rollout")
-            or (user.HasStatus("ice ball") and name != "Ice Ball")
-            or (user.HasStatus("biding") and name != "Bide")
-            or (user.HasStatus(".disabling") and name == user.GetStatusCount(".disabling"))
-            or (user.HasStatus("tormented") and maybemove == GetLastMove(ActionLog, user))
-            or (user.HasStatus("dug in") and name != "Dig")
-            or (user.HasStatus("diving") and name != "Dive")
-            or (user.HasStatus("airborne") and name not in ["Fly", "Bounce"])
-            or (user.HasStatus("cloaked in light") and name != "Sky Attack")
-            or (user.HasStatus("charging light") and name != "Solar Beam")
-            or (user.HasStatus("thrashing") and name != "Thrash")
-            or (user.HasStatus("gasping") and IsSoundMove(name))
-            or (user.HasStatus("unhealthy") and IsHealingMove(name))
-            or (BattlefieldExists("Gravity") and name in ["Bounce", "Fly", "Flying Press", "High Jump Kick", "Jump Kick", "Magnet Rise", "Sky Drop", "Splash", "Telekinesis"])
-            or (not RunItemFunction("attackValidation", user, [maybemove]))
-            or (name in GetImprisonedMoves(user))
-            or (name == "Gigaton Hammer" and maybemove == GetLastMove(ActionLog, user)))
+
+        if name == "Struggle":
+            return True
+
+        if maybemove.PP == 0 and not ContinuingMove(user, name):
+            return False
+
+        forced_moves = {
+            "rollout": "Rollout",
+            "ice ball": "Ice Ball",
+            "biding": "Bide",
+            "dug in": "Dig",
+            "diving": "Dive",
+            "cloaked in light": "Sky Attack",
+            "charging light": "Solar Beam",
+            "thrashing": "Thrash",
+        }
+
+        for status, required_move in forced_moves.items():
+            if user.HasStatus(status) and name != required_move:
+                return False
+
+        if user.HasStatus("airborne") and name not in ["Fly", "Bounce"]:
+            return False
+
+        if user.HasStatus(".fixated") and user.GetStatusCount(".fixated") != name:
+            return False
+
+        if user.HasStatus("taunted") and maybemove.Category == "Status":
+            return False
+
+        if user.HasStatus("encored") and maybemove != GetLastMove(ActionLog, user, ignorefailures=True):
+            return False
+
+        if user.HasStatus(".disabling") and name == user.GetStatusCount(".disabling"):
+            return False
+
+        if user.HasStatus("tormented") and maybemove == GetLastMove(ActionLog, user):
+            return False
+
+        if user.HasStatus("gasping") and IsSoundMove(name):
+            return False
+
+        if user.HasStatus("unhealthy") and IsHealingMove(name):
+            return False
+
+        gravity_blocked_moves = {
+            "Bounce",
+            "Fly",
+            "Flying Press",
+            "High Jump Kick",
+            "Jump Kick",
+            "Magnet Rise",
+            "Sky Drop",
+            "Splash",
+            "Telekinesis",
+        }
+
+        if BattlefieldExists("Gravity") and name in gravity_blocked_moves:
+            return False
+
+        if not RunItemFunction("attackValidation", user, [maybemove]):
+            return False
+
+        if name in GetImprisonedMoves(user):
+            return False
+
+        if name == "Gigaton Hammer" and maybemove == GetLastMove(ActionLog, user):
+            return False
+
+        return True
 
     def HasValidMoves(user):
         for move in user.GetMoves():
@@ -390,6 +445,8 @@
         camotype = "Normal"
         if (BattlefieldExists("Electric Terrain")):
             camotype = "Electric"
+        elif (BattlefieldExists("Psychic Terrain")):
+            camotype = "Psychic"
         elif (location == "laboratory" or BattlefieldExists("Misty Terrain")):
             camotype = "Fairy"
         elif (location in ["unhallowed holt", "catacombs"] or BattlefieldExists("Burial Ground")):
@@ -435,7 +492,6 @@
             trainer.ResetFaintedPokemonCount()
             for mon in trainer.GetTeam():
                 mon.Owner = trainer
-                mon.TrainerType = trainer.GetType()
                 mon.ItemHistory = [("Started", mon.GetItem(), 0)]
                 mon.TimesHit = 0
                 mon.CritsLanded = 0
@@ -475,11 +531,11 @@
         return unfainteds
 
     def FriendlyPokemon():
-        enemies = []
+        allies = []
         for trainer in Trainers:
             if (trainer.GetType() != TrainerType.Enemy):
-                enemies += trainer.GetTeam()
-        return enemies
+                allies += trainer.GetTeam()
+        return allies
 
     def FriendlyUnfainteds():
         unfainteds = []
@@ -550,7 +606,8 @@
                     * (pow(GetTypeBonus(move.Name, move.Type, perceivedtarget, mon), 2) if move.Category != "Status" else 1.0))#_heavily_ prioritize damaging moves with higher effectiveness
                 unalteredtargets[(target, move)] = targets[(target, move)]
 
-                if ((movename in ["Recover", "Milk Drink", "Moonlight", "Morning Sun", "Synthesis", "Slack Off", "Shore Up", "Roost", "Soft-Boiled", "Life Dew"] and mon.GetHealthPercentage() >= 0.5)
+                if ((move.Category == "Status" and AbilityOnOpponentField(mon, "Magic Bounce", False))
+                    or (movename in ["Recover", "Milk Drink", "Moonlight", "Morning Sun", "Synthesis", "Slack Off", "Shore Up", "Roost", "Soft-Boiled", "Life Dew"] and mon.GetHealthPercentage() >= 0.5)
                     or (movename == "Tailwind" and EffectOnOwnField(mon, "tailwind"))
                     or (movename in ["Rain Dance", "Healing Spring"] and WeatherIs("rainy"))
                     or (movename == "Sunny Day" and WeatherIs("sunny"))
@@ -590,7 +647,7 @@
                     or (movename in ["Confuse Ray", "Sweet Kiss", "Supersonic"] and target.HasStatus("confused"))
                     or (movename in ["Legacy", "Fake Out", "First Impression"] and not (Turn == 1 or (Turn - mon.GetTurnSwitchedIn() <= 1)))
                     or (movename in ["Sleep Powder", "Poison Powder", "Spore", "Stun Spore"] and (perceivedtarget.HasType("Grass") or target.HasNormalStatus() or perceivedtarget.HasAbility("Overcoat")))
-                    or (move.Category == "Status" and AbilityOnOpponentField(mon, "Magic Bounce", False))
+                    or (movename == "Substitute" and (mon.GetHealthPercentage() <= 0.33 or mon.HasStatus("substitute")))
                     or ((movename in target.suspiciousmoves) if hasattr(target, "suspiciousmoves") else False)
                     or (movename == "Fling" and CalculateFling(mon) < 30)):
                     del targets[(target, move)]
@@ -634,6 +691,7 @@
                     or (movename in ["Confuse Ray", "Sweet Kiss", "Supersonic"] and not target.HasStatus("confused"))
                     or (movename in ["Legacy", "Fake Out", "First Impression"] and (Turn == 1 or (Turn - mon.GetTurnSwitchedIn() <= 1)))
                     or (movename in ["Sleep Powder", "Poison Powder", "Spore", "Stun Spore"] and not (perceivedtarget.HasType("Grass") or target.HasNormalStatus() or perceivedtarget.HasAbility("Overcoat", False)))
+                    or (movename == "Substitute" and mon.GetHealthPercentage() > 0.33 and not mon.HasStatus("substitute"))
                     or (movename == "Fling" and (CalculateFling(mon) > 60 or mon.GetItem() in [Item.KingsRock, Item.RazorFang, Item.PoisonBarb]))):
                     targets[(target, move)] += 20
                     unalteredtargets[(target, move)] += 20
@@ -1040,8 +1098,11 @@
             returnmessage += mon.GetNickname() + "'s wishes coalesced! " + mon.GetNickname() + " chowed down on their " + mon.GetItem() + " and is now " + pokemontype + "-type!"
 
         for ability in mon.GetAbilities():
-            if (ability not in ["Intimidate", "Anticipation", "Download", "Drizzle", "Drought", "Snow Warning", "Sand Stream", "Forewarn", "Frisk", "Illusion", "Imposter", "Intimidate", "Schooling", "Shields Down", "Screen Cleaner", "Trace", "Hospitality", "Supreme Overlord", "Grassy Surge", "Misty Surge", "Electric Surge", "Psychic Surge"]):
+            if (ability not in ["Intimidate", "Anticipation", "Download", "Drizzle", "Drought", "Snow Warning", "Sand Stream", "Forewarn", "Frisk", "Illusion", "Imposter", "Intimidate", "Schooling", "Shields Down", "Screen Cleaner", "Trace", "Hospitality", "Supreme Overlord", "Grassy Surge", "Misty Surge", "Electric Surge", "Psychic Surge", "Eternity's Weapon"]):
                 continue
+
+            if (mon.HasAbility("Eternity's Weapon")):
+                returnmessage += mon.GetNickname() + " has been weaponized!"
 
             if (not fromTrace):
                 if (mon.HasAbility("Trace") and len(GetTargets(mon, Range.AdjacentFoe)) != 0):
@@ -1119,8 +1180,9 @@
                             movelist = [move.Name]
                         elif (movepower == maxpower):
                             movelist.append(move.Name)
-                chosenmove = random.choice(movelist)
-                returnmessage += "{} was forewarned of {}!".format(mon.GetNickname(), chosenmove)
+                if (len(movelist) > 0):
+                    chosenmove = random.choice(movelist)
+                    returnmessage += "{} was forewarned of {}!".format(mon.GetNickname(), chosenmove)
 
             if (mon.HasAbility("Sand Stream")):
                 returnmessage += ApplyWeather("sandstorm", 5, mon)
@@ -1139,10 +1201,12 @@
                         break
             
             if (mon.HasAbility("Imposter")):
-                target = random.choice(GetTargets(mon, Range.AllFoes))
-                mon.ApplyStatus("transformed", copy.deepcopy(target))
-                mon.ChangeForme("DittoTransform")
-                returnmessage += "{} transformed into the opponent {}!".format(mon.GetNickname(), target.GetNickname())
+                targets = GetTargets(mon, Range.AllFoes)
+                if (targets != None and len(targets) > 0):
+                    target = random.choice(targets)
+                    mon.ApplyStatus("transformed", copy.deepcopy(target))
+                    mon.ChangeForme("DittoTransform")
+                    returnmessage += "{} transformed into the opponent {}!".format(mon.GetNickname(), target.GetNickname())
             
             if (mon.HasAbility("Illusion", False)):
                 usertrainer = mon.GetTrainer()
@@ -1200,7 +1264,7 @@
         else:
             return None
 
-    def CalculateHocusTransform(ditto):# returns the id of the legendary beast to change into
+    def CalculateKasaTransform(ditto):# returns the id of the legendary beast to change into
         beastdict = {
             "Fire": pokedexlookupname("Entei", DexMacros.Id),
             "Electric": pokedexlookupname("Raikou", DexMacros.Id),
@@ -1226,6 +1290,32 @@
         else:
             return None
 
+    def CalculateWugtrioTriveral(trio):# returns the id of the 'trio' to change into
+        triodict = {
+            "Steel": 51.1,
+            "Water": 961,
+            "Ground": 51
+        }
+
+        possibletypes = ["Steel", "Water", "Ground"]
+        typedict = {}
+
+        for mon in GetTargets(trio, forceenemy = True):
+            for element in possibletypes:
+                bonusagainstfoe = 1
+                bonusfromfoe = 1
+                bonusagainstfoe *= GetAllEffectiveness(element, mon.GetTypes())
+                for foeelement in mon.GetTypes():
+                    bonusfromfoe += GetEffectiveness(foeelement, element)
+                cumulativebonus = bonusagainstfoe / bonusfromfoe
+                if (element not in typedict.keys() or typedict[element] < cumulativebonus):
+                    typedict[element] = cumulativebonus
+
+        if (len(typedict) != 0):
+            return triodict[max(typedict, key=typedict.get)]
+        else:
+            return None
+
     def AddNewWildPokemon(pkmn, firstslot=False, randslot=False, useoldtrainer=None):
         global Trainers
         if (useoldtrainer != None):
@@ -1234,7 +1324,6 @@
         else:
             newtrainer = Trainer(str(len(Trainers)), TrainerType.Enemy, [pkmn], isPokemon=True)
         pkmn.Owner = newtrainer
-        pkmn.TrainerType = newtrainer.GetType()
         pkmn.ItemHistory = [("Started", mon.GetItem(), 0)]
         if (IsAfter(9, 5, 2004) or (IsDate(9, 5, 2004) and timeOfDay not in ["Noon", "Morning", "Afternoon"])):
             pkmn.Trained = []
@@ -1257,6 +1346,7 @@
                 Trainers = [newtrainer] + Trainers
             else:
                 Trainers.append(newtrainer)
+        SwitchInEffects(pkmn, False, Turn < 2)
 
     def ClearSemiInvuls(mon):
         clearimmediately = ["airborne", "dug in", "diving", "ethereal"]
@@ -1294,6 +1384,39 @@
                 return topregion
 
         return "Kanto"
+
+    def SwitchAction(user, effect=None):
+        usertrainer = user.GetTrainer()
+        if user in FriendlyBattlers():
+            newlist = []
+            for mon in usertrainer.GetTeam():
+                if (mon.Health >= 1 and mon not in Battlers()):
+                    newlist.append(mon)
+            if (len(newlist) == 0):
+                return False
+            validswitch = False
+            while not validswitch:
+                renpy.say(None, "Pick a Pokémon to switch in.")
+                switchCommand = renpy.call_screen('switch', user.GetTrainer(), True)
+                newPokemon = user.GetTrainer().GetTeam()[switchCommand]
+                if (newPokemon.GetHealth() == 0):
+                    renpy.say(None, "{} has fainted, and cannot fight!".format(newPokemon.GetNickname()))
+                elif (newPokemon in Battlers()):
+                    renpy.show_screen("battleui")
+                    renpy.say(None, "{} is already in battle!".format(newPokemon.GetNickname()))
+                else:
+                    validswitch = True
+            team = usertrainer.GetTeam()
+            usertrainer.ShiftTeam(team.index(user), switchCommand, True)
+
+            return newPokemon
+
+        newPokemon = SwitchAI.MidTurnSwitch(user)
+        if not newPokemon:
+            return False
+        team = usertrainer.GetTeam()
+        usertrainer.ShiftTeam(team.index(user), team.index(newPokemon), True)
+        return newPokemon
 
 define movestatuses = {
     "ice ball": ["Ice Ball"],

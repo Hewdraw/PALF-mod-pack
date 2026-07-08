@@ -359,13 +359,13 @@ label Hilbert1:
 
     narrator "Hilbert tosses the hat back to you."
 
-    red @surprised "No, this really matters. Like, how valuable was it, before I used it for ten years?"
+    red @surprised "No, this really matters. Like, how valuable was it, before I used it for three years?"
 
     hilbert @closedbrow talking2mouth "Easily $1,500,000."
 
     red @sad "Oh, no[ellipses] and how much is it worth now?"
 
-    hilbert @angry "After ten years of use? $70,000 maximum."
+    hilbert @angry "After three years of hard use? $70,000 maximum."
 
     pause 1.0
 
@@ -689,7 +689,7 @@ label Hilbert2:
 
     red @confused "A[ellipses] {i}public{/i} library? That has information about thousand-year-old weapons?"
 
-    hilbert @talkingmouth "A shining showcase of the naivete of the Kobukan region. It's not like they could store those important historical books on a military base, or anything of that sort."
+    hilbert @talkingmouth "A shining showcase of the naïveté of the Kobukan region. It's not like they could store those important historical books on a military base, or anything of that sort."
     hilbert @closedbrow talkingmouth "Kobukan doesn't even have a military."
 
     red @sadbrow talkingmouth "I guess, since Kobukan's always been a peaceful nation--"

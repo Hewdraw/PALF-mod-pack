@@ -227,10 +227,10 @@ raihan @angrybrow happymouth "Sharp, too. Guess your victory wasn't a fluke."
 $ BecomeNamed("Raihan")
 
 if (HasEvent("Leaf", "AcceptedConfession")):
-    leaf uniform @surprisedbrow talkingmouth "U-u-u-um...? Raihan? Big fan. I follow your RotoPhoto account. What are you doing here, kneeling on my date?"
+    leaf uniform @surprisedbrow talkingmouth "U-u-u-um...? Raihan? Big fan. I follow your RotoPhotos account. What are you doing here, kneeling on my date?"
 
 else:
-    leaf uniform @surprisedbrow talkingmouth "U-u-u-um...? Raihan? Big fan. I follow your RotoPhoto account. What are you doing here, kneeling on my roommate?"
+    leaf uniform @surprisedbrow talkingmouth "U-u-u-um...? Raihan? Big fan. I follow your RotoPhotos account. What are you doing here, kneeling on my roommate?"
 
 raihan @happy "Not much, besides that."
 
@@ -249,7 +249,7 @@ if (GetRelationshipRank("Nessa") > 0):
 
     red @talkingmouth "You're the strongest Gym Leader of the Galar Region. You've fought Leon more than anyone else. And you're strong enough to be a Champion in any other region!"
     
-    leaf @talking2mouth "Plus, he's got this really popular RotoPhoto account where he posts pictures and videos of himself in battles, and during meals, and... {w=0.5}uh..."
+    leaf @talking2mouth "Plus, he's got this really popular RotoPhotos account where he posts pictures and videos of himself in battles, and during meals, and... {w=0.5}uh..."
     leaf @blush talkingmouth "{size=30}Pool parties.{/size}"
     leaf @happy "His fans are called the Fang Gang!"
 
@@ -297,7 +297,7 @@ if (GetRelationshipRank("Nessa") == 0):
 
     leaf @surprised "You don't-- oh, no, of course you don't."
     leaf @talkingmouth "This is {i}Raihan.{/i} He's the strongest Gym Leader of the Galar Region! He's fought Leon more than anyone else! He's strong enough to be a Champion in any other region!"
-    leaf @talking2mouth "Plus, he's got this really popular RotoPhoto account where he posts pictures and videos of himself in battles, and during meals, and... {w=0.5}uh..."
+    leaf @talking2mouth "Plus, he's got this really popular RotoPhotos account where he posts pictures and videos of himself in battles, and during meals, and... {w=0.5}uh..."
     leaf @blush talkingmouth "{size=30}Pool parties.{/size}"
     leaf @happy "His fans are called the Fang Gang!"
 
@@ -600,11 +600,11 @@ show nessa uniform surprised:
 
 pause 2.0
 
-nessa @surprisedbrow talkingmouth "...Rai?"
+nessa @surprisedbrow talking2mouth "...Rai?"
 
 raihan @happy "Hey, Ness!"
 
-nessa -surprisedbrow -frownmouth -surprised @talkingmouth "...It's good to see you again."
+nessa -surprisedbrow -frownmouth -surprised @talking2mouth "...It's good to see you again."
 
 sonia -surprisedbrow -frownmouth -surprised @talking2mouth "Rai, why didn't you tell us you were coming?"
 
@@ -617,12 +617,12 @@ raihan @talkingmouth "Didn't you know? I'm a student. Well, I will be after I de
 
 show lance surprisedbrow with dis
 
-nessa @talkingmouth "You want to fight [first_name]? Using your Gym Leader team?"
+nessa @talking2mouth "You want to fight [first_name]? Using your Gym Leader team?"
 
 raihan @happy "Nah, I'm going to go out and catch some others."
 
 if (GetRelationshipRank("Nessa") > 0):
-    nessa @closedbrow talkingmouth "Oh. I wouldn't be so sure that you can beat him, then."
+    nessa @closedbrow talking2mouth "Oh. I wouldn't be so sure that you can beat him, then."
 
     raihan @sad "There's Nessa, with that icy-cold splash of reality, as always..."
 
@@ -645,7 +645,7 @@ sonia @confused "Oh! Advisor Lance, thanks for... um... {size=30}getting us...{/
 
 pause 1.0
 
-nessa @talkingmouth "Think he's gone, Sunny."
+nessa @talking2mouth "Think he's gone, Sunny."
 
 show raihan:
     xpos 0.66
@@ -669,7 +669,7 @@ nessa @happy "Oh, Rai, you {i}definitely{/i} did something wrong, but it didn't 
 
 raihan @happy "Man, you're just hating 'cause I'm prettier than you."
 
-nessa @talkingmouth "I think you'll find that's the only reason I {i}tolerate{/i} you."
+nessa @talking2mouth "I think you'll find that's the only reason I {i}tolerate{/i} you."
 
 raihan @happy "Hah! But, no, really, what's up? You called me out here for a reason, right?"
 raihan @surprised "Oh, wait, should we do this in private?"
@@ -686,17 +686,17 @@ if (GetRelationship("Nessa") == 0 and not rescuedsabrina):
 
 else:
     $ AddEvent("Raihan", "KnowsWhyHere")
-    nessa @talkingmouth "Nah, [first_name]'s already in this."
-    nessa @talkingmouth "I called you out because I thought we needed your help rescuing a missing student."
+    nessa @talking2mouth "Nah, [first_name]'s already in this."
+    nessa @talking2mouth "I called you out because I thought we needed your help rescuing a missing student."
 
     raihan @surprised "Huh?!"
 
     if (rescuedsabrina):
-        nessa @talkingmouth "But... we already rescued her."
+        nessa @talking2mouth "But... we already rescued her."
 
         raihan @closedbrow sadmouth "Cripes. Here I was thinking you were in mortal danger or something, but you already solved it?"
 
-        nessa @talkingmouth "[first_name] works fast. I didn't expect that."
+        nessa @talking2mouth "[first_name] works fast. I didn't expect that."
 
         raihan @happy "Well, I can't complain that the hard work's already been done."
 
@@ -705,8 +705,8 @@ else:
         raihan @talking2mouth "Actually... I'm looking forward to our battle even more, now, [last_name]."
 
     else:
-        nessa @talkingmouth "She's lost in the woods. Has been, for a few days. There's a bigger story, but the long of it is that the forest is full of Grass-types, and I'm basically dead weight in there."
-        nessa @talkingmouth "I know you love to brag about how 'well hard' you are. Thought you might be able to put that stone head of yours to use and help us."
+        nessa @talking2mouth "She's lost in the woods. Has been, for a few days. There's a bigger story, but the long of it is that the forest is full of Grass-types, and I'm basically dead weight in there."
+        nessa @talking2mouth "I know you love to brag about how 'well hard' you are. Thought you might be able to put that stone head of yours to use and help us."
 
         raihan @closedbrow talking2mouth "Hm. Yeah, I saw the woods when I was flying over. Didn't look like there was anything too challenging in there, but I see why you'd have trouble, Ness."
 
@@ -722,7 +722,7 @@ else:
 
     raihan @angrybrow talkingmouth "Don't leave me hungry. The Great Raihan's got quite an appetite."
 
-    nessa @closedbrow talkingmouth "{size=30}Matched only by his ego...{/size}"
+    nessa @closedbrow talking2mouth "{size=30}Matched only by his ego...{/size}"
 
     sonia @happy "C'mon. Let's show you around the place for a bit before you become an {i}official{/i} student."
     sonia @sadbrow talkingmouth "And... maybe you could tell me how you're paying for it...?"

@@ -10,42 +10,35 @@ screen dungeonpartyviewer(dungeon):
             python:
                 trainer = trainers[i]
                 setxpos = positions[i]
-                firstmon = trainer.GetUnfaintedTeam()[0]
-                charcolor = GetCharColor(trainer.GetName())
-                status = firstmon.GetNormalStatus()
-                status = status.title() if status else "No Status"
-                ppercentage = 0
-                actualpp = 0
-                maxpp = 0
+                unfainted_team = trainer.GetUnfaintedTeam()
+                has_firstmon = len(unfainted_team) > 0
+                if has_firstmon:
+                    firstmon = unfainted_team[0]
+                    charcolor = GetCharColor(trainer.GetName())
+                    status = firstmon.GetNormalStatus()
+                    status = status.title() if status else "No Status"
+                    ppercentage = 0
+                    actualpp = 0
+                    maxpp = 0
 
-                for move in firstmon.GetMoves():
-                    actualpp += move.PP
-                    maxpp += move.MaxPP
+                    for move in firstmon.GetMoves():
+                        actualpp += move.PP
+                        maxpp += move.MaxPP
 
-                ppercentage = str(round(actualpp / maxpp * 100)) + "%"
-            
-            add firstmon.GetImage() xanchor 0.5 yanchor 1.0 pos (setxpos - 0.06, 1.01) zoom 0.3 matrixcolor TintMatrix(charcolor) * BrightnessMatrix(1.0) * ContrastMatrix(0.0)
+                    ppercentage = str(round(actualpp / maxpp * 100)) + "%"
+
+            if (has_firstmon):
+                add firstmon.GetImage() xanchor 0.5 yanchor 1.0 pos (setxpos - 0.06, 1.01) zoom 0.3 matrixcolor TintMatrix(charcolor) * BrightnessMatrix(1.0) * ContrastMatrix(0.0)
             add (GetChibi(trainer.GetName()) if not inbattle else firstmon.GetImage()) xanchor 0.5 yanchor 1.0 pos (setxpos, 0.9) zoom 0.4
             add "gui/PaperFrame.png" xanchor 0.5 yanchor 1.0 pos (setxpos, 1.0)
-            add (firstmon.GetImage() if not inbattle else GetChibi(trainer.GetName())) xanchor 0.5 yanchor 1.0 pos (setxpos - 0.06, 1.0) zoom 0.25
-            
-            text status xalign 0.5 yanchor 1.0 pos (setxpos, 0.945) color "#fff" font "fonts/AncientModernTales.ttf" outlines [(absolute(1), "#000000", absolute(1), absolute(1))]
-            text "PP: " + str(ppercentage) xalign 0.5 yanchor 1.0 pos (setxpos, 0.99) color "#fff" font "fonts/AncientModernTales.ttf" outlines [(absolute(1), "#000000", absolute(1), absolute(1))]
-            #text ppercentage xalign 0.5 yanchor 1.0 pos (setxpos + 0.04, 0.99) color "#fff" font "fonts/AncientModernTales.ttf" outlines [(absolute(1), "#000000", absolute(1), absolute(1))]
+            if (has_firstmon):
+                add (firstmon.GetImage() if not inbattle else GetChibi(trainer.GetName())) xanchor 0.5 yanchor 1.0 pos (setxpos - 0.06, 1.0) zoom 0.25
 
-            python:
-                health = firstmon.GetHealth()
-                maxhealth = firstmon.GetStat(Stats.Health)
-                gendersymbol = ""
-                if (firstmon.GetGender(affectedByIllusion = True) == Genders.Male):
-                    gendersymbol = "{color=#2b00ff}{font=fonts/pkmndp.ttf}♂{/font}"
-                elif (firstmon.GetGender(affectedByIllusion = True) == Genders.Female):
-                    gendersymbol = "{color=#ff00b7}{font=fonts/pkmndp.ttf}♀{/font}"
-                hueshift = 0
-                if (health / maxhealth <= 0.25):
-                    hueshift = 240
-                elif (health / maxhealth <= 0.5):
-                    hueshift = 300
+            if (has_firstmon):
+                text status xalign 0.5 yanchor 1.0 pos (setxpos, 0.945) color "#fff" font "fonts/AncientModernTales.ttf" outlines [(absolute(1), "#000000", absolute(1), absolute(1))]
+                text "PP: " + str(ppercentage) xalign 0.5 yanchor 1.0 pos (setxpos, 0.99) color "#fff" font "fonts/AncientModernTales.ttf" outlines [(absolute(1), "#000000", absolute(1), absolute(1))]
+            else:
+                text "Wiped\nOut..." xalign 0.5 yanchor 0.5 pos (setxpos, 0.945) color "#fff" font "fonts/AncientModernTales.ttf" outlines [(absolute(1), "#000000", absolute(1), absolute(1))]
 
             hbox:
                 xalign 0.5
@@ -54,12 +47,11 @@ screen dungeonpartyviewer(dungeon):
                     for pkmn in trainer.GetTeam():
                         add "GUI/pixelpokeball_indicator.webp" matrixcolor SaturationMatrix(pkmn.GetHealth() > 0) xalign 0.5 ypos 1.0
 
-
         add "gui/dungeontextbox.png" xalign 0.5 yanchor 0.24 zoom 0.6
 
         add MultiBar(2, (960, 50), (0, 0), [ Color("#800"), Color("#008") , Color("#080") ], [Color("#000"), Color("#000")], bar_range = (dungeon.GetFerocity()+dungeon.GetMysteriosity()+dungeon.GetGenerosity()), start_values = [dungeon.GetFerocity(), dungeon.GetMysteriosity(), dungeon.GetGenerosity()], sensitive=False) xalign 0.5
         text "Mysteriosity Saturation - " + dungeon.GetEventChance() ypos 57 xalign 0.5 color "#fff" font "fonts/AncientModernTales.ttf" outlines [(absolute(1), "#000000", absolute(1), absolute(1))]
-        
+
         hbox:
             xalign 0.5
             ypos 0.1

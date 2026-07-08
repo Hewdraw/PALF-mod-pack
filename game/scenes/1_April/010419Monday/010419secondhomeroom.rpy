@@ -2,79 +2,80 @@ label secondhomeroom010419:
 
 if (excusesecondhomeroom):
     narrator "You take advantage of your Excused Absence to skip your second homeroom."
-    jump freeroam
-
-if (pikachuobj in playerparty):
-    $ playerparty.remove(pikachuobj)
-
-scene blank2
-
-play music "Audio/Music/Oak Intro.ogg" noloop
-queue music "Audio/Music/Oak Class.ogg"
-
-show homeroom behind blank2
-
-show oakbg behind blank2
-    
-$ renpy.transition(dissolve)
-show screen currentdate
-
-hide blank2 with splitfade
-
-oak @talkingmouth "Welcome back to class, ladies and gentlemen!" 
-oak @talkingmouth "I can tell you're all very excited for the upcoming Battle Team tryouts happening later today, but remember that you have to pass a quiz first!"
-oak @talkingmouth "I hope you all remember what I said during homeroom this morning. 'If it's not 100%%, it's 50%%!" 
-oak @talkingmouth "You may think your strategy is undefeatable, but even the best trainer can be brought down by something as unlucky as missing Will-O-Wisp five times in a row."
-oak @talkingmouth "{color=#0048ff}In this upcoming battle, you'll be under the field effect 'Blinding Fog.'{/color}"
-oak @talkingmouth "That means, if a move has a chance to miss, it {i}will.{/i} Keep that in mind."
-
-redmind uniform @thinking "Huh... I've never heard of a field effect like that. I guess it's just a hypothetical, though. I can't imagine something like that existing in real life."
-
-oak @talkingmouth "Now, let's try to complete this test quickly! I don't want to be late to the Battle Team tryouts."
-
-$ trainer1 = Trainer("red", TrainerType.Player, [Pokemon(pokedexlookupname("Nuzleaf", DexMacros.Id), level=28, moves=[GetMove("Razor Leaf"), GetMove("Fake Out"), GetMove("Feint Attack"), GetMove("Leaf Blade")])])
-$ trainer2 = Trainer("oak", TrainerType.Enemy, [Pokemon(pokedexlookupname("Roggenrola", DexMacros.Id), level=20, moves=[GetMove("Sand Attack")], ability="Sturdy")])
-
-$ trainer1.GetTeam()[0].ApplyStatus("poisoned")
-$ trainer1.GetTeam()[0].Health = 15
-
-call Battle([trainer1, trainer2], currentWeather=("blinding fog", 999), gainexp=False, healParty=False, uniforms=[True, False], lockbag=True) from _call_Battle_45
-$ battlehistory["Oak4"] = _return
-
-$ renpy.transition(dissolve)
-show screen currentdate
-
-play music "Audio/Music/Oak Intro.ogg" noloop
-queue music "Audio/Music/Oak Class.ogg"
-
-if (WonBattle("Oak4")):
-    red uniform @happy "Phew. This was a bit of a trickier quiz than I thought. It's nice this one had two ways to win, though."
+    call freeroam() from _call_freeroam_44
+    $ excusesecondhomeroom = False
 else:
-    red uniform @sad "Oh, crap. I don't think I did this one right."
+    if (pikachuobj in playerparty):
+        $ playerparty.remove(pikachuobj)
 
-oak "{w=0.5}.{w=0.5}.{w=0.5}."
+    scene blank2
 
-pause 0.5
+    play music "Audio/Music/Oak Intro.ogg" noloop
+    queue music "Audio/Music/Oak Class.ogg"
 
-oak @talkingmouth "At a glance..."
+    show homeroom behind blank2
 
-pause 0.5
+    show oakbg behind blank2
+        
+    $ renpy.transition(dissolve)
+    show screen currentdate
 
-if (WonBattle("Oak4")):
-    oak "It looks like everyone did quite well."
-else:
-    oak "It seems some of you did not take into account my warnings about the inevitability of missing. Or perhaps you're just unaware how a Pokémon's accuracy and evasion interact with move accuracy?"
+    hide blank2 with splitfade
 
-oak @talkingmouth "Remember, even if a move has 100%% accuracy, if your accuracy has been lowered, you can still miss." 
-oak @talkingmouth "The same applies if your opponent's evasion has been raised."
+    oak @talkingmouth "Welcome back to class, ladies and gentlemen!" 
+    oak @talkingmouth "I can tell you're all very excited for the upcoming Battle Team tryouts happening later today, but remember that you have to pass a quiz first!"
+    oak @talkingmouth "I hope you all remember what I said during homeroom this morning. 'If it's not 100%%, it's 50%%!" 
+    oak @talkingmouth "You may think your strategy is undefeatable, but even the best trainer can be brought down by something as unlucky as missing Will-O-Wisp five times in a row."
+    oak @talkingmouth "{color=#0048ff}In this upcoming battle, you'll be under the field effect 'Blinding Fog.'{/color}"
+    oak @talkingmouth "That means, if a move has a chance to miss, it {i}will.{/i} Keep that in mind."
 
-$ renpy.music.set_volume(0.1, delay=1.0, channel="music")
-$ PlaySound("BellChime.ogg")
+    redmind uniform @thinking "Huh... I've never heard of a field effect like that. I guess it's just a hypothetical, though. I can't imagine something like that existing in real life."
 
-$ renpy.pause(2.0, hard=True)
-$ renpy.music.set_volume(1.0, delay=1.0, channel="music")
+    oak @talkingmouth "Now, let's try to complete this test quickly! I don't want to be late to the Battle Team tryouts."
 
-oak @talkingmouth "But I suppose you'll be able to see those maneuvers in battle in a few hours! I hope to see you all at the Battle Team Tryouts shortly! Dismissed!"
+    $ trainer1 = Trainer("red", TrainerType.Player, [Pokemon(pokedexlookupname("Nuzleaf", DexMacros.Id), level=28, moves=[GetMove("Razor Leaf"), GetMove("Fake Out"), GetMove("Feint Attack"), GetMove("Leaf Blade")])])
+    $ trainer2 = Trainer("oak", TrainerType.Enemy, [Pokemon(pokedexlookupname("Roggenrola", DexMacros.Id), level=20, moves=[GetMove("Sand Attack")], ability="Sturdy")])
+
+    $ trainer1.GetTeam()[0].ApplyStatus("poisoned")
+    $ trainer1.GetTeam()[0].Health = 15
+
+    call Battle([trainer1, trainer2], currentWeather=("blinding fog", 999), gainexp=False, healParty=False, uniforms=[True, False], lockbag=True) from _call_Battle_45
+    $ battlehistory["Oak4"] = _return
+
+    $ renpy.transition(dissolve)
+    show screen currentdate
+
+    play music "Audio/Music/Oak Intro.ogg" noloop
+    queue music "Audio/Music/Oak Class.ogg"
+
+    if (WonBattle("Oak4")):
+        red uniform @happy "Phew. This was a bit of a trickier quiz than I thought. It's nice this one had two ways to win, though."
+    else:
+        red uniform @sad "Oh, crap. I don't think I did this one right."
+
+    oak "{w=0.5}.{w=0.5}.{w=0.5}."
+
+    pause 0.5
+
+    oak @talkingmouth "At a glance..."
+
+    pause 0.5
+
+    if (WonBattle("Oak4")):
+        oak "It looks like everyone did quite well."
+    else:
+        oak "It seems some of you did not take into account my warnings about the inevitability of missing. Or perhaps you're just unaware how a Pokémon's accuracy and evasion interact with move accuracy?"
+
+    oak @talkingmouth "Remember, even if a move has 100%% accuracy, if your accuracy has been lowered, you can still miss." 
+    oak @talkingmouth "The same applies if your opponent's evasion has been raised."
+
+    $ renpy.music.set_volume(0.1, delay=1.0, channel="music")
+    $ PlaySound("BellChime.ogg")
+
+    $ renpy.pause(2.0, hard=True)
+    $ renpy.music.set_volume(1.0, delay=1.0, channel="music")
+
+    oak @talkingmouth "But I suppose you'll be able to see those maneuvers in battle in a few hours! I hope to see you all at the Battle Team Tryouts shortly! Dismissed!"
 
 label aftersecondhomeroom010419:
 
@@ -325,11 +326,13 @@ if (not HasEvent("Erika", "Backstory")):
 
     erika @happy "Oh, no! Rather, you convinced me that I could defend myself from the brutes and adversaries doubtlessly embedded in the school."
 
-    erika @talkingmouth "I, again, am truly sorry about that slap. But it gave me a tremendous sense of self-confidence about my ability to succeed in this school."
+    erika @talkingmouth "I, again, am truly sorry about how I reacted when we first met. But it gave me a tremendous sense of self-confidence about my ability to succeed in this school."
 
     red @confused "Uh-huh."
 
-    redmind @thinking "Seriously. That was such a weak slap. But I don't have the heart to tell her."
+    if (WonBattle("Erika0")):
+        redmind @thinking "I mean[ellipses] I beat her. Easily. Why did that make her {i}more{/i} confident?"
+        redmind @closedeyes sadeyebrows frownmouth "[ellipses]Ah, hell, if she became more confident from that, more power to her."
 
     red @happy "Well, that's great! Maybe I'll see you around some more, then?"
 
@@ -835,12 +838,12 @@ elif (selectedtrainer == trainerhilbert):
 
     red @talkingmouth "Ready?"
 
-    hilda @talkingmouth "Yep."
+    hilda @talking2mouth "Yep."
 
     if (GetRelationship("Hilda") == "Caretaker"):
         red @happy "Hey, do you realize what this means?"
 
-        hilda @talkingmouth "What?"
+        hilda @talking2mouth "What?"
 
         red @happy "You asked me for help with something. This is {i}progress{/i}."
 

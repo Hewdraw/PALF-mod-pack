@@ -265,16 +265,16 @@ init -2 python:
         212 : [212, "Mega Tiara", "A gleaming Key Stone is embedded in it. Polished daily.", "Misc.", True, "None", lambda: False, 1, ["pov switch", "lisia item"]],
         213 : [213, "Ribbon Case", "Four Ranks. Five Categories. And your six Pokémon won them all. You are very proud of them.", "Misc.", True, "None", lambda: False, 1, ["pov switch", "lisia item"]],
         214 : [214, "Key to Sootopolis", "Shining silver. They gave it to you after the Super-Ancient Pokémon attacked... all you could do was cheer them up after, though.", "Misc.", True, "None", lambda: False, 1, ["pov switch", "lisia item"]],
-        215 : [215, "Larvesta Egg", "Features a hair-like white texture.", "Misc.", True, "None", lambda: False, 1, ["egg hunt"]],
-        216 : [216, "Togepi Egg", "Will become part of a Togepi's shell.", "Misc.", True, "None", lambda: False, 1, ["egg hunt"]],
-        217 : [217, "Tyrogue Egg", "Its lilac and brown colors blend together perfectly.", "Misc.", True, "None", lambda: False, 1, ["egg hunt"]],
-        218 : [218, "Smoochum Egg", "Has a yellow hair tuft poking from the top.", "Misc.", True, "None", lambda: False, 1, ["egg hunt"]],
-        219 : [219, "Magby Egg", "It's very hot to the touch.", "Misc.", True, "None", lambda: False, 1, ["egg hunt"]],
-        220 : [220, "Wynaut Egg", "It's completely blue.", "Misc.", True, "None", lambda: False, 1, ["egg hunt"]],
-        221 : [221, "Bonsly Egg", "If it wasn't slightly rounded, it would be indistinguishable from a log.", "Misc.", True, "None", lambda: False, 1, ["egg hunt"]],
-        222 : [222, "Mantyke Egg", "The colored texture makes it look like it's smiling.", "Misc.", True, "None", lambda: False, 1, ["egg hunt"]],
-        223 : [223, "Toxel Egg", "Occasionally, the lighter-colored patches emit electricity.", "Misc.", True, "None", lambda: False, 1, ["egg hunt"]],
-        224 : [224, "Deino Egg", "Has a dense patch of hair on the top.", "Misc.", True, "None", lambda: False, 1, ["egg hunt"]],
+        215 : [215, "Larvesta Egg", "Features a hair-like white texture.", "Misc.", True, "None", lambda: False, 1, ["egg"]],
+        216 : [216, "Togepi Egg", "Will become part of a Togepi's shell.", "Misc.", True, "None", lambda: False, 1, ["egg"]],
+        217 : [217, "Tyrogue Egg", "Its lilac and brown colors blend together perfectly.", "Misc.", True, "None", lambda: False, 1, ["egg"]],
+        218 : [218, "Smoochum Egg", "Has a yellow hair tuft poking from the top.", "Misc.", True, "None", lambda: False, 1, ["egg"]],
+        219 : [219, "Magby Egg", "It's very hot to the touch.", "Misc.", True, "None", lambda: False, 1, ["egg"]],
+        220 : [220, "Wynaut Egg", "It's completely blue.", "Misc.", True, "None", lambda: False, 1, ["egg"]],
+        221 : [221, "Bonsly Egg", "If it wasn't slightly rounded, it would be indistinguishable from a log.", "Misc.", True, "None", lambda: False, 1, ["egg"]],
+        222 : [222, "Mantyke Egg", "The colored texture makes it look like it's smiling.", "Misc.", True, "None", lambda: False, 1, ["egg"]],
+        223 : [223, "Toxel Egg", "Occasionally, the lighter-colored patches emit electricity.", "Misc.", True, "None", lambda: False, 1, ["egg"]],
+        224 : [224, "Deino Egg", "Has a dense patch of hair on the top.", "Misc.", True, "None", lambda: False, 1, ["egg"]],
         225 : [225, "Dubious Disc", "Evolves Porygon2.", "Evo Items", True, "None", lambda: False, 2, ["Evo Items"]],
         226 : [226, "Mystery Gift", "The thing everyone craves.", "Misc.", True, "None", lambda: False, 10, []],
         227 : [227, "Rare Candy", "Increases a Pokémon's level.", "Medicines", True, "Pokemon", lambda mon: not (mon.GetLevel() >= 100 and mon.GetEvos() == []), 0, ["exp item"]],
@@ -317,7 +317,7 @@ init -2 python:
         264 : [264, "Quick Powder", "Doubles the speed of an untransformed Ditto.", "Battle Items", False, "None", lambda: False, 2, []],
         265 : [265, "Banettite", "Allows Banette to Mega Evolve.", "Misc.", True, "None", lambda: False, 4, ["megastone", "Banette"]],
         266 : [266, "Eviolite", "Boosts the defenses of a Pokémon that can still evolve.", "Battle Items", True, "None", lambda: False, 1, []],
-        267 : [267, "Feebas Egg", "Laid by Champion Wallace's Milotic, Lucy. An egg of enormous prestige, especially for coordinators.", "Misc.", True, "None", lambda: False, 5, []],
+        267 : [267, "Feebas Egg", "Laid by Champion Wallace's Milotic, Lucy. An egg of enormous prestige, especially for coordinators.", "Misc.", True, "None", lambda: False, 5, ["egg"]],
         268 : [268, "Toxic Orb", "Badly Poisons the Pokémon holding it at the end of the turn.", "Battle Items", True, "None", lambda: False, 3, ["likedByJanine"]],
         269 : [269, "Exp. Candy XS", "Increases a Pokémon's experience by up to 100 points, with stronger Pokémon receiving less.", "Medicines", True, "Pokemon", lambda mon: mon.GetLevel() < 100 or mon.GetEvos() != [], 1, ["exp item"]],
         270 : [270, "Exp. Candy S", "Increases a Pokémon's experience by 800 points, with stronger Pokémon receiving less.", "Medicines", True, "Pokemon", lambda mon: mon.GetLevel() < 100 or mon.GetEvos() != [], 2, ["exp item"]],
@@ -358,10 +358,26 @@ init -2 python:
         305 : [305, "Black Apricorn", "A curious fruit. Its ebony flesh is incredibly hard.", "Misc.", True, "None", lambda: False, 1, ["apricorn"]],
         306 : [306, "Blue Apricorn", "A curious fruit. Its cerulean flesh is incredibly hard.", "Misc.", True, "None", lambda: False, 1, ["apricorn"]],
         307 : [307, "Green Apricorn", "A curious fruit. Its verdant flesh is incredibly hard.", "Misc.", True, "None", lambda: False, 1, ["apricorn"]],
-        308 : [308, "Pink Apricorn", "A curious fruit. Its roseate flesh is incredibly hard..", "Misc.", True, "None", lambda: False, 1, ["apricorn"]],
+        308 : [308, "Pink Apricorn", "A curious fruit. Its roseate flesh is incredibly hard.", "Misc.", True, "None", lambda: False, 1, ["apricorn"]],
         309 : [309, "Red Apricorn", "A curious fruit. Its scarlet flesh is incredibly hard.", "Misc.", True, "None", lambda: False, 1, ["apricorn"]],
         310 : [310, "White Apricorn", "A curious fruit. Its alabaster flesh is incredibly hard.", "Misc.", True, "None", lambda: False, 1, ["apricorn"]],
-        311 : [311, "Yellow Apricorn", "A curious fruit. Its amber flesh is incredibly hard.", "Misc.", True, "None", lambda: False, 1, ["apricorn"]]
+        311 : [311, "Yellow Apricorn", "A curious fruit. Its amber flesh is incredibly hard.", "Misc.", True, "None", lambda: False, 1, ["apricorn"]],
+        312 : [312, "Bunny Party 2: Electric Pikachu", "Ethan's guide to party planning. Make sure to update it frequently!", "Misc.", True, "None", lambda: True, 1, ["book", "not consumed"]],
+        313 : [313, "Black Sludge", "Heals the equipped Pokémon every turn, if Poison-type, but damages others.", "Battle Items", True, "None", lambda: False, 0, []],
+        314 : [314, "Flame Orb", "Burns the Pokémon holding it at the end of the turn.", "Battle Items", True, "None", lambda: False, 3, []],
+        315 : [315, "Poké Ball Garland", "Carries your Pokémon. You've never been able to wrap your head around those PC systems.", "Misc.", True, "None", lambda: False, 3, ["pov switch", "alder item"]],
+        316 : [316, "Sacred Ashes", "Kept in a small purple satchel. You'll meet the one who gave you them again someday.", "Misc.", True, "None", lambda: False, 3, ["pov switch", "alder item"]],
+        317 : [317, "The Red Button", "The Unovan Champion's greatest responsibility.", "Misc.", True, "None", lambda: False, 3, ["pov switch", "alder item"]],
+        318 : [318, "Hiking Stick", "Useful for long journeys across Unova.", "Misc.", True, "None", lambda: False, 3, ["pov switch", "alder item"]],
+        319 : [319, "Ankle Brace", "Your orthopedist keeps telling you to stop jumping off of cliffs.", "Misc.", True, "None", lambda: False, 3, ["pov switch", "alder item"]],
+        320 : [320, "Spare Poncho", "It's useful for more than just keeping yourself warm. Those kids in Opelucid made good use of it, a few years back.", "Misc.", True, "None", lambda: False, 3, ["pov switch", "alder item"]],
+        321 : [321, "Macaroni Art", "Given to you by Benga. It seems to depict him kicking you down a flight of stairs. You both look very proud.", "Misc.", True, "None", lambda: False, 3, ["pov switch", "alder item"]],
+        322 : [322, "Blastoisinite", "Allows Blastoise to Mega Evolve.", "Misc.", True, "None", lambda: False, 4, ["megastone", "Blastoise"]],
+        323 : [323, "Venusaurite", "Allows Venusaur to Mega Evolve.", "Misc.", True, "None", lambda: False, 4, ["megastone", "Venusaur"]],
+        324 : [324, "Charizardite Y", "Allows Charizard to Mega Evolve into Mega Charizard Y.", "Misc.", True, "None", lambda: False, 4, ["megastone", "Charizard"]],
+        325 : [325, "Kangaskhanite", "Allows Kangaskhan to Mega Evolve.", "Misc.", True, "None", lambda: False, 4, ["megastone", "Kangaskhan"]],
+        326 : [326, "Tatsugirinite", "Allows Tatsugiri to Mega Evolve.", "Misc.", True, "None", lambda: False, 4, ["megastone", "Tatsugiri"]],
+        
     }
 
 # ITEM FORMAT: (0: id, int); (1: name, str); (2: description, str); (3: category, str); (4: return after battle, bool); (5: scope, either "Pokemon", "Move", "None"); (6: usage condition, func); (7: default gift reaction, number), (8: tags, list)
@@ -400,7 +416,7 @@ init -2 python:
         if event == "received":
             if IsBerry(item) and ValidateItemUsage(item, itemtarget) and (True if item not in [Item.OranBerry, Item.SitrusBerry] else itemtarget.GetHealthPercentage() < .5):
                 RunItemFunction("used", itemtarget, [])
-                ItemText += "{} ate the stolen {}!".format(itemtarget.GetNickname(), name)
+                ItemText += "{} ate the {}!".format(itemtarget.GetNickname(), name)
                 itemtarget.MarkItemUsed()
         
         # "forceReceived" - Receiving the *effect* of the item in-battle through Pluck or Bug Bite.
@@ -508,7 +524,7 @@ init -2 python:
                 receivedUse = itemtarget.ClearStatus("frostbitten")
             
             elif item == Item.LumBerry:
-                receivedUse = itemtarget.ClearStatus("all", nonvolatilesandconfusion = True)
+                receivedUse = itemtarget.ClearStatus("all", basicafflictions = True)
             
             elif item == Item.OranBerry:
                 itemtarget.AdjustHealth(10)
@@ -532,7 +548,7 @@ init -2 python:
             
             elif item == Item.FullRestore:
                 itemtarget.AdjustHealth(999)
-                itemtarget.ClearStatus("all", nonvolatilesandconfusion = True)
+                itemtarget.ClearStatus("all", basicafflictions = True)
             
             elif item == Item.Revive:
                 FaintedMons.remove(itemtarget)
@@ -561,7 +577,7 @@ init -2 python:
                 posttext = "The PP of {}'s moves have been maxed out.".format(itemtarget.GetNickname())
             
             elif item in [Item.FullHeal, Item.HealPowder, Item.LavaCookie]:
-                itemtarget.ClearStatus("all", nonvolatilesandconfusion = True)
+                itemtarget.ClearStatus("all", basicafflictions = True)
             
             elif item == Item.EnergyPowder:
                 itemtarget.AdjustHealth(60)
@@ -739,11 +755,9 @@ init -2 python:
             elif item == Item.Carbos:
                 itemtarget.ModifyEV(Stats.Speed, 10)
 
-            elif item == Item.MirageResearch4:
-                renpy.show_screen("book_mixed_text", mirageresearch4)
-
-            elif item == Item.GhostJournal:
-                renpy.show_screen("book_mixed_text", ghostjournal)
+            elif ItemHasTag(item, "book"):
+                bookvarname = GetItemName(item).replace(" ", "").replace("é", "e").replace("-", "").replace("(", "").replace(")", "").replace("'", "").replace("#", "").replace(".", "").replace(":", "").lower()
+                renpy.show_screen("book_mixed_text", globals()[bookvarname])
 
             elif item in [Item.BlankTR, Item.BlankTM]:
                 itemname = GetItemName(item)
@@ -1013,7 +1027,7 @@ init -2 python:
                     pass # TODO: change Arceus' forme when (if) they're added
 
             if ItemHasTag(item, "choice item"): # Choice Items
-                itemtarget.ApplyStatus(".lock on move", move.Name)
+                itemtarget.ApplyStatus(".fixated", move.Name)
 
             if item == Item.Metronome:
                 global ActionLog
@@ -1046,17 +1060,31 @@ init -2 python:
                 attacker.GiveItem(98)
                 ItemText = "The {} attached to {}!".format(name, attacker.GetNickname())
         
+        elif event == "preEndOfTurn":
+            if item == Item.Leftovers:
+                if (itemtarget.GetHealthPercentage() < 1 and itemtarget.GetHealthPercentage() > 0):
+                    itemtarget.AdjustHealth(max(itemtarget.GetStat(Stats.Health) * 1/16.0, 1))
+                    ItemText = "{} restored some health thanks to the {}!".format(itemtarget.GetNickname(), name)
+            elif item == Item.BlackSludge:
+                if (itemtarget.HasType("Poison")):
+                    if (itemtarget.GetHealthPercentage() < 1 and itemtarget.GetHealthPercentage() > 0):
+                        itemtarget.AdjustHealth(max(itemtarget.GetStat(Stats.Health) * 1/16.0, 1))
+                        ItemText = "{} restored some health thanks to the {}!".format(itemtarget.GetNickname(), name)
+                else:
+                    if (itemtarget.GetHealthPercentage() > 0):
+                        itemtarget.AdjustHealth(max(itemtarget.GetStat(Stats.Health) * 1/8.0, 1))
+                        ItemText = "{} was hurt by the {}!".format(itemtarget.GetNickname(), name)
+
         # "endOfTurn" event
         elif event == "endOfTurn":
             if item == Item.StickyBarb:
-                itemtarget.AdjustHealth(-itemtarget.GetStat(Stats.Health) * 1/8.0)
-                ItemText = "{} was hurt by the {}!".format(itemtarget.GetNickname(), name)
-            elif item == Item.Leftovers:
-                if (itemtarget.GetHealthPercentage() < 1):
-                    itemtarget.AdjustHealth(max(itemtarget.GetStat(Stats.Health) * 1/16.0, 1))
-                    ItemText = "{} restored some health thanks to the {}!".format(itemtarget.GetNickname(), name)
+                if (itemtarget.GetHealthPercentage() > 0):
+                    itemtarget.AdjustHealth(-itemtarget.GetStat(Stats.Health) * 1/8.0)
+                    ItemText = "{} was hurt by the {}!".format(itemtarget.GetNickname(), name)
             elif item == Item.ToxicOrb:
                 ItemText = itemtarget.ApplyStatus("badly poisoned")
+            elif item == Item.FlameOrb:
+                ItemText = itemtarget.ApplyStatus("burned")
         
         # "gainExp" event
         elif event == "gainExp":

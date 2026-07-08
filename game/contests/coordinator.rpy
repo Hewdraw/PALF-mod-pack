@@ -10,191 +10,199 @@ init python:
             self.PriorityAdjustment = 0
             self.Energy = 0
 
-        def GetPerformanceDialog(self, move, energy):
+        def GetPerformanceDialog(self, move, energy, simplified = False):
             element = move.Type
             movename = move.Name
             performancetype = move.Contest
 
-            if (element == "Normal" and move.Category == "Status"):#overwrite normal-type status moves with whatever the Pokémon in question is
-                element = self.GetMon().GetTypes()[0]
-                if (element == "Normal" and len(self.GetMon().GetTypes()) > 1):#if the Pokémon actually is normal-type, look for their secondary type
-                    element = self.GetMon().GetTypes()[1]
+            if (simplified):
+                energyline = ""
+                spend = "spend" if self.IsGroup() else "spends"
+                if (energy != 0):
+                    energyline = f"{spend} {IntToWord(energy)} energy and "
 
-            #performancetype can be one of "Cute", "Tough", "Beautiful", "Clever", or "Cool"
-            #turn can be any int from 1 to 10. Higher values should have more excited narration.
-            #Energy can be any int from 0 to 3. Higher values should have more excited narration.
+                return f"{self.GetName()}'s {self.GetFirstMonName()} {energyline}uses {movename}!"
+            else:
+                if (element == "Normal" and move.Category == "Status"):#overwrite normal-type status moves with whatever the Pokémon in question is
+                    element = self.GetMon().GetTypes()[0]
+                    if (element == "Normal" and len(self.GetMon().GetTypes()) > 1):#if the Pokémon actually is normal-type, look for their secondary type
+                        element = self.GetMon().GetTypes()[1]
 
-            performance_dialogues_male = {
-                "Cute": "With a dashing smile and a bow to the crowd,",
-                "Tough": "Gritting his teeth and flexing at the crowd,",
-                "Beautiful": "With an elegant motion that flows like water,",
-                "Clever": "With a quick-witted improvised embellishment,",
-                "Cool": "With an effortless and stylish flair,"
-            }
+                #performancetype can be one of "Cute", "Tough", "Beautiful", "Clever", or "Cool"
+                #turn can be any int from 1 to 10. Higher values should have more excited narration.
+                #Energy can be any int from 0 to 3. Higher values should have more excited narration.
 
-            performance_dialogues_female = {
-                "Cute": "With an adorable twirl and a curtsey to the crowd,",
-                "Tough": "Planting her feet firmly and raising a fist to the crowd,",
-                "Beautiful": "With a graceful motion like flowing water,",
-                "Clever": "Masterfully executing a practiced performance,",
-                "Cool": "With an effortless and stylish flair,"
-            }
-
-            performance_dialogues_group = {
-                "Cute": "Holding hands and winking at the audience,",
-                "Tough": "Back-to-back,",
-                "Beautiful": "With synchronized, graceful motions that come together like flowing water,",
-                "Clever": "Putting their heads together to come up with a genius plan",
-                "Cool": "With an effortless and stylish flair,"
-            }
-
-            energydialogues = {
-                0: " performs",
-                1: " gives a rousing performance",
-                2: " gives a striking performance",
-                3: " gives an absolutely stunning performance"
-            }
-
-            performance_dialogues = {
-                Genders.Male : performance_dialogues_male,
-                Genders.Female : performance_dialogues_female,
-                Genders.Unknown : performance_dialogues_group
-            }
-
-            movedialogues = {
-                "Normal" : {
-                    "Cute" : "charming the audience with a playful bounce!",
-                    "Tough" : "showing off raw power with an imposing stance!",
-                    "Beautiful" : "demonstrating a smooth and flowing routine!",
-                    "Clever" : "crafting a perfectly timed move to intrigue the judges!",
-                    "Cool" : "executing a confident and stylish flourish!"
-                },
-                "Fire" : {
-                    "Cute" : "sending out little embers that twinkle like fireflies!",
-                    "Tough" : "unleashing a fierce blaze that radiates intensity!",
-                    "Beautiful" : "creating a mesmerizing spiral of flames!",
-                    "Clever" : "crafting a controlled burst of fire that dazzles the judges!",
-                    "Cool" : "setting the stage ablaze with a fiery spectacle!"
-                },
-                "Water" : {
-                    "Cute" : "sprinkling tiny bubbles that glisten in the light!",
-                    "Tough" : "summoning a crashing wave with force!",
-                    "Beautiful" : "weaving water into an elegant, flowing dance!",
-                    "Clever" : "manipulating water with precise control!",
-                    "Cool" : "launching a jet of water with pinpoint accuracy!"
-                },
-                "Grass" : {
-                    "Cute" : "instantaneously growing a field of flowers wherever the coordinators step!",
-                    "Tough" : "as thick vines burst from the ground and interlace into a rigid canopy!",
-                    "Beautiful" : "summoning a whirlwind of petals that dance in the air!",
-                    "Clever" : "coiling vines in an intricate pattern!",
-                    "Cool" : "slicing through the air with sharp-edged foliage!"
-                },
-                "Electric" : {
-                    "Cute" : "sending out tiny sparks that crackle playfully!",
-                    "Tough" : "discharging a bolt of lightning that shakes the stage!",
-                    "Beautiful" : "illuminating the stage with a dazzling electric glow!",
-                    "Clever" : "timing a precise spark to literally steal the spotlight!",
-                    "Cool" : "flashing a blinding bolt of electricity with style!"
-                },
-                "Ice" : {
-                    "Cute" : "sending a soft flurry of snowflakes flying around the stage!",
-                    "Tough" : "creating a hard mountain of ice, then shattering it with sheer force!",
-                    "Beautiful" : "summoning a gorgeous aurora to cover the stage!",
-                    "Clever" : "carving an intricate ice sculpture on the spot!",
-                    "Cool" : "skating around on the ice-covered floor with quick, sharp movements!"
-                },
-                "Fighting" : {
-                    "Cute" : "throwing a playful feint before striking a bold pose!",
-                    "Tough" : "demonstrating its supreme physical prowess!",
-                    "Beautiful" : "flowing seamlessly between powerful strikes!",
-                    "Clever" : "using a strategic feint to keep the other coordinator's guessing!",
-                    "Cool" : "unleashing a precise and disciplined attack!"
-                },
-                "Poison" : {
-                    "Cute" : "blowing a cloud of iridescent bubbles into the air!",
-                    "Tough" : "harmlessly inhaling toxic fumes that could lay out a Copperajah!",
-                    "Beautiful" : "creating a mesmerizing mist of purple haze!",
-                    "Clever" : "coating the stage with a calculated, eerie poison pattern!",
-                    "Cool" : "leaving behind a trail of dazzling, toxic energy!"
-                },
-                "Ground" : {
-                    "Cute" : "kicking up a tiny cloud of dust with an energetic stomp!",
-                    "Tough" : "shaking the stage with an earth-rattling strike!",
-                    "Beautiful" : "sculpting a smooth, flowing sand formation!",
-                    "Clever" : "shifting the ground beneath their feet with precision!",
-                    "Cool" : "sending cracks through the ground with a stylish stomp!"
-                },
-                "Flying" : {
-                    "Cute" : "fluttering about in a playful aerial dance!",
-                    "Tough" : "slicing through the air with powerful wing beats!",
-                    "Beautiful" : "performing an elegant mid-air twirl!",
-                    "Clever" : "soaring with precise, controlled movements!",
-                    "Cool" : "gliding effortlessly with a confident look!"
-                },
-                "Psychic" : {
-                    "Cute" : "creating a floating display of sparkling energy!",
-                    "Tough" : "pulsing psychic energy through the air with force!",
-                    "Beautiful" : "forming intricate, shimmering patterns midair!",
-                    "Clever" : "telekinetically levitating objects in a gravity-defying show!",
-                    "Cool" : "radiating a literally visible aura of power and confidence!"
-                },
-                "Bug" : {
-                    "Cute" : "playing up the inherent adorableness of all things tiny, creepy, and crawly!",
-                    "Tough" : "lifting weights a hundred times its own!",
-                    "Beautiful" : "releasing a wave of shimmering scales in a hypnotic display!",
-                    "Clever" : "outmaneuvering the other coordinators with rapid and unpredictable motions!",
-                    "Cool" : "slicing with claw, mandible, and other insectoid armaments!"
-                },
-                "Rock" : {
-                    "Cute" : "stacking tiny pebbles into a cute arrangement!",
-                    "Tough" : "crashing a massive boulder into the stage!",
-                    "Beautiful" : "sculpting a stone masterpiece mid-performance!",
-                    "Clever" : "shaping the rock with calculated strikes!",
-                    "Cool" : "shattering rock with seemingly effortless ease!"
-                },
-                "Ghost" : {
-                    "Cute" : "creating playful ghostly wisps that dance around!",
-                    "Tough" : "sending out an eerie chill through the audience!",
-                    "Beautiful" : "floating ethereally, phasing in and out!",
-                    "Clever" : "vanishing and reappearing with perfect timing!",
-                    "Cool" : "executing a spooky yet thrilling phantom display!"
-                },
-                "Dark" : {
-                    "Cute" : "giving a mischievous yet charming wink!",
-                    "Tough" : "mercilessly overshadowing the competition!",
-                    "Beautiful" : "moving with an air of mysterious grace!",
-                    "Clever" : "crafting an illusion to dazzle and confuse!",
-                    "Cool" : "executing a shadowy maneuver with confidence!"
-                },
-                "Dragon" : {
-                    "Cute" : "letting out a tiny but endearing roar!",
-                    "Tough" : "unleashing a powerful draconic roar that shakes the stage!",
-                    "Beautiful" : "soaring with majestic, draconic energy!",
-                    "Clever" : "using an ancient technique with masterful precision!",
-                    "Cool" : "dominating the stage with a fiery draconic display!"
-                },
-                "Steel" : {
-                    "Cute" : "clinking metal pieces together in a rhythmic fashion!",
-                    "Tough" : "displaying unyielding resilience with a steel-hard stance!",
-                    "Beautiful" : "reflecting light beautifully off metallic surfaces!",
-                    "Clever" : "forging an intricate steel shape with expert control!",
-                    "Cool" : "striking with a sleek, metallic finish!"
-                },
-                "Fairy" : {
-                    "Cute" : "sprinkling shimmering fairy dust into the air!",
-                    "Tough" : "releasing an unexpected burst of dazzling force!",
-                    "Beautiful" : "dancing gracefully with a radiant glow!",
-                    "Clever" : "casting an enchanting spell with playful trickery!",
-                    "Cool" : "winking as a cascade of sparkles follows their movement!"
+                performance_dialogues_male = {
+                    "Cute": "With a dashing smile and a bow to the crowd,",
+                    "Tough": "Gritting his teeth and flexing at the crowd,",
+                    "Beautiful": "With an elegant motion that flows like water,",
+                    "Clever": "With a quick-witted improvised embellishment,",
+                    "Cool": "With an effortless and stylish flair,"
                 }
-            }
 
-            energyline = energydialogues[energy]
-            if (len(self.GetCoordinators()) > 1):
-                energyline = energyline.replace("performs", "perform").replace("gives", "give")
-            
-            return f"{performance_dialogues[self.GetSex()][performancetype]} {self.GetName()}{energyline} as {self.GetFirstMonName()} uses {movename}, {movedialogues[element][performancetype]}"
+                performance_dialogues_female = {
+                    "Cute": "With an adorable twirl and a curtsey to the crowd,",
+                    "Tough": "Planting her feet firmly and raising a fist to the crowd,",
+                    "Beautiful": "With a graceful motion like flowing water,",
+                    "Clever": "Masterfully executing a practiced performance,",
+                    "Cool": "With an effortless and stylish flair,"
+                }
+
+                performance_dialogues_group = {
+                    "Cute": "Holding hands and winking at the audience,",
+                    "Tough": "Back-to-back,",
+                    "Beautiful": "With synchronized, graceful motions that come together like flowing water,",
+                    "Clever": "Putting their heads together to come up with a genius plan",
+                    "Cool": "With an effortless and stylish flair,"
+                }
+
+                energydialogues = {
+                    0: " performs",
+                    1: " gives a rousing performance",
+                    2: " gives a striking performance",
+                    3: " gives an absolutely stunning performance"
+                }
+
+                performance_dialogues = {
+                    Genders.Male : performance_dialogues_male,
+                    Genders.Female : performance_dialogues_female,
+                    Genders.Unknown : performance_dialogues_group
+                }
+
+                movedialogues = {
+                    "Normal" : {
+                        "Cute" : "charming the audience with a playful bounce!",
+                        "Tough" : "showing off raw power with an imposing stance!",
+                        "Beautiful" : "demonstrating a smooth and flowing routine!",
+                        "Clever" : "crafting a perfectly timed move to intrigue the judges!",
+                        "Cool" : "executing a confident and stylish flourish!"
+                    },
+                    "Fire" : {
+                        "Cute" : "sending out little embers that twinkle like fireflies!",
+                        "Tough" : "unleashing a fierce blaze that radiates intensity!",
+                        "Beautiful" : "creating a mesmerizing spiral of flames!",
+                        "Clever" : "crafting a controlled burst of fire that dazzles the judges!",
+                        "Cool" : "setting the stage ablaze with a fiery spectacle!"
+                    },
+                    "Water" : {
+                        "Cute" : "sprinkling tiny bubbles that glisten in the light!",
+                        "Tough" : "summoning a crashing wave with force!",
+                        "Beautiful" : "weaving water into an elegant, flowing dance!",
+                        "Clever" : "manipulating water with precise control!",
+                        "Cool" : "launching a jet of water with pinpoint accuracy!"
+                    },
+                    "Grass" : {
+                        "Cute" : "instantaneously growing a field of flowers wherever the coordinators step!",
+                        "Tough" : "as thick vines burst from the ground and interlace into a rigid canopy!",
+                        "Beautiful" : "summoning a whirlwind of petals that dance in the air!",
+                        "Clever" : "coiling vines in an intricate pattern!",
+                        "Cool" : "slicing through the air with sharp-edged foliage!"
+                    },
+                    "Electric" : {
+                        "Cute" : "sending out tiny sparks that crackle playfully!",
+                        "Tough" : "discharging a bolt of lightning that shakes the stage!",
+                        "Beautiful" : "illuminating the stage with a dazzling electric glow!",
+                        "Clever" : "timing a precise spark to literally steal the spotlight!",
+                        "Cool" : "flashing a blinding bolt of electricity with style!"
+                    },
+                    "Ice" : {
+                        "Cute" : "sending a soft flurry of snowflakes flying around the stage!",
+                        "Tough" : "creating a hard mountain of ice, then shattering it with sheer force!",
+                        "Beautiful" : "summoning a gorgeous aurora to cover the stage!",
+                        "Clever" : "carving an intricate ice sculpture on the spot!",
+                        "Cool" : "skating around on the ice-covered floor with quick, sharp movements!"
+                    },
+                    "Fighting" : {
+                        "Cute" : "throwing a playful feint before striking a bold pose!",
+                        "Tough" : "demonstrating its supreme physical prowess!",
+                        "Beautiful" : "flowing seamlessly between powerful strikes!",
+                        "Clever" : "using a strategic feint to keep the other coordinator's guessing!",
+                        "Cool" : "unleashing a precise and disciplined attack!"
+                    },
+                    "Poison" : {
+                        "Cute" : "blowing a cloud of iridescent bubbles into the air!",
+                        "Tough" : "harmlessly inhaling toxic fumes that could lay out a Copperajah!",
+                        "Beautiful" : "creating a mesmerizing mist of purple haze!",
+                        "Clever" : "coating the stage with a calculated, eerie poison pattern!",
+                        "Cool" : "leaving behind a trail of dazzling, toxic energy!"
+                    },
+                    "Ground" : {
+                        "Cute" : "kicking up a tiny cloud of dust with an energetic stomp!",
+                        "Tough" : "shaking the stage with an earth-rattling strike!",
+                        "Beautiful" : "sculpting a smooth, flowing sand formation!",
+                        "Clever" : "shifting the ground beneath their feet with precision!",
+                        "Cool" : "sending cracks through the ground with a stylish stomp!"
+                    },
+                    "Flying" : {
+                        "Cute" : "fluttering about in a playful aerial dance!",
+                        "Tough" : "slicing through the air with powerful wing beats!",
+                        "Beautiful" : "performing an elegant mid-air twirl!",
+                        "Clever" : "soaring with precise, controlled movements!",
+                        "Cool" : "gliding effortlessly with a confident look!"
+                    },
+                    "Psychic" : {
+                        "Cute" : "creating a floating display of sparkling energy!",
+                        "Tough" : "pulsing psychic energy through the air with force!",
+                        "Beautiful" : "forming intricate, shimmering patterns midair!",
+                        "Clever" : "telekinetically levitating objects in a gravity-defying show!",
+                        "Cool" : "radiating a literally visible aura of power and confidence!"
+                    },
+                    "Bug" : {
+                        "Cute" : "playing up the inherent adorableness of all things tiny, creepy, and crawly!",
+                        "Tough" : "lifting weights a hundred times its own!",
+                        "Beautiful" : "releasing a wave of shimmering scales in a hypnotic display!",
+                        "Clever" : "outmaneuvering the other coordinators with rapid and unpredictable motions!",
+                        "Cool" : "slicing with claw, mandible, and other insectoid armaments!"
+                    },
+                    "Rock" : {
+                        "Cute" : "stacking tiny pebbles into a cute arrangement!",
+                        "Tough" : "crashing a massive boulder into the stage!",
+                        "Beautiful" : "sculpting a stone masterpiece mid-performance!",
+                        "Clever" : "shaping the rock with calculated strikes!",
+                        "Cool" : "shattering rock with seemingly effortless ease!"
+                    },
+                    "Ghost" : {
+                        "Cute" : "creating playful ghostly wisps that dance around!",
+                        "Tough" : "sending out an eerie chill through the audience!",
+                        "Beautiful" : "floating ethereally, phasing in and out!",
+                        "Clever" : "vanishing and reappearing with perfect timing!",
+                        "Cool" : "executing a spooky yet thrilling phantom display!"
+                    },
+                    "Dark" : {
+                        "Cute" : "giving a mischievous yet charming wink!",
+                        "Tough" : "mercilessly overshadowing the competition!",
+                        "Beautiful" : "moving with an air of mysterious grace!",
+                        "Clever" : "crafting an illusion to dazzle and confuse!",
+                        "Cool" : "executing a shadowy maneuver with confidence!"
+                    },
+                    "Dragon" : {
+                        "Cute" : "letting out a tiny but endearing roar!",
+                        "Tough" : "unleashing a powerful draconic roar that shakes the stage!",
+                        "Beautiful" : "soaring with majestic, draconic energy!",
+                        "Clever" : "using an ancient technique with masterful precision!",
+                        "Cool" : "dominating the stage with a fiery draconic display!"
+                    },
+                    "Steel" : {
+                        "Cute" : "clinking metal pieces together in a rhythmic fashion!",
+                        "Tough" : "displaying unyielding resilience with a steel-hard stance!",
+                        "Beautiful" : "reflecting light beautifully off metallic surfaces!",
+                        "Clever" : "forging an intricate steel shape with expert control!",
+                        "Cool" : "striking with a sleek, metallic finish!"
+                    },
+                    "Fairy" : {
+                        "Cute" : "sprinkling shimmering fairy dust into the air!",
+                        "Tough" : "releasing an unexpected burst of dazzling force!",
+                        "Beautiful" : "dancing gracefully with a radiant glow!",
+                        "Clever" : "casting an enchanting spell with playful trickery!",
+                        "Cool" : "winking as a cascade of sparkles follows their movement!"
+                    }
+                }
+
+                energyline = energydialogues[energy]
+                if (len(self.GetCoordinators()) > 1):
+                    energyline = energyline.replace("performs", "perform").replace("gives", "give")
+                
+                return f"{performance_dialogues[self.GetSex()][performancetype]} {self.GetName()}{energyline} as {self.GetFirstMonName()} uses {movename}, {movedialogues[element][performancetype]}"
             
         def GetActions(self):
             return self.ActionRecord
@@ -260,11 +268,17 @@ init python:
         def GroupSize(self):
             return len(self.GetCoordinators())
 
+        def GetIsAre(self):
+            return ("are" if self.IsGroup() else "is")
+
         def GetHisPronoun(self):
             return ("his" if self.GetSex() == Genders.Male else ("her" if self.GetSex() == Genders.Female else "their"))
         
         def GetHimPronoun(self):
             return ("him" if self.GetSex() == Genders.Male else ("her" if self.GetSex() == Genders.Female else "them"))
+    
+        def GetHePronoun(self):
+            return ("he" if self.GetSex() == Genders.Male else ("she" if self.GetSex() == Genders.Female else "they"))
 
         def IsGroup(self):
             return self.GroupSize() > 1
@@ -384,10 +398,14 @@ init python:
 
             self.CurrentPoints += points
 
-        def JamPoints(self):
-            index = Coordinators.index(self)
+        def JamPoints(self, sidebar=False):
             losepoints = min(-1, -math.floor(self.CurrentPoints / 3))
-            AnimateValueChange(losepoints, (0.33, 0.5), changemood=False, pausing=True)
+            if (not sidebar):
+                AnimateValueChange(losepoints, (0.33, 0.5), changemood=False, pausing=True)
+            else:
+                for img in self.GetImage(overridemood = -10):
+                    renpy.show(img, at_list=[sidebarcontest])
+                AnimateValueChange(losepoints, (0.05, 0.8), changemood=False, pausing=True)
             self.CurrentPoints += losepoints
             self.ResetEnergy()
 
@@ -443,8 +461,14 @@ init python:
                     return energy if self.GetConditionAverage() / 160 > 0.5 + random.random() / 2 else 0 # Higher condition coordinators groups have a higher chance of spending all energy if they know the next coordinator has a jamming move
             return 0
 
+        def GetIsControllable(self):
+            for coord in self.Coordinators:
+                if (coord.GetIsControllable()):
+                    return True
+            return False
+
     class Coordinator:
-        def __init__(self, name, condition = 0, isprotag = False, partner=None, contestsprite=None):
+        def __init__(self, name, condition = 0, isprotag = False, partner=None, contestsprite=None, iscontrollable=False):
             self.Name = name#the coordinator's name, as read in the persondex
             if (not isprotag):
                 if (name in defaultpersondex):
@@ -453,16 +477,18 @@ init python:
                     self.Trainer = Trainer(name, TrainerType.Enemy, [partner])
             else:
                 self.Trainer = MakeRed()
+            self.IsControllable = iscontrollable
             self.Condition = condition#basically their rizz score
             self.IsProtagonist = isprotag
             self.ContestSprite = "contest"
+            self.Partner = partner
             if (contestsprite != None):
                 self.ContestSprite = contestsprite
-
-            if (partner in self.GetTeam()):
-                self.GetTeam().remove(partner)
-                self.GetTeam().insert(0, partner)
-
+        
+        def GetIsControllable(self):
+            if (not hasattr(self, 'IsControllable')):
+                self.IsControllable = False
+            return self.IsControllable
 
         def GetCondition(self):
             return self.Condition
@@ -474,7 +500,10 @@ init python:
             return GetCharacterSprite(self.GetName(), overridemood, extras=self.ContestSprite + " " + additionals, protag=self.IsProtagonist)
 
         def GetTeam(self):
-            return self.Trainer.GetTeam()
+            if (self.Partner != None):
+                return [self.Partner]
+            else:
+                return self.Trainer.GetTeam()
 
         def GetSex(self):
             if (self.IsProtag() or self.GetName() in ["Old Man", "Roughneck", "Hiker"]):

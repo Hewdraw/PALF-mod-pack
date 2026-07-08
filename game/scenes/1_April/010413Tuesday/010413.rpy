@@ -672,7 +672,7 @@ show fields2:
 
 red @surprised "WHA--"
 
-brendan @talking2mouth "Not again!"
+brendan @surprised "Not again!"
 
 show brendan:
     ease 0.25 xpos 0.85 rotate 90 ypos 1.5

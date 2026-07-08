@@ -398,8 +398,7 @@ show nate happy with dis
 
 red @talkingmouth "See you around."
 
-show nate at dissolveaway:
-    xpos 450
+hide nate with dis
 
 pause 2.0
 

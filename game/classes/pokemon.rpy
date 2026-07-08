@@ -63,7 +63,6 @@
             self.Image = None
             self.Experience = self.CalculateAllExperienceNeededForLevel(math.floor(self.Level))
             self.Owner = None#Trainer object, defined during battle
-            self.TrainerType = None#TrainerType Macro, defined during battle
             self.WasCaught = 0#int, defined during battle
             self.DamagedThisTurn = False#bool, defined during battle
             self.TurnSwitchedIn = 0#int, defined during battle
@@ -154,9 +153,8 @@
             return self.Trained
             
         def GetContestTrait(self):
-            if self.GetId() == 25.2:
-                return "Cool"
-            return pokedexlookup(math.floor(self.GetId()), DexMacros.ContestTrait)
+            formtrait = pokedexlookup(self.GetId(), DexMacros.ContestTrait)
+            return formtrait if formtrait else pokedexlookup(math.floor(self.GetId()), DexMacros.ContestTrait)
 
         def GetForeverals(self):
             if (not hasattr(self, 'Foreverals')):
@@ -372,17 +370,17 @@
 
             elements = self.GetTypes(True)
             for fvl in self.GetForeverals():
-                if (lookupforeveraldata(fvl, FVLMacros.FVLType) == ForeveralTypes.AddProficiency or lookupforeveraldata(fvl, FVLMacros.FVLType) == ForeveralTypes.AddType):
+                if (lookupforeveraldata(fvl, FVLMacros.FVLType) == ForeveralTypes.AddProficiency 
+                    or lookupforeveraldata(fvl, FVLMacros.FVLType) == ForeveralTypes.AddType):
                     for proficientelement in lookupforeveraldata(fvl, FVLMacros.FVLTypeData):
                         elements.append(proficientelement)
                 elif (lookupforeveraldata(fvl, FVLMacros.FVLType) == ForeveralTypes.FormSwap):
                     for mon in lookupforeveraldata(fvl, FVLMacros.FVLTypeData):
                         elements.append(pokedexlookup(mon, DexMacros.Type1))
                         elements.append(pokedexlookup(mon, DexMacros.Type2))
-                elif (lookupforeveraldata(fvl, FVLMacros.FVLType) == ForeveralTypes.AddType):
-                    for mon in lookupforeveraldata(fvl, FVLMacros.FVLTypeData):
-                        elements.append(pokedexlookup(mon, DexMacros.Type1))
-                        elements.append(pokedexlookup(mon, DexMacros.Type2))
+                elif (lookupforeveraldata(fvl, FVLMacros.FVLType) == ForeveralTypes.MoveBoost):
+                    if (fvl == "Dhelmise Foreveral" and self.GetMoves()[0].Name == "Anchor Shot"):
+                        elements.append("Steel")
                 elif (lookupforeveraldata(fvl, FVLMacros.FVLType) == ForeveralTypes.Mega):
                     elements.append(pokedexlookup(lookupforeveraldata(fvl, FVLMacros.FVLTypeData)[1], DexMacros.Type1))
                     elements.append(pokedexlookup(lookupforeveraldata(fvl, FVLMacros.FVLTypeData)[1], DexMacros.Type2))
@@ -453,7 +451,7 @@
 
         def HandleLiberationOverflow(self):
             hidescreen = False
-            if (self.Id == 25.2):
+            if (self.Id == 25.2 and not dungeon):
                 ll = GetLiberationLimit()
                 hidescreen = False
                 while (ll[0] > maxliberationlimit):
@@ -492,9 +490,6 @@
                 renpy.show_screen("currentdate")
 
         def GainExperience(self, newexp, fainting=False, ignorescaling=False, prefix=None):
-            global starter_id
-            global starter_name
-            global starter_species_name
             global silentlastexp
 
             responselist = ([] if prefix == None else prefix)
@@ -507,19 +502,21 @@
                 if (newexp > 10 and self.GetMaxLevel() > AimLevel()):
                     newexp /= (self.GetMaxLevel() - AimLevel())
                     newexp = max(10, newexp)
+            
+            newexp = math.floor(newexp)
 
             undercap = False
             if (self.Level >= self.GetLevelCap()):
                 if (Item.ExperienceCondenser in inventorymetadata and inventorymetadata[Item.ExperienceCondenser][0]):
                     self.Experience -= newexp
                     inventorymetadata[Item.ExperienceCondenser][1] += newexp
-                    responselist += [self.GetNickname() + " stored " + str(math.floor(newexp)) + " experience in the Experience Condenser!"]
+                    responselist += [self.GetNickname() + " stored " + str(newexp) + " experience in the Experience Condenser!"]
                 else:
-                    responselist += [self.GetNickname() + " stored " + str(math.floor(newexp)) + " experience for later!"]
+                    responselist += [self.GetNickname() + " stored " + str(newexp) + " experience for later!"]
             else:
                 undercap = True
-                responselist += [self.GetNickname() + " gained " + str(math.floor(newexp)) + " experience!"]
-            priorexperience = self.Experience
+                responselist += [self.GetNickname() + " gained " + str(newexp) + " experience!"]
+            priorexperience = math.floor(self.Experience)
             self.Experience += newexp
             priorlevel = self.GetLevel()
             while (self.GetExperience() > self.CalculateAllExperienceNeededForLevel(self.Level + 1) and self.Level < self.GetLevelCap()):
@@ -529,15 +526,15 @@
                 if (not fainting):
                     NewHp = self.Stats[Stats.Health]
                     self.AdjustHealth(NewHp - OldHp, directdamage=True)
-                responselist.append(self.GetNickname() + " leveled up to level " + str(self.GetLevel()) + "!")
-                if (self.Id != 25.2):
+                responselist.append(self.GetNickname() + " reached level " + str(self.GetLevel()) + "!")
+                if (self.Id not in [25.2, 132]):
                     newmoves = GetLevelMoves(self, self.GetLevel(), True)
                     if (len(newmoves) != 0):
                         renpy.say(None, " ".join(responselist))
                         if (self.LearnNewMove(newmoves, True)):
                             responselist.clear()
 
-            if (self.GetLevel() != priorlevel and self.Id != 25.2 and not fainting):
+            if (self.GetLevel() != priorlevel and self.Id not in [25.2, 132] and not fainting):
                 evoconditions = []
 
                 for mon in pokedex.values():
@@ -567,6 +564,8 @@
                     or self.GetId() == 215.1 and self.HasItem(Item.RazorClaw) and IsEarlier() #hisuian sneasel
                     or self.GetId() == 207 and self.HasItem(Item.RazorFang) and IsLater() # Gligar
                     or self.GetId() == 264.1 and self.GetLevel() >= 35 and IsLater()#Galarian Linoone
+                    or self.GetId() == 971 and self.GetLevel() >= 30 and IsLater()#Greavard
+                    or self.GetId() == 19.1 and self.GetLevel() >= 20 and IsLater()#Alolan Rattata
                     or evocondition != "" and int(evocondition.split("Lv. ")[1]) <= self.GetLevel())
 
                 evolveinto = self.GetId() + 1
@@ -637,8 +636,16 @@
 
             return responselist
 
-        def Evolve(self, evolveinto):
-            renpy.stop_skipping()
+        def Evolve(self, evolveinto, force=False):
+            global starter_id
+            global starter_name
+            global starter_species_name
+            
+            if self.HasStatus("transformed"):
+                return
+            
+            if (not betatesting()):
+                renpy.stop_skipping()
             oldname = self.GetNickname()
             damagebefore = self.GetStat(Stats.Health, absolute=True) - self.Health
             oldabilityslot = GetAbilities(self.Id).index(self.Ability)
@@ -651,7 +658,7 @@
             renpy.music.set_volume(0.0, 0.5, channel="misc")
             renpy.music.queue("audio/music/evolution_cut.ogg", channel="evolution")
 
-            evolved = renpy.call_screen("evolution", self.GetId(), evolveinto)
+            evolved = renpy.call_screen("evolution", self.GetId(), evolveinto, False, force)
             if (evolved):
                 renpy.music.set_volume(1.0, 0.5)
                 renpy.music.set_volume(1.0, 0.5, channel="crowd")
@@ -767,7 +774,7 @@
                 return None
 
         def TakeItem(self):
-            if (dawnbattle and self.Item == 249):
+            if (HasEvent("Dawn", "LiberationBattle") and self.Item == 249):
                 return "Dawn's Altaria holds onto the Altarianite firmly!"
             if (not self.HasItem(None)) and not self.HasStatus("substitute"):
                 olditem = self.GetItem()
@@ -954,6 +961,10 @@
                 return ""
             elif (status == "aqua ring"):
                 return "{} set up an Aqua Ring!".format(self.GetNickname())
+            elif (status == "charging light"):
+                return "{} began absorbing light!".format(self.GetNickname())
+            elif (status == "hardheaded"):
+                return "{} is preparing to charge!".format(self.GetNickname())
             elif (status == "gorging" and self.HasStatus("frenzied")):
                 return "The frenzied Cramorant is trying to swallow [pika_name]!"
             return "{} became {}! {}".format(self.GetNickname(), status, returnable).strip()
@@ -995,19 +1006,19 @@
                 self.AdjustHealth(self.GetStat(Stats.Health) / 3.0)
             self.Item = None
 
-        def ClearStatus(self, status, all=False, volatiles=False, nonvolatilesandconfusion=False):
+        def ClearStatus(self, status, all=False, volatiles=False, basicafflictions=False):
             returntext = ""
             if (volatiles):
                 copystatus = self.Status.copy()
                 for existingstatus in copystatus.keys():
                     if (existingstatus not in nonvolatiles):
                         del self.Status[existingstatus]
-            elif (nonvolatilesandconfusion):
+            if (basicafflictions):
                 copystatus = self.Status.copy()
                 for existingstatus in copystatus.keys():
                     if (existingstatus in normalstatuses + ["confused"]):
                         del self.Status[existingstatus]
-            elif (all):
+            if (all):
                 keepstatuses = {}
                 if (self.HasStatus("busted disguise") and self.GetHealthPercentage() < 1):
                     keepstatuses["busted disguise"] = 1
@@ -1015,8 +1026,10 @@
                     keepstatuses["transformed"] = self.GetStatusCount("transformed")
                 if (self.HasStatus("illusion")):
                     keepstatuses["illusion"] = self.GetStatusCount("illusion")
+                if (self.HasStatus("recruited")):
+                    keepstatuses["recruited"] = 1
                 self.Status = keepstatuses
-            elif (status in self.Status):
+            if (status in self.Status):
                 if (status == "thrashing" and self.GetStatusCount("thrashing") == 0):
                     returntext += self.ApplyStatus("confused", RandInt(4, 5), self)
                 del self.Status[status]
@@ -1062,11 +1075,11 @@
             if (self.GetId() == 774 and self.GetHealthPercentage() > 0.5):#Minior
                 self.ChangeForme("Minior (Meteor Form)")
 
-            if (self.GetId() in [334, 334.1] and dawnbattle and self.GetHealth() < 1 and self not in playerparty):
+            if (self.GetId() in [334, 334.1] and HasEvent("Dawn", "LiberationBattle") and self.GetHealth() < 1 and self not in playerparty):
                 self.Health = 1
                 #I'm genuinely sorry I had to do this. If it's any consolation, you're very smart.
                 #EDIT: Okay, that's what I wrote last release, but at this point, the constant whining has quite turned me off from any compliments.
-            elif (self.GetId() == 25 and dawnbattle and self.GetHealth() < 1 and len(self.GetUnfaintedTeam()) > 1):
+            elif (self.GetId() == 25 and HasEvent("Dawn", "LiberationBattle") and self.GetHealth() < 1 and len(self.GetUnfaintedTeam()) > 1):
                 AutoLose = True
             elif (self.GetId() == 352 and HasEvent("Professor Oak", "KecleonTest") and adjustment < 0):
                 AutoLose = True
@@ -1208,10 +1221,13 @@
                 return [GetMove("Explosion")]
             if (self.HasStatus("mimicking")):
                 moveslist = []
-                for move in self.Moves:
+                mimicindex = 0
+                for i, move in enumerate(self.Moves):
                     if (move.Name != "Mimic"):
                         moveslist.append(move)
-                moveslist.append(self.GetStatusCount("mimicking"))
+                    else:
+                        mimicindex = i
+                moveslist.insert(mimicindex, self.GetStatusCount("mimicking"))
                 return moveslist
             return self.Moves
 
@@ -1258,7 +1274,7 @@
                 if ("♂" in nick):
                     nick = nick.replace("Nidoran♂", "Nidoran")
 
-                if (self.IsShiny()):
+                if (self.IsShiny() and not config.developer):
                     nick = "{font=fonts/DejaVuSans.ttf}{size=-5}✧{/size}{/font}" + nick
                 
                 return nick
@@ -1305,7 +1321,10 @@
             return 0
 
         def GetWeight(self):
-            return max(0.2, pokedexlookup(self.GetId(), DexMacros.Weight) * (2.0 if self.HasAbility("Heavy Metal") else 1.0) - self.GetStatusCount("nimble") * 220)
+            return max(0.2, pokedexlookup(self.GetId(), DexMacros.Weight) 
+                * (2.0 if self.HasAbility("Heavy Metal") else 1.0) 
+                * (0.5 if self.HasAbility("Light Metal") else 1.0) 
+                - self.GetStatusCount("nimble") * 220)
 
         def ResetStatChanges(self):
             self.StatChanges = {}
@@ -1407,15 +1426,22 @@
             if (pureraw):
                 raw = True
             if (not self.IsTerad() or ignoreTera or raw):
-                if (self.GetId() == 25.2 and not pureraw):
-                    if (libtypes == []):
+                if (self.Id == 25.2):
+                    if (pureraw):
+                        return ["Electric"]
+                    elif (HasEvent("Game", "LiberationBattle") and libtypes != []):
+                        for element in libtypes:
+                            types.append(element)
+                    elif (self.GetId() != 25.2):#if pikachu is diveralized into something else
+                        types.append(pokedexlookup(self.GetId(), DexMacros.Type1))
+                        type2 = pokedexlookup(self.GetId(), DexMacros.Type2)
+                        if (type2 != None):
+                            types.append(type2)
+                    else:
                         for fvl in self.GetForeverals():
                             types.append(pokedexlookup(GetForeveralSpecies(fvl), DexMacros.Type1))
                         if (types == []):
                             types = ["Electric"]
-                    else:
-                        for element in libtypes:
-                            types.append(element)
                 else:
                     types.append(pokedexlookup(self.GetId(), DexMacros.Type1))
                     type2 = pokedexlookup(self.GetId(), DexMacros.Type2)
@@ -1431,11 +1457,14 @@
                             if (replacetype in types):
                                 types.remove(replacetype)
                                 types.append(newtype)
+                    elif (lookupforeveraldata(fvl, FVLMacros.FVLType) == ForeveralTypes.MoveBoost):
+                        if (fvl == "Dhelmise Foreveral" and self.GetMoves()[0].Name == "Anchor Shot"):
+                            types.append("Steel")
             else:
                 types.append(self.GetTeraType())
 
             if (inbattle):
-                if (BattlefieldExists("Simple World") and IsGroundedSimpleWorld(self, "Flying" in types)):
+                if (BattlefieldExists("Simple World") and IsGrounded(self, "Flying" in types)):#pass the parameter here to avoid a recursive type-checking loop
                     types = ["Normal"]
 
                 if (self.HasAbility("Mimicry", False)):
@@ -1458,6 +1487,8 @@
                     types = [self.GetStatusCount("versatile")]
                 if (self.HasStatus("reflectant")):
                     types = self.GetStatusCount("reflectant")
+                if (self.HasStatus("converted")):
+                    types = self.GetStatusCount("converted")
                 if (self.HasStatus("soaked")):
                     types = ["Water"]
 
@@ -1467,6 +1498,7 @@
                     types.append("Grass")
                 if (self.HasStatus("metallic")):
                     types.append("Steel")
+
                 if (self.HasStatus("burnt out") and "Fire" in types):
                     types.remove("Fire")
                 if (self.HasStatus("roosted") and "Flying" in types):
@@ -1506,7 +1538,7 @@
 
         def UpdateLevel(self, level, updateMoves=True, force=False, intellect=True):
             if (level + self.GetOffset() > self.Level or force):
-                self.Level = min(100, max(1, level + self.GetOffset()))
+                self.Level = min(100, max(1, level + (self.GetOffset() if not force else 0)))
                 if (updateMoves):
                     self.Moves = GetMovesForLevel(self)
             if (intellect):
@@ -1531,6 +1563,7 @@
             self.ClearStatus("All", all=True)
             self.ResetStatChanges()
             self.ResetFaintedTurn()
+            self.Terastallized = -1
             for move in self.GetMoves():
                 move.PP = move.MaxPP
 
@@ -1689,32 +1722,39 @@
                 if (oldpp != -1):
                     self.GetMoves()[len(self.GetMoves()) - 1].PP = oldpp
 
-            if (self.Id == pokedexlookupname("Eevee", DexMacros.Id) and self.HasAbility("Tetra Element") and not revert):
-                removemove = None
+            if (self.Id == pokedexlookupname("Eevee", DexMacros.Id) and self.HasAbility("Tetra Element")):
                 for move in self.GetMoves():
-                    if (move.Name in ["Swift", "Leaf Blade", "Flare Blitz", "Surf", "Thunderbolt", "Ice Beam", "Moonblast", "Foul Play", "Psychic"]):
+                    if (move.Name in ["Sand Attack", "Swift", "Leaf Blade", "Flare Blitz", "Surf", "Thunderbolt", "Ice Beam", "Moonblast", "Foul Play", "Psychic"]):
                         self.Moves.remove(move)
                         break
-                self.Nickname = pokedexlookup(formename, DexMacros.Name)
-                if (formename == pokedexlookupname("Flareon", DexMacros.Id)):
-                    self.LearnNewMove([(0, "Flare Blitz")])
-                elif (formename == pokedexlookupname("Vaporeon", DexMacros.Id)):
-                    self.LearnNewMove([(0, "Surf")])
-                elif (formename == pokedexlookupname("Jolteon", DexMacros.Id)):
-                    self.LearnNewMove([(0, "Thunderbolt")])
-                elif (formename == pokedexlookupname("Espeon", DexMacros.Id)):
-                    self.LearnNewMove([(0, "Psychic")])
-                elif (formename == pokedexlookupname("Umbreon", DexMacros.Id)):
-                    self.LearnNewMove([(0, "Foul Play")])
-                elif (formename == pokedexlookupname("Glaceon", DexMacros.Id)):
-                    self.LearnNewMove([(0, "Ice Beam")])
-                elif (formename == pokedexlookupname("Leafeon", DexMacros.Id)):
-                    self.LearnNewMove([(0, "Leaf Blade")])
-                elif (formename == pokedexlookupname("Sylveon", DexMacros.Id)):
-                    self.LearnNewMove([(0, "Moonblast")])
-                elif (len(self.Moves) == 3):
-                    self.LearnNewMove([(0, "Swift")])
-                self.GetMoves()[len(self.GetMoves()) - 1].PP = 1
+                if len(self.Moves) > 3:
+                    self.Moves = self.Moves[0:3]
+                if (not revert):
+                    self.Nickname = pokedexlookup(formename, DexMacros.Name)
+                    if (formename == pokedexlookupname("Flareon", DexMacros.Id)):
+                        self.LearnNewMove([(0, "Flare Blitz")])
+                    elif (formename == pokedexlookupname("Vaporeon", DexMacros.Id)):
+                        self.LearnNewMove([(0, "Surf")])
+                    elif (formename == pokedexlookupname("Jolteon", DexMacros.Id)):
+                        self.LearnNewMove([(0, "Thunderbolt")])
+                    elif (formename == pokedexlookupname("Espeon", DexMacros.Id)):
+                        self.LearnNewMove([(0, "Psychic")])
+                    elif (formename == pokedexlookupname("Umbreon", DexMacros.Id)):
+                        self.LearnNewMove([(0, "Foul Play")])
+                    elif (formename == pokedexlookupname("Glaceon", DexMacros.Id)):
+                        self.LearnNewMove([(0, "Ice Beam")])
+                    elif (formename == pokedexlookupname("Leafeon", DexMacros.Id)):
+                        self.LearnNewMove([(0, "Leaf Blade")])
+                    elif (formename == pokedexlookupname("Sylveon", DexMacros.Id)):
+                        self.LearnNewMove([(0, "Moonblast")])
+                    elif (len(self.Moves) == 3):
+                        self.LearnNewMove([(0, "Swift")])
+                    self.GetMoves()[len(self.GetMoves()) - 1].PP = 1
+                else:
+                    self.Nickname = "Eevee"
+
+                if (len(self.Moves) == 3):
+                    self.Moves.append(GetMove("Swift"))
 
             self.HandleLiberationOverflow()
 
@@ -1783,7 +1823,7 @@
             return self.Owner
 
         def GetTrainerType(self):
-            return self.TrainerType
+            return self.GetTrainer().GetType()
 
         def PlayCry(self):
             if self.HasStatus("illusion"):
@@ -1793,8 +1833,11 @@
             else:
                 PlaySound("pokemon/cries/{}.mp3".format(math.floor(self.GetId())), otherchannel="altcry")
 
-        def GetSpeciesname(self):
+        def GetSpeciesName(self):
             return pokedexlookup(self.Id, DexMacros.Name)
 
         def GetUnfaintedTeam(self):
             return self.GetTrainer().GetUnfaintedTeam()
+
+        def GetSwitchables(self):
+            return self.GetTrainer().GetSwitchables()

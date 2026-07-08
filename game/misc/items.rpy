@@ -270,18 +270,18 @@ init python:
     def GetGiftValue(character, item):
         global giftedmysterygift
 
-        if (item == "Premier Ball"):
+        if (item == "Premier Ball"): # 7 : 2000 - Each $ is worth 0.0035
             return 7
-        elif (item in ["Mystery Gift", "Slowpoke Tail"]):
+        elif (item in ["Mystery Gift", "Slowpoke Tail"]): # 10 : 2500 - Each $ is worth 0.004
             return 10
         elif (character == "Leaf"):
             if (item == Item.MysticWater):
                 return -1
-            elif (item == Item.LavaCookie):
+            elif (item == Item.LavaCookie): # 5 : 350 - Each $ is worth 0.0143. Quite high, but this is Leaf, and who's gifting her things, honestly?
                 return 5
-        elif (character == "Misty" and item == Item.SilverPowder):
+        elif (character == "Misty" and item in [Item.SilverPowder, Item.PicnicBasket]):
             return -1
-        elif (character == "Gardenia" and item == Item.SpellTag):
+        elif (character == "Gardenia" and item in [Item.SpellTag, Item.SoulFood]):
             return -1
         elif (character == "Brendan" and item == Item.LavaCookie):
             return -1
@@ -297,46 +297,51 @@ init python:
                 return 7
             elif (character == "Melody"):
                 return -1
-        elif (item in [Item.ResearchPaper, Item.CelebiWing] and character == "Professor Cherry"):
+        elif (item in [Item.ResearchPaper, Item.CelebiWing] and character == "Professor Cherry"): # (Using the RP) 7 : 700 - Each $ is worth 0.01. Quite high, but this is Cherry, who's hard to get points with
             return 7
-        elif (ItemHasTag(item, "software") or item == Item.SecondhandLaptop and character in ["Iono", "Professor Cherry", "Sonia"]):
-            return 7
+        elif (ItemHasTag(item, "software") or item == Item.SecondhandLaptop and character in ["Iono", "Professor Cherry", "Sonia"]): # (All softwares/laptop cost 10k) 30 : 10000 - Each $ is worth 0.003. Not efficient, but a massive chunk of points in a pinch. Very useful for Iono, who can be distant
+            return 30
+        elif (character == "Erika"):
+            if (item == Item.UnremarkableTeacup): # 12 : 2500 - Each $ is worth 0.0048. Quite high, but this is Erika, who's hard to get points with
+                return 12
+            elif (item == Item.MasterpieceTeacup): # 50 : 50000 - Insane cost, insane inefficiency, but also insane gross reward. For people who ignored Erika until endgame
+                return 50
             
         if (character in classdex):
-            if item in elementitems and elementitems[item] in GetCharTypes(character):
+            if item in elementitems and elementitems[item] in GetCharTypes(character):#cost analysis doesn't need to be done here, since you can't buy element items. If you could, though, since their sell value is 100, they'd have a purchase price of 400, making them 5 : 400, or 0.0125 per $. Extremely efficient.
                 return 5
 
-            if item in treatboosts and treatboosts[item] in GetCharTypes(character):
+            if item in treatboosts and treatboosts[item] in GetCharTypes(character): # (after mayboost) 5 : 800 - Each $ is worth 0.00625. Significantly more efficient than the Slowpoketail or premier ball, but it's an upgrade you need to unlock for, and the treats aren't universal gifts, so I *think* this is fine.
                 return 5
 
         if (character == "Janine"):
-            if (ItemHasTag(item, "likedByJanine")):
+            if (ItemHasTag(item, "likedByJanine")):# you can't actually gift janine stuff, can you? Huh.
                 return 5
         elif (character in ["Professor Cherry", "Iono"]):
-            if ItemHasTag(item, "rotom catalog"):
-                return 20
-            if character == "Professor Cherry" and ItemHasTag(item, "move boost item"):
+            if ItemHasTag(item, "rotom catalog"): # 30 : 5000 - Each $ is worth 0.006. This is fine, it only applies to two specific Distant characters.
+                return 30
+            if character == "Professor Cherry" and ItemHasTag(item, "move boost item"):#cost analysis doesn't need to be done here, since you can't buy element items. If you could, though, since their sell value is 100, they'd have a purchase price of 400, making them 5 : 400, or 0.0125 per $. Extremely efficient.
                 return 5
-        elif (character == "Ethan"):
+        elif (character == "Ethan"):#Since ethan's thrilled to get _anything_, you can give this man Oran Berries every week and get a ridiculous number of points with him. Because that's something you need, obviously.
             return 5
 
         for shopitem in AllMarkets():
             if (item == shopitem[1]):
-                if (shopitem[0] < 500):
+                if (shopitem[0] < 500):# (Using Oran Berries) 1 : 20 - Each $ is worth 0.05. This would be absolutely massive if it didn't lock you into only earning two 'gift points' for the week. But it does.
+                    return 1
+                elif (shopitem[0] < 800):# (Using Repels) 2 : 500 - Each $ is worth 0.04. Honestly pretty good, for the price point, same ratio as the Slowpoketail. Only downside is that three is a relatively small number, compared to what some gift items can do. I never would've thought that stocking up on repels and handing them out as gifts might be the meta strat, but here we go.
                     return 2
-                elif (shopitem[0] < 800):
+                elif (shopitem[0] < 1001):# (Using Ultra Balls) 3 : 800 - Each $ is worth 0.00375. Just barely below the Slowpoketail, in terms of efficiency.
                     return 3
-                elif (shopitem[0] < 1001):
+                elif (shopitem[0] < 5001):# (Using Energy Roots) 4 : 1200 - Each $ is worth 0.00333. Just barely below the Premier Ball, in terms of efficiency. (Of course, the premier ball comes with ten Poké Balls, too...)
                     return 4
-                elif (shopitem[0] < 5001):
-                    return 5
                 else:
-                    return 10
+                    return 5
 
         return GetItemEntry(item)[7]
 
     def IsPerishable(item):
-        return ItemHasTag(item, "berry") or ItemHasTag(item, "exp item") or ItemHasTag(item, "treat boost") or ItemHasTag(item, "apricorn")
+        return ItemHasTag(item, "egg") or ItemHasTag(item, "berry") or ItemHasTag(item, "exp item") or ItemHasTag(item, "treat boost") or ItemHasTag(item, "apricorn")
 
     def GetItemSellValue(item):
         global soldmysterygift

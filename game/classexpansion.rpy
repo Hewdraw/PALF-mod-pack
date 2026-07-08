@@ -67,6 +67,14 @@ init python:
         "water_class_x4" : (lambda: IsDate(12, 7, 2004))
     }
 
+    # just aliases for remembering the name of the function
+    def ElectiveSceneSeen(classtype, number):
+        return ClassSceneSeen(classtype, number)
+
+    # just aliases for remembering the name of the function
+    def SeenElectiveScene(classtype, number):
+        return ClassSceneSeen(classtype, number)
+
     def ClassSceneSeen(classtype, number):
         classtype = classtype.lower()
         eventstring = classtype + "_class_" + ("0" if number < 10 else "") + str(number)

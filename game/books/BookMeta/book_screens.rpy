@@ -41,10 +41,7 @@ screen show_two_pages(index, book):
             spacing 10
 
             for line in book.Show_Page(index):
-                $ line = line.replace("first_name", first_name)
-                if (len(line) > 1 and line[0]) == " ":
-                    $ line = line[1:]
-                text line
+                text InterpretLine(line)
                 
 
     viewport id "page2":
@@ -54,10 +51,7 @@ screen show_two_pages(index, book):
             spacing 10
 
             for line in book.Show_Page(index + 1):
-                $ line = line.replace("first_name", first_name)
-                if (len(line) > 1 and line[0]) == " ":
-                    $ line = line[1:]
-                text line
+                text InterpretLine(line)
     
     if index in book.image_dict:
         # Display an image.

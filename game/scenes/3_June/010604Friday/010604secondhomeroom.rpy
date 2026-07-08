@@ -123,7 +123,7 @@ show hilbert:
 
 janine @talking2mouth "Who's been watching that Millennium Drop contest?"
 
-if (HasEvent("Professor Oak", "ParticipateMDTryouts") or HasEvent("Professor Oak", "WatchMDTryouts")):
+if (IsCoordinator() or HasEvent("Professor Oak", "WatchMDTryouts")):
     narrator "You, Leaf, Ethan, and Blue raise their hands."
 
 else:
@@ -133,7 +133,7 @@ janine @talking2mouth "Now, who's {i}participated?{/i}"
 
 narrator "Leaf, Ethan, and Blue lower their hands."
 
-if (HasEvent("Professor Oak", "ParticipateMDTryouts")):
+if (IsCoordinator()):
     narrator "You are now the only one with a hand still raised."
     
     janine @talking2mouth "[first_name]?"
@@ -162,7 +162,7 @@ else:
     $ ValueChange("Janine", 5, 0.33)
     janine @talking2mouth "Good. That's what I want to see. You don't have time to be both a Coordinator and a Battler."
     janine @talking2mouth "If you're going to give yourself to something, you need to give {i}all{/i} of yourself. Right now, you're the Battle Team's--you're {i}mine{/i}."
-    janine @closedbrow talking2mouth "Stay focused on {i}our{/i} mission. The national tournament."
+    janine @closedbrow talking2mouth "Stay focused on {i}our{/i} mission. The National Tournament."
 
 janine @closedbrow talking2mouth "I don't have any special instruction for today. We'll go through the same drills--just harder and faster than last time."
 

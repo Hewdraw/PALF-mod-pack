@@ -73,14 +73,17 @@ if (not HasEvent("Instructor Olivia", 1)): #first class
 
     olivia @sad "...Which brings me back to Rock-types. You know 'em; you... probably don't love 'em. They're hard. Solid. Unbreakable. Unlike my heart..."
 
-    show nessa uniform at rightside with dis
-    show bea uniform with dis
-    show hilda uniform at leftside with dis
+    if (IsPresent("Nessa")):
+        $ MoveInSmart("nessa uniform")
+    if (IsPresent("Bea")):
+        $ MoveInSmart("bea uniform")
+    if (IsPresent("Hilda")):
+        $ MoveInSmart("hilda uniform")
 
     olivia "Now, here's the thing about Rock-types. Despite their reputation as strong defenders, almost all of the strong ones focus mainly on offense."
     olivia @talking2mouth "Can anyone think of why that might be?"
 
-    hilda @talkingmouth "Is it that Rock-types have unfavorable elemental matchups against several powerful types?"
+    hilda @talking2mouth "Is it that Rock-types have unfavorable elemental matchups against several powerful types?"
 
     olivia @talkingmouth "Yes, that's right. Rock can be destroyed by Fighting, Water, and Ground, easily. That's not even mentioning Grass and Steel."
     olivia "With so many weaknesses to powerful types, one might wonder why you'd even want to train Rock-types..."
@@ -94,20 +97,19 @@ if (not HasEvent("Instructor Olivia", 1)): #first class
 
     olivia "Just like my exes..."
 
-    show nessa sad with dis
-    show bea sad with dis
-    show hilda sad with dis
+    $ GroupExpression("sad")
 
     red @talkingmouth "Oh boy. This is going to be a depressing class."
 
-    hide nessa uniform at rightside with dis
-    hide bea uniform with dis
-    hide hilda uniform at leftside with dis
+    hide nessa
+    hide bea
+    hide hilda 
+    with dis
 
     narrator "Despite Olivia's pitiable mood, you learn quite a bit about battling with Rock-type Pokémon."
 
     hide olivia
-elif (not HasEvent("Instructor Olivia", 2.1) and classstats["Rock"] >= 10):#Splinter Shield
+elif (not HasEvent("Instructor Olivia", 2.1) and GetElective("Rock") >= 10):#Splinter Shield
     show olivia with dis
     if (not HasEvent("Instructor Olivia", 2)):
         hide olivia with dis
@@ -196,7 +198,7 @@ elif (not HasEvent("Instructor Olivia", 2.1) and classstats["Rock"] >= 10):#Spli
         Pokemon(165, level=11, moves=[GetMove("Tackle"), GetMove("Supersonic"), GetMove("Swift")], ability="Early Bird")
     ])
 
-    call Battle([trainer1, trainer2]) from _call_Battle_39
+    call Battle([trainer1, trainer2], uniforms=[True, False]) from _call_Battle_39
     $ battlehistory["Instructor Olivia1"]  = _return
 
     show olivia with dis
@@ -217,13 +219,13 @@ elif (not HasEvent("Instructor Olivia", 2.1) and classstats["Rock"] >= 10):#Spli
         redmind @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide olivia with dis
-elif (not HasEvent("Instructor Olivia", 3.1) and classstats["Rock"] >= 20):#Hard Stone
+elif (not HasEvent("Instructor Olivia", 3.1) and GetElective("Rock") >= 20):#Hard Stone
     show olivia with dis
     if (not HasEvent("Instructor Olivia", 3)):
 
         narrator "Rock Class is wrapping up, and you're coming to the end of the lesson, when you notice Instructor Olivia is somewhat aimlessly meandering in the corner of the room."
 
-        redmind uniform @confused "{w=0.5}.{w=0.5}.{w=0.5}."
+        redmind uniform @thonk "{w=0.5}.{w=0.5}.{w=0.5}."
 
         red @talkingmouth "Instructor Olivia?"
 
@@ -311,7 +313,7 @@ elif (not HasEvent("Instructor Olivia", 3.1) and classstats["Rock"] >= 20):#Hard
         redmind @thinking "Damn... that was an embarrassing loss. Still, at least I learned something..."
 
     hide olivia with dis
-elif (not HasEvent("Instructor Olivia", 4.1) and classstats["Rock"] >= 30):#Rock Tomb
+elif (not HasEvent("Instructor Olivia", 4.1) and GetElective("Rock") >= 30):#Rock Tomb
     show olivia with dis
     if (not HasEvent("Instructor Olivia", 4)):
         
@@ -419,6 +421,7 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+            hide olivia with dis
             jump aftertutoring
         else:
             jump afterrocksetup
@@ -434,6 +437,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ newmon.LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide olivia with dis
         jump endclass
 else:
     olivia @surprised "...Huh? No, I... that Pokémon, I don't know... sorry."

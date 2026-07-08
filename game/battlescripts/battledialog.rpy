@@ -1552,7 +1552,7 @@ label hocustransform:
     duplica @closedbrow happymouth "I wouldn't expect a lowbrow goon like you to understand, but I'm a member of High Societea, where advantages like this are common."
     duplica angrybrow frownmouth @happymouth winkbrow "Mr. Giovanni took one look at my special Ditto and brought me onboard! Lololol!"
 
-    red angrybrow @talking2mouth "Yeah, for all the good it did. Team Rocket fell apart right after you joined, didn't it."
+    red angrybrow @talking2mouth "Yeah, for all the good it did. Team Rocket fell apart right after you joined, didn't it?"
 
     show copyred shadow with dis
 
@@ -1687,4 +1687,700 @@ label rowanbattle3:
     hide red
     show screen battle
     with dis
+    return
+
+init python:
+    def sycamoredialog(attributes):
+        currentscene = None
+        if ("BeforeBattle" in attributes):
+            currentscene = "sycamorebattleintro"
+        elif ("PreStep" in attributes and Turn % 12 == 0 and seencutscenes.count("sycamorebunnyrecruit") < 3):
+            currentscene = "sycamorebunnyrecruit"
+        elif ("PostTurn" in attributes and eb().Item == Item.Kangaskhanite):
+            currentscene = "sycamoremegaevo"
+
+        if (currentscene != None and (currentscene == "sycamorebunnyrecruit" or currentscene not in seencutscenes)):
+            seencutscenes.append(currentscene)
+            renpy.call_in_new_context(currentscene)
+
+label sycamorebattleintro:
+    hide screen battle
+    show screen battleui
+
+    redmind uniform @thinking "It looks like almost everyone is here, even the professors. Gotta admit, this is a great opportunity--no-one'll notice me chatting with everyone's focus on the battle."
+    redmind @thinking "The longer Blue lasts in battle, the more time I'll have to talk to people. [bluecolor]I think I can probably talk to one person for every twelve turns he lasts{/color}[ellipses] as long as I speak {i}quickly{/i}, anyway."
+
+    pause 1.0
+
+    redmind @unamusedbrow unamusedmouth "I can't believe I'm saying this[ellipses] but good luck, Blue."
+
+    show screen battle
+    with dis
+    return
+
+label sycamorebunnyrecruit:
+    hide screen battle
+    show screen battleui
+
+    python:
+        bunnyrecruitables = []
+        for candidate in GetGymClassCandidates() + ["Kris", "Janine"]:
+            if (CanBunnyRecruit(candidate) and candidate not in ["Morty", "Bugsy"]):
+                bunnyrecruitables.append((candidate, candidate))
+
+    if (len(bunnyrecruitables) > 0):
+        narrator "There's a break in the crowd[ellipses] with everyone's eyes on the battle, now might be the time to discreetly approach someone!"
+
+        python:
+            bluebattlechar = renpy.display_menu(bunnyrecruitables)
+            renpy.transition(dis)
+            renpy.show(GetCharacterSprite(bluebattlechar, None, True))
+
+        "You want to talk to [bluebattlechar]?"
+
+        menu:
+            "Yes.":
+                call BunnyRecruit(bluebattlechar, True) from _call_BunnyRecruit
+
+            "No.":
+                $ renpy.hide(bluebattlechar.lower())
+
+                jump sycamorebunnyrecruit
+
+        if (seencutscenes.count("sycamorebunnyrecruit") >= 3):
+            narrator "A decent amount of time has passed, and other students start filtering out of the Battle Hall[ellipses] you signal to Blue that he should try to wrap this up."
+
+    show screen battle
+    with dis
+    return
+
+label sycamoremegaevo:
+    hide screen battle
+    show screen battleui
+
+    show blue angrybrow uniform zorder 201:
+        xpos 0.1
+    show sycamore zorder 201:
+        xpos 0.9 xzoom -1
+    with dis
+
+    blue @happymouth "{i}Comme je pensé! Moi gagne toi avec presque pas effort. Bonjour! C'est ça le vrai power du Prof de Méga Évolution{/i}?"
+
+    sycamore @happy "Ah-ha-ha! My friend, this battle is only {i}beginning!{/i} I promised you a show of Mega Evolution, did I not?"
+
+    blue @angrybrow "About time. Hit me with {i}everything!{/i}"
+
+    sycamore @talkingmouth "{i}Oui.{/i} Such passion deserves a mirror--let me show you the bonds between my Pokémon and I!"
+
+    narrator "Professor Sycamore casually puts his hand in his pocket, and pulls out a Key Stone."
+    narrator "[ellipses]Apparently, attaching it to something else is more of a tradition than a requirement."
+
+    show blank zorder 202
+    hide screen battleui
+    with transeye2
+
+    narrator "Kangaskhan's Kangaskhanite is reacting to Professor Sycamore's Mega Flair!"
+    
+    pause 1.0
+
+    $ PlaySound("megaevo.ogg")
+
+    sycamore "Kangaskhan! Show this promising young student the power of bonds between people and Pokémon! Mega Evolution!"
+
+    $ EnemyBattlers()[0].ChangeForme(115.1)
+    $ EnemyBattlers()[0].ApplyStatus("mega evolved")
+
+    pause 1.0
+
+    show screen battleui
+    show sycamore angrybrow
+    hide blank 
+    with transeye
+
+    pause 1.0
+
+    sycamore @talkingmouth "{i}Mon ami{/i}, it has been absolutely {i}fantastic{/i} battling with such a motivated and passionate student. But I am afraid this is where your attempt to beat me ends."
+
+    blue @talkingmouth "We'll see about that! Where I'm standing, it looks to me like this is where {i}your{/i} reputation as a great battler ends!"
+
+    sycamore @happy "Passionate words! Passion, passion, passion--fantastic! {i}En garde!{/i}"
+
+    hide sycamore
+    hide blue
+    show screen battle
+    with dis
+    return
+
+init python:
+    def phobospeanutgallery(attributes):
+        global smalltalks
+        currentscene = None
+
+        tatsu = GetTrainerTeam("phobos", "Tatsugiri", False)
+        if ("PostTurn" in attributes):
+            for mon in EnemyBattlers():
+                if (mon != None):
+                    fvls = mon.GetForeverals()
+                    if (fvls == ["Wugtrio Triveral"] and not "wugtrioseen" in seencutscenes):
+                        seencutscenes.append("wugtrioseen")
+                        smalltalks = [("Ethan", "Guys, that Dugtrio has a Foreveral!"), ("Blue", "That is {i}not{/i} a Dugtrio!"), ("Leaf", "Isn't the Foreveral the bigger problem?!")]
+                    elif (mon.GetId() == 993 and not "ironjugulisseen" in seencutscenes):
+                        seencutscenes.append("ironjugulisseen")
+                        smalltalks = [("Ethan", "That's not a Pokémon, right?"), ("Leaf", "Looks like a Hydreigon...?"), ("Blue", "But it's all wrong.")]
+                    elif (fvls == ["Dodrio Overal"] and not "dodrioseen" in seencutscenes):
+                        seencutscenes.append("dodrioseen")
+                        smalltalks = [("Leaf", "Why does it sound so familiar?"), ("Blue", "It's acting strange..."), ("Ethan", "It's also got a Foreveral.")]
+                    elif (fvls == ["Vespiquen Uneveral"] and not "combeeseen" in seencutscenes):
+                        seencutscenes.append("combeeseen")
+                        smalltalks = [("Blue", "This Combee's going crazy!"), ("Leaf", "Maybe it's the Foreveral...?"), ("Ethan", "How many does Phobos {i}have?!{/i}")]
+                    else:
+                        smalltalks = []
+        elif ("PreChoice" in attributes and tatsu in EnemyBattlers() and tatsu.GetId() != 978.4):
+            if ("phobosbattlemegatatsugiri" not in seencutscenes):
+                currentscene = "phobosbattlemegatatsugiri"
+            else:
+                currentscene = "phobosbattlemegatatsugiriskip"
+
+        if (currentscene != None and (currentscene not in seencutscenes or currentscene == 'phobosbattlemegatatsugiriskip')):
+            seencutscenes.append(currentscene)
+            renpy.call_in_new_context(currentscene)
+
+init python:
+    def phobosbattledialog(attributes):
+        currentscene = None
+        tatsu = GetTrainerTeam("phobos", "Tatsugiri", False)
+        if ("BeforeBattle" in attributes and Turn == 0):
+            currentscene = "phobosbattleintro"
+        elif ("PreChoice" in attributes and tatsu in EnemyBattlers() and tatsu.GetId() != 978.4):
+            if ("phobosbattlemegatatsugiri" not in seencutscenes):
+                currentscene = "phobosbattlemegatatsugiri"
+            else:
+                currentscene = "phobosbattlemegatatsugiriskip"
+
+        if (currentscene != None and (currentscene not in seencutscenes or currentscene == 'phobosbattlemegatatsugiriskip')):
+            seencutscenes.append(currentscene)
+            renpy.call_in_new_context(currentscene)
+
+label phobosbattleintro:
+    narrator "{glitch=20}The winds of liberation are howling!{/glitch} [pika_name] is raring to battle!"
+
+    $ PlaySound("Pokemon/pikachu_excite5.ogg")
+    libpikachu glowing angry2eyes sparks happy2mouth "Piii-kaaaa-chuuu!"
+
+    if (fb() == pikachuobj):
+        narrator "{glitch=20.00}A familiar option has appeared to you.{/glitch}"
+
+    else:
+        narrator "{glitch=20.00}A familiar power is flowing out of [pika_name].{/glitch}"
+
+    return
+
+label phobosbattlemegatatsugiri:
+    hide screen battle
+    show screen battleui
+    show phobos angrybrow angrysharkmouth goggles:
+        xpos 0.67
+
+    phobos "Bah, so what? You've only defeated the vanguard of my magnificience!"
+
+    narrator "Phobos slams his hand down on his chair, and a Key Stone pops out!"
+
+    show blank
+    hide screen battleui
+    with transeye2
+
+    narrator "Tatsugiri's Megaveral is reacting to Baron Lawrence Phobos III's Mega Armrest!"
+    
+    pause 1.0
+
+    $ PlaySound("megaevo.ogg")
+
+    phobos "Tatsugiri! Prove your worth to me! Mega Evolve, and blow these brats away in an outrage of {i}my{/i} elegallantry!"
+
+    $ GetTrainerTeam("phobos", "Tatsugiri", False).ChangeForme(978.4)
+    $ GetTrainerTeam("phobos", "Tatsugiri", False).ApplyStatus("mega evolved")
+
+    pause 1.0
+
+    show screen battleui
+    hide blank 
+    hide phobos
+    with transeye
+
+    return
+
+label phobosbattlemegatatsugiriskip:
+    $ PlaySound("megaevo.ogg")
+    $ GetTrainerTeam("phobos", "Tatsugiri", False).ChangeForme(978.4)
+    $ GetTrainerTeam("phobos", "Tatsugiri", False).ApplyStatus("mega evolved")
+
+    return
+
+init python:
+    def phobosbattle2dialog(attributes):
+        currentscene = None
+        revived = False
+        
+        if ("PreChoice" in attributes and len(EnemyTrainers()[0].GetUnfaintedTeam()) > 0):
+            BattleCheck()
+            for mon in EnemyPokemon():
+                if mon.GetHealth() <= 0 and not mon.HasStatus("recruited"):
+                    mon.Heal()
+                    PlaySound("Heal_A.ogg")
+                    if (not revived):
+                        renpy.say(None, "ETERNITY PHOBOS used MAX REVIVE(s)!")
+                    revived = True
+        
+        if ("PreChoice" in attributes and eb() == GetTrainerTeam("phobos", "Dodrio", False)):
+            currentscene = "phobosbattle2dodriointro"
+        elif ("Call" in attributes and eb() == GetTrainerTeam("phobos", "Dodrio", False)):
+            currentscene = "phobosbattle2dodriocall"
+        elif ("PreChoice" in attributes and eb() == GetTrainerTeam("phobos", "Wugtrio", False)):
+            currentscene = "phobosbattle2wugtriointro"
+        elif ("Call" in attributes and eb() == GetTrainerTeam("phobos", "Wugtrio", False)):
+            currentscene = "phobosbattle2wugtriocall"
+        elif ("PreChoice" in attributes and eb() == GetTrainerTeam("phobos", "Combee", False)):
+            currentscene = "phobosbattle2combeeintro"
+        elif ("Call" in attributes and eb() == GetTrainerTeam("phobos", "Combee", False)):
+            currentscene = "phobosbattle2combeecall"
+        elif ("PreChoice" in attributes and eb() == GetTrainerTeam("phobos", "Tatsugiri", False)):
+            currentscene = "phobosbattle2tatsugiriintro"
+        elif ("Call" in attributes and eb() == GetTrainerTeam("phobos", "Tatsugiri", False)):
+            currentscene = "phobosbattle2tatsugiricall"
+        elif ("Call" in attributes and eb() == GetTrainerTeam("phobos", "Iron Jugulis", False)):
+            currentscene = "phobosbattle2ironjuguliscall"
+
+        if (currentscene != None and currentscene not in seencutscenes):
+            seencutscenes.append(currentscene)
+            renpy.call_in_new_context(currentscene)
+
+label phobosbattle2dodriointro:
+    hide screen battle
+    show screen battleui
+    show red angrybrow frownmouth zorder 1000:
+        xpos 0.1
+    show yellow angrybrow frownmouth zorder 1001:
+        xpos 0.2 xzoom -1
+
+    yellow @talking2mouth "This Dodrio[ellipses] it's scared, and hurt. It's actually a Doduo, but when that stone was forced onto it, a third mind developed, demanding and absolute."
+    yellow @sadbrow talking2mouth "The two other minds just want peace--but with that third mind screaming Phobos' orders at them, they're following his orders just to have a chance at silence."
+
+    hide red
+    hide yellow
+    hide screen battleui
+    with dis
+
+    return
+
+label phobosbattle2dodriocall:
+    hide screen battle
+    show screen battleui
+    show red angrybrow frownmouth zorder 1000:
+        xpos 0.1
+    show yellow angrybrow frownmouth zorder 1001:
+        xpos 0.2 xzoom -1
+
+    red @sadbrow talking2mouth "Dodrio! No--Doduo! Don't listen to what Phobos tells you you need to be! Break away from Phobos!"
+    red @sadbrow talking2mouth "That third voice you're hearing--that's not yours, that's Phobos screaming at you through the gem!"
+    red @angrybrow talking2mouth "When you evolve, it will be a powerful and beautiful thing--not something you'll have to endure!"
+    red @happy "Remember what you are, and that you only need to be yourself!"
+    
+    narrator "[ellipses]"
+
+    show yellow surprisedbrow frownmouth with dis
+
+    python:
+        eb().ApplyStatus("recruited")
+        eb().Health = 0
+        AddEvent("Yellow", "DoduoCalled")
+        dodrioobj = GetTrainerTeam("Phobos", "Dodrio", False)
+        yellowtrainer = FriendlyTrainers()[1]
+        dodrioobj.Owner = yellowtrainer
+        dodrioobj.ClearStatus("recruited")
+        dodrioobj.Heal()
+        dodrioobj.Foreverals = []
+        dodrioobj.Id = 84
+        EnemyTrainers()[0].GetTeam().remove(dodrioobj)
+        yellowtrainer.GetTeam().append(dodrioobj)
+
+    yellow @talking2mouth "Wait, it--it wants to join me?"
+
+    red @winkbrow talkingmouth "It's a bird of taste. But we're not done yet! Come on, let's keep going!"
+
+    if (len(EnemyTrainers()[0].GetUnfaintedTeam()) == 0):
+        jump phobosbattle2finalcall
+    else:
+        hide red
+        hide yellow
+        hide phobos
+        hide screen battleui
+        with dis
+
+        return
+
+label phobosbattle2combeeintro:
+    hide screen battle
+    show screen battleui
+    show red angrybrow frownmouth zorder 1000:
+        xpos 0.1
+    show yellow angrybrow frownmouth zorder 1001:
+        xpos 0.2 xzoom -1
+
+    yellow @talking2mouth "This Combee[ellipses] it used to be a Vespiquen, a dignified queen. She was stolen from her hive, and has been forced to devolve, stripped of her dignity and status."
+    yellow @sadbrow talking2mouth "She doesn't know what has happened to her hive--her children--and fears for them. She doesn't want to rebel against Phobos in case he tries to hurt them more."
+
+    hide red
+    hide yellow
+    hide screen battleui
+    with dis
+
+    return
+
+label phobosbattle2combeecall:
+    hide screen battle
+    show screen battleui
+    show red angrybrow frownmouth zorder 1000:
+        xpos 0.1
+    show yellow angrybrow frownmouth zorder 1001:
+        xpos 0.2 xzoom -1
+
+    red @sadbrow talking2mouth "Vespiquen, listen up! You're still a queen, and you still have hundreds of grubs who need you to be a queen for them!"
+    red @talking2mouth "You can't be scared of what Phobos might do in retaliation! You have to be strong for your subjects--you have to believe you'll be strong enough to defend them again!"
+    red @angrybrow angrymouth "If you want to fight for them, then you're on the wrong side! Go to them and fight for them {i}against{/i} Phobos!"
+
+    narrator "[ellipses]"
+
+    $ eb().ApplyStatus("recruited")
+    $ eb().Health = 0
+    $ AddEvent("May", "CombeeCalled")
+
+    may contest @surprised "Oh, it's--it's coming right at me! I think it wants to battle?"
+    may @angrybrow angrymouth "I'll take care of this, Yellow and [first_name]! You handle Phobos!"
+
+    if (len(EnemyTrainers()[0].GetUnfaintedTeam()) == 0):
+        jump phobosbattle2finalcall
+    else:
+        hide red
+        hide yellow
+        hide phobos
+        hide screen battleui
+        with dis
+
+        return
+
+label phobosbattle2tatsugiriintro:
+    hide screen battle
+    show screen battleui
+    show red angrybrow frownmouth zorder 1000:
+        xpos 0.1
+    show yellow angrybrow frownmouth zorder 1001:
+        xpos 0.2 xzoom -1
+
+    yellow @talking2mouth "This Tatsugiri[ellipses] it had a partner, a strong and proud Dondozo. The two were inseparable, until Phobos tore the two apart."
+    yellow @talking2mouth "That rock is making Tatsugiri feel a sickening, saccharine sense of loyalty toward him, to force Mega Evolution."
+    yellow @sadbrow talking2mouth "But Tatsugiri[ellipses] just wants to go home. They're oceans apart, but Tatsugiri can still hear Dondozo's cry of loss."
+    yellow @sadbrow talking2mouth "Tatsugiri doesn't think that they'll ever find Dondozo again, though[ellipses]"
+
+    hide red
+    hide yellow
+    hide screen battleui
+    with dis
+
+    return
+
+label phobosbattle2tatsugiricall:
+    hide screen battle
+    show screen battleui
+    show red angrybrow frownmouth zorder 1000:
+        xpos 0.1
+    show yellow angrybrow frownmouth zorder 1001:
+        xpos 0.2 xzoom -1
+
+    red @sadbrow talking2mouth "Tatsugiri! Don't give up, okay? You can still find Dondozo again! But you have to start looking!"
+    red @angrybrow talkingmouth "Phobos will never let you go--he'll never {i}help{/i} you get away from him! You have to choose, now, to break what he's got over you!"
+    red @talking2mouth "It's not loyalty or partnership--it's dependency. He {i}needs{/i} you to be strong for him!"
+    red @angrybrow angrymouth "But you need to be strong for yourself!"
+
+    narrator "[ellipses]"
+
+    $ eb().ApplyStatus("recruited")
+    $ eb().Health = 0
+    $ AddEvent("Melody", "TatsugiriCalled")
+
+    melody contest up @surprised "It's coming to me? Really? I was on Phobos' side ten minutes ago."
+    melody @bubblemouth "[ellipses]"
+    melody @talking2mouth "Guess we both were. I've got it. You finish him off."
+
+    if (len(EnemyTrainers()[0].GetUnfaintedTeam()) == 0):
+        jump phobosbattle2finalcall
+    else:
+        hide red
+        hide yellow
+        hide phobos
+        hide screen battleui
+        with dis
+
+        return
+
+label phobosbattle2finalcall:
+    red @talking2mouth "Wait. One, two, three[ellipses]"
+    red @surprised "That's it, right? He's out. We beat him."
+
+    pause 1.0
+
+    yellow @talking2mouth "No. No, there's one more. One more who needs healing."
+
+    red @surprisedbrow talking2mouth "Really? You think you can do it?"
+
+    yellow @closedeyes angryeyebrows sweat talking2mouth "I think I {i}have{/i} to try."
+
+    show blank4 behind yellow 
+    hide screen battle
+    show screen battleui
+    with transeye2nopause
+    $ PlaySound("shine.ogg")
+    pause 1.0
+    python:
+        for mon in FriendlyPokemon():
+            mon.AdjustHealth(mon.GetStat(Stats.Health), absolute = True)
+            mon.ClearStatus("basics", volatiles=True, basicafflictions=True)
+            mon.ResetStatChanges()
+            mon.ResetFaintedTurn()
+            mon.Terastallized = -1
+            for move in mon.GetMoves():
+                move.PP = move.MaxPP
+    hide blank4 with transeye2nopause
+
+    yellow @talking2mouth "Heal."
+
+    pause 2.0
+
+    show phobos goggles angrybrow angrysharkmouth zorder 1000 with dis:
+        xpos 0.75
+
+    phobos "What--what {i}nonsense{/i} is this?! Are you trying to {i}heal{/i} this disappointing pile of scrap?! My weapon--your opponent?!"
+
+    yellow @closedbrow talking2mouth "[first_name], there's--there {i}is{/i} something there. I just need a burst of energy, and I think I can get over the ledge."
+
+    red @talking2mouth "Tell me what to do."
+
+    yellow @closedbrow frownmouth sweat "[ellipses]"
+    yellow @talkingmouth "Nothing. I can do it."
+
+    if (GetTrainerTeam("Yellow", "Pichu") not in FriendlyBattlers()):
+        python:
+            yellowtrainer = FriendlyTrainers()[1]
+            yellowteam = yellowtrainer.GetTeam()
+            yellowtrainer.ShiftTeam(0, yellowteam.index(GetTrainerTeam("Yellow", "Pichu")))
+
+        yellow @talking2mouth "Chuchu, please switch in. I need you!"
+
+    else:
+        phobos @talking2mouth "A boyish stringbean and her Pichu?"
+
+    pause 1.0
+
+    phobos @upeyes talking2sharkmouth "That hardly terrifies me."
+
+    yellow @talking2mouth "Whenever a Pokémon evolves, it releases a burst of energy around it--a wave of natural rejuvenation, like a much more powerful version of what I can do."
+    yellow @closedbrow talking2mouth "Every Pokémon can only do it as many times as they evolve."
+    yellow @talking2mouth "So if you're going up against a trainer who has a team that's entirely unevolved, it might mean they don't battle very often[ellipses]"
+    yellow @angrybrow challengingmouth "Or they're saving that boost for something more important than a battle."
+
+    yellow @closedbrow talking2mouth "Pichu, now's our time! Please, evolve!"
+
+    $ GetTrainerTeam("Yellow", "Pichu", False).Ability = "Static"
+    $ GetTrainerTeam("Yellow", "Pichu").Evolve(25.3, force=True)
+    $ GetTrainerTeam("Yellow", "Pichu", True).Foreverals = ["Pikachu Foreveral"]
+
+    show yellow surprisedbrow frownmouth
+    show red surprisedbrow frownmouth
+    with dis
+
+    red @talking2mouth "Uh[ellipses] where'd the outfit come from?"
+
+    yellow @talking2mouth "I don't know. Maybe it was the Foreveral that Blue gave Chuchu?"
+
+    red @unamusedbrow talking2mouth "Chuchu hasn't just turned into another one-in-a-million super-rare heretofore-unknown Pokémon with unimaginable power, has she?"
+
+    yellow -surprisedbrow @confusedbrow talking2mouth "I'm pretty sure it's just an outfit."
+
+    redmind -surprisedbrow @upeyes frownmouth confusedeyebrows "Well, that's a kind of power, I guess."
+
+    yellow @talking2mouth "But that's not the important part. The important part is that Chuchu evolved, and with the ambient energy from evolution, I can[ellipses]"
+    
+    show blank4 behind yellow with transeye2nopausefast
+    $ PlaySound("shine.ogg")
+    pause 0.4
+    hide blank4 with transeye2nopause
+
+    yellow closedbrow sweat talking2mouth "Heal,{w=0.5}{nw}"
+
+    show blank4 as blank42 behind yellow with transeye2nopausefast
+    $ PlaySound("shine.ogg")
+    pause 0.4
+    hide blank42 with transeye2nopause
+
+    extend closedeyes angryeyebrows sweat talking2mouth " heal,{w=0.5}{nw}"
+
+    show blank4 as blank43 behind yellow with transeye2nopausefast
+    $ PlaySound("shine.ogg")
+    pause 0.4
+    hide blank43 with transeye2nopause
+
+    extend closedeyes angryeyebrows sweat angrymouth " and {i}heal!{/i}"
+
+    pause 2.0
+
+    show yellow winkeyebag winkeyes sweat frownmouth:
+        xpos 0.2 xzoom -1
+        ease 2.0 xpos 0.21 ypos 1.02 rotate 1
+
+    $ EnemyTrainers()[0].Team = [GetTrainerTeam("Phobos", "Iron Jugulis")]
+
+    red @talking2mouth "This one[ellipses] it hurt AZOTH1."
+
+    yellow @talking2mouth "It says Phobos calls it Iron Jugulis--but its name is Cybreigon. It came from another world, in the distant future, but while it was trying to get its bearings, Phobos captured it."
+    yellow @sadbrow talking2mouth "It's just scared and lost. It doesn't understand this new world, and the rock Phobos forced onto it is at least giving it some sort of direction--even if it hates it."
+
+    pause 1.0
+
+    red @talking2mouth "So even {i}it's{/i} a victim of Phobos, and not just a mindless machine. After all, if you can heal it, it's gotta be a Pokémon, right?" 
+    red @happy "Fine. I know what to say. Let's finish this, Yell'!"
+
+    hide red
+    hide yellow
+    hide screen battleui
+    with dis
+
+    return
+
+label phobosbattle2wugtriointro:
+    hide screen battle
+    show screen battleui
+    show red angrybrow frownmouth:
+        xpos 0.1
+    show yellow angrybrow frownmouth:
+        xpos 0.2 xzoom -1
+
+    $ himpronoun = "him" if GetTrainerTeam("phobos", "Wugtrio", heal=False).GetGender() == Genders.Male else "her"
+    $ hispronoun = "his" if GetTrainerTeam("phobos", "Wugtrio", heal=False).GetGender() == Genders.Male else "her"
+    yellow @talking2mouth "This Wugtrio[ellipses] it was Lawrence--Phobos' first partner. Wugtrio says Phobos wasn't always this way, and even though the rock Phobos forced on [himpronoun] is warping [hispronoun] body[ellipses]"
+    yellow @sadbrow talking2mouth "Wugtrio remembers when Phobos was kind, and remembers the pain the two of them went through together."
+
+    pause 1.0
+
+    red @talking2mouth "I understand how it feels, but it can't let Phobos keep using it like this." 
+
+    show red surprisedbrow frownmouth with dis
+    
+    yellow @talking2mouth "Try to convince [himpronoun] to come to our side--or at least leave Phobos."
+
+    red @talking2mouth "What? But it's a trainer's Pokémon. They can't just[ellipses] {i}leave{/i} their trainer--can they?"
+
+    yellow @talking2mouth "The entire time you were battling Phobos, all they were saying is that they wanted to."
+    yellow @closedbrow sweat talking2mouth "Poké Balls don't control a Pokémon's mind. All of them, right now, are choosing to see Phobos as their trainer."
+    yellow @angrybrow talking2mouth "And if they're choosing to stay, they can choose to leave."
+
+    pause 1.0
+
+    red -surprisedbrow @talking2mouth "Got it. I know what to say."
+
+    hide red
+    hide yellow
+    hide screen battleui
+    with dis
+
+    return
+
+label phobosbattle2wugtriocall:
+    hide screen battle
+    show screen battleui
+    show red angrybrow frownmouth:
+        xpos 0.1
+    show yellow angrybrow frownmouth:
+        xpos 0.2 xzoom -1
+
+    red @sadbrow talking2mouth "Wugtrio, listen to us! You're not being loyal to Phobos, you're just suffering for him!"
+    red @talking2mouth "If he cared about you as much as you care about him, he wouldn't ask you to forgive everything he's become!"
+
+    show phobos unamusedbrow frownmouth goggles:
+        xpos 0.7
+
+    phobos @talking2sharkmouth "What nonsense is this? Wugtrio was my very first Pokémon. It can't abandon me--it knows I made it what it is today."
+    phobos @happybrow happysharkmouth "Versatile, powerful, beautiful. Everything a Pokémon of mine should be! It owes me for every contest I let it shine in!"
+
+    red @talking2mouth sadbrow "Ignore him, Wugtrio. You don't owe him anything--and you certainly don't owe him your suffering. Not anymore."
+    red @talking2mouth angrybrow "You deserve someone kind, who will appreciate you, and take care of you! Someone who will take you to contests for {i}your{/i} benefit, not his!"
+
+    phobos @talking2sharkmouth upeyes "Enough of this rubbish. Attack, Wugtrio."
+
+    narrator "[ellipses]"
+
+    show phobos surprisedbrow frownmouth with dis
+    
+    $ eb().ApplyStatus("recruited")
+    $ eb().Health = 0
+    $ AddEvent("Brendan", "WugtrioCalled")
+
+    brendan contest @surprised "Wait, it's comin' toward me?! Uh, okay, I guess I'll battle it! Keep it up, you guys!"
+
+    if (len(EnemyTrainers()[0].GetUnfaintedTeam()) == 0):
+        jump phobosbattle2finalcall
+    else:
+        hide red
+        hide yellow
+        hide phobos
+        hide screen battleui
+        with dis
+
+        return
+
+label phobosbattle2ironjuguliscall:
+    hide screen battle
+    show screen battleui
+    show red angrybrow frownmouth zorder 1000:
+        xpos 0.1
+    show yellow angrybrow frownmouth zorder 1001:
+        xpos 0.2 xzoom -1
+
+    red @closedbrow sweat talking2mouth "Hey, uh, Cybreigon! I don't--I {i}really{/i} don't understand what you are, but if you're a Pokémon, that's good enough for me!"
+    red @talking2mouth "If you're a Pokémon, you deserve to be loved and cared for! I know this world is strange and scary, but it's not going to get any better by listening to what Phobos tells you to do!"
+    red @angrybrow angrymouth "You're strong--you're {i}incredibly{/i} strong--and that means {i}you{/i} should get to decide what your strength means! Not Phobos, not anyone else!"
+
+    show phobos angrybrow angrysharkmouth goggles zorder 1000:
+        xpos 0.7
+
+    phobos "Listen to me, brats! It's a machine! Just a tool! You're--you're trying to reach the heart of a lighter, a wrench, a--a pocketwatch!"
+    
+    red @talking2mouth "You're the only tool here, Phobos."
+
+    yellow @talking2mouth "You can't decide people's paths for them. Not because you have power, or money, or influence. We might not always walk where we should, when we should..."
+    yellow @talking2mouth "But that's our choice, too. Cybreigon--please, break free."
+
+    narrator "[ellipses]"
+
+    show phobos surprisedbrow frownmouth with dis
+
+    $ eb().ApplyStatus("recruited")
+    $ eb().Health = 0
+    $ EnemyTrainers()[0].Team = []
+    $ AddEvent("Grusha", "IronJugulisCalled")
+
+    pause 2.0
+
+    grusha noscarf winkbrow sweat @talking2mouth "Wait, why's everyone looking at--"
+
+    show concerthallstagenight with vpunch
+
+    grusha @surprisedblankeyes tinyup surprisedeyebrows surprisedmouth "{i}¡Mierda, ¿qué es eso?!{/i}"
+
+    hide red
+    hide yellow
+    hide phobos
+    hide screen battleui
+    with dis
+
+    $ AutoWin = True
+
     return

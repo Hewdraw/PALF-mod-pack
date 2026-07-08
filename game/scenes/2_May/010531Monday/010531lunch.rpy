@@ -35,10 +35,13 @@ with dis
 red uniform @closedbrow talking2mouth "Hm... seems like the audience is looking for some pretty specific Pokémon."
 
 if (starterobj in playerparty):
-    $ DisplayPokemon(starter_species_name)
-
     python:
+        starter_id = starterobj.Id
+        starter_name = starterobj.GetNickname()
+        starter_species_name = pokedexlookup(starter_id, DexMacros.Name)
         starter_contest_trait = pokedexlookup(starter_id, DexMacros.ContestTrait)
+
+        DisplayPokemon(starter_species_name)
 
     red @confused "Let's see... looking at you, I think I'd say you're... [starter_contest_trait]!"
 

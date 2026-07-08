@@ -93,7 +93,7 @@ gardenia @talking2mouth "Uh... no-one knows."
 gardenia @surprisedbrow talkingmouth "I've studied the economies of Celestic Town and the area north of Route 223 so I could figure out what she was spending her money on, and invest in it..."
 gardenia @surprised "But as far as I can tell, she's either not spending that money at all, or does all her shopping online!"
 
-nessa @talkingmouth "Being fair, it's rather hard to imagine Cynthia walking into a Poké Mart and asking to buy a handful of Poké Balls."
+nessa @talking2mouth "Being fair, it's rather hard to imagine Cynthia walking into a Poké Mart and asking to buy a handful of Poké Balls."
 
 gardenia @talkingmouth "Yeah, I guess..."
 
@@ -105,11 +105,11 @@ gardenia @angrybrow happymouth "So what does your dear friend Leon spend his mon
 
 raihan @closedbrow talking2mouth "Ah... somehow, he spends that money even faster than he gets it. He helps out trainers in Galar, mostly, but sometimes he'll just decide to buy an island, or bankroll a new field of science..."
 
-nessa @talkingmouth "The Aether Foundation has three new wings named after him. Don't think he even knows how to pronounce 'aether.'"
+nessa @talking2mouth "The Aether Foundation has three new wings named after him. Don't think he even knows how to pronounce 'aether.'"
 
 raihan @surprised "Being fair, it's a bloody tough word. Who decided 'ae' should be pronounced 'ee'? It should be, like... 'eye-ee.' Or maybe 'ey'?"
 
-nessa @talkingmouth "...Sunny, this is your daily reminder you're the smart one."
+nessa @talking2mouth "...Sunny, this is your daily reminder you're the smart one."
 
 sonia @sadbrow talking2mouth "Er... thanks, Ness."
 

@@ -364,7 +364,7 @@ ethan @talkingmouth "Well, Pichu? You wanna run off as well?"
 
 $ PlaySound("pokemon/cries/172.mp3")
 
-Character("Pichu") "\"Pi-chu!\""
+TempCharacter("Pichu") "Pi-chu!"
 
 narrator "The Spiky-Eared Pichu tightly hugs Ethan's leg, clearly not intending to leave. It doesn't seem scared; it just seems overly affectionate."
 
@@ -532,7 +532,7 @@ brendan @talking2mouth "Oh yeah, you're from New Bark Town.{w=0.5} Isn't the pop
 
 ethan @happy "Something like that."
 
-if (classstats["Ground"] == 0):
+if (GetElective("Ground") == 0):
     brendan @happybrow talkingmouth "I brought some Lava Cookies, by the way.{w=0.5} Sorry if you're not a fan of sweet things, I'm not big on them either, but they're a Hoenn specialty!"
     
 else:
@@ -949,7 +949,7 @@ show brendan sadbrow frownmouth
 show calem sadbrow frownmouth
 with dis
 
-red @angrybrow talking2mouth "Yeah, well, someone had to stand up for [pika_name] and I."
+red @angrybrow talking2mouth "Yeah, well, {i}someone{/i} had to stand up for [pika_name] and me."
 
 brendan @talking2mouth "Oh yeah. H-heh.{w=0.5}{nw}"
 extend @sad " Y'know, Lance is kind of a big deal, and if I said the wrong thing it might've made you look worse and--"
@@ -2156,10 +2156,10 @@ show revlance with dis:
 
 redmind -happy frownmouth sadbrow "They're in perfect sync. Is it just because Janine trained her Venomoth well?{w=0.5} Meanwhile, all her opponent can do is try to keep up."
 
-if (classstats["Dark"] > 0):
+if (GetElective("Dark") > 0):
     redmind "Lance talks about a Pokémon's strength like it's the be-all and end-all element in battle, but Instructor Karen would call that philosophy selfish.{w=0.5} So who's right?"
     redmind "There's just gotta be more to battles than raw power.{w=0.5} There {i}has{/i} to be."
-elif (classstats["Poison"] > 0):
+elif (GetElective("Poison") > 0):
     redmind "Lance talks about a Pokémon's strength like it's the be-all and end-all element in battle, but Instructor Koga would beg to differ.{w=0.5} So who's right?"
     redmind "There's just gotta be more to battles than raw power.{w=0.5} There {i}has{/i} to be."
 else:

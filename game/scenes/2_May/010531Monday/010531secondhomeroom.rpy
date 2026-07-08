@@ -85,18 +85,18 @@ python:
             mon.ChangeStats(Stats.SpecialDefense, -6)
 
 call Battle([trainer1, trainer2], clearstats=False, gainexp=False, healParty=False, uniforms=[True, False], lockbag=True, lockluck=True) from _call_Battle_174
-$ RecordBattle("Oak11")
+$ RecordBattle("Oak12")
 
 play music "Audio/Music/Oak Intro.ogg" noloop
 queue music "Audio/Music/Oak Class.ogg"
 
 show oak with dis
 
-if (WonBattle("Oak11")):
+if (WonBattle("Oak12")):
     oak @talkingmouth "Hm! Well done."
 
 else:
-    oak @closedbrow talkingmouth "Room for improvement, amongst some of you. Not to worry. If you have ny questions, I'll be holding office hours quite shortly."
+    oak @closedbrow talkingmouth "Room for improvement, amongst some of you. Not to worry. If you have any questions, I'll be holding office hours quite shortly."
 
 pause 1.0
 
@@ -349,7 +349,7 @@ blue @closedbrow talking2mouth "Whaaat{i}ever{/i}. Let's just get this over with
 python:
     coordinators = [
         CoordinatorGroup([
-            Coordinator(first_name, condition=coordinatingknowledge, isprotag=True, contestsprite="")
+            Coordinator(first_name, condition=coordinatingknowledge, isprotag=True, contestsprite="", iscontrollable=True)
         ]),
         CoordinatorGroup([
             Coordinator("Blue", condition=0, partner=GetTrainerTeam("Blue", "Pidgeotto"), contestsprite="og")

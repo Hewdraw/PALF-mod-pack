@@ -847,6 +847,7 @@ label Silver2:
     return
 
 label Silver2Part2:
+    $ timeOfDay = "Midnight"
     $ AddEvent("Silver", "Silver2Part2")
     $ AddEvent("Silver", "Overthrown")
     stop music fadeout 1.5
@@ -920,7 +921,7 @@ label Silver2Part2:
     pause 1.0
 
     narrator "It seems apparent that your magical powers of lip-reading across dark distances has left you."
-    narrator "Either that or Silver's having a stroke."
+    narrator "Or perhaps Silver's having a stroke."
 
     redmind @thinking sweat "Either way, I should definitely head down there quickly..."
 
@@ -938,6 +939,8 @@ label Silver2Part2:
     scene blank2 with splitfade
 
     pause 1.0
+
+    $ location = "campus"
 
     scene relichall_B 
     show silver winter surprisedbrow frownmouth at night
@@ -1011,7 +1014,7 @@ label Silver2Part2:
 
     show silver sadbrow frownmouth with dis
 
-    silver @talking2mouth "They're so screwed. It's been hard enough trying to keep them under the radar. We've had INTERPOL sweeping across the globe trying to get the last of us, especially after those idiots in Johto made their play."
+    silver @talking2mouth "They're so screwed. It's been hard enough trying to keep them under the radar. We've had INTERPOL sweeping across the globe trying to finish us off, especially after those idiots in Johto made their play."
     silver @closedbrow talking2mouth "The last of us in Unova were captured six months ago. They found him buried somewhere in Icirrus. Swept in in the dead of winter." 
     silver @talking2mouth closedbrow "That place is a swampy shithole in the middle of nowhere--if they could find him {i}there{/i}, what chance do {i}we{/i} have in the middle of a big fucking city?!"
     silver @sadbrow talking2mouth "I thought Kobukan would be safe! I thought if I got a proper Kobukan education, didn't stand out, we can stay under the radar, and I could emerge as a legitimate Dark-type Gym Leader, or something, somewhere."

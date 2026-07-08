@@ -289,7 +289,7 @@ iono confusedeyes bravemouth calmeyebrow @shadow disgustedbrow disgustedmouth "{
 
 red @talking2mouth "(This is the longest five-minute conversation I've ever had.)"
 
-iono @talkingmouth "English, friendo. {i}No hablo japonesa.{/i}"
+iono @talkingmouth "English, friendo. {i}No hablo japonés.{/i}"
 
 red @talking2mouth "Right. Okay, so, as I was saying--the most important thing to you is that no-one knows you're {i}here{/i}."
 
@@ -546,7 +546,6 @@ pause 1.0
 iono puppyeyes defeatedeyebrow frownmouth @puppyeyes defeatedeyebrow talking2mouth "[first_name]? Please help me. I don't know what I did wrong, and I'm kinda scared."
 
 red @surprisedbrow talking2mouth "Oh. Oh, shit, sorry, I didn't mean to take it that far."
-
 
 show iono surprised blush with dis
 
@@ -877,7 +876,7 @@ show iono behind kris with dis:
 iono @talkingmouth "I guess you're a big fan of my streaming career, then?"
 
 kris @talking2mouth "Oh, well[ellipses] I think I'm a bit older than your target demo, but your engineering work is a {i}massive{/i} inspiration to me."
-kris @happy "You made a better Poké Ball than the industry standard when your were {i}fourteen!{/i} I handcraft all my Poké Balls, and I still follow {i}your{/i} method."
+kris @happy "You made a better Poké Ball than the industry standard when you were {i}fourteen!{/i} I handcraft all my Poké Balls, and I still follow {i}your{/i} method."
 
 pause 1.0
 
@@ -955,7 +954,7 @@ iono happy "You gotcha, Doc! We'll both be able to keep track of 'em, anyway, si
 
 kris happy "I can't wait!"
 
-$ PlaySound("audio/07_fanfare.ogg")
+$ PlaySound("07_fanfare.ogg")
 
 pause 1.0
 
@@ -1023,9 +1022,9 @@ iono @embarrassedeyebrow sad2eyes talking2mouth "I[ellipses] y'know, didn't want
 if (IsDate(month=6)):
     drayden @closedbrow "And in your avoidance of immediate conflict, you find yourself in the unenviable position of a {i}far more dire{/i} one a month later, asking me to make an exception to the rules with, frankly, little justification."
 elif (IsDate(month=5)):
-    drayden @closedbrow "And in your avoidance of immediate conflict, you find yourself in the unenviable position of a {i}far more dire{/i} less than a month later, asking me to make an exception to the rules with, frankly, little justification."
+    drayden @closedbrow "And in your avoidance of immediate conflict, you find yourself in the unenviable position of a {i}far more dire{/i} one less than a month later, asking me to make an exception to the rules with, frankly, little justification."
 else:
-    drayden @closedbrow "And in your avoidance of immediate conflict, you find yourself in the unenviable position of a {i}far more dire{/i} months later, asking me to make an exception to the rules with, frankly, little justification."
+    drayden @closedbrow "And in your avoidance of immediate conflict, you find yourself in the unenviable position of a {i}far more dire{/i} one months later, asking me to make an exception to the rules with, frankly, little justification."
 
 drayden "You are aware, of course, I cannot admit you into the Quarter Qlashes. That is under the Kobukan Region's jurisdiction." 
 drayden "All I can do is waive the graduation requirement that you participate in as many rounds as your competence allows."
@@ -1035,7 +1034,7 @@ iono @sadbrow talking2mouth "Yeah, I know."
 pause 1.0
 
 drayden "Mr. [last_name], do you believe Miss Iono here deserves another chance?"
-drayden @angrybrow "Consider leniency here will doubtlessly push one other student, who may have tried harder, who may have studied harder, and may have {i}needed{/i} Kobukan more, out of the ranks of your graduating class."
+drayden @angrybrow "Consider. Leniency here will doubtlessly push one other student, who may have tried harder, who may have studied harder, and may have {i}needed{/i} Kobukan more, out of the ranks of your graduating class."
 drayden "Iono's graduation could harm a friend. It could even harm {i}you.{/i}"
 drayden @unamusedeyebrows "And[ellipses] one may be forced to ask what a Champion and Gym Leader needs with a degree from Kobukan. Perhaps that 'graduation slot' will better serve someone else."
 

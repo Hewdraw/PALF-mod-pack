@@ -20,7 +20,6 @@ image fireclass = "BG/ClassFire.webp"
 image fireclass_b = "BG/ClassFire_B.webp"
 image grassclass = "BG/ClassGrass.webp"
 image groundclass = "BG/ClassGround.webp"
-image poisclass = "BG/ClassPoison.webp"
 image darkclass = "BG/ClassDark.webp"
 image dragclass = "BG/ClassDragon.webp"
 image ghostclass = "BG/ClassGhost.webp"
@@ -95,6 +94,7 @@ image contest_stage = "BG/contest_stage.webp"
 image contestdark_stage = "BG/contestdark_stage.webp"
 image contestdark_curtains = "BG/contestdark_curtains.webp"
 image contest_light = "BG/contest_light.webp"
+image fieldstatic = "BG/fieldstatic.webp" # used for the Pokédex
 
 #Props
 image letter = "GFX/Acceptance Letter.webp"
@@ -125,6 +125,8 @@ image meteor = "GFX/meteor.webp"
 image baseballitem = "GFX/baseball.webp"
 image mindscholarship = "GFX/mindscholarship.webp"
 image dragonbadge = "GFX/dragonbadge.webp"
+image millenniumtrophy = "GFX/trophy.webp"
+image cocoon = "GFX/cocoon.webp"
 
 image genericitem = "GFX/item.webp"
 

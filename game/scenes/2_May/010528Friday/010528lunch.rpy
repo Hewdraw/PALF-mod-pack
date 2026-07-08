@@ -69,6 +69,6 @@ silver @talkingmouth "See you around."
 
 hide silver with dis
 
-$ removelunchstudents = { "Silver", "Cheren", "Skyla", "Melody" }
+$ removelunchstudents = removelunchstudents | { "Silver", "Cheren", "Skyla", "Melody" }
 
 jump PickTable

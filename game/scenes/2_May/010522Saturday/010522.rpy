@@ -396,7 +396,7 @@ pause 1.0
 leaf -surprisedbrow -frownmouth @talkingmouth "Okay. Let's go over the details of the plan."
 
 leaf @closedbrow talking2mouth "I've already sent out invitations. My old dormmates are coming."
-leaf @talking2mouth "I figured Dawn knows May from the Coordinator Club, and Hilda and Serena are just super-nice, anyway."
+leaf @talking2mouth "I figured Dawn knows May and Serena from the Coordinator Club, and Hilda's just super-nice, anyway."
 leaf @sadbrow talkingmouth "If we're trying to get Dawn some new friends, I figured those three would be good options, and they already want to help Bianca, so it's the best of both worlds."
 leaf sadbrow @happy "{size=30}AndIalsoinvitedCheren.{/size}"
 
@@ -613,15 +613,15 @@ hilda @smirkmouth "Cool."
 
 pause 1.0
 
-hilda @talkingmouth "I'm the first one here?"
+hilda @talking2mouth "I'm the first one here?"
 
 leaf @happy "Of course you are! You always were. You had a to-do list bigger than any of our schedules, but you always got everything done sooner than the rest of us, too."
 leaf @sadbrow talkingmouth "I never realized how good I had it with you as a dormmate. I love these new guys, but, besides Yellow, they're kinda hopeless when it comes to keeping the dorm running."
 
 yellow @closedbrow talking2mouth "{size=30}We might have an easier time if you did any of the chores...{/size}"
 
-hilda @closedbrow talking2mouth "Same. I missed you. Dorm 251 isn't the same without you."
-hilda @closedbrow talkingmouth "I dormed with Hilbert because I figured he needed it, but... uh..."
+hilda @closedbrow talkingmouth "Same. I missed you. Dorm 251 isn't the same without you."
+hilda @closedbrow talking2mouth "I dormed with Hilbert because I figured he needed it, but... uh..."
 hilda @sad "I forgot that would mean I'd have to {i}live{/i} with him."
 hilda @happy "Don't know how you managed it, [first_name]. At least I've learned a few tricks over the years."
 
@@ -669,7 +669,7 @@ show hilda surprisedbrow frownmouth with dis:
     xpos 0.5 xzoom -1
     ease 0.5 xzoom 1
 
-hilda @talkingmouth "Shit, you okay?"
+hilda @talking2mouth "Shit, you okay?"
 
 may @sadbrow talkingmouth "Lisia's... {i}always{/i} running after Brendan and I... and..."
 
@@ -699,7 +699,7 @@ serena @sadbrow talkingmouth "Reminds me of simpler days."
 
 leaf @talking2mouth "Yeah, and you guys finally have a chance to catch up with each other again!"
 
-hilda @closedbrow talkingmouth "We're pretty caught up, actually. Serena's our connector."
+hilda @closedbrow talking2mouth "We're pretty caught up, actually. Serena's our connector."
 
 serena @talkingmouth "Yes. I have Fire Classes with May, so there's little catching-up to do."
 
@@ -754,15 +754,11 @@ dawn @happy "Haha! Nope!"
 
 pause 1.0
 
-dawn @sadbrow talkingmouth "I'm... I'm sorry, I think there are a few faces I don't know here? I know that you're in my homeroom, May, and I know you, Leaf and Ethan, from the Battle Team, but...?"
-
-serena @talkingmouth "Of course! My name is Serena. A pleasure to make your acquaintance. I am one of Leaf's former roommates."
-
-leaf @talkingmouth "And the fanciest girl you'll ever meet. And on the other side of the spectrum is..."
+dawn @sadbrow talkingmouth "I'm... I'm sorry, I'm not sure I know you, um. Y-you, with the cool vest, I mean."
 
 hilda @happy "Hilda's my name. I saw that shit you pulled in the Battle Hall, during the Quarter Qlashes. You might've lost, but that was a hell of a show. Good work."
 
-yellow @sadbrow challengingmouth "And I'm... Yellow. You probably recognize me."
+yellow @sadbrow challengingmouth "And I'm[ellipses] Yellow. You probably recognize me."
 
 dawn @happy "Of course I do! Good to see you again. And I'm glad to meet you two, too."
 
@@ -770,19 +766,19 @@ yellow @happy "{size=30}Good to see me again! That's what she said!{/size}"
 
 ethan @closedbrow talkingmouth "{size=30}Of course it is. C'mon. You're {i}Yellow.{/i}{/size}"
 
-may @talkingmouth "Well, looks like we're just about all here..."
+may @talkingmouth "Well, looks like we're just about all here[ellipses]"
 
 pause 1.0
 
-hilda @talkingmouth "I guess Bianca decided not to come, then."
-hilda @closedbrow talkingmouth "Shit sucks, but not much we can do about it. Guess she just needs more time."
+hilda @talking2mouth "I guess Bianca decided not to come, then."
+hilda @closedbrow talking2mouth "Shit sucks, but not much we can do about it. Guess she just needs more time."
 
 red @confused "Come to think of it, didn't Hilbert say he'd be coming, too?"
 red @closedbrow talking2mouth "Besides, you said you also invited Cheren?"
 
 serena @surprised "In truth? That's rather brassy."
 
-hilda @closedbrow talking2mouth "Not my first pick, but I see where you're coming from. They're friends."
+hilda @closedbrow talkingmouth "Not my first pick, but I see where you're coming from. They're friends."
 
 red @angryeyebrows sad2eyes talking2mouth "I can't imagine him being late to something without a good reason."
 
@@ -794,7 +790,7 @@ red @sadbrow talkingmouth "I mean, if you're cool with that, Dawn? It's your par
 
 dawn @happy "Oh! Yes, absolutely. We should check on her. Bianca was you guys' fifth roommate, right, Hilda?"
 
-hilda @talkingmouth "Yep."
+hilda @talking2mouth "Yep."
 
 dawn @talkingmouth "It'd be a shame if only the four of you were here. The set's incomplete. 'Gotta Catch 'em All', you know?"
 dawn @closedbrow sadmouth "...That's something an old TV Show I used to watch said."
@@ -1170,11 +1166,11 @@ else:
 
 leaf @closedbrow talkingmouth "Okay, well, all y'all have got {i}that{/i} in your minds now, and I've never been happier to have never attended the Water-type class."
 
-hilda @closedbrow talking2mouth "I dunno, I might need to start attending. I've seen the Water-type instructor, he's kinda a hunk."
+hilda @closedbrow talkingmouth "I dunno, I might need to start attending. I've seen the Water-type instructor, he's kinda a hunk."
 
 serena @sadbrow talkingmouth "Ah, well, I'm not sure one should necessarily change something as massive as their elective selection merely to stare at the washboard abs of the instructor... as tempting as it may be."
 
-hilda @talking2mouth "I guess you're right. Twenty-thirty years down the line, even those washboards will become saggy, right?"
+hilda @talkingmouth "I guess you're right. Twenty-thirty years down the line, even those washboards will become saggy, right?"
 
 bianca @talkingmouth "That's right! Because we're all just pieces of meat powered by electricity and chemical reactions! Nothing we experience is real, it's just how we consistently misinterpret sensory input!"
 
@@ -1246,7 +1242,7 @@ label theatergo:
 
     dawn @happy "I'm surprised you all wanted to go to the theater! I didn't realize that Kobukan had such a thriving drama community."
 
-    hilda @talking2mouth "You kidding? This school's practically built on drama."
+    hilda @talkingmouth "You kidding? This school's practically built on drama."
 
     dawn @talkingmouth "That's fantastic. In Sinnoh, I used to love watching this playwright's works. He's penned a couple more, all sort of set in the same world."
     dawn @closedbrow talkingmouth "Let's see... there was 'The Red Chain'. That was a good one. Then there was 'Moonlit Dance of Dreams.'"
@@ -1270,7 +1266,7 @@ label theatergo:
 
     serena @angry "Ooooh, I hate that! Inconsiderate cretins who rip all the suspense out of a well-foreshadowed story... unmarked spoilers are {i}the worst.{/i}"
 
-    hilda @talkingmouth "Same. Worst part is when they give you spoilers {i}when{/i} you're watching the movie."
+    hilda @talking2mouth "Same. Worst part is when they give you spoilers {i}when{/i} you're watching the movie."
     hilda @angry "It's like, I don't {i}care{/i} how it happened in the comics, I'm never going to read them. I'm just watching the movie, and want to see how the movie does it!"
 
     may @talkingmouth "I feel like you're speaking from experience."
@@ -1279,7 +1275,7 @@ label theatergo:
 
     pause 1.0
 
-    hilda @talking2mouth "Anyway, I gotta stop thinking about him. For the next four hours, he's someone else's problem."
+    hilda @talkingmouth "Anyway, I gotta stop thinking about him. For the next four hours, he's someone else's problem."
 
     may @talkingmouth "That's the spirit! I have a brother who's a bit like that. When it comes to spoilers, I mean."
 
@@ -1309,17 +1305,17 @@ label theatergo:
 
     pause 1.0
 
-    hilda @talkingmouth "...Speaking of movies, aren't we going the wrong way for the cinema?"
+    hilda @talking2mouth "...Speaking of movies, aren't we going the wrong way for the cinema?"
 
     dawn @talkingmouth "Hm? Yeah, but we're going to the theater."
 
-    hilda @talkingmouth "Huh."
+    hilda @talking2mouth "Huh."
 
     pause 1.0
 
     show dawn surprisedbrow frownmouth with dis
 
-    hilda @talkingmouth "Okay, so, like, I guess I don't know what the difference between a theater and a cinema is."
+    hilda @talking2mouth "Okay, so, like, I guess I don't know what the difference between a theater and a cinema is."
 
     dawn @talkingmouth "Oh."
 
@@ -1340,7 +1336,7 @@ label theatergo:
 
     leaf @happy "No way, girlfriend! You were really excited about this fancy-schmancy play, right? It's your birthday, so we're doing it, come hell or high water!"
 
-    hilda @talkingmouth "Yeah, what Leaf said. Fuck giving up what you want to do just because we aren't cultured enough to understand it."
+    hilda @talking2mouth "Yeah, what Leaf said. Fuck giving up what you want to do just because we aren't cultured enough to understand it."
     hilda @happy "It's your day, Dawn. We're here to hang out as a group again, but we're mostly here for you."
 
     may @talkingmouth "Who knows! Maybe we'll really end up liking this sort of thing!"
@@ -1454,15 +1450,15 @@ label theatergo:
 
     mace @angrybrow talkingmouth "That {i}incident{/i} was clearly not my, or my step-sister's, fault. Further, our relationship is our own. I would ask you to not make judgments about something you know {i}nothing{/i} about."
 
-    hilda @talkingmouth "Yeah, no, you shitheads brought it onto yourself when you tried to--"
+    hilda @talking2mouth "Yeah, no, you shitheads brought it onto yourself when you tried to--"
 
     mace @talkingmouth "Ugh, stop {i}talking{/i} to me. I can smell your {i}odious{/i} breath from over here."
 
-    hilda angry @angrybrow talkingmouth "...The fuck you say?"
+    hilda angry @angrybrow talking2mouth "...The fuck you say?"
 
     mace @talkingmouth "You heard me, {w=0.5}{i}skank{/i}. The stench of whatever trailer park you rolled out of is stinking up this entire lobby."
     mace @angrybrow happymouth "Of all the people who {i}least{/i} deserve to be in this theater, you are by far the worst offender. Look at what you're {i}wearing.{/i}"
-    mace @angrybrow happymouth "I can't even imagine how {i}you{/i} could afford the tickets. I suppose you were able to find a good number of catalytic convertors over the past month?"
+    mace @angrybrow happymouth "I can't even imagine how {i}you{/i} could afford the tickets. I suppose you were able to find a good number of catalytic converters over the past month?"
 
     pause 1.0
 
@@ -1480,7 +1476,7 @@ label theatergo:
 
     pause 1.0
 
-    hilda @talkingmouth "I'll make you regret those words. Let's battle."
+    hilda @talking2mouth "I'll make you regret those words. Let's battle."
 
     mace @surprised "What? You couldn't stand a little criticism, so your first recourse is violence?"
     mace @closedbrow talkingmouth "I've better things to do than humor your hurt feelings, but if you insist."
@@ -1488,7 +1484,7 @@ label theatergo:
 
     serena @sadmouth "...The show starts in half an hour."
 
-    hilda @angrybrow talkingmouth "I only need five minutes."
+    hilda @angrybrow talking2mouth "I only need five minutes."
 
     call clearscreens() from _call_clearscreens_201
     scene blank2 with splitfade
@@ -1506,12 +1502,12 @@ label theatergo:
     mace @talkingmouth "Send out your Pokémon so that we can get this over with quickly."
     mace @closedbrow talkingmouth "It goes without saying, of course, that the loser will have to forego their spot in the theater."
 
-    hilda @angrybrow talkingmouth "Of course. But I'm not losing to some pretentious stick-up-their-asshole like you."
+    hilda @angrybrow talking2mouth "Of course. But I'm not losing to some pretentious stick-up-their-asshole like you."
 
     mace @closedbrow talkingmouth "So mouthy. Clearly, no-one's ever told you that vulgar women aren't attractive."
 
     hilda -angrybrow -frownmouth @closedbrow smirkmouth "Attractive?"
-    hilda @talkingmouth "Where I come from, beauty is a reflection of one's personality, and the impact they leave on the people around them. Beauty is measured by the hearts you've touched, and how much better the world is for you having lived in it."
+    hilda @talking2mouth "Where I come from, beauty is a reflection of one's personality, and the impact they leave on the people around them. Beauty is measured by the hearts you've touched, and how much better the world is for you having lived in it."
 
     show mace surprisedbrow frownmouth with dis
 
@@ -1519,12 +1515,12 @@ label theatergo:
 
     redmind @surprised "Where did that come from?"
 
-    hilda @closedbrow talkingmouth "Maybe you're happy to dress up in your fancy clothes and look in your fancy mirror and tell yourself that you've got it made..."
-    hilda @talkingmouth "But if no-one else's looking at you, what the hell does it matter?"
+    hilda @closedbrow talking2mouth "Maybe you're happy to dress up in your fancy clothes and look in your fancy mirror and tell yourself that you've got it made..."
+    hilda @talking2mouth "But if no-one else's looking at you, what the hell does it matter?"
 
     pause 1.0
 
-    hilda @angrybrow talkingmouth "You know what people did when you were pulled from the school?"
+    hilda @angrybrow talking2mouth "You know what people did when you were pulled from the school?"
 
     mace @closedbrow talkingmouth "Oh, cheered, probably. I can't imagine what--"
 
@@ -1533,21 +1529,21 @@ label theatergo:
     mace "Hm?"
 
     hilda @smirkmouth "Nothing, fancy-pants. Literally no-one gave a shit. Don't think anyone missed you, or even noticed you were gone."
-    hilda @closedbrow talking2mouth "Beauty's in the eye of the beholder, shithead. There's not a single person in this school who wants to behold you."
+    hilda @closedbrow talkingmouth "Beauty's in the eye of the beholder, shithead. There's not a single person in this school who wants to behold you."
 
     pause 1.0
 
-    hilda @closedbrow talkingmouth "In fact... I don't think I even want to battle you anymore."
+    hilda @closedbrow talking2mouth "In fact... I don't think I even want to battle you anymore."
 
     mace angry "What?!"
 
     if (GetRelationshipRank("Hilda") > 0):
-        hilda @talkingmouth "Sorry, I just don't think you could really satisfy me. Besides, I've got a friend who wants to settle something with you."
+        hilda @talking2mouth "Sorry, I just don't think you could really satisfy me. Besides, I've got a friend who wants to settle something with you."
 
-        hilda @talkingmouth "[first_name], think you could handle this one for me?"
+        hilda @talking2mouth "[first_name], think you could handle this one for me?"
 
     else:
-        hilda @talkingmouth "Sorry, I just don't think you could really satisfy me. Anyone else want to take this guy?"
+        hilda @talking2mouth "Sorry, I just don't think you could really satisfy me. Anyone else want to take this guy?"
 
         red shadow angryeyebrows talking2mouth "Absolutely."
 
@@ -1555,7 +1551,7 @@ label theatergo:
 
     red @confused "Swine?"
 
-    hilda @talkingmouth "Then I guess you surrender. Damn, you really {i}are{/i} Kalosian."
+    hilda @talking2mouth "Then I guess you surrender. Damn, you really {i}are{/i} Kalosian."
 
     serena @angry "Hilda!"
 
@@ -1605,7 +1601,7 @@ label theatergo:
 
         mace "So fails your 'great defender!' How embarrassing for you!"
 
-        hilda @closedbrow talkingmouth "Still less embarrassing than exposing you and your sister's secret in front of the whole school."
+        hilda @closedbrow talking2mouth "Still less embarrassing than exposing you and your sister's secret in front of the whole school."
 
         mace @talkingmouth "Is that really the only thing you can bring to bear against me? What a tired quip."
         mace @closedbrow talkingmouth "I suppose it's too much to ask for one so lacking in class and intelligence to come up with an original jab."
@@ -1657,7 +1653,7 @@ label theatergo:
 
         dawn @talkingmouth "{size=30}...Carved a path.{/size}"
 
-        hilda @talkingmouth "{i}Damn,{/i} Dawn. That was some serious battling."
+        hilda @talking2mouth "{i}Damn,{/i} Dawn. That was some serious battling."
 
         mace angry @talkingmouth "That's... that's inhuman. You're an ogre! Some sort of battling freak!"
 
@@ -1673,7 +1669,7 @@ label theatergo:
 
     pause 2.0
 
-    hilda @talkingmouth "Uh... so... should we go back in, then?"
+    hilda @talking2mouth "Uh... so... should we go back in, then?"
 
     dawn @happy "Yeah! The show starts soon, and we don't want to miss our seats!"
 
@@ -1722,7 +1718,7 @@ label theatergo:
 
         leaf night @sarcastic "Who?"
 
-        red @happy "You know, Misty! She's responsible for three-fourths of the physical injuries I've taken this year."
+        red @happy "You know, Misty! We met when we slammed into each other in the hallway, then she yelled at me."
 
         may night @sad "Why do you look so happy about that?"
 
@@ -1790,7 +1786,7 @@ label theatergo:
 
     Character("Patron") "\"{size=30}Shh, please. It's a great play, I agree, but try to keep your excitement down.{/size}\""
 
-    hilda @sweat closedbrow talkingmouth "{size=30}Shit, my bad.{/size}"
+    hilda @sweat closedbrow talking2mouth "{size=30}Shit, my bad.{/size}"
 
     Character("Narrator") "\"The ice bites into The Priestess' flesh. It hurts like a Houndoom's bite--it demands its toll from her fortitude.\""
 
@@ -1852,7 +1848,7 @@ label theatergo:
         xpos 5/6
     with splitfade
 
-    hilda @talkingmouth "That was {i}great!{/i} Man, we gotta come back here again, sometime. Dawn, next time you go, call me, right?"
+    hilda @talking2mouth "That was {i}great!{/i} Man, we gotta come back here again, sometime. Dawn, next time you go, call me, right?"
 
     dawn "I-- I'd love that! Yes!"
 
@@ -2016,31 +2012,11 @@ label parkgo:
 
     cheren @talkingmouth "Ah, here we go. Let's load up, then."
 
-    scene carbase
-    show carback
-    show hilbert: 
-        xpos 0.45 ypos 0.8
-    show bianca:
-        xpos 0.65 ypos 0.8
-    show yellow neutralhat:
-        xpos 0.95 ypos 0.7
-    show carfront
-    show ethan:
-        xpos 0.8 zoom 1.2
-    show cheren:
-        xzoom -1 xpos 0.4 zoom 1.2
-    show carwheel
-    with splitfade
+    scene runshadowfax with splitfade
 
     cheren @talkingmouth "There. Everyone comfortable? Seatbelts on."
 
-    red @closedbrow talking2mouth "There's only room for five people in this car."
-
-    ethan @winkbrow talkingmouth "Guess {i}someone's{/i} going to have to sit on my lap, then."
-
-    cheren @talkingmouth "Nonsense. The trunk folds up into another set of three seats. I wouldn't load this car past capacity."
-
-    ethan @closedbrow talking2mouth "{size=30}Damn.{/size}"
+    bianca @happy "Let's go, let's go!"
 
     cheren smilemouth @talkingmouth happybrow "Run, Shadowfax. Show us the meaning of haste."
 
@@ -2071,13 +2047,6 @@ label parkgo:
     if (GetRelationshipRank("Hilbert") > 0):
         redmind @upeyes frownmouth "Classic Hilbert. Refusing to see the gray."
 
-    show bianca:
-        xpos 0.65 ypos 0.8
-        block:
-            ease 1.0 ypos 0.85
-            ease 1.0 ypos 0.8
-            repeat 3
-
     bianca @happy "So what are we all going to do at the fair?~"
 
     cheren @sad2eyes talking2mouth "I appreciate the change of topic, but please remember your seatbelt, Bianca."
@@ -2089,21 +2058,15 @@ label parkgo:
     yellow @talking2mouth "I think... maybe if they have one of those 'fishing' games... I might try that. I'm pretty good at fishing."
     yellow frownmouth @happy "Well, real fishing, anyway."
 
-    show cheren sad2eyes with dis
-
     hilbert @closedbrow talking2mouth "Tch. Those games are all rigged, and chance-based, to boot. Skill means nothing."
 
     bianca frownmouth @happy "I'm going to stuff my face with cotton candy! Did you know cotton candy is actually pretty low in calories, compared to how much of it you eat?"
 
     ethan @surprised "What? It's pure sugar, right?"
 
-    show cheren sad2eyes angryeyebrows with dis
-
     hilbert @talkingmouth "A couple teaspoons of sugar could make an entire tub of cotton candy. You're paying for sweetened air."
 
     ethan frownmouth @unamusedbrow talking2mouth "Well, {i}I'm{/i} planning on riding one of those rollercoasters, which {w=0.5}oh god you're about to say something, aren't you?"
-
-    show cheren sad2eyes angryeyebrows shadow with dis
 
     hilbert @talkingmouth "You spend $700 for two minutes of excitement and twenty minutes of waiting. It's a waste of time {i}and{/i} money."
 
@@ -2112,11 +2075,6 @@ label parkgo:
     hilbert @closedbrow talkingmouth "We're not on campus. You don't have any power."
 
     cheren -angryeyebrows -shadow -sad2eyes @confusedeyebrows talkingmouth "And you think I do {i}on-campus{/i}? I thought you were meant to be observant."
-
-    show yellow -frownmouth
-    show bianca -frownmouth
-    show ethan -frownmouth
-    with dis 
 
     hilbert @closedbrow angrymouth "...Guh."
 
@@ -2139,20 +2097,20 @@ label parkgo:
 
     ethan @talkingmouth "And what about you, [first_name]?"
 
-    red @talkingmouth "...Hm."
+    red @upeyes frownmouth "...Hm."
 
     menu:
         "Probably get some cotton candy.":
-            $ ValueChange("Cheren", -1, 0.4, False)
-            $ ValueChange("Bianca", 1, 0.65)
+            $ ValueChange("Cheren", -1, 0.8, False)
+            $ ValueChange("Bianca", 1, 0.4)
             $ AddEvent("Ethan", "CottonCandy")
 
         "The rollercoasters sound fun.":
-            $ ValueChange("Ethan", 1, 0.8)
+            $ ValueChange("Ethan", 1, 0.1)
             $ AddEvent("Ethan", "Rollercoasters")
 
         "Carnival games, maybe.":
-            $ ValueChange("Hilbert", 1, 0.45)
+            $ ValueChange("Hilbert", 1, (0.65, 0.2))
             $ AddEvent("Ethan", "CarnivalGames")
 
     pause 1.0
@@ -2162,10 +2120,6 @@ label parkgo:
     hilbert @talkingmouth "I've already made my thoughts known."
 
     redmind @closedbrow frownmouth "Boy, has he."
-
-    show hilbert angry
-    show cheren sad2eyes smilemouth 
-    with dis
 
     ethan @winkbrow talkingmouth "You sure? If you got killstreak rewards for every mood you've butchered, you'd have an airstrike by now."
 
@@ -3277,14 +3231,14 @@ may @sadbrow talkingmouth "Um... yeah... it's part of Instructor Wallace's perso
 show hilda behind leaf with dis:
     xpos 0.45
 
-hilda @happybrow talking2mouth "Don't know about you, but I'm not ignoring that box. In fact, if you don't want the packaging, I'll take it off your hands."
+hilda @happybrow talkingmouth "Don't know about you, but I'm not ignoring that box. In fact, if you don't want the packaging, I'll take it off your hands."
 
 show hilbert behind hilda with dis:
     xpos 0.55
 
 hilbert @sadbrow talkingmouth "Hilda, you're embarrassing us."
 
-hilda @talking2mouth "Us who? {i}I'm{/i} not embarrassed."
+hilda @talkingmouth "Us who? {i}I'm{/i} not embarrassed."
 
 hilbert @closedbrow talkingmouth "Whatever."
 hilbert @talkingmouth "Here's my gift. It's a Choice Specs."
@@ -3302,13 +3256,13 @@ hilbert @sadbrow talkingmouth "And if you don't like it, one of my classmates, G
 
 hide hilbert with dis
 
-hilda @closedbrow talkingmouth "...Sorry about him."
+hilda @closedbrow talking2mouth "...Sorry about him."
 
 dawn @happy "No, no, it's fine! I loved this gift. {size=40}Thank you, Hilbert!{/size}"
 
 hilbert @closedbrow talking2mouth "Mm."
 
-hilda @talkingmouth "Anyway, my gift isn't as fancy as his, but I hope you still like it."
+hilda @talking2mouth "Anyway, my gift isn't as fancy as his, but I hope you still like it."
 
 show dawn surprisedbrow frownmouth:
     xpos 0.66
@@ -3320,8 +3274,8 @@ show dawn -surprisedbrow -frownmouth with dis:
     xpos 0.72 ypos 1.03 rotate 3
     ease 0.5 xpos 0.66 ypos 1.0 rotate 0
 
-hilda @talkingmouth "Hilbert said that you liked ice cream, so I got you this. It, uh, it's one of those make-your-own Casteliacone kits."
-hilda @sadbrow talking2mouth "Sorry it's not handmade on my end, either. {size=30}We shouldn't've let Yellow go first...{/size}"
+hilda @talking2mouth "Hilbert said that you liked ice cream, so I got you this. It, uh, it's one of those make-your-own Casteliacone kits."
+hilda @sadbrow talkingmouth "Sorry it's not handmade on my end, either. {size=30}We shouldn't've let Yellow go first...{/size}"
 
 dawn @happy "Oh, that's fantastic! I always wanted one of these when I was a kid."
 

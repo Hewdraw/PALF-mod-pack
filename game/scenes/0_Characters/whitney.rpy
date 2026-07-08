@@ -537,7 +537,7 @@ label Whitney2:
     red @talking2mouth "Sure."
     red @sadbrow talkingmouth "But did you feel {i}better{/i} for seducing her sister? Or did you just feel {i}even?{/i}"
 
-    whitney poutmouth @talkingmouth lightblush angryeyebrows "I didn't {i}seduce{/i} her. We just started chatting, and one thing lead to another, so..."
+    whitney poutmouth @talkingmouth lightblush angryeyebrows "I didn't {i}seduce{/i} her. We just started chatting, and one thing led to another, so..."
 
     pause 1.0
 
@@ -651,7 +651,7 @@ label Whitney2:
 
     pause 1.0
 
-    narrator "Two-thirds of a second has passed. In order to greet the new person, you raise up your arm, and Whitney can now see past you, to the woman behind you. Her eyes dilate with terror."
+    narrator "Two-thirds of a second have passed. In order to greet the new person, you raise up your arm, and Whitney can now see past you, to the woman behind you. Her eyes dilate with terror."
 
     show whitney surprisedeyebrows feareyes surprised2mouth shadow with dis
 
@@ -1065,7 +1065,8 @@ label Whitney2Part2:
             persondex["Wally"]["Value"] = 0
 
         persondex["Whitney"]["Relationship"] = "Hindrance"
-        persondex["Whitney"]["Value"] = -9999 
+        persondex["Whitney"]["Value"] = -9999
+        persondex["Whitney"]["Named"] = True
         #to make this one stand out more
 
         classstats = { 
@@ -1366,7 +1367,8 @@ label Whitney2Part2:
 
     whitney @happy "Why're you on the fence?"
 
-    flannery @sad2eyes talking2mouth "I... don't know. It's not that you're my best friend, or anything like that. I know we'd work. And it's not that you're not, like, perfect for me. I mean, I always thought you were cute. I just didn't think you were, you know, 'cute.'"
+    flannery @sad2eyes talking2mouth "I... don't know. It's not that you're my best friend, or anything like that. I know we'd work. And it's not that you're not, like, perfect for me."
+    flannery @sad2eyes talking2mouth "I mean, I always thought you were cute. I just didn't think you were, you know, 'cute.'"
     flannery @sadeyebrows talkingmouth "But, like, how do I even know if I like girls? I mean, the old folks back at Lavaridge told me everything changes when you go to college, but I didn't think it would happen to {i}me.{/i}"
     flannery @closedbrow talking2mouth "And I kinda thought they meant I'd, like, start training Ice-types or something, not {i}this.{/i}"
 

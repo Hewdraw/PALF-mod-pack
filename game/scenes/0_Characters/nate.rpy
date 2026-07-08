@@ -707,7 +707,7 @@ label Nate2:
 
     pause 1.0
 
-    nate @talkingmouth "[first_name]? Pal! How are you?"
+    nate @talkingmouth "[nate_name]? Pal! How are you?"
     nate -surprisedbrow -frownmouth -surprised angrybrow frownmouth @happy "What's the occasion?"
 
     red @talking2mouth "I want to talk about that project we were working on."
@@ -938,7 +938,7 @@ label Nate2:
 
     nate @happy "Yeah, but you also think Instructor Marshal is cool, Bea."
 
-    bea @surprisedbrow talkingmouth "Is he not?"
+    bea @surprisedbrow talking2mouth "Is he not?"
 
     hilbert -sad @closedbrow talkingmouth "Just... let's just get back on track."
     hilbert @talkingmouth "Am I right? Is that purple-haired woman your mother?"
@@ -974,7 +974,7 @@ label Nate2:
     hilbert @talkingmouth "Your consent is not a necessary part of it."
 
     nate @closedbrow talkingmouth "{size=30}And {i}that's{/i} why you can never get a date.{/size}"
-    nate @talking2mouth "Alright. I'll tell you. But... in front of Bea? [last_name]?"
+    nate @talking2mouth "Alright. I'll tell you. But... in front of Bea? [nate_name]?"
 
     hilbert @closedbrow talkingmouth "I repeat. The insulation of my mission has long since been breached. We are all in this together."
 
@@ -1334,7 +1334,7 @@ label Nate2:
 
     nate @closedbrow talking2mouth "I'll message everyone to meet up later. Might be hours, might be weeks, might be months. I can't know yet."
     nate @sadbrow talkingmouth "Stay safe until then. Not a word of this to anyone. Keep your head down, eyes on the ground." 
-    nate @closedbrow talking2mouth "If Anabel gets a whiff of this, it's all over. You guys get wiped, [first_name] gets recruited, and I get reassigned to Orre under the name 'Skrub.'"
+    nate @closedbrow talking2mouth "If Anabel gets a whiff of this, it's all over. You guys get wiped, [nate_name] gets recruited, and I get reassigned to Orre under the name 'Skrub.'"
 
     pause 0.5
 

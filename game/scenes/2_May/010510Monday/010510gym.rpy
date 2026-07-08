@@ -97,7 +97,7 @@ pause 0.5
 alder @talkingmouth "Now, why don't we start off with some battles?"
 alder @closedbrow talkingmouth "Our unit this week will be triple battles." 
 
-hilda @angrybrow talking2mouth "Hell yeah!"
+hilda @angrybrow talkingmouth "Hell yeah!"
 
 alder @happy2 "Nice enthusiasm, Hilda! As you all must know, the range of your moves matters more in this format than in any other!"
 alder @talkingmouth "Bruno, the assignments?"

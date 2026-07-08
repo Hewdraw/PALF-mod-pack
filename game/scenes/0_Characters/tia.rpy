@@ -90,7 +90,7 @@ label Tia1:
             ease 0.3 ypos 1.1
             repeat
 
-    tia "You learned JSL? That's {font=fonts/sign.ttf}great{/font}! I'm so {font=fonts/sign.ttf}happy{/font}! Now we can {font=fonts/sign.ttf}talk{/font} and {font=fonts/sign.ttf}play{/font} and I {font=fonts/sign.ttf}don't{/font} {font=fonts/sign.ttf}need{/font} {font=fonts/sign.ttf}Whitney{/font}!"
+    tia "You learned JSL? That's [tiafont]great{/font}! I'm so [tiafont]happy{/font}! Now we can [tiafont]talk{/font} and [tiafont]play{/font} and I [tiafont]don't{/font} [tiafont]need{/font} [tiafont]Whitney{/font}!"
 
     red @surprisedbrow frownmouth "<Slow down, very slow. I cannot speak that fast.>"
 
@@ -101,9 +101,9 @@ label Tia1:
     show tia happy:
         ease 0.5 xpos 0.5 ypos 1.0 xzoom 1
 
-    tia -happy @surprised "Oh. Well, I'm still {font=fonts/sign.ttf}happy{/font}!"
+    tia -happy @surprised "Oh. Well, I'm still [tiafont]happy{/font}!"
     tia @sadbrow happymouth "But it's okay if you want to just speak."
-    tia @happy "I really {font=fonts/sign.ttf}appreciate{/font} you making the effort, {font=fonts/sign.ttf}[first_name]{/font}!"
+    tia @happy "I really [tiafont]appreciate{/font} you making the effort, [tiafont][first_name]{/font}!"
 
     red @happy "I might just take you up on that. I'll try to sign and speak at the same time, though. Whitney makes it look easy!"
 
@@ -112,7 +112,7 @@ label Tia1:
     red @talkingmouth "Anyway, those were some sick dance moves. Or... I guess 'sick' isn't the right word. Elegant?"
     red @happy "Where'd you learn to dance, spacewoman? The moon?"
 
-    tia @happy "In A-L-T-O M-A-R-E! My sister and I used to dance {font=fonts/sign.ttf}all{/font} {font=fonts/sign.ttf}the{/font} time."
+    tia @happy "In A-L-T-O M-A-R-E! My sister and I used to dance [tiafont]all{/font} [tiafont]the{/font} time."
 
     red @talking2mouth "Right... and your Sister is 'Bianca,' right?"
 
@@ -120,7 +120,7 @@ label Tia1:
 
     red @talkingmouth "...She must love you a lot, to let you get into this school under her name."
 
-    tia @happy "She does! She was my first {font=fonts/sign.ttf}human{/font} friend. Before I {font=fonts/sign.ttf}met{/font} {font=fonts/sign.ttf}her{/font} it was just my brother and I hiding in the city."
+    tia @happy "She does! She was my first [tiafont]human{/font} friend. Before I [tiafont]met{/font} [tiafont]her{/font} it was just my brother and I hiding in the city."
 
     red @talkingmouth "Oh, so your brother and you came before your Sister? So I guess Bianca is a younger sister, then."
 
@@ -137,7 +137,7 @@ label Tia1:
 
         red @confused "Tia, that's called being homeless."
 
-        tia @angrybrow poutmouth "{font=fonts/sign.ttf}Nuh-uh{/font}! Alto Mare was my home."
+        tia @angrybrow poutmouth "[tiafont]Nuh-uh{/font}! Alto Mare was my home."
 
         pause 1.0
 
@@ -145,12 +145,12 @@ label Tia1:
 
     red @confused "I've got a question, though. If she was willing to let you take her place at Kobukan, why didn't she want to go herself?"
 
-    tia @happy "Oh, she's busy helping {font=fonts/sign.ttf}grampy{/font} run Alto Mare. My grandpa is the city's {font=fonts/sign.ttf}mayor{/font}!"
-    tia @talkingmouth "And someone needs to run the {font=fonts/sign.ttf}Defense{/font} {font=fonts/sign.ttf}Mechanism{/font} of Alto Mare, of course."
+    tia @happy "Oh, she's busy helping [tiafont]grampy{/font} run Alto Mare. My grandpa is the city's [tiafont]mayor{/font}!"
+    tia @talkingmouth "And someone needs to run the [tiafont]Defense{/font} [tiafont]Mechanism{/font} of Alto Mare, of course."
 
     red @confused "The... what?"
 
-    tia @happy "The {font=fonts/sign.ttf}Defense{/font} {font=fonts/sign.ttf}Mechanism{/font} of Alto Mare!"
+    tia @happy "The [tiafont]Defense{/font} [tiafont]Mechanism{/font} of Alto Mare!"
 
     red @sadbrow happymouth "Gimme a hint here. The food court of Alto Mare? The tourism bureau of Alto Mare? The sewer system of Alto Mare?"
 
@@ -165,7 +165,7 @@ label Tia1:
 
     red @surprised "Oh, bad people... like the one you said you were hiding from."
 
-    tia @happy "Yes, {font=fonts/sign.ttf}exactly{/font}! Grandpa said he knew the bad person would appear in Kobukan {i}months{/i} ago, so that's why I'm here."
+    tia @happy "Yes, [tiafont]exactly{/font}! Grandpa said he knew the bad person would appear in Kobukan {i}months{/i} ago, so that's why I'm here."
 
     show tia:
         ease 0.2 ypos 1.2 zoom 1.3
@@ -178,8 +178,8 @@ label Tia1:
     red @happy "Aw. I thought I was protecting {i}you{/i}, though?"
 
     tia @lightblush talkingmouth "I... might need that for a little bit longer."
-    tia @angrybrow happymouth "The {font=fonts/sign.ttf}bad{/font} {font=fonts/sign.ttf}person{/font} is much stronger than grandpa thought. I could only barely {font=fonts/sign.ttf}fight{/font} {font=fonts/sign.ttf}them{/font}, and I got really tired after..."
-    tia @talkingmouth "Normally my brother {font=fonts/sign.ttf}handles{/font} stuff like that, though."
+    tia @angrybrow happymouth "The [tiafont]bad{/font} [tiafont]person{/font} is much stronger than grandpa thought. I could only barely [tiafont]fight{/font} [tiafont]them{/font}, and I got really tired after..."
+    tia @talkingmouth "Normally my brother [tiafont]handles{/font} stuff like that, though."
 
     red @closedbrow talking2mouth "Your grandpa and your sister engaged in a conspiracy to get your sister into this school so that you could take her place and be here to protect the population of Kobukan from... a bad person?"
 
@@ -191,7 +191,7 @@ label Tia1:
     if (IsAfter(15, 5, 2004)):
         red @talkingmouth "Um... what would you say if I told you that the 'bad person' has already been captured?"
 
-        tia @happy "I would stay here to {font=fonts/sign.ttf}beat{/font} them up if they come back! They're no match for me!"
+        tia @happy "I would stay here to [tiafont]beat{/font} them up if they come back! They're no match for me!"
 
     pause 1.0
 
@@ -220,9 +220,9 @@ label Tia1:
     "{color=#000}TL Note{/color}" "There is no sign for 'Mrgrgr.' And yet, that is the only possible translation for Tia's hands in this moment."
 
     if (IsBefore(1, 5, 2004)):
-        tia "You don't need to know how to use a dumb ol' {font=fonts/sign.ttf}phone{/font} to protect people!"
+        tia "You don't need to know how to use a dumb ol' [tiafont]phone{/font} to protect people!"
     else:
-        tia "It was at least a {font=fonts/sign.ttf}draw{/font}!"
+        tia "It was at least a [tiafont]draw{/font}!"
 
     show tia happy with dis
 
@@ -251,7 +251,7 @@ label Tia1:
 
     show tia sadbrow frownmouth with dissolve
 
-    tia "...I know. My brother isn't {font=fonts/sign.ttf}here{/font}..."
+    tia "...I know. My brother isn't [tiafont]here{/font}..."
 
     red @closedbrow talking2mouth "Also, I was kinda asking more about your solo battle strategy. Like, what you do when it's just one trainer against another."
 
@@ -358,7 +358,7 @@ label Tia1:
 
     red @talkingmouth "I'm impressed. You're a better trainer than I've given you credit for."
 
-    tia @sadbrow happymouth "Aw, thanks. But I think I need a {font=fonts/sign.ttf}trainer{/font} myself..."
+    tia @sadbrow happymouth "Aw, thanks. But I think I need a [tiafont]trainer{/font} myself..."
 
     red @confused "A what?"
 
@@ -366,15 +366,15 @@ label Tia1:
 
     red @closedbrow talking2mouth "Me? A... student? A Champion?"
 
-    tia @angrybrow poutmouth "No, no! The person who throws the {font=fonts/sign.ttf}poke{/font} Balls!"
+    tia @angrybrow poutmouth "No, no! The person who throws the [tiafont]poke{/font} Balls!"
 
     red @happy "Oh, a trainer!"
 
-    tia @happy "Yeah! There's a lot I don't know about {font=fonts/sign.ttf}humans{/font}. I want to learn how to be a better {font=fonts/sign.ttf}human{/font}."
+    tia @happy "Yeah! There's a lot I don't know about [tiafont]humans{/font}. I want to learn how to be a better [tiafont]human{/font}."
 
     red @talkingmouth "Well, I might be able to help you with that. I mean, I don't know much about being a trainer myself, yet, but I guess I know a little bit more than you."
 
-    tia angrybrow happymouth "Yay! Thank you, {color=#0048ff}{font=fonts/sign.ttf}Trainer{/font}!{/color}"
+    tia angrybrow happymouth "Yay! Thank you, {color=#0048ff}[tiafont]Trainer{/font}!{/color}"
 
     $ ValueChange("Tia", 5, 0.5)
 

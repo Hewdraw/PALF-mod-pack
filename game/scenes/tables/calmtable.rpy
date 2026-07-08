@@ -58,7 +58,7 @@ menu:
         $ IncreaseProficiency(classtype, 0.25)
 
     ">Study with Hilda" if "Hilda" in npcs:
-        hilda @talkingmouth "Sure, I've got some time. I can probably help you with Poison, Steel, and Rock-type Pokémon. Which are you looking for some help with?"
+        hilda @talking2mouth "Sure, I've got some time. I can probably help you with Poison, Steel, and Rock-type Pokémon. Which are you looking for some help with?"
         $ classtype = ""
         menu:
             ">Study Poison-types":
@@ -141,7 +141,7 @@ menu:
         if ("Cheren" in npcs):
             if (randnum < 0.2):
                 cheren @sadmouth "Might I ask you to join me in my attempts to move a certain Student Council initiative through the administration?"
-                hilda @talkingmouth "I'd like to help, but what the hell can we do about it?"
+                hilda @talking2mouth "I'd like to help, but what the hell can we do about it?"
                 bea @talking2mouth "I will defeat the administration in single combat and demand their surrender as a token of victory."
                 sabrina @talking2mouth "Cheren appreciates your 'ride-or-die attitude,' but he'd actually prefer we just send emails to the administration."
 
@@ -151,7 +151,7 @@ menu:
 
             elif (randnum < 0.4):
                 bea @talking2mouth "I would ask one of you to act as my sparring partner tomorrow."
-                hilda @talkingmouth "Shit no. I remember what happened last time I agreed to that. My ass {i}still{/i} hurts."
+                hilda @talking2mouth "Shit no. I remember what happened last time I agreed to that. My ass {i}still{/i} hurts."
                 sabrina @talking2mouth "I am not a suitable opponent for your specialty."
                 cheren @sadmouth "Er... I suppose that leaves me, then, but, er..."
 
@@ -160,40 +160,40 @@ menu:
                 bea @talking2mouth "Do not worry. I do not fold old napkins. I rip them apart and throw them away."
 
             elif (randnum < 0.6):
-                hilda @talkingmouth "I can't tell you how much I appreciate getting away from Hilbert, even for one lunch."
+                hilda @talking2mouth "I can't tell you how much I appreciate getting away from Hilbert, even for one lunch."
                 cheren @sadmouth "Is he giving you trouble? If he's harassing you, you can report him to the Student Council."
                 bea @talking2mouth "It seems more as though Hilda is the one harassing him. He's the one hiding from you most of the time."
                 sabrina @talking2mouth "Yes. If you were to just leave him alone, you would never see him again."
 
                 red uniform @closedbrow talking2mouth "Sure, but just 'cause you can't see a problem doesn't mean it doesn't exist."
 
-                hilda @talkingmouth "This guy gets it."
+                hilda @talking2mouth "This guy gets it."
 
             elif (randnum < 0.8):
                 sabrina "[ellipses]"
                 cheren @sadmouth "What's on your mind?"
                 bea @talking2mouth "That was a poor choice of words."
-                hilda @talkingmouth "Yeah, kinda an 'open mouth; insert foot' moment."
+                hilda @talking2mouth "Yeah, kinda an 'open mouth; insert foot' moment."
                 
                 red uniform @closedbrow talking2mouth "But since it's been asked, might as well answer it. Sabrina?"
 
                 sabrina @talking2mouth "...Everything, everywhere, all at once."
 
             else:
-                hilda @talkingmouth "Hey, do you guys need help with anything? I've got some time off from Hilbert."
+                hilda @talking2mouth "Hey, do you guys need help with anything? I've got some time off from Hilbert."
                 bea @talking2mouth "You spend your time off of doing something for a person doing more things for other people?"
                 sabrina @talking2mouth "I truly wish I could somehow put the concept of selfishness into your mind."
                 cheren @sadmouth "Er... I was going to ask if you would help with some Student Council business, but now I feel rather..."
                 
                 red uniform @closedbrow talking2mouth "Hm... I mean, this is a great opportunity. I can't think of how I could take advantage of it, though."
 
-                hilda @talkingmouth "Then I guess I'll help you figure out what I can help you out with."
+                hilda @talking2mouth "Then I guess I'll help you figure out what I can help you out with."
 
         else:
             if (IsDate(26, 4, 2004)):
                 grusha @talkingmouth "Hey, you two."
 
-                hilda @talkingmouth "Grush. How the hell are you? Hilbert not being too much of a pain in your ice classes?"
+                hilda @talking2mouth "Grush. How the hell are you? Hilbert not being too much of a pain in your ice classes?"
 
                 grusha @closedbrow talking2mouth "He's fine."
 
@@ -212,7 +212,7 @@ menu:
                 sabrina @sadmouth "I appreciate that you are willing to let me sit here with you, even with your reservations."
                 if ("Grusha" in npcs):
                     grusha @closedbrow "{w=0.5}.{w=0.5}.{w=0.5}."
-                hilda @talkingmouth "I mean, I'm not even sure I believe that you can read minds, so you can sit anywhere you want. I won't fight you."
+                hilda @talking2mouth "I mean, I'm not even sure I believe that you can read minds, so you can sit anywhere you want. I won't fight you."
                 bea @talking2mouth "I {i}will{/i} fight you. But because I want to get stronger, not because I dislike your course of action."
 
                 if ("Jasmine" in npcs):
@@ -228,7 +228,7 @@ menu:
                 bea @talking2mouth "I would ask one of you to act as my sparring partner tomorrow."
                 if ("Grusha" in npcs):
                     grusha @closedbrow talking2mouth "No thanks. Sounds like a pain."
-                hilda @talkingmouth "Shit no. I remember what happened last time I agreed to that. My ass {i}still{/i} hurts."
+                hilda @talking2mouth "Shit no. I remember what happened last time I agreed to that. My ass {i}still{/i} hurts."
                 sabrina @talking2mouth "I am not a suitable opponent for your specialty."
 
                 if ("Jasmine" in npcs):
@@ -239,7 +239,7 @@ menu:
                 bea @talking2mouth "Do not worry. I do not fold old napkins. I rip them apart and throw them away."
 
             elif (randnum < 0.6):
-                hilda @talkingmouth "I can't tell you how much I appreciate getting away from Hilbert, even for one lunch."
+                hilda @talking2mouth "I can't tell you how much I appreciate getting away from Hilbert, even for one lunch."
                 bea @talking2mouth "It seems more as though Hilbert wants to get away from you. He's the one hiding from you most of the time."
                 if ("Grusha" in npcs):
                     grusha @closedbrow talking2mouth "I'd listen to the guy."
@@ -247,7 +247,7 @@ menu:
 
                 red uniform @closedbrow talking2mouth "Sure, but just 'cause you can't see a problem doesn't mean it doesn't exist."
 
-                hilda @talkingmouth "This guy gets it."
+                hilda @talking2mouth "This guy gets it."
 
                 if ("Jasmine" in npcs):
                     jasmine @talkingmouth sweat "I believe your efforts in regard to Hilbert are admirable, Hilda. Him making helping him difficult is all the more reason to try."
@@ -259,7 +259,7 @@ menu:
                     grusha "Wow."
 
                 bea @talking2mouth "That was a poor choice of words."
-                hilda @talkingmouth "Yeah, kinda an 'open mouth; insert foot' moment."
+                hilda @talking2mouth "Yeah, kinda an 'open mouth; insert foot' moment."
                 if ("Jasmine" in npcs):
                     jasmine @talkingmouth "Everyone misspeaks once in a while. Let's not harp on it."
 
@@ -268,7 +268,7 @@ menu:
                 sabrina @talking2mouth "...Everything, everywhere, all at once."
 
             else:
-                hilda @talkingmouth "Hey, do you guys need help with anything? I've got some time off from Hilbert."
+                hilda @talking2mouth "Hey, do you guys need help with anything? I've got some time off from Hilbert."
                 bea @talking2mouth "You spend your time off of doing something for a person doing more things for other people?"
                 sabrina @talking2mouth "I truly wish I could somehow put the concept of selfishness into your mind."
 
@@ -280,7 +280,7 @@ menu:
                 if ("Jasmine" in npcs):
                     jasmine @happy sweat "Is taking advantage of it really necessary?"
 
-                hilda @talkingmouth "Then I guess I'll help you figure out what I can help you out with."
+                hilda @talking2mouth "Then I guess I'll help you figure out what I can help you out with."
 
         narrator "You talk seriously as lunch passes."
 

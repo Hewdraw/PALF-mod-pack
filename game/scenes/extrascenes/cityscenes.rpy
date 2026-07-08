@@ -127,6 +127,7 @@ label cramorantscene:
     call Battle([trainer1, trainer2], healParty = False, specialmusic="Nothing") from _call_Battle_38
     $ battlehistory["Cramorant1"]  = _return
 
+    $ cramorantobj.ClearStatus("gorging")
     $ AddPikachu()
 
     if (cramorantobj in (AllPokemon())):
@@ -161,7 +162,7 @@ label cramorantscene:
 
         $ cramorantname = cramorantobj.GetNickname()
 
-        red @closedbrow talking2mouth "I get the feeling that [pika_name] would rather not hang out around [cramorantname] any more than absolutely necessary..."   
+        redmind @closedbrow sweat "I get the feeling that [pika_name] would rather not hang out around [cramorantname] any more than absolutely necessary..."   
 
         narrator "{color=#0048ff}You discovered the seaport!{/color} In the seaport, you'll be able to find new Pokémon, and battle for as long as you want."
         narrator "However, leaving will cause this period of free time to end."

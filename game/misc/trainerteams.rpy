@@ -1,5 +1,7 @@
 init python:
     def GetTrainerTeam(name, specific=None, heal=True, order=None):#when adding teams, unless you've got a good reason, make ace offset +1, and nothing higher
+        global showscrimblo
+
         name = name.title()
         teammembers = []
         if (name not in npcteams.keys()):
@@ -32,7 +34,7 @@ init python:
             level = GetHighestLevelAll()
             teammembers = ["Eevee"]
             if (IsAfter(8, 4, 2004)):
-                teammembers += ["Pidgeotto"]
+                teammembers = ["Pidgeotto"] + teammembers
             if (AimLevel() >= 9):
                 teammembers += ["Charmander"]
             if (AimLevel() >= 13):
@@ -43,12 +45,18 @@ init python:
                 if (teammate == "Magikarp"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Magikarp", level=15, moves=["Bounce", "Tackle"], nature=Natures.Rash, gender=Genders.Male)
-                    if (level >= 20 and IsAfter(3, 5, 2004)):
-                        npcteams[name][teammate].Id = pokedexlookupname("Gyarados", DexMacros.Id)
-                        npcteams[name][teammate].Ability = "Intimidate"
-                        npcteams[name][teammate].UpdateMoves(["Bounce", "Tackle", "Thrash", "Bite"])
-                    elif (level >= 20):
-                        npcteams[name][teammate].Item = Item.Everstone
+                    if (IsAfter(3, 5, 2004)):
+                        if (level >= 25):
+                            npcteams[name][teammate].UpdateMoves(["Crunch", "Waterfall", "Ice Fang", "Bounce"])
+                        elif (level >= 20):
+                            npcteams[name][teammate].UpdateMoves(["Bounce", "Tackle", "Thrash", "Bite"])
+                        if (level >= 20):
+                            npcteams[name][teammate].Id = pokedexlookupname("Gyarados", DexMacros.Id)
+                            npcteams[name][teammate].Ability = "Intimidate"
+                            npcteams[name][teammate].Item = None
+                    else:
+                        if (level >= 20):
+                            npcteams[name][teammate].Item = Item.Everstone
                 elif (teammate == "Dratini"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = GetTrainerTeam("Leaf", "Dratini", heal)
@@ -62,7 +70,9 @@ init python:
                 elif (teammate == "Eevee"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Eevee", level=5, moves=["Tackle", "Sand Attack", "Tail Whip", "Growl"], gender=Genders.Male, ability="Run Away")
-                    if (level >= 20):
+                    if (level >= 25):
+                        npcteams[name][teammate].UpdateMoves(["Double Kick", "Bite", "Quick Attack", "Sand Attack"])
+                    elif (level >= 20):
                         npcteams[name][teammate].UpdateMoves(["Swift", "Bite", "Quick Attack", "Sand Attack"])
                     elif (level >= 17):
                         npcteams[name][teammate].UpdateMoves(["Bite", "Quick Attack", "Swift", GetMove("Baby-Doll Eyes")])
@@ -77,20 +87,28 @@ init python:
                 elif (teammate == "Exeggcute"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Exeggcute", level=13, moves=["Leech Seed", "Hypnosis", "Reflect", "Uproar"], nature=Natures.Jolly, gender=Genders.Female, offset=-1)
-                    if (level >= 17):
+                    if (level >= 26):
+                        npcteams[name][teammate].UpdateMoves(["Poison Powder", "Bark Up", "Leech Seed", "Mega Drain"])
+                    elif (level >= 17):
                         npcteams[name][teammate].UpdateMoves(["Hypnosis","Bark Up","Leech Seed","Bullet Seed"])
                 elif (teammate == "Charmander"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Charmander", level=10, nature=Natures.Timid, moves=["Smokescreen", "Ember", "Growl", "Scratch"], gender=Genders.Male, ability="Blaze")
+                    if (level >= 25):
+                        npcteams[name][teammate].UpdateMoves(["Fire Fang", "Steady Flame", "Metal Claw", "Dragon Rage"])
+                    elif (level >= 16):
+                        npcteams[name][teammate].UpdateMoves(["Ember","Dragon Rage","Smokescreen","Steady Flame"])
                     if (level >= 16):
                         npcteams[name][teammate].Id = 5
-                        npcteams[name][teammate].UpdateMoves(["Ember","Dragon Rage","Smokescreen","Steady Flame"])
                 npcteams[name][teammate].UpdateLevel(level, False)
 
         elif (name == "Leaf"):
             teammembers = ["Helioptile", "Bulbasaur", "Dratini"]
             if (level >= 13):
                 teammembers += ["Drampa"]
+                if (level >= 25):
+                    teammembers += ["Diggersby"]
+
             if (IsAfter(4, 5, 2004)):
                 teammembers += ["Jigglypuff"]
 
@@ -110,7 +128,9 @@ init python:
                 elif (teammate == "Dratini"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Dratini", level=15, offset=1, moves=["Dragon Rage", "Thunder Wave", "Leer", "Twister"], nature=Natures.Jolly, ivs=[31, 31, 31, 31, 31, 31], ability="Shed Skin")
-                    if (level >= 16):
+                    if (level >= 25):
+                        npcteams[name][teammate].UpdateMoves(["Dragon Rage", "Slam", "Dragon Tail", "Legacy"])
+                    elif (level >= 16):
                         npcteams[name][teammate].UpdateMoves(["Dragon Rage", "Twister", "Dragon Tail", "Legacy"])
                     elif (level >= 15):
                         npcteams[name][teammate].UpdateMoves(["Wrap","Thunder Wave","Twister","Dragon Rage"])
@@ -129,6 +149,9 @@ init python:
                         npcteams[name][teammate].UpdateMoves(["Legacy","Echoed Voice","Protect","Twister"])
                 elif (teammate == "Jigglypuff"):
                     npcteams[name][teammate] = Pokemon("Jigglypuff", AimLevel() - 1, moves=["Pound", "Sing", "Disarming Voice", "Disable"], gender=Genders.Female, nature=Natures.Lonely, ability="Friend Guard", offset = -1, intelligence = 1)
+                elif (teammate == "Diggersby"):
+                    if (teammate not in npcteams[name]):#first time you encounter diggersby, it should be a bit underleveled, because A) It's very strong, and B) Leaf has been skipping classes.
+                        npcteams[name][teammate] = Pokemon("Diggersby", level=21, moves=["Double Kick", "Dig", "Return", "Swords Dance"], nature = Natures.Jolly, ability="Huge Power", offset=-3)
                 npcteams[name][teammate].UpdateLevel(level, False)
 
         elif (name == "Ethan"):
@@ -161,19 +184,29 @@ init python:
 
         elif (name == "Yellow"):
             teammembers = ["Rattata", "Pichu"]
+            if (IsAfter(12, 6, 2004)):
+                teammembers.append("Omanyte")
             for teammate in ([specific] if specific != None else teammembers):#base level here is level >= 16
                 if (teammate == "Rattata"):
                     if (teammate not in npcteams[name]):
-                        npcteams[name][teammate] = Pokemon("Rattata", AimLevel() - 2, moves = ["Pursuit", "Bite", "Tackle", "Quick Attack"], gender=Genders.Male, offset=-2, ability="Run Away", ivs=[31, 31, 31, 31, 31, 31], intelligence=1)
+                        npcteams[name][teammate] = Pokemon("Rattata", AimLevel() - 2, moves = ["Pursuit", "Bite", "Tackle", "Quick Attack"], nickname="Ratty", gender=Genders.Male, offset=-2, ability="Run Away", ivs=[31, 31, 31, 31, 31, 31], intelligence=1)
                 elif (teammate == "Pichu"):
                     if (teammate not in npcteams[name]):
-                        npcteams[name][teammate] = Pokemon(172.1, AimLevel() - 3, moves = ["Nasty Plot", "Sweet Kiss", "Charm", "Tail Whip"], gender=Genders.Female, offset=-3, nickname = "Chuchu", ability="Small World", nature=Natures.Mild, ivs=[31, 31, 31, 31, 31, 31], intelligence=1)
+                        npcteams[name][teammate] = Pokemon(172.1, AimLevel() - 3, moves = ["Nasty Plot", "Sweet Kiss", "Charm", "Tail Whip"], nickname="Chuchu", gender=Genders.Female, offset=-3,ability="Small World", nature=Natures.Mild, ivs=[31, 31, 31, 31, 31, 31], intelligence=1)
+                    if (npcteams[name][teammate].GetId() == 25.3):
+                        npcteams[name][teammate].Foreverals = ["Pikachu Foreveral"]
+                elif (teammate == "Omanyte"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon(138, AimLevel() - 3, moves = ["Sand Attack", "Rollout", "Bind", "Withdraw"], nickname="Omny", gender=Genders.Male, offset=-3, ability="Swift Swim", nature=Natures.Docile, ivs=[31, 31, 31, 31, 31, 31], intelligence=1)
+
                 npcteams[name][teammate].UpdateLevel(level, False)
 
         elif (name == "Erika"):
-            teammembers = ["Nidorina", "Glimmet", "Gloom"]
-            if (level >= 16):
-                teammembers += ["Poltchageist", "Turtwig", "Wooper"]
+            teammembers = ["Turtwig"]
+            if (level >= 8):
+                teammembers += ["Glimmet", "Gloom"]
+                if (level >= 16):
+                    teammembers += ["Poltchageist", "Nidorina", "Wooper"]
             for teammate in ([specific] if specific != None else teammembers):#default is level >= 16
                 if (teammate == "Nidorina"):
                     if (teammate not in npcteams[name]):
@@ -337,7 +370,7 @@ init python:
 
         elif (name == "Rosa"):
             teammembers = ["Pikachu", "Charmander", "Eevee"]
-            if (level >= 15):
+            if (level >= 15 and showscrimblo):
                 teammembers += ["Dottler"]
             if (level >= 16):
                 teammembers += ["Gastly"]
@@ -380,8 +413,11 @@ init python:
             if (HasEvent("Nessa", "HasBonsly")):
                 teammembers += ["Bonsly"]
             
-            if (HasEvent("Brendan", "GaveFeebas")):
+            if (HasEvent("Nessa", "GaveFeebas")):
                 teammembers += ["Feebas"]
+
+            if (level >= 25):
+                teammembers += ["Azumarill"]
 
             for teammate in ([specific] if specific != None else teammembers):
                 if (teammate == "Drednaw"):
@@ -407,6 +443,9 @@ init python:
                 elif (teammate == "Feebas"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = GetTrainerTeam("Brendan", "Feebas", heal)
+                elif (teammate == "Azumarill"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Azumarill", level = AimLevel() - 1, moves=["Defense Curl", "Rollout", "Aqua Tail", "Play Rough"], intelligence=1, ability="Sap Sipper")
 
                 npcteams[name][teammate].UpdateLevel(level, False)
 
@@ -537,6 +576,8 @@ init python:
                     teammembers += ["Chansey"]  
                 else:
                     teammembers += ["Munchlax"]
+                if (level >= 25):
+                    teammembers += ["Lopunny"]
                 
             for teammate in ([specific] if specific != None else teammembers):
                 if (teammate == "Cleffa"):
@@ -561,6 +602,9 @@ init python:
                 elif (teammate == "Audino"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Audino", level=AimLevel() - 2, gender=Genders.Male, moves=["Simple World", "Disarming Voice", "Hyper Voice", "Helping Hand"], nickname="Dr. Doctor", ability="Healer", offset=-2, intelligence=1)
+                elif (teammate == "Lopunny"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Lopunny", level=AimLevel(), gender=Genders.Female, moves=["Return", "Healing Wish", "Jump Kick", "Quick Attack"], nickname="Lady Lepus", ability="Cute Charm", offset=0, intelligence=1)
                 npcteams[name][teammate].UpdateLevel(level, False)
 
         elif (name == "Tia"):
@@ -685,19 +729,30 @@ init python:
                         npcteams[name][teammate] = Pokemon("Snom", level=AimLevel(), moves=["Powder Snow", "Struggle Bug"], gender=Genders.Female, ability="Shield Dust", intelligence=1)
                     if (level >= 20):
                         npcteams[name][teammate].Id = 873
+                    if (level >= 26):
+                        npcteams[name][teammate].UpdateMoves(["Icy Wind", "Aurora Beam", "Struggle Bug", "Hail"])
+                    elif (level >= 20):
                         npcteams[name][teammate].UpdateMoves(["Icy Wind", "Powder Snow", "Struggle Bug", "Stun Spore"])
                 elif (teammate == "Cetoddle"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Cetoddle", level=AimLevel() + 1, moves=["Ice Shard", "Rest", "Powder Snow", "Slow Freeze"], gender=Genders.Female, ability="Thick Fat", item="Chesto Berry", intelligence=1)
+                    if (level >= 26):
+                        npcteams[name][teammate].UpdateMoves(["Ice Shard", "Rest", "Avalanche", "Slow Freeze"])
                 elif (teammate == "Swablu"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Swablu", level=AimLevel(), moves=["Disarming Voice", "Safeguard", "Fury Attack", "Sing"], gender=Genders.Female, ability="Natural Cure", intelligence=1)
+                    if (level >= 26):
+                        npcteams[name][teammate].UpdateMoves(["Disarming Voice", "Round", "Dragon Breath", "Sing"])
                 elif (teammate == "Delibird"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Delibird", level=AimLevel() - 1, moves=["Acrobatics", "Icy Wind", "Seed Bomb", "Thief"], gender=Genders.Male, ability="Insomnia", intelligence=1)
+                    if (level >= 26):
+                        npcteams[name][teammate].UpdateMoves(["Acrobatics", "Freeze-Dry", "Seed Bomb", "Thief"])
                 elif (teammate == "Archen"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Archen", level=AimLevel() - 1, moves=["Wing Attack", "Rock Throw", "Double Team", "Pluck"], intelligence=1)
+                    if (level >= 26):
+                        npcteams[name][teammate].UpdateMoves(["Dragon Breath", "Rock Slide", "U-turn", "Pluck"])
                 npcteams[name][teammate].UpdateLevel(level, False)
     
         elif (name == "Raihan"):#give him a tyrunt & Duraludon eventually 
@@ -761,7 +816,6 @@ init python:
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Phantump", level=9, gender=Genders.Male, nature="Lonely", ability="Frisk", offset=-1)#phantump should not level up for a while
                         npcteams[name][teammate].Level = 8
-                        npcteams[name][teammate].UpdateLevel(9, True, True)
                 if (teammate != "Phantump"):
                     npcteams[name][teammate].UpdateLevel(level, False)
 
@@ -778,14 +832,22 @@ init python:
                 if (teammate == "Sandshrew"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon(27, level=4, gender=Genders.Female, ability="Sand Veil")
-                    if (level >= 19):
+                    if (level >= 22):
+                        npcteams[name][teammate].Id = 28
+                    if (level >= 26):
+                        npcteams[name][teammate].UpdateMoves(["Dig", "Slash", "Rapid Spin", "Rollout"])
+                    elif (level >= 19):
                         npcteams[name][teammate].UpdateMoves(["Bulldoze", "Rapid Spin", "Fury Cutter", "Sand Attack"])
                     elif (level >= 11):
                         npcteams[name][teammate].UpdateMoves(["Rapid Spin", "Defense Curl", "Rollout", "Poison Sting"])
                 elif (teammate == "Shroomish"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon(285, level=8, nature=Natures.Docile, gender=Genders.Male, ability="Poison Heal")
-                    if (level >= 19):
+                    if (level >= 23):
+                        npcteams[name][teammate].Id = 286
+                    if (level >= 26):
+                        npcteams[name][teammate].UpdateMoves(["Bark Up", "Giga Drain", "Mach Punch", "Spore"])
+                    elif (level >= 19):
                         npcteams[name][teammate].UpdateMoves(["Bark Up", "Mega Drain", "Headbutt", "Leech Seed"])
                     elif (level >= 12):
                         npcteams[name][teammate].UpdateMoves(["Mega Drain", "Leech Seed", "Stun Spore"])
@@ -794,19 +856,31 @@ init python:
                         npcteams[name][teammate] = Pokemon(258, level=7, nature=Natures.Hardy, gender=Genders.Male, ability="Torrent", offset=1)
                     if (level >= 15):
                         npcteams[name][teammate].Id = 259
-                    if (level >= 19):
+                    if (level >= 26):
+                        npcteams[name][teammate].UpdateMoves(["Mud Shot", "Rock Smash", "Rock Slide", "Water Pulse"])
+                    elif (level >= 19):
                         npcteams[name][teammate].UpdateMoves(["Mud Shot", "Rock Smash", "Rock Throw", "Water Pulse"])
                     elif (level >= 10):
-                        npcteams[name][teammate].UpdateMoves([GetMove("Mud-Slap"), "Water Gun"])
+                        npcteams[name][teammate].UpdateMoves(["Mud-Slap", "Water Gun"])
                 elif (teammate == "Wailmer"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Wailmer", level=AimLevel() -1, moves=["Healing Spring", "Water Pulse", "Mist", "Astonish"], offset = -1, ability="Oblivious", intelligence=1)
+                    if (level >= 26):
+                        npcteams[name][teammate].UpdateMoves(["Healing Spring", "Water Pulse", "Brine", "Heavy Slam"])
                 elif (teammate == "Grovyle"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Grovyle", level=AimLevel() -1, moves=["Detect", GetMove("X-Scissor"), "Energy Ball", "Low Sweep"], offset = -1, ability="Unburden", item="Sitrus Berry", intelligence=1)
+                    if (level >= 26):
+                        npcteams[name][teammate].UpdateMoves(["X-Scissor", "Giga Drain", "Low Sweep", "Detect"])
                 elif (teammate == "Feebas"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Feebas", level=AimLevel() - 1, gender=Genders.Female, moves=["Splash", "Tackle"], ability="Adaptability", intelligence=1)
+                    if (npcteams[name][teammate].Id == 349):
+                        npcteams[name][teammate].Offset = 2
+                        npcteams[name][teammate].Ability = "Marvel Scale"
+                        if (level >= 26):
+                            npcteams[name][teammate].UpdateMoves(["Dragon Tail", "Healing Spring", "Water Pulse", "Disarming Voice"])
+
                 npcteams[name][teammate].UpdateLevel(level, False)
 
         elif (name == "Hilda"):
@@ -999,6 +1073,28 @@ init python:
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Bouffalant", level = 82, moves = ["Wild Charge", "Earthquake", "Megahorn", "Head Charge"], nature = Natures.Hardy, gender=Genders.Male, ability="Sap Sipper", intelligence=1)
 
+        elif (name == "Young Alder"):
+            teammembers = ["Volcarona", "Bouffalant", "Braviary", "Accelgor", "Escavalier", "Vanilluxe"]
+            for teammate in ([specific] if specific != None else teammembers):
+                if (teammate == "Volcarona"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Volcarona", ivs=[31, 14, 31, 31, 31, 31], evs=[0, 0, 4, 252, 252, 0], nature=Natures.Timid, gender=Genders.Female, level=86, moves=["Bug Buzz", "Quiver Dance", "Flamethrower", "Hurricane"], item="Heavy-Duty Boots", ability="Flame Body")
+                elif (teammate == "Braviary"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Braviary", level = 85, moves = ["Crush Claw", "Superpower", "Rock Slide", "Aerial Ace"], nature = Natures.Brave, gender=Genders.Male, ability="Defiant", intelligence=1)
+                elif (teammate == "Bouffalant"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Bouffalant", level = 85, moves = ["Wild Charge", "Earthquake", "Megahorn", "Head Charge"], nature = Natures.Hardy, gender=Genders.Male, ability="Sap Sipper", intelligence=1)
+                elif (teammate == "Accelgor"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Accelgor", level = 85, moves = ["Bug Buzz", "Focus Blast", "Energy Ball", "Me First"], nature = Natures.Serious, gender=Genders.Male, ability="Hydration", intelligence=1)
+                elif (teammate == "Escavalier"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Escavalier", level = 85, moves = ["X-Scissor", "Iron Head", "Aerial Ace", "Close Combat"], nature = Natures.Adamant, gender=Genders.Male, ability="Swarm", intelligence=1)
+                elif (teammate == "Vanilluxe"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Vanilluxe", level = 85, moves = ["Blizzard", "Light Screen", "Flash Cannon", "Acid Armor"], nature = Natures.Quirky, gender=Genders.Male, ability="Ice Body", intelligence=1)
+                
         elif (name == "Bruno"):
             teammembers = ["Onix", "Machamp", "Poliwrath"]
             for teammate in ([specific] if specific != None else teammembers):
@@ -1046,6 +1142,9 @@ init python:
                 elif (teammate == "Togetic"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Togetic", level=AimLevel(), moves=["Magical Leaf", "Fairy Wind", "Ardent Gaze", "Ancient Power"], ability="Serene Grace", offset=-1, intelligence=1)
+                    if (level >= 20):
+                        npcteams[name][teammate].UpdateMoves(["Magical Leaf", "Fairy Wind", "Ardent Gaze", "Ancient Power"])
+
                 npcteams[name][teammate].UpdateLevel(level, False)
         
         elif (name == "Lisia"):
@@ -1100,8 +1199,10 @@ init python:
                         npcteams[name][teammate] = Pokemon("Amaura", level=level, moves=["Slow Freeze", "Aurora Beam", "Rock Throw", "Thunder Wave"], ability="Refrigerate", offset=-1, intelligence=1, gender=Genders.Male)
                 npcteams[name][teammate].UpdateLevel(level, False)
 
-        elif (name == "Melody"):#give her a Masquerain, eventually. Take away the Falinks
+        elif (name == "Melody"):#Take away the Falinks
             teammembers = ["Wimpod", "Lombre", "Finneon", "Slowpoke", "Falinks"]
+            if (level >= 24):
+                teammembers.insert(0, "Masquerain")
 
             for teammate in ([specific] if specific != None else teammembers):
                 if (teammate == "Wimpod"):
@@ -1110,15 +1211,23 @@ init python:
                 elif (teammate == "Lombre"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Lombre", level=AimLevel(), moves=["Fake Out", "Fury Swipes", "Bubble", "Absorb"], gender=Genders.Male, ability="Swift Swim", intelligence=1)
-                #elif (teammate == "Masquerain"):
-                #    if (teammate not in npcteams[name]):
-                #        npcteams[name][teammate] = Pokemon("Masquerain", level=AimLevel(), moves=["Air Cutter", "Gust", "Quick Attack", "Bubble Beam"], ability = "Intimidate", intelligence=1)
+                    if (level >= 24):
+                        npcteams[name][teammate].UpdateMoves(["Fake Out", "Fury Swipes", "Bubble Beam", "Mega Drain"])
+                elif (teammate == "Masquerain"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Masquerain", level=AimLevel(), moves=["Quiver Dance", "Bug Buzz", "Air Cutter", "Bubble Beam"], ability = "Intimidate", intelligence=1)
+                    if (level >= 26):
+                        npcteams[name][teammate].UpdateMoves(["Quiver Dance", "Bug Buzz", "Air Cutter", "Bubble Beam"])
                 elif (teammate == "Finneon"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Finneon", level=AimLevel() - 1, offset=-1, moves=["Gust", "Rain Dance", "Attract", "Water Gun"], gender=Genders.Female, ability="Swift Swim", intelligence=1)
+                    if (level >= 24):
+                        npcteams[name][teammate].UpdateMoves(["Gust", "Rain Dance", "Attract", "Water Pulse"])
                 elif (teammate == "Slowpoke"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Slowpoke", level=AimLevel(), moves=["Disable", "Confusion", "Water Gun", "Yawn"], gender=Genders.Male, ability = "Own Tempo", intelligence=1)#boy needs some pants
+                    if (level >= 24):
+                        npcteams[name][teammate].UpdateMoves(["Zen Headbutt", "Confusion", "Water Gun", "Yawn"])
                 elif (teammate == "Falinks"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Falinks", level=10, gender=Genders.Male)
@@ -1136,6 +1245,9 @@ init python:
                     else:
                         teammembers += ["Sizzlipede"]
                     teammembers += ["Cutiefly"]
+
+            if (IsDate(6, 12, 2004)):
+                teammembers += ["Scorbunny"]
 
             for teammate in ([specific] if specific != None else teammembers):
                 if (teammate == "Heracross"):
@@ -1174,6 +1286,9 @@ init python:
                 elif (teammate == "Cutiefly"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Cutiefly", level=AimLevel() - 1, offset = -1, moves=["Draining Kiss", "Silver Wind", "Stun Spore", "Absorb"], gender=Genders.Male, ability = "Shield Dust", intelligence=1)
+                elif (teammate == "Scorbunny"):#contest pokemon, not for battling
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Scorbunny", level=AimLevel(), offset = 0, moves=["Double Kick", "Ember", "Acrobatics", "Flame Charge"], gender=Genders.Female, ability = "Libero", intelligence=1)
 
                 npcteams[name][teammate].UpdateLevel(level, False)
        
@@ -1184,17 +1299,26 @@ init python:
                 if (teammate == "Tentacool"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Tentacool", gender=Genders.Male, moves=["Acid Spray", "Bubble Beam", "Toxic Spikes", "Constrict"], ability="Liquid Ooze")
+                    if (level >= 25):
+                        npcteams[name][teammate].item = Item.BlackSludge
                 elif (teammate == "Slowpoke"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon(79.1, gender=Genders.Female, moves=["Headbutt", "Zen Headbutt", "Water Pulse", "Curse"], ability="Gluttony", level=24, offset = -1)
                     if (heal):
-                        npcteams[name][teammate].Item = "Sitrus Berry"
+                        npcteams[name][teammate].Item = Item.Leftovers
+                    if (level >= 25):
+                        npcteams[name][teammate].offset = 2
+                        npcteams[name][teammate].Id = 80.2
+                        npcteams[name][teammate].UpdateMoves(["Shell Side Arm", "Zen Headbutt", "Water Pulse", "Curse"])
                 elif (teammate == "Skorupi"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Skorupi", gender=Genders.Male, moves=["Poison Fang", "Bug Bite", "Acupressure", "Pursuit"], ability="Sniper", offset=-1)
                 elif (teammate == "Araquanid"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Araquanid", moves=["Spider Web", "Bubble Beam", "Wide Guard", "Aqua Ring"], gender=Genders.Male, ability = "Water Bubble")
+                    if (level >= 25):
+                        offset = 1
+                        npcteams[name][teammate].UpdateMoves(["Crunch", "Bubble Beam", "Bug Bite", "Healing Spring"])
                 elif (teammate == "Whirlipede"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Whirlipede", moves=["Bug Bite", "Protect", "Rollout", "Poison Tail"], gender=Genders.Female, ability = "Speed Boost", offset=1)
@@ -1204,10 +1328,16 @@ init python:
         elif (name == "Iono"):
             teammembers = ["Mismagius"]
 
+            if (GetRelationshipRank("Iono") >= 1):
+                teammembers += ["Rotom"]
+
             for teammate in teammembers + ([specific] if specific != None else []):
                 if (teammate == "Mismagius"):
                     if (teammate not in npcteams[name]):
                         npcteams[name][teammate] = Pokemon("Mismagius", level=24, offset=1, gender=Genders.Female, moves=["Charge Beam", "Confuse Ray", "Hex"], ability="Levitate", nature=Natures.Modest, item=Item.ElectricTypeGem, teratype="Electric")
+                if (teammate == "Rotom"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Rotom", level=23, offset=0, nickname = "Rotee", moves=["Thunder Wave", "Double Team", "Electro Ball", "Hex"], ability="Levitate", nature=Natures.Rash, teratype="Levitate")
             
                 npcteams[name][teammate].UpdateLevel(level, False)
 
@@ -1261,6 +1391,125 @@ init python:
             
                 npcteams[name][teammate].UpdateLevel(level, False)
 
+        elif (name == "Sycamore"):
+            teammembers = ["Gogoat", "Venusaur", "Charizard", "Blastoise", "Greninja", "Kangaskhan"]
+
+            for teammate in teammembers + ([specific] if specific != None else []):
+                if (teammate == "Gogoat"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Gogoat", level=54, gender=Genders.Male, moves=["Horn Leech", "Double-Edge", "Earthquake", "Leech Seed"], ability="Sap Sipper", nature=Natures.Jolly, offset=-9)
+                elif (teammate == "Venusaur"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Venusaur", level=50, gender=Genders.Female, moves=["Solar Beam", "Petal Dance", "Synthesis", "Frenzy Plant"], ability="Overgrow", item=Item.Venusaurite, nature=Natures.Modest, offset=-10)
+                elif (teammate == "Charizard"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Charizard", level=50, gender=Genders.Female, moves=["Fly", "Blast Burn", "Counter", "Dragon Claw"], ability="Blaze", item=Item.CharizarditeY, nature=Natures.Adamant, offset=-10)
+                elif (teammate == "Blastoise"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Blastoise", level=50, gender=Genders.Male, moves=["Hydro Cannon", "Skull Bash", "Protect", "Fake Out"], ability="Torrent", item=Item.Blastoisinite, nature=Natures.Quirky, offset=-10)
+                elif (teammate == "Greninja"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Greninja", level=52, gender=Genders.Male, moves=["Spikes", "Substitute", "Hydro Cannon", "Dark Pulse"], ability="Torrent", nature=Natures.Quiet, offset=-7)
+                elif (teammate == "Kangaskhan"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Kangaskhan", level=55, gender=Genders.Female, moves=["Power-Up Punch", "Return", "Crunch", "Fake Out"], ability="Scrappy", item=Item.Kangaskhanite, nature=Natures.Brave, offset=-5)
+            
+                npcteams[name][teammate].UpdateLevel(level, False)
+
+        elif (name == "Mallow"):
+            teammembers = ["Steenee", "Maractus"]
+
+            for teammate in teammembers + ([specific] if specific != None else []):
+                if (teammate == "Steenee"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Steenee", level=AimLevel(), gender=Genders.Female, moves=["Teeter Dance", "Magical Leaf", "Double Slap", "Play Nice"], ability="Oblivious", nature=Natures.Lonely, offset=1)
+                elif (teammate == "Maractus"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Maractus", level=AimLevel(), gender=Genders.Female, moves=["Leech Seed", "Synthesis", "Cotton Guard", "Spiky Shield"], ability="Storm Drain", nature=Natures.Lonely, offset=0)
+            
+                npcteams[name][teammate].UpdateLevel(level, False)
+        
+        elif (name == "Morty"):
+            teammembers = ["Sigilyph", "Gastly", "Inkay", "Misdreavus"]
+
+            for teammate in teammembers + ([specific] if specific != None else []):
+                if (teammate == "Misdreavus"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Misdreavus", level=AimLevel() + 1, gender=Genders.Female, moves=["Hex", "Will-O-Wisp", "Psywave", "Mean Look"], ability="Levitate", nature=Natures.Quiet, offset=1)
+                    if (level >= 30):
+                        npcteams[name][teammate].Id = 429
+                elif (teammate == "Sigilyph"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Sigilyph", level=AimLevel(), gender=Genders.Female, moves=["Cosmic Power", "Psycho Shift", "Stored Power", "Roost"], ability="Magic Guard", item=Item.FlameOrb, nature=Natures.Calm, offset=0)
+                elif (teammate == "Gastly"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Gastly", level=AimLevel(), gender=Genders.Male, moves=["Night Shade", "Curse", "Payback", "Shadow Sneak"], ability="Levitate", nature=Natures.Mild, offset=0)
+                    if (level >= 25):
+                        npcteams[name][teammate].Id = 93
+                    if (level >= 30):
+                        npcteams[name][teammate].UpdateMoves(["Night Shade", "Hex", "Payback", "Icy Wind"])
+                elif (teammate == "Inkay"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Inkay", level=AimLevel() - 1, gender=Genders.Male, moves=["Payback", "Pluck", "Psybeam", "Hypnosis"], ability="Contrary", nature=Natures.Lonely, offset=-1)
+                    if (level >= 30):
+                        npcteams[name][teammate].Id = 687
+                        npcteams[name][teammate].UpdateMoves(["Night Slash", "Pluck", "Psycho Cut", "Hypnosis"])
+
+                npcteams[name][teammate].UpdateLevel(level, False)
+
+        elif (name == "Bugsy"):
+            teammembers = ["Whirlipede", "Larvesta", "Scizor"]
+            if (ClassSceneSeen("Bug", 22)):
+                teammembers.append("Joltik")
+
+            for teammate in teammembers + ([specific] if specific != None else []):
+                if (teammate == "Scizor"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Scizor", level=AimLevel() + 2, gender=Genders.Male, moves=["Bug Bite", "Bullet Punch", "Wing Attack", "Quick Attack"], ability="Technician", nature=Natures.Adamant, nickname="Fern", offset=2)
+                elif (teammate == "Whirlipede"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Whirlipede", level=AimLevel(), gender=Genders.Male, moves=["Pin Missile", "Rollout", "Screech", "Protect"], ability="Speed Boost", nature=Natures.Careful, nickname="Gummyworm", offset=0)
+                    if (level >= 30):
+                        npcteams[name][teammate].Id = 544   
+                elif (teammate == "Larvesta"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Larvesta", level=AimLevel(), gender=Genders.Female, moves=["Struggle Bug", "Flame Charge", "String Shot", "Flame Wheel"], ability="Flame Body", nature=Natures.Rash, nickname="Poppy", offset=0)
+                elif (teammate == "Joltik"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Joltik", level=AimLevel() - 3, gender=Genders.Male, moves=["Electroweb", "Bug Bite", "Thunder Wave", "Absorb"], ability="Compound Eyes", nature=Natures.Quiet, nickname="Socks", offset=-3)
+                    if (level >= 30):
+                        npcteams[name][teammate].UpdateMoves(["Electroweb", "Electro Ball", "Thunder Wave", "Sucker Punch"])
+            
+                npcteams[name][teammate].UpdateLevel(level, False)            
+
+        elif (name == "Phobos"):
+            teammembers = ["Wugtrio", "Tatsugiri", "Iron Jugulis"]
+            if not HasPokemon("vespiquenobj") or HasEvent("Lawrence", "Tyrannic"):
+                teammembers.append("Combee")
+            if not HasPokemon("dodrioobj") or HasEvent("Lawrence", "Tyrannic"):
+                teammembers.append("Dodrio")
+
+            for teammate in teammembers + ([specific] if specific != None else []):
+                if (teammate == "Wugtrio"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Wugtrio", level=24, offset=-2, gender=Genders.Male, moves=["Frustration", "Triple Dive", "Dig", "Metal Claw"], ability="Gooey", nature=Natures.Lonely, foreverals=["Wugtrio Triveral"])
+                elif (teammate == "Tatsugiri"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Tatsugiri", level=27, offset=1, gender=Genders.Male, moves=["Frustration", "Water Pulse", "Mud Shot", "Outrage"], ability="Storm Drain", nature=Natures.Lonely, foreverals=["Tatsugiri Megaveral"])
+                elif (teammate == "Iron Jugulis"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Iron Jugulis", level=30,offset=4, gender=Genders.Unknown, moves=["Frustration", "Hyper Beam", "Outrage", "Fly"], nickname="???", ability="Quark Drive", nature=Natures.Lonely, foreverals=["Iron Jugulis Eterneveral"])
+                elif (teammate == "Combee"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Vespiquen", level=27,offset=1, moves=["Attack Order", "Defend Order", "Heal Order", "Frustration"], nature=Natures.Lonely, gender=Genders.Female, foreverals=["Vespiquen Uneveral V3"])
+                        npcteams[name][teammate].Nickname = "Combee"
+                    npcteams[name][teammate].Image = "pokemon/415.webp"
+                elif (teammate == "Dodrio"):
+                    if (teammate not in npcteams[name]):
+                        npcteams[name][teammate] = Pokemon("Dodrio", level=27,offset=1, moves=["Acupressure", "Tri Attack", "Drill Peck", "Frustration"], nature=Natures.Lonely, gender=Genders.Male, foreverals=["Dodrio Overal V3"])
+            
+                npcteams[name][teammate].UpdateLevel(level, False)            
+
         else:
             return None
 
@@ -1301,3 +1550,8 @@ init python:
                 return cherenbrain1
 
         return None
+
+    def GetTrainerSkill(name):
+        # if config.developer: return 3
+        trainerskilldex = {"Sycamore": 3}
+        return trainerskilldex.get(name, 0)

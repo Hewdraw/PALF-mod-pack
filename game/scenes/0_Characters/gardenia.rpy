@@ -529,7 +529,17 @@ label Gardenia1:
 
     gardenia @talkingmouth "Hm... how about the fields? It's a nice, easy, open location for training. Just text me whenever you're free, and I'll tell you if I have time to meet you there."
 
-    red @talking2mouth "Alright, sure. Good talking with you."
+    if (IsContacted("Gardenia")):
+        red @talking2mouth "Alright, sure. Good talking with you."
+
+    else:
+        red @happy "Won't I need your number to text you?"
+
+        gardenia @happy "Oh, seriously? I thought I'd already done that. Here, let me add you to my contacts."
+
+        $ BecomeContacted("Gardenia")
+
+        red @talking2mouth "Cool. Good talking with you!"
 
     gardenia @happy "Same to you, partner!"
 
@@ -1067,11 +1077,9 @@ label Gardenia1Part2:
     $ renpy.music.queue("audio/music/GSCBike_Loop.ogg", channel='music', loop=True)
     $ freeroaming = True
 
-    scene map with splitfade
+    scene map 
     show blank2 as blackground behind map
-    show screen currentdate 
-    call screen map_UI(_with_none=False)
-    hide blackground
-    with dissolve
+    show screen currentdate
+    with splitfade
     
     return

@@ -1,4 +1,4 @@
-init python:
+init 1 python:
     import functools
 
     def CurrentPersondex():
@@ -61,30 +61,31 @@ init python:
         return random.randint(math.floor(min), math.ceil(max))
 
     def BecomeNamed(name):
-        if name in CurrentPersondex():
-            CurrentPersondex()[name]["Named"] = True
-        else:
-            renpy.say(None, "{color=#f00}Character [name] not found for naming. Please report this error. ErrorData: [calDate], [timeOfDay]")
+        if name in persondex:
+            persondex[name]["Named"] = True
+        return False
 
     def IsNamed(name):
-        if (name in CurrentPersondex() and "Named" in CurrentPersondex()[name]):
-            return CurrentPersondex()[name]["Named"]
-        else:
-            renpy.say(None, "{color=#f00}Character [name] not found for isnaming. Please report this error. ErrorData: [calDate], [timeOfDay]")
-            return False
+        if ('bondvalueoverride' in globals() and bondvalueoverride != None or 'relationshiprankoverride' in globals() and relationshiprankoverride != None):
+            return True
+        if (name in persondex and "Named" in persondex[name]):
+            return persondex[name]["Named"]
+        return False
 
     def Named(name):
         return IsNamed(name)
     
     def BecomeContacted(name):
-        if name not in CurrentPersondex().keys():
-            renpy.say(None, "{color=#f00}Character [name] not found for contacting. Please report this error. ErrorData: [calDate], [timeOfDay]")
+        if (IsContacted(name)):
+            return
+
+        if name not in persondex:
             return
 
         renpy.music.set_volume(0.0, delay=0.0, channel="music")
         renpy.sound.play("Audio/PhoneNumber.ogg")
 
-        CurrentPersondex()[name]["Contact"] = True
+        persondex[name]["Contact"] = True
 
         renpy.music.set_volume(1.0, delay=1.5, channel="music")
         if (name != "Sabrina"):
@@ -95,7 +96,6 @@ init python:
 
     def IsContacted(name):
         if name not in persondex.keys():
-            renpy.say(None, "{color=#f00}Character [name] not found for contacting. Please report this error. ErrorData: [calDate], [timeOfDay]")
             return
 
         return persondex[name]["Contact"]
@@ -323,7 +323,26 @@ init python:
 
     def callbackcontinue(ctc, **kwargs):
         if ctc == "end":
-            renpy.sound.play("Audio/Button_A.ogg", channel="ctc")
+            if 'no_click' not in kwargs:
+                renpy.music.play("Audio/Button_A.ogg", channel="ctc")
+
+    def smalltalkcallback(event, interact=True, **kwargs):
+        global smalltalks, lastsmalltalks
+        if ('smalltalks' not in globals()):
+            smalltalks = []
+
+        if event == "slow_done":
+            renpy.sound.stop(channel="bipbop")
+            if (smalltalks != []):
+                renpy.transition(Dissolve(0.15))
+                renpy.show_screen("smalltalk", smalltalks)
+        
+        if event == "end":
+            if 'no_click' not in kwargs:
+                renpy.music.play("Audio/Button_A.ogg", channel="ctc")
+            renpy.hide_screen("smalltalk")
+            lastsmalltalks = copy.copy(smalltalks)
+            smalltalks = []
 
     def boopy_voice(event, interact=True, boopfile="Audio/pmd_speak.ogg", no_click=False, **kwargs):
         if event == "end":
@@ -339,10 +358,6 @@ init python:
         if event == "slow_done":
             renpy.sound.stop(channel="bipbop")
 
-
-    def donothing(*args, **kwargs):
-        pass
-
     def GetCharColor(findname):
         if (findname == "Gramps"):
             return "#5e5e5e"
@@ -352,6 +367,9 @@ init python:
             return "#46897c"
         elif (findname == "You" and playercharacter == None):
             return "#cf0000"
+        if (findname in persondex):
+            if ("Color" in persondex[findname]):
+                return persondex[findname]["Color"]
         for char in charlist:
             if ((findname.lower() in char.name.lower())
             or (char.image == "red" and findname == first_name) 
@@ -363,6 +381,8 @@ init python:
         return "#000"
     
     def GetElective(element):
+        if (classstatoverride != None):
+            return classstatoverride
         return classstats[element]
 
     def GetStatRank(rank):
@@ -403,12 +423,17 @@ init python:
 
         return totalsize
 
-    def GetHighestLevel():
-        highestlevel = 0
+    def GetHighestLevelMon():
+        highestlevel = -1
+        highestmon = None
         for mon in playerparty:
-            if (mon.GetLevel() > highestlevel):
+            if mon.GetLevel() > highestlevel:
                 highestlevel = mon.GetLevel()
-        return highestlevel
+                highestmon = mon
+        return highestmon
+
+    def GetHighestLevel():
+        return GetHighestLevelMon().GetLevel()
 
     def GetHighestLevelAll():
         highestlevel = 0
@@ -418,16 +443,25 @@ init python:
         return highestlevel
 
     def GetAllPokemonIn():
-        return [622, 623, 418, 419, 100, 101, 590, 591, 352, 343, 344, 234, 899, 776, 86, 87, 459, 460, 74.1, 75.1, 76.1, 712, 713, 739, 740, 757, 758, 220, 221, 473, 225, 337, 338, 872, 873, 425, 426, 624, 625, 983, 996, 997, 998, 27.1, 28.1, 703, 129, 130, 79.1, 80.2, 199.1, 618.1, 163, 164, 187, 188, 189, 56, 57, 979, 296, 297, 708, 709, 723, 724, 46, 47, 932, 933, 934, 531.1, 122.1, 866, 131.1, 88, 89, 359.1, 263.1, 264.1, 862, 554.1, 555.2, 555.3, 38, 38.1, 446, 143, 427, 428, 428.1, 359, 870, 506, 4, 258, 387, 179, 363, 532, 41, 328, 396, 280, 540, 246, 551, 371, 304, 669, 206, 554, 194, 548, 170, 361, 447, 747, 529, 198, 290, 566, 200, 696, 597, 742, 531, 631, 746, 781, 479, 615, 214, 336, 618, 357, 561, 213, 774, 778, 302, 780, 227, 303, 263, 155, 399, 191, 835, 133, 919, 406, 29, 32, 333, 307, 401, 111, 710, 659, 967, 777, 764, 431, 607, 767, 412, 81, 351, 559, 568, 104, 629, 677, 917, 744, 353, 88.1, 714, 965, 439, 507, 5, 259, 388, 180, 364, 533, 42, 329, 397, 281, 541, 247, 552, 372, 305, 670, 982, 555, 195, 549, 171, 362, 448, 748, 530, 291, 567, 429, 697, 598, 743, 264, 156, 400, 192, 836, 134, 920, 315, 30, 33, 334, 308, 402, 112, 711, 660, 432, 608, 768, 413, 82, 560, 569, 105, 630, 678, 918, 745, 354, 89.1, 715, 966, 122, 508, 6, 260, 389, 181, 365, 534, 169, 330, 398, 282, 542, 248, 553, 373, 306, 671, 478, 430, 678.1, 292, 157, 135, 407, 31, 34, 464, 609, 414, 462, 745.1, 745.2, 136, 196, 197, 470, 471, 700, 636, 637, 175, 176, 468, 236, 237, 106, 107, 238, 124, 240, 126, 467, 360, 202, 438, 185, 440, 113, 242, 458, 226, 848, 849, 849.1, 79, 80, 199, 215, 461, 725, 726, 727, 633, 634, 635, 556, 298, 58, 59, 602, 603, 604, 131, 852, 853, 690, 691, 194.1, 980, 580, 581, 976, 595, 596, 688, 689, 592, 593, 318, 319, 885, 886, 887, 393, 394, 395, 183, 184, 190, 424, 223, 224, 443, 444, 445, 50.1, 51.1, 957, 958, 959, 453, 454, 19.1, 20.1, 52.2, 863, 859, 860, 861, 856, 857, 858, 562.1, 867, 935, 936, 937, 736, 737, 738, 874, 95, 208, 328, 329, 330, 83.1, 865, 854, 855, 971, 972, 92, 93, 94, 109, 110.1, 207, 472]
+        return [557, 558, 884, 622, 623, 418, 419, 100, 101, 590, 591, 352, 343, 344, 234, 899, 776, 86, 87, 459, 460, 74.1, 75.1, 76.1, 712, 713, 739, 740, 757, 758, 220, 221, 473, 225, 337, 338, 872, 873, 425, 426, 624, 625, 983, 996, 997, 998, 27.1, 28.1, 703, 129, 130, 79.1, 80.2, 199.1, 618.1, 163, 164, 187, 188, 189, 56, 57, 979, 296, 297, 708, 709, 723, 724, 46, 47, 932, 933, 934, 531.1, 122.1, 866, 131.1, 88, 89, 359.1, 263.1, 264.1, 862, 554.1, 555.2, 555.3, 38, 38.1, 446, 143, 427, 428, 428.1, 359, 870, 506, 4, 258, 387, 179, 363, 532, 41, 328, 396, 280, 540, 246, 551, 371, 304, 669, 206, 554, 194, 548, 170, 361, 447, 747, 529, 198, 290, 566, 200, 696, 597, 742, 531, 631, 746, 781, 479, 615, 214, 336, 618, 357, 561, 213, 774, 778, 302, 780, 227, 303, 263, 155, 399, 191, 835, 133, 919, 406, 29, 32, 333, 307, 401, 111, 710, 659, 967, 777, 764, 431, 607, 767, 412, 81, 351, 559, 568, 104, 629, 677, 917, 744, 353, 88.1, 714, 965, 439, 507, 5, 259, 388, 180, 364, 533, 42, 329, 397, 281, 541, 247, 552, 372, 305, 670, 982, 555, 195, 549, 171, 362, 448, 748, 530, 291, 567, 429, 697, 598, 743, 264, 156, 400, 192, 836, 134, 920, 315, 30, 33, 334, 308, 402, 112, 711, 660, 432, 608, 768, 413, 82, 560, 569, 105, 630, 678, 918, 745, 354, 89.1, 715, 966, 122, 508, 6, 260, 389, 181, 365, 534, 169, 330, 398, 282, 542, 248, 553, 373, 306, 671, 478, 430, 678.1, 292, 157, 135, 407, 31, 34, 464, 609, 414, 462, 745.1, 745.2, 136, 196, 197, 470, 471, 700, 636, 637, 175, 176, 468, 236, 237, 106, 107, 238, 124, 240, 126, 467, 360, 202, 438, 185, 440, 113, 242, 458, 226, 848, 849, 849.1, 79, 80, 199, 215, 461, 725, 726, 727, 633, 634, 635, 556, 298, 58, 59, 602, 603, 604, 131, 852, 853, 690, 691, 194.1, 980, 580, 581, 976, 595, 596, 688, 689, 592, 593, 318, 319, 885, 886, 887, 393, 394, 395, 183, 184, 190, 424, 223, 224, 443, 444, 445, 50.1, 51.1, 957, 958, 959, 453, 454, 19.1, 20.1, 52.2, 863, 859, 860, 861, 856, 857, 858, 562.1, 867, 935, 936, 937, 736, 737, 738, 874, 95, 208, 328, 329, 330, 83.1, 865, 854, 855, 971, 972, 92, 93, 94, 109, 110.1, 207, 472]
     
     def GetImplementedSpecialEvos():
-        return [414, 413, 413.1, 413.2, 292, 122, 122.1, 745, 745.1, 745.2, 678.1, 106, 107, 237, 124, 126, 202, 980, 424, 853, 185, 226, 849, 849.1, 473, 862, 570, 700, 982, 470, 700, 113, 865, 461, 472]
+        return [414, 413, 413.1, 413.2, 292, 122, 122.1, 745, 745.1, 745.2, 678.1, 106, 107, 237, 124, 126, 202, 980, 424, 853, 185, 226, 849, 849.1, 473, 862, 570, 700, 982, 470, 700, 113, 865, 461, 472, 971]
 
     def GetPartySpecies():
         partyids = []
         for mon in playerparty:
             partyids.append(mon.GetId())
         return partyids
+
+    def GetSeenClassScenes(elective):
+        if ('haseventoverride' in globals()):
+            if (haseventoverride):
+                return 100
+        elective = elective.lower()
+        if (elective in seenclasses):
+            return len(seenclasses[elective])
+        return 0
 
     def GetGrade():
         grade = 0
@@ -460,7 +494,7 @@ init python:
         return round(avgprof / 18, 2)
 
     def GetRememberableMoves(partymon):
-        knowledgebonus = max(1, round(personalstats["Knowledge"] / 6))
+        knowledgebonus = max(min(personalstats["Knowledge"], 1), round(personalstats["Knowledge"] / 6))
         moveslist = GetLevelMoves(partymon, partymon.GetLevel() + knowledgebonus)
         justmoves = []
         for move in moveslist:
@@ -479,8 +513,7 @@ init python:
         explist = []
         for mon in playerparty:
             explist += mon.GainExperience(pow(AimLevel(), 3) / 25 * (1 + max(0, (AimLevel() - mon.GetLevel()) / 10)))
-        if (len(explist) > 0):
-            renpy.say(None, " ".join(explist))
+        PrintExp(explist)
         renpy.transition(dissolve)
         renpy.show_screen("currentdate")
 
@@ -499,10 +532,12 @@ init python:
             mustswitch = True
             renpy.say(None, "Please pick a Pokémon to send to the PC. You can hover over the Pokémon in your party to view their stats.")
             sendtopc = renpy.call_screen("SendToPC")
-            playerparty.remove(sendtopc)
             box.append(sendtopc)
+            playerparty.remove(sendtopc)
             hidebattleui = False
             mustswitch = False
+            if (dungeon):
+                dungeon.GetRedTrainer().Team = playerparty
         stopsaving = False
 
     def PlaySound(soundname, otherchannel="misc", instant=False):
@@ -801,12 +836,16 @@ init python:
             return "Acquaintance"
 
     def GetValue(character):
+        if ('bondvalueoverride' in globals() and bondvalueoverride != None):
+            return bondvalueoverride
         if "Value" in persondex[character].keys():
             return persondex[character]["Value"]
         else:
             return 0
 
     def GetRelationshipRank(character):
+        if ('relationshiprankoverride' in globals() and relationshiprankoverride != None):
+            return relationshiprankoverride
         if "RelationshipRank" in persondex[character].keys():
             return persondex[character]["RelationshipRank"]
         else:
@@ -821,6 +860,8 @@ init python:
             return TrainerNature.Friendly
         elif (character == "Wallace"):
             return TrainerNature.Moody
+        elif character not in defaultpersondex:
+            return TrainerNature.Friendly
         elif "Nature" not in persondex[character].keys():
             persondex[character]["Nature"] = copy.copy(defaultpersondex[character]["Nature"])
         return persondex[character]["Nature"]
@@ -900,7 +941,7 @@ init python:
             | ({"Raihan"} if element in ["Dragon", "Rock"] and (IsAfter(13, 5, 2004) or IsDate(13, 5, 2004) and timeOfDay in ["Evening", "Night"]) else set())
             | ({"Leaf"} if element in ["Normal"] and IsAfter(12, 5, 2004) else set())
             | ({"Nate"} if element in ["Dark"] and IsAfter(18, 5, 2004) else set())
-            | ({"Klara"} if element in ["Bug", "Water"] and IsAfter(24, 5, 2004) and not HasEvent("Klara", "BrokeBond") else set())
+            | ({"Klara"} if element in ["Bug", "Water"] and IsAfter(24, 5, 2004) and not (HasEvent("Klara", "BrokeBond") or HasEvent("Klara", "TrueKlara")) else set())
             | ({"Iono"} if element in ["Electric", "Ghost"] and HasEvent("Cheren", "Cheren2Part2") else set()))
             - (RemoveStudents(element) if not ignoreabsences else set()))
 
@@ -924,12 +965,14 @@ init python:
         removedict = {
             "Leaf": [IsDate(10, 5, 2004),#when she skips a day of school to search for Tia
                     IsAfter(12, 5, 2004) and element == "Dragon",#after leaving dragon class
-                    IsDate(13, 5, 2004) and timeOfDay == "Morning" and element == "Normal"],#doesn't take normal class for first period 
+                    IsDate(13, 5, 2004) and timeOfDay == "Morning" and element == "Normal",#doesn't take normal class for first period 
+                    IsAfter(6, 6, 2004) and IsBefore(13, 6, 2004)],#when bunny-splashed
             "Sabrina": [IsAfter(1, 5, 2004) and not rescuedsabrina and IsBefore(16, 5, 2004)],#when she is missing in the forest
             "Tia": [IsAfter(1, 5, 2004) and not rescuedtia and IsBefore(16, 5, 2004)],#when she is missing in the forest
             "Cheren": [IsAfter(9, 5, 2004) and (not rescuedsabrina or not rescuedwill or not rescuedtia) and IsBefore(16, 5, 2004)],#when he's spending all his time searching for will/sabrina/tia
             "Nessa": [IsDate(13, 5, 2004) and timeOfDay == "Afternoon"],#when they're showing raihan around the school
-            "Sonia": [IsDate(13, 5, 2004) and timeOfDay == "Afternoon"],#when they're showing raihan around the school
+            "Sonia": [IsDate(20, 4, 2004) and timeOfDay == "Morning",#before nessa helps her sign up for classes
+                    IsDate(13, 5, 2004) and timeOfDay == "Afternoon"],#when they're showing raihan around the school
             "Bianca": [IsAfter(17, 5, 2004) and IsBefore(23, 5, 2004)],
             "Nate": [IsAfter(18, 5, 2004) and element == "Electric"],
             "Blue": [IsAfter(23, 5, 2004) and IsBefore(28, 5, 2004) and timeOfDay == "Afternoon"],#when Yellow and Ethan are pissed at him
@@ -944,6 +987,8 @@ init python:
         return newset.union(removestudents).union(removelunchstudents)
 
     def IsPresent(character, element = "All", ignoreabsences=False):
+        if (excusesecondelective or excusesecondhomeroom):
+            return False
         if (isinstance(character, str)):
             character = [character]
         for student in character:
@@ -1123,10 +1168,6 @@ init python:
 
         with open("myfile.txt", "w") as f:
             f.write(finalmovestring)
-
-    def RankUpClasses():
-        for classkey in classstats.keys():
-            classstats[classkey] += 10
 
     def eb():
         if (len(EnemyBattlers()) > 0):
@@ -1389,26 +1430,33 @@ init python:
             num = num - 0.5
         return round(num, 0)
 
-    def AddEvent(char, event, custommetadata=None):
+    def TranslateShorthands(char):
         if (char in ["Game", ""]):
-            char = "Professor Oak"
+            return "Professor Oak"
+        elif (char in ["Kris"]):
+            return "Professor Cherry"
+        return char
+
+    def AddEvent(char, event, custommetadata=None):
+        char = TranslateShorthands(char)
         if (not HasEvent(char, event)):
             metadata = [calDate.year, calDate.month, calDate.day, timeOfDay, location] if not custommetadata else custommetadata
             if metadata == -1:
                 metadata = [calDate.year, calDate.month, calDate.day - 1, timeOfDay, location]
             CurrentPersondex()[char]["Events"].append((event, metadata))
+        return True#this is because sometimes I evaluate AddEvent accidentally, instead of HasEvent. This should help me catch more of those
 
     def HasEvent(char, event):
-        if (char in ["Game", ""]):
-            char = "Professor Oak"
+        if ('haseventoverride' in globals() and haseventoverride != None):
+            return haseventoverride
+        char = TranslateShorthands(char)
         for loggedevent in CurrentPersondex()[char]["Events"]:
             if (loggedevent == event or (isinstance(loggedevent, tuple) and event == loggedevent[0])):#the '0' is the name of the event
                 return True
         return False
 
     def RemoveEvent(char, event):
-        if (char in ["Game", ""]):
-            char = "Professor Oak"
+        char = TranslateShorthands(char)
         for loggedevent in CurrentPersondex()[char]["Events"]:
             if (loggedevent == event or (isinstance(loggedevent, tuple) and event == loggedevent[0])):#the '0' is the name of the event
                 CurrentPersondex()[char]["Events"].remove(loggedevent)
@@ -1418,6 +1466,7 @@ init python:
         return GetEventDatetime(char, event)
 
     def GetEventDatetime(char, event):
+        char = TranslateShorthands(char)
         for loggedevent in CurrentPersondex()[char]["Events"]:
             if (isinstance(loggedevent, tuple) and loggedevent[0] == event):#the '0' is the name of the event
                 datelist = loggedevent[1]
@@ -1426,6 +1475,16 @@ init python:
                 day = datelist[2]
                 return datetime.datetime(year, month, day)
         return datetime.datetime(1, 1, 1)#should only be triggered for old events that never had times set for them
+
+    def GetEventMetaData(char, event):
+        return GetEventMetadata(char, event)
+
+    def GetEventMetadata(char, event):
+        char = TranslateShorthands(char)
+        for loggedevent in CurrentPersondex()[char]["Events"]:
+            if (isinstance(loggedevent, tuple) and loggedevent[0] == event):#the '0' is the name of the event
+                return loggedevent[1]
+        return []
 
     def SortBySize(studentslist):
         sizedict = {}
@@ -1556,33 +1615,48 @@ init python:
         return ''
 
     def NateNameFilter(originalstring):
-        if (not natenicknaming):
+        if not natenicknaming:
             return originalstring
-        setnames = { }
-        if (IsAfter(24, 4, 2004)):
+        setnames = {}
+        if IsAfter(24, 4, 2004):
             setnames["Leaf"] = "LG"
             setnames["Ethan"] = "MC²"
-        if (IsAfter(5, 5, 2004)):
+        if IsAfter(5, 5, 2004):
             setnames["Bea"] = "Bea"
+        # Replace shortened names only if they are whole words
         for name in defaultpersondex:
             shortenedname = extract_last_word_with_no_spaces(name)
-            if (shortenedname not in setnames.keys() and shortenedname not in ["Will", "May", "Nate"]):
-                originalstring = originalstring.replace(shortenedname, shortenedname[0])
+            if shortenedname not in setnames.keys() and shortenedname not in ["Will", "May", "Nate"]:
+                # Use word boundaries to match whole words only
+                originalstring = re.sub(r'\b{}\b'.format(re.escape(shortenedname)), shortenedname[0], originalstring)
+        # Replace setnames only if they are whole words
         for name, replacement in setnames.items():
-            originalstring = originalstring.replace(name, replacement)
+            originalstring = re.sub(r'\b{}\b'.format(re.escape(name)), replacement, originalstring)
         return originalstring
 
     def count_non_brace_chars(text):
         # Pattern to find text within curly braces
-        pattern = re.compile(r'{[^{}]*}')
+        brace_pattern = re.compile(r'{[^{}]*}')
         
         # Remove all text within curly braces
-        text_without_braces = pattern.sub('', text)
+        text_without_braces = brace_pattern.sub('', text)
         
-        # Count the number of characters in the remaining text
-        non_brace_char_count = len(text_without_braces)
-        
-        return non_brace_char_count
+        # Pattern to match <condition|option1|option2>
+        angle_brace_pattern = re.compile(r'<(.*?)\|(.*?)\|(.*?)>')
+
+        match = angle_brace_pattern.search(text_without_braces)
+        if match:
+            full_match, option1, option2 = match.group(0), match.group(2), match.group(3)
+
+            # Remove the full match from the text
+            text_without_braces = text_without_braces.replace(full_match, '', 1)
+
+            # Choose the longer option and add its length
+            text_length = len(text_without_braces) + max(len(option1), len(option2))
+        else:
+            text_length = len(text_without_braces)
+
+        return text_length
 
     def RelationshipRankUp(character, newrelationship, newrank = 0):
         character = character.title()
@@ -1629,9 +1703,11 @@ init python:
             PlaySound("pokemon/cries/{}.mp3".format(mon.GetId()))
         renpy.show("sideportraitfull" if isinstance(mon, str) else "sideportraitnew", [pokeball, place])
 
-    def HidePokemon():
+    def HidePokemon(place=None):
+        if place == None:
+            place = Transform()
         PlaySound("pokemon/ball sound.ogg")
-        renpy.show("sideportraitfull", [backinpokeball])
+        renpy.show("sideportraitfull", [backinpokeball, place])
 
     def GetNextInvestmentPrize():
         for cost, item in marketitems.items():
@@ -1798,16 +1874,49 @@ init python:
                         inventorymetadata[recorded_item].append(move)
                     else:
                         inventorymetadata[recorded_item] = [move]
+
+                    if (blank_item in inventorymetadata):
+                        del inventorymetadata[blank_item]
+
             elif (software == Item.TMSoftware2000 and not IsWinner):
                 renpy.say(None, "The recording of {} seems to have been corrupted in the scuffle--at least the {} is reusable.".format(move, GetItemName(blank_item)))
 
     def version_key(version):
-        """
-        Converts a version string into a tuple of comparable elements.
-        Numeric segments are converted to integers, alphabetic segments remain as strings.
-        """
-        parts = re.findall(r'([A-Za-z]+|\d+)', version)
-        return tuple(int(part) if part.isdigit() else -999 for part in parts)
+        parts = re.findall(r'[A-Za-z]+|\d+', version)
+
+        is_beta = any(part.upper() == "BETA" for part in parts)
+
+        numbers = [int(part) for part in parts if part.isdigit()]
+        year = numbers[-1]
+        date_parts = numbers[:-1]
+
+        # Pad so 5.11.2026 and 5.11.0.2026 compare safely, if needed.
+        while len(date_parts) < 3:
+            date_parts.append(0)
+
+        # Any non-BETA letters are treated as a post-release suffix:
+        # no suffix < a < b < c ...
+        suffixes = [
+            part.lower()
+            for part in parts
+            if part.isalpha() and part.upper() != "BETA"
+        ]
+
+        suffix_rank = 0
+        if suffixes:
+            suffix = "".join(suffixes)
+            for ch in suffix:
+                suffix_rank = suffix_rank * 26 + (ord(ch) - ord("a") + 1)
+
+        # Release beats beta when the numeric version is otherwise identical.
+        release_rank = 0 if is_beta else 1
+
+        return (
+            year,
+            *date_parts,
+            release_rank,
+            suffix_rank,
+        )
 
     def IsLesser(version1, version2):
         """
@@ -1822,16 +1931,34 @@ init python:
     def PrintExp(explist):
         if (len(explist) > 0):
             expstring = " ".join(explist)
+            expstring = re.sub(r"(\w+) gained (\d+) experience! \1 reached level (\d+)!", r"\1 gained \2 experience and reached level \3!", expstring)
             if (count_non_brace_chars(expstring) >= 230):
                 expstring = expstring.replace("Experience Condenser", "XPC").replace("experience", "XP").replace("Experience", "XP")
             renpy.say(None, expstring)
 
     def GetContestWinner(contestname):
-        winner = contesthistory[contestname][0]
-        return winner
+        if contestname in contesthistory:
+            return contesthistory[contestname][0]
+        return None
 
     def WasContestWinner(contestname):
         return GetContestWinner(contestname).IsProtag()
+
+    def IsCoordinator():
+        return HasEvent("Professor Oak", "ParticipateMDTryouts")
+
+    def PokemonSpeak(name, dialog):
+        global sidemonnum
+        sidemonnum = pokedexlookupname("Jigglypuff", DexMacros.Id)
+        PlaySound("pokemon/ball sound.ogg")
+        PlaySound("pokemon/cries/{}.mp3".format(sidemonnum))
+
+        renpy.say(sidemon, dialog)
+
+        PlaySound("pokemon/ball sound.ogg")
+
+    def ColoredTitle(character):
+        return "{color=" + persondex[character]['Color'] + '}' + character + "{/color}"
         
 define mooddict = {
     -10: { TrainerNature.Distant: (-5,0), TrainerNature.Moody: (-5,1), TrainerNature.Neutral: (-5,1), TrainerNature.Friendly: (-5,0), TrainerNature.Devoted: (0,2)},
@@ -1899,9 +2026,10 @@ define liberizesecondsentence = {
     "Fairy": "wishes for liberty!"
 }
 
-define nonvolatiles = ["burned", "frozen", "paralyzed", "poisoned", "badly poisoned", "asleep", "busted disguise", "frenzied", "mega evolved", "minigigamaxed", "annihilating", "transformed", "bitter", "illusion"]
+define nonvolatiles = ["burned", "frozen", "paralyzed", "poisoned", "badly poisoned", "asleep", "busted disguise", "recruited", "frenzied", "mega evolved", "minigigamaxed", "annihilating", "transformed", "bitter", "illusion", "demotivated"]
 define normalstatuses = ["burned", "frozen", "paralyzed", "poisoned", "badly poisoned", "asleep"]
 define bluecolor = "{color=#0048ff}"
+define redcolor = "{color=#ff0000}"
 define sabrinacolor = "{color=#600080}"
 define leafcolor = "{color=#00b23f}"
 define charmcolor = "{color=#b7669e}"
@@ -1922,6 +2050,7 @@ define movesin = ["Strange Steam", "Forest's Curse", 'Defense Curl', 'Tackle', '
 define abilitiesin = ['Misty Surge', 'Stall', 'Trace', 'Shell Armor', 'Chlorophyll', 'Steelworker', 'Hustle', 'Keen Eye', 'Plus', 'Healer', 'Merciless', 'Sweet Veil', 'Rock Head', 'Iron Fist', 'Overgrow', 'Tinted Lens', 'Shield Dust', 'Volt Absorb', 'Disguise', 'Magic Guard', 'Weak Armor', 'White Smoke', 'Synchronize', 'Overcoat', 'Own Tempo', 'Prankster', 'Sheer Force', 'Contrary', 'Iron Barbs', 'Telepathy', 'Blaze', 'Serene Grace', 'Run Away', 'Pickup', 'Steadfast', 'Levitate', 'Mold Breaker', 'Shed Skin', 'Shields Down', 'Strong Jaw', 'Reckless', 'Illuminate', 'Intimidate', 'Regenerator', 'Sap Sipper', 'Hyper Cutter', 'Guts', 'Solar Power', 'Flash Fire', 'Swarm', 'Damp', 'Cloud Nine', 'Leaf Guard', 'Limber', 'Rattled', 'Wonder Skin', 'Anger Point', 'Harvest', 'Ice Body', 'Compound Eyes', 'Insomnia', 'Arena Trap', 'Defeatist', 'Gluttony', 'Klutz', 'Vital Spirit', 'Flame Body', 'Super Luck', 'Water Absorb', 'Sand Force', 'Honey Gather', 'Moody', 'Unaware', 'Infiltrator', 'Heavy Metal', 'Sturdy', 'Thick Fat', 'Oblivious', 'Berserk', 'Flower Veil', 'Torrent', 'Inner Focus', 'Symbiosis', 'Sand Rush', 'Sand Veil', 'Moxie', 'Static', 'Schooling', 'Sniper', 'Aftermath', 'Clear Body', 'Speed Boost', 'Technician', 'Frisk', 'Simple', 'Rivalry', 'Early Bird', 'Anticipation', 'Lightning Rod', 'Natural Cure', 'Poison Point', 'Pure Power', 'Cheek Pouch', 'Adaptability', 'Triage', 'Huge Power', 'Quick Feet', 'Ball Fetch', 'Scrappy', 'Gale Wings', 'Toxic Debris', 'Defiant', 'Magic Bounce', 'Tough Claws', 'Cute Charm', 'Soundproof', 'Slow Start', 'Big Pecks', 'Pixilate', 'No Guard', 'Wimp Out', 'Power of Alchemy', 'Sand Stream', 'Emergency Exit', 'Forecast', 'Sticky Hold', 'Cursed Body', 'Vital spirit', 'Stakeout', 'Unnerve', 'Filter', 'Stench', 'Pressure', 'Justified', 'Hydration', 'Poison Touch', 'Magnet Pull', 'Wonder Guard', 'Competitive', 'Scrappy', 'Battle Armor', 'Solid Rock', 'Zen Mode', 'Snow Cloak', 'Analytic', 'Drizzle', 'Drought', 'Snow Warning', 'Minus', 'Shadow Tag', 'Swift Swim', 'Dry Skin', 'Punk Rock', 'Unburden', 'Water Veil', 'Forewarn', 'Friend Guard', 'Suction Cups', 'Pickpocket', 'Skill Link', 'Storm Drain', 'Rough Skin', 'Sharpness', 'Prism Armor', 'Parental Bond', 'Fluffy', 'Tangled Feet', 'Immunity', 'Gorilla Tactics', 'Screen Cleaner', 'Purifying Salt', 'Hospitality', 'Thermal Exchange', 'Long Reach', 'Effect Spore', 'Bad Dreams', 'Mimicry', 'Quick Draw', 'Curious Medicine', 'Supreme Overlord', 'Flare Boost', 'Corrosion', 'Ice Scales', 'Slush Rush', 'Galvanize', 'Color Change', 'Tetra Element', 'Protean', 'Libero', 'Water Bubble', 'Power Spot', 'Neutralizing Gas', 'Battery', 'Poison Heal', 'Thrice Denied', 'Tangling Hair', 'Mummy', 'Wandering Spirit', 'Steely Spirit']
 
 define nightmatrix = BrightnessMatrix(-0.2) * ContrastMatrix(1.3)
+define daymatrix = BrightnessMatrix(0) * ContrastMatrix(1.0)
 
 default persondex = copy.deepcopy(defaultpersondex)
 
@@ -2051,8 +2180,6 @@ default allowfractions = False
 default libbuttontext = "Liberize"
 #keeps track of which types you're Liberized into
 default libtypes = []
-#true if it's the first dawn battle
-default dawnbattle = False
 #keeps track of the max number of types you can liberize into (2 in first Dawn battle)
 default libtypesnum = 1
 #keeps track of when you're allowed to use Foreverals
@@ -2111,8 +2238,6 @@ default removelunchstudents = set()
 default scholarshipslist = []
 #badges gained
 default badgeslist = []
-#nessa outfit swap
-default nessaoutfitswap = False
 #freeroam but for texting
 default texting = False
 #triggered if the player just did a normal text at night, for use in scenes after
@@ -2210,3 +2335,30 @@ default beepboop = False
 default dungeon = None
 #the last save file this game was saved under
 default version = None
+#a list of the characters you battle in week 10's gym classes
+default week10gymbattles = []
+#a variable used to keep track of the correct date to set something to in combination with genericmorning
+default daytuple = (1, 4, 2004)
+# the small lines that appear when characters say something not very relevant, kinda like in Deltarune
+default smalltalks = []
+# the smalltalks associated to the previous line; keeps track for the readback
+default lastsmalltalks = []
+# a log of the last direction someone moved in or out on, so you can flip sides dynamically. Should only be "Right" or "Left"
+default lastmovein = "Right"
+default lastmoveout = "Right"
+# used for testing features--whether hasevent always evaluates to "true", "false", or just triggers normally
+default haseventoverride = None
+# used for testing features--sets whether relationshipranks evaluate to 0, 1, 2, 3, 4, 5, or just evaluate normally
+default relationshiprankoverride = None
+# used for testing--sets whether relationshipvalues evaluate to 0, 10, 50, 100, 999, or just evaluate normally
+default bondvalueoverride = None
+# used for testing features--sets whether classstats evaluate to 0, 100, or just evaluate normally
+default classstatoverride = None
+# used to turn off betatesting features
+default betatestingoverride = False
+# used to determine which karaoke track is being played
+default karaoketrack = ""
+#whether Rosa should be hiding her scrimblo right now
+default showscrimblo = False
+#the object used to refer to pikachu
+default pikachuobj = None

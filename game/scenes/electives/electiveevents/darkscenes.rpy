@@ -209,7 +209,7 @@ label dark_class_17:
     karen @sad "It's an honor to take over his position, but of course I'm not happy about the circumstances."
     karen @closedbrow angrymouth "Fleeing to Alola and leaving his debts behind... what was he thinking?!"
     karen sadbrow neutralmouth "I've told him a thousand times--he just needs to take things more seriously. He'll get back on his feet someday."
-    narrator "Karen focuses the lesson on Grimsley's battle team..."
+    narrator "Karen focuses the lesson on Grimsley's Battle Team..."
     return
 
 label dark_class_18:

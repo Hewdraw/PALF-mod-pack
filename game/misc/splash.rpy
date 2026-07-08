@@ -8,13 +8,21 @@ init python:
             return 0
 
 label CreateSplash(players, challengers, customexpressions=[], reanchor=[], uniforms=[], pkmnlist=[], pkmnids=[], customoutfits=[]):        
+    
+    python:
+        alltags = renpy.get_showing_tags("master", sort=True) 
+        if (alltags != None):
+            for i, tag in enumerate(alltags):
+                if tag not in players + challengers:
+                    renpy.change_zorder("master", tag, zorder=i - 100)
+    
     # setup art
     hide blank2
     show blank2 zorder 0:
         alpha 0.0
         ease 0.5 alpha 1.0
         
-    show speedlines zorder 1:
+    show speedlines zorder 501:
         yalign 0.5 xalign 0.5 alpha 0.0 zoom 1.0 rotate 0
         parallel:
             ease 0.25 alpha 1.0
@@ -39,9 +47,9 @@ label CreateSplash(players, challengers, customexpressions=[], reanchor=[], unif
             newtransforms = [Transform(yanchor=(1.0 if reanchor[i] else 0.65), xanchor=0.5), fadeinleft(xbuffer)] + ([Transform(ypos=0.7)] if player in pkmnlist or player == "sideportraitfull" else [])
             if ("roughneck" in playersprite):
                 newtransforms.append(Transform(yanchor=0.8))
-            renpy.show(playersprite, newtransforms + [Transform(matrixcolor=finalmatrix, xanchor=0.54, zoom=1.04)], zorder=2, tag="leftsilhouette" + charname + str(i) + "p")
-            renpy.show(playersprite, newtransforms + [Transform(matrixcolor=InvertMatrix() * finalmatrix, xanchor=0.52, zoom=1.02)], zorder=3, tag="leftinversion" + charname + str(i) + "p")
-            renpy.show(playersprite, newtransforms, zorder=4 + extrazorder, tag=charname + str(i) + "p")
+            renpy.show(playersprite, newtransforms + [Transform(matrixcolor=finalmatrix, xanchor=0.54, zoom=1.04)], tag="leftsilhouette" + charname + str(i) + "p", zorder=503)
+            renpy.show(playersprite, newtransforms + [Transform(matrixcolor=InvertMatrix() * finalmatrix, xanchor=0.52, zoom=1.02)], tag="leftinversion" + charname + str(i) + "p", zorder=504)
+            renpy.show(playersprite, newtransforms, tag=charname + str(i) + "p", zorder=505 + extrazorder)
 
         for i, challenger in enumerate(challengers):
             renpy.hide(challenger)
@@ -52,22 +60,26 @@ label CreateSplash(players, challengers, customexpressions=[], reanchor=[], unif
             charcolor = GetCharColor(charname.capitalize()) if challenger not in pkmnlist and challenger != "sideportraitfull" else GetColor(challengername)
             finalmatrix = TintMatrix(charcolor) * BrightnessMatrix(1.0) * ContrastMatrix(0.0)
             challengersprite = (challenger if len(customexpressions) == 0 else customexpressions[i + len(players) * 2]) + (" uniform" if uniforms[i + len(players)] else "") + (" hat" if challenger == "tia" else "") + " " +  ("" if len(customoutfits) == 0 else customoutfits[i + len(players)])
+            if ("iono" in challengersprite and "uniform" in challengersprite):
+                challengersprite += " nocoat"
             if (challenger == "sideportraitfull" and i == 1):
                 challengersprite = "sideportraitfull2"
             elif (challenger == "sideportraitfull" and i == 2):
                 challengersprite = "sideportraitfull3"
+            if ("morty" in challengersprite):
+                challengersprite += " nobook"
             newtransforms = [Transform(yanchor=(1.0 if reanchor[i + len(players)] else 0.65), xanchor=0.5), fadeinright(xbuffer)] + ([Transform(ypos=0.7)] if challenger in pkmnlist or challenger == "sideportraitfull" or challenger == "latias" else [])
             if ("roughneck" in challengersprite):
                 newtransforms.append(Transform(yanchor=0.8))
-            renpy.show(challengersprite, newtransforms + [Transform(matrixcolor=finalmatrix, xanchor=0.46, zoom=1.04)], zorder=2, tag="rightsilhouette" + charname + str(i)+ "e")
-            renpy.show(challengersprite, newtransforms + [Transform(matrixcolor=InvertMatrix() * finalmatrix, xanchor=0.48, zoom=1.02)], zorder=3, tag="rightinversion" + charname + str(i)+ "e")
-            renpy.show(challengersprite, newtransforms, zorder=4 + extrazorder, tag=charname + str(i)+ "e")
+            renpy.show(challengersprite, newtransforms + [Transform(matrixcolor=finalmatrix, xanchor=0.46, zoom=1.04)], tag="rightsilhouette" + charname + str(i)+ "e", zorder=503)
+            renpy.show(challengersprite, newtransforms + [Transform(matrixcolor=InvertMatrix() * finalmatrix, xanchor=0.48, zoom=1.02)], tag="rightinversion" + charname + str(i)+ "e", zorder=504)
+            renpy.show(challengersprite, newtransforms, tag=charname + str(i)+ "e", zorder=505 + extrazorder)
         
     # wait half a second
     pause 0.575
     
     # show the versus symbol
-    show versus zorder 6:
+    show versus zorder 510:
         zoom 2.0 / (max(len(players), len(challengers)) + 1)
         xalign 0.5 yalign -0.5
         ease 0.35 yalign 0.85
@@ -81,7 +93,6 @@ label CreateSplash(players, challengers, customexpressions=[], reanchor=[], unif
             if (player not in pkmnlist):
                 xbuffer = calculate_Z(i, len(players))
                 newtransforms = [Transform(yanchor=(1.0 if reanchor[i] else 0.65), xpos=xbuffer), dissolvein]
-                extrazorder = 1 if i == 1 and len(players) == 3 else 0
                 renpy.transition(dissolve)
                 renpy.show(((player + " uniform angrybrow happymouth" if uniforms[i] else player + " angrybrow happymouth") if len(customexpressions) == 0 else customexpressions[i * 2 + 1]), tag=player + str(i)+ "p")
         
@@ -89,10 +100,14 @@ label CreateSplash(players, challengers, customexpressions=[], reanchor=[], unif
             if (challenger not in pkmnlist):
                 xbuffer = 1 - calculate_Z(i, len(challengers))
                 newtransforms = [Transform(yanchor=(1.0 if reanchor[i + len(players)] else 0.65), xpos=xbuffer), dissolvein]
-                extrazorder = 1 if i == 1 and len(challengers) == 3 else 0
                 renpy.transition(dissolve)
-                renpy.show(((challenger + " uniform angrybrow happymouth" if uniforms[len(players) + i] else challenger + " angrybrow happymouth") if len(customexpressions) == 0 else customexpressions[i + len(players) * 2 + len(challengers)]), tag=challenger + str(i)+ "e")
-    
+                if (challenger != "iono"):
+                    renpy.show(((challenger + " uniform angrybrow happymouth" if uniforms[len(players) + i] else challenger + " angrybrow happymouth") if len(customexpressions) == 0 else customexpressions[i + len(players) * 2 + len(challengers)]), tag=challenger + str(i)+ "e")
+                else:
+                    renpy.show(((challenger + " nocoat uniform angrybrow happymouth" if uniforms[len(players) + i] else challenger + " angrybrow happymouth") if len(customexpressions) == 0 else customexpressions[i + len(players) * 2 + len(challengers)]), tag=challenger + str(i)+ "e")
+                    renpy.show(((challenger + " nocoat uniform angrybrow happymouth" if uniforms[len(players) + i] else challenger + " angrybrow happymouth") if len(customexpressions) == 0 else customexpressions[i + len(players) * 2 + len(challengers)]), tag="rightsilhouette" + charname + str(i)+ "e")
+                    renpy.show(((challenger + " nocoat uniform angrybrow happymouth" if uniforms[len(players) + i] else challenger + " angrybrow happymouth") if len(customexpressions) == 0 else customexpressions[i + len(players) * 2 + len(challengers)]), tag="rightinversion" + charname + str(i)+ "e")
+
     pause 1.5
     
     # hide images
@@ -108,9 +123,10 @@ label CreateSplash(players, challengers, customexpressions=[], reanchor=[], unif
             renpy.hide("rightinversion" + name+ str(i)+ "e")
 
     hide versus
+    hide speedlines
+    show blank2 zorder 0:
+        alpha 0.5
     with Dissolve(0.5)
-    show blank2:
-        alpha 0.0
-        ease 0.5 alpha 0.5
+
     return
     

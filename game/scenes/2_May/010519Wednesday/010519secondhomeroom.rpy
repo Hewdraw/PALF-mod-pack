@@ -191,6 +191,7 @@ red @closedbrow talking2mouth "A... Soothe Bell?"
 blue @talkingmouth "I don't need that junk. My Pokémon respect me without some bell ringing 24/7. But it'd be perfect for you."
 
 python:
+    bellrung = False
     _skipping = False
     isgame = False
     disableinventory = False

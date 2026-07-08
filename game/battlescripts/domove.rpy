@@ -1,4 +1,10 @@
 init python:
+    def FailMove(addendum, action):
+        global posttext
+        posttext += addendum
+        posttext += "But it failed!"
+        action.ChangeSuccess(False)
+
     def DoMove(action, user, move, targets, alreadypretext="", alreadyposttext="", repeating=False, parentalbond=False):
         global BattlefieldEffects
         global UsingMove
@@ -51,7 +57,7 @@ init python:
         contact = MakesContact(move)
         forcedswitch = None
         preservestats = False
-        godmode = (user.Id == 334 and dawnbattle and user.GetTrainerType() == TrainerType.Enemy)#used to ignore rng for story moments
+        godmode = (user.Id == 334 and HasEvent("Dawn", "LiberationBattle") and user.GetTrainerType() == TrainerType.Enemy)#used to ignore rng for story moments
 
         if (user.HasAbility("Long Reach")):
             contact = False
@@ -69,11 +75,8 @@ init python:
 
         user.ClearStatus("bound to destiny")
 
-        if (not repeat):
-            if (user.HasStatus("flinching")):
-                posttext += "{} flinched!".format(username)
-                abortmove = True
-            elif (user.HasStatus("frozen")):
+        if (not (repeat or parentalbond)):
+            if (user.HasStatus("frozen")):
                 if (random.random() > .2 
                     and move.Name not in ["Flame Wheel", "Sacred Fire", "Flare Blitz", "Fusion Flare", "Scald", "Steam Eruption", "Burn Up", "Pyro Ball", "Scorching Sands", "Matcha Gotcha"]
                     and not (move.Name == "Fillet Away" and "Fillet Away" in moveboosts)
@@ -91,6 +94,9 @@ init python:
                 pretext = "{} woke up!".format(username, move.Name)
             elif (user.HasStatus("paralyzed") and random.random() <= .25 and not godmode):
                 posttext += "{} is paralyzed, so it can't move!".format(username)
+                abortmove = True
+            elif (user.HasStatus("flinching")):
+                posttext += "{} flinched!".format(username)
                 abortmove = True
             elif (user.HasStatus("infatuated") and random.random() <= .5 and not godmode):
                 posttext += "{} is infatuated, and cannot move!".format(username)
@@ -117,6 +123,10 @@ init python:
                 abortmove = True
             elif (IsExplosion(name) and AbilityOnField("Damp")):
                 posttext += "It's too damp for explosions!"
+                abortmove = True
+            elif (user.HasStatus("loafing")):
+                posttext += "{} is loafing around!".format(username, move.Name)
+                user.ClearStatus("loafing")
                 abortmove = True
 
         if (name not in ["Endure", "Protect", "Wide Guard", "Detect", "Enshroud", "Deathless", "Splinter Shield", "Spiky Shield", "Quick Guard", "Crafty Shield", "Silk Trap", "Baneful Bunker", "Obstruct"]):
@@ -160,7 +170,7 @@ init python:
 
         if (len(targets) == 1 and StatusInBattlers("the standout")):
             for mon in Battlers():
-                if (mon.HasStatus("the standout") and mon in GetTargets(user, GetMoveRange(move)) and mon not in GetBattlers(user)):
+                if (mon.HasStatus("the standout") and mon in GetTargets(user, GetMoveRange(move)) and mon not in GetBattlers(user) and not user.HasAbility("Stalwart")):
                     targets = [mon]
 
         if (GetMoveRange(move) in [Range.All, Range.AllAlliesAndSelf]):
@@ -170,13 +180,15 @@ init python:
         
         newtargets = []
         for mon in targets:
-            if (mon not in mon.GetTrainer().GetLead()):
+            if (not (mon in CaughtMons or mon in mon.GetTrainer().GetLead())):
                 try:
                     newtarget = mon.GetTrainer().GetLead()[action.GetTargetSlots()[action.GetTargets().index(mon)]]
                     action.GetTargets()[action.GetTargets().index(mon)] = newtarget
                     newtargets.append(newtarget)
                 except:
                     newtargets.append(None)
+            elif (mon in CaughtMons):
+                newtargets.append(None)
             else:
                 newtargets.append(mon)
         
@@ -250,7 +262,7 @@ init python:
             hittargets.append(target)
             
             if (name == "Shell Side Arm"):
-                if (user.GetStat(Stats.Attack, triggerabilities=False) / target.GetStat(Stats.Attack, triggerabilities=False) > user.GetStat(Stats.SpecialAttack, triggerabilities=False) / target.GetStat(Stats.SpecialDefense, triggerabilities=False)):
+                if (user.GetStat(Stats.Attack, triggerAbilities=False) / target.GetStat(Stats.Attack, triggerAbilities=False) > user.GetStat(Stats.SpecialAttack, triggerAbilities=False) / target.GetStat(Stats.SpecialDefense, triggerAbilities=False)):
                     move.Category = "Physical"
                     contact = True
                 else:
@@ -266,27 +278,29 @@ init python:
                     if (target not in GetBattlers(user, True)):
                         target = random.choice(GetBattlers(user, True))
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
+            
+            baseaccuracy = move.Accuracy
 
-            checkaccuracy = ((isinstance(move.Accuracy, float) or isinstance(move.Accuracy, int)) 
-                and not (user.HasAbility("No Guard") or target.HasAbility("No Guard"))
-                and not (move.Name in ["Thunder", "Hurricane"] and WeatherIs("rainy"))
-                and not (move.Name == "Blizzard" and (WeatherIs("snowy") or WeatherIs("hailing")))
-                and not (user.HasStatus(".mindreading") and target.HasStatus("mind read"))
-                and not (user.HasStatus(".lockingon") and target.HasStatus("locked on"))
-                and not (target.HasStatus('vulnerable'))
-                and not godmode)
+            unmissable = not (isinstance(baseaccuracy, float) or isinstance(baseaccuracy, int))# refers specifically to moves that don't have accuracy checks, ever--sonicboom, shadow punch, etc.
+
+            checkaccuracy = not (unmissable
+                or (user.HasAbility("No Guard") or target.HasAbility("No Guard"))
+                or (move.Name in ["Thunder", "Hurricane"] and WeatherIs("rainy"))
+                or (move.Name == "Blizzard" and (WeatherIs("snowy") or WeatherIs("hailing")))
+                or (user.HasStatus(".mindreading") and target.HasStatus("mind read"))
+                or (user.HasStatus(".lockingon") and target.HasStatus("locked on"))
+                or (target.HasStatus('vulnerable'))
+                or godmode)
 
             trueaccuracy = 1.0
-            baseaccuracy = move.Accuracy
 
             if (move.Name in ["Hurricane", "Thunder"] and WeatherIs("sunny")):
                 baseaccuracy = 0.5
 
             if (element in ["Electric", "Water"] and GetMoveRange(move) in [Range.Adjacent, Range.AdjacentFoe, Range.Any, Range.AnyOrSelf, Range.AdjacentAlly, Range.AdjacentAllyOrSelf]):
                 for pkmn in Battlers(True):
-                    if (pkmn != user):
+                    if (pkmn != user and not user.HasAbility("Stalwart")):
                         if (element == "Electric" and pkmn.HasAbility("Lightning Rod")
                             or element == "Water" and pkmn.HasAbility("Storm Drain")):
                             target = pkmn
@@ -311,6 +325,11 @@ init python:
 
             if (name in ["Stomp", "Body Slam", "Dragon Rush", "Steamroller", "Heat Crash", "Heavy Slam", "Flying Press", "Malicious Moonsault"] and target.HasStatus(".minimized") 
             or name == "Dig" and not user.HasStatus("dug in")
+            or name == "Solar Beam" and not user.HasStatus("gathering light")
+            or name == "Solar Blade" and not user.HasStatus("hardening light")
+            or name == "Skull Bash" and not user.HasStatus("hardheaded")
+            or name == "Razor Wind" and not user.HasStatus("whipping up winds")
+            or name == "Sky Attack" and not user.HasStatus("cloaked in light")
             or name in ["Fly", "Bounce"] and not user.HasStatus("airborne")
             or name == "Dive" and not user.HasStatus("diving")
             or name == "Phantom Force" and not user.HasStatus("ethereal")
@@ -336,8 +355,8 @@ init python:
                 evasionbuffs = target.GetStatChanges(Stats.Evasion)
                 if (target.HasStatus("confused") and target.HasAbility("Tangled Feet")):
                     evasionbuffs += 3
-                if (evasionbuffs > 0 and (target.HasStatus("miraculously seen") or target.HasStatus("foreseen") or target.HasStatus("sniffed out") or user.HasAbility("Keen Eye") 
-                or (evasionbuffs != 0 and (user.HasAbility("Unaware") or move.Name in ["Chip Away", "Darkest Lariat"])))):
+                if (evasionbuffs > 0 and (target.HasStatus("miraculously seen") or target.HasStatus("foreseen") or target.HasStatus("sniffed out") or user.HasAbility("Keen Eye")) 
+                or (evasionbuffs != 0 and (user.HasAbility("Unaware") or move.Name in ["Chip Away", "Darkest Lariat"]))):
                     evasionbuffs = 0
                 if (accuracybuffs != 0 and target.HasAbility("Unaware")):
                     accuracybuffs = 0
@@ -377,20 +396,101 @@ init python:
             if (element == "Fire" and target.HasAbility("Thermal Exchange")):
                 posttext += target.ChangeStats(Stats.Attack, 1, target)
 
-            if (((((GetMoveRange(move) in [Range.Adjacent, Range.AdjacentFoe, Range.AllAdjacent, Range.AllAdjacentFoes, Range.AllFoes, Range.Any, Range.AnyOrSelf] 
-                    or name in ["Thrash", "Outrage", "Uproar", "Petal Dance", "Raging Fury"]#I don't think Counter, Comeuppance, Mirror Coat, or Metal Burst can ever actually hit a shield move
-                    or name == "Bide" and user.GetStatusCount("biding") >= 3 and user.GetStatusCount(".bidingdamage") != 0)#should only block bide on the third turn
-                and target.HasStatus("protected"))
-                and not (target.HasStatus(".silked") and (move.Category == "Status" and "Silk Trap" not in moveboosts))
-                and not (target.HasStatus(".obstructing") and move.Category == "Status"))
-            or (GetMoveRange(move) in [Range.All, Range.AllAdjacent, Range.AllFoes, Range.AllAdjacentFoes] and EffectOnOwnField(target, "wide guard"))
-            or (action.GetPriority() > 0 and EffectOnOwnField(target, "quick guard"))
-            or (move.Category == "Status" and EffectOnOwnField(target, "crafty shield")))
-            and name not in ["Tearful Look", "Hyper Drill", "Bestow", "Toxic Spikes", "Spikes", "Stealth Rock", "Confide", "Play Nice"]
-            and not (name in ["Fly", "Bounce"] and not user.HasStatus("airborne")
-                    or name == "Dig" and not user.HasStatus("dug in")
-                    or name == "Dive" and not user.HasStatus("diving")
-                    or name in ["Shadow Force", "Phantom Force"] and not user.HasStatus("ethereal"))):
+            semi_invulnerable_statuses = ["dug in", "airborne", "ethereal", "diving"]
+
+            accuracy_miss = checkaccuracy and random.random() > trueaccuracy
+
+            semi_invul_miss = (
+                not breaksemiinvul
+                and (checkaccuracy or not unmissable)
+                and any(target.HasStatus(status) for status in semi_invulnerable_statuses)
+            )
+
+            def IsBideAttacking(user, name):
+                return name == "Bide" and user.GetStatusCount("biding") >= 3 and user.GetStatusCount(".bidingdamage") != 0
+
+            def IsSemiInvulChargeTurn(user, name):
+                return ((name in ["Fly", "Bounce"] and not user.HasStatus("airborne"))
+                    or (name == "Dig" and not user.HasStatus("dug in"))
+                    or (name == "Dive" and not user.HasStatus("diving"))
+                    or (name in ["Shadow Force", "Phantom Force"] and not user.HasStatus("ethereal")))
+                
+            def IsBlockedByProtect(user, target, move, name, moveboosts):
+                protect_blockable_ranges = [
+                    Range.Adjacent,
+                    Range.AdjacentFoe,
+                    Range.AllAdjacent,
+                    Range.AllAdjacentFoes,
+                    Range.AllFoes,
+                    Range.Any,
+                    Range.AnyOrSelf,
+                ]
+
+                multi_turn_rampage_moves = [
+                    "Thrash",
+                    "Outrage",
+                    "Uproar",
+                    "Petal Dance",
+                    "Raging Fury",
+                ]
+
+                move_range = GetMoveRange(move)
+
+                protect_can_block_move = (
+                    move_range in protect_blockable_ranges
+                    or name in multi_turn_rampage_moves
+                    or IsBideAttacking(user, name)
+                )
+
+                silk_trap_allows_status_move = (
+                    target.HasStatus(".silked")
+                    and move.Category == "Status"
+                    and "Silk Trap" not in moveboosts
+                )
+
+                obstruct_allows_status_move = (
+                    target.HasStatus(".obstructing")
+                    and move.Category == "Status"
+                )
+
+                return (
+                    target.HasStatus("protected")
+                    and protect_can_block_move
+                    and not silk_trap_allows_status_move
+                    and not obstruct_allows_status_move
+                )
+
+            def IsBlockedByFieldShield(target, move, action):
+                move_range = GetMoveRange(move)
+
+                wide_guard_ranges = [
+                    Range.All,
+                    Range.AllAdjacent,
+                    Range.AllFoes,
+                    Range.AllAdjacentFoes,
+                ]
+
+                return (
+                    (move_range in wide_guard_ranges and EffectOnOwnField(target, "wide guard"))
+                    or (action.GetPriority() > 0 and EffectOnOwnField(target, "quick guard"))
+                    or (move.Category == "Status" and EffectOnOwnField(target, "crafty shield"))
+                )
+
+            def MoveIgnoresShields(name):
+                return name in [
+                    "Tearful Look",
+                    "Hyper Drill",
+                    "Bestow",
+                    "Toxic Spikes",
+                    "Spikes",
+                    "Stealth Rock",
+                    "Confide",
+                    "Play Nice",
+                ]
+
+            blocked_by_shield = IsBlockedByProtect(user, target, move, name, moveboosts) or IsBlockedByFieldShield(target, move, action)
+
+            if (blocked_by_shield and not MoveIgnoresShields(name) and not IsSemiInvulChargeTurn(user, name)):
                 repeat = False                  
                 doDamage = False
                 posttext += "But {} was protected!".format(target.GetNickname())
@@ -411,9 +511,10 @@ init python:
                     posttext += user.ApplyStatus("poisoned")
                 elif (target.HasStatus(".obstructing") and contact):
                     posttext += user.ChangeStats(Stats.Defense, -2, target)
-            elif (checkaccuracy and random.random() > trueaccuracy or (not breaksemiinvul and checkaccuracy and (target.HasStatus("dug in") or target.HasStatus("airborne") or target.HasStatus("ethereal") or target.HasStatus("diving")))):
+            elif (accuracy_miss or semi_invul_miss):
                 doDamage = False
                 posttext += "But it missed {}!".format(target.GetNickname())
+                user.ClearStatus("recharging")
                 repeat = False
                 MultihitMax = None
                 MultihitCount = None
@@ -450,7 +551,7 @@ init python:
             elif (IsPowderSporeMove(move) and target.HasAbility("Overcoat")):
                 doDamage = False
                 posttext += "But it failed to affect {}...".format(target.GetNickname())
-            elif (AreAllied(user, target) and GetMoveRange(move) not in [Range.Self, Range.AllAlliesAndSelf, Range.AllAllies, Range.AdjacentAlly, Range.AdjacentAllyOrSelf] and user != target and target.HasAbility("Telepathy")):
+            elif (AreAllied(user, target) and GetMoveRange(move) not in [Range.Self, Range.AllAlliesAndSelf, Range.AllAllies, Range.AdjacentAlly, Range.AdjacentAllyOrSelf] and move.Category != "Status" and user != target and target.HasAbility("Telepathy")):
                 doDamage = False
                 posttext += "{} used telepathy to dodge the ally's attack!".format(target.GetNickname())
             #cancellation of move effects above here
@@ -460,8 +561,7 @@ init python:
             elif (name in ["Absorb", "Mega Drain", "Giga Drain", "Leech Life", "Dream Eater", "Parabolic Charge", "Horn Leech", "Drain Punch"]):
                 healthgain += 0.5
                 if (name == "Dream Eater" and not target.HasStatus("asleep")):
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
                     doDamage = False
             elif (name == "Draining Kiss"):
                 healthgain += 0.75
@@ -470,7 +570,6 @@ init python:
             elif (name == "Fire Lash"):
                 sideeffects.append(SideEffect(user, target, Stats.Defense, -1))
                 if ("Fire Lash" in moveboosts):
-                    power = 90
                     healthgain += 0.5
             elif (name in ["Rock Smash", "Razor Shell", "Crush Claw"]):
                 sideeffects.append(SideEffect(user, target, Stats.Defense, -1, 0.5))
@@ -521,11 +620,11 @@ init python:
                 useritem = user.GetItem()
                 targetitem = target.GetItem()
                 if ((useritem == None and targetitem == None) or target.HasStatus("substitute") or target.HasAbility("Sticky Hold")):
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
                 else:
                     posttext += "{}".format(target.GiveItem(useritem, True))
                     posttext += "{}".format(user.GiveItem(targetitem, True))
+                    ItemText = ""
             elif (name in ["Play Nice", "Growl", "Baby-Doll Eyes", "Strength Sap"]):
                 posttext += target.ChangeStats(Stats.Attack, -1, user)
                 if (move == "Strength Sap"):
@@ -552,8 +651,7 @@ init python:
                 move.PP -= 1
                 lastmove = GetLastMove(ActionLog, ignorepp=True, ignoremoves=["Copycat"])
                 if (lastmove == None):
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
                 else:
                     newtargets = GetTargets(user, GetMoveRange(lastmove), True)
                     if (GetMoveRange(lastmove) in [Range.Adjacent, Range.AdjacentAlly, Range.AdjacentAllyOrSelf, Range.AdjacentFoe, Range.Any, Range.AnyOrSelf, Range.Self, Range.All]):
@@ -606,6 +704,20 @@ init python:
                     repeat = False
                     MultihitMax = None
                     MultihitCount = None
+            elif (name in ["Triple Dive"]):
+                global MultihitCount
+                global MultihitMax
+                repeat = True
+                if (MultihitCount == None):
+                    MultihitCount = 2
+                    MultihitMax = MultihitCount
+                posttext += "Hit {} time(s)!".format(MultihitMax - MultihitCount + 1)
+                if (MultihitCount != 0):
+                    MultihitCount -= 1
+                else:
+                    repeat = False
+                    MultihitMax = None
+                    MultihitCount = None
             elif (name in ["Constrict", "Bubble Beam"]):
                 sideeffects.append(SideEffect(user, target, Stats.Speed, -1, chance=0.1))
             elif (name == "Rage"):
@@ -645,14 +757,12 @@ init python:
             elif (name == "Last Resort"):
                 if (not LastResortWorks(ActionLog, user)):
                     doDamage = False
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Spite"):
                 lastmove = GetLastMove(ActionLog, target)
                 reduction = (min(4, lastmove.PP) if lastmove != None else 0)
                 if (lastmove == None or reduction == 0 or lastmove.Name == "Struggle" or target.GetMoveByName(lastmove.Name) == None):
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
                 else:
                     if ("Spite" in moveboosts):
                         target.GetMoveByName(lastmove.Name).PP = 0
@@ -916,8 +1026,7 @@ init python:
                 if (GetLastMove(ActionLog, target) != None):
                     posttext += target.ApplyStatus("encored", 4, user)
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Smog"):
                 sideeffects.append(SideEffect(user, target, "poisoned", chance=0.4))
             elif (name in ["Zen Headbutt", "Dark Pulse", "Dragon Rush", "Waterfall"]):
@@ -1032,6 +1141,9 @@ init python:
                     if (len(newlist) == 0 or target.HasStatus("ingrained")):
                         posttext += "But it failed!"
                         action.ChangeSuccess(False)
+                    elif (target.HasStatus("tyrannic")):
+                        posttext += "The reinforcements prevent the Tyrannic Pokémon from being switched out!"
+                        action.ChangeSuccess(False)
                     else:
                         randpkmn = random.choice(newlist)
                         trainer = target.GetTrainer()
@@ -1045,8 +1157,7 @@ init python:
                     posttext += target.ApplyStatus("disabled", 4, user)
                     target.ApplyStatus(".disabling", lastmove.Name)
                 elif (name == "Disable"):
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Disabling Poke"):
                 lastmove = GetLastMove(ActionLog, target)
                 if (lastmove != None):
@@ -1056,8 +1167,7 @@ init python:
                 countercount = user.GetStatusCount(".countering")
                 if (countercount == None or isinstance(countercount, int) or len(countercount) != 2 or countercount[1] not in Battlers()):
                     doDamage = False
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
                 else:
                     target = countercount[1]
                     fixeddamage = math.floor(countercount[0] * 2)
@@ -1066,8 +1176,7 @@ init python:
                 countercount = user.GetStatusCount(".metalbursting")
                 if (countercount == None or isinstance(countercount, int) or len(countercount) != 2 or countercount[1] not in Battlers()):
                     doDamage = False
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
                 else:
                     target = countercount[1]
                     fixeddamage = math.floor(countercount[0] * 1.5)
@@ -1076,8 +1185,7 @@ init python:
                 countercount = user.GetStatusCount(".shelltrapping")
                 if (countercount == None):
                     doDamage = False
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
                 user.ClearStatus(".shelltrapping")
             elif (name == "Liberage"):
                 posttext += "{} fights for liberty!".format(username)
@@ -1095,8 +1203,7 @@ init python:
                 if (countercount == None or isinstance(countercount, int) or len(countercount) != 2 or countercount[1] not in Battlers()):
                     doDamage = False
                     user.ClearStatus(".mirrorcoat")
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
                 else:
                     target = countercount[1]
                     fixeddamage = math.floor(countercount[0] * 2)
@@ -1179,67 +1286,19 @@ init python:
                     if (target.HasType("Normal")):
                         power *= 2
             elif (name == "Teleport"):
-                usertrainer = user.GetTrainer()
-                newlist = []
-                for mon in usertrainer.GetTeam():
-                    if (mon.Health >= 1 and mon not in Battlers()):
-                        newlist.append(mon)
-                if (len(newlist) == 0):
+                forcedswitch = SwitchAction(user)
+                if forcedswitch:
+                    posttext += "{} teleported out, and {} switched in!".format(username, forcedswitch.GetNickname())
+                else:
                     posttext += "But it failed!"
                     action.ChangeSuccess(False)
-                elif (user in FriendlyBattlers()):
-                    validswitch = False
-                    while not validswitch:
-                        renpy.say(None, "Pick a Pokémon to switch in.")
-                        switchCommand = renpy.call_screen('switch', user.GetTrainer(), True)
-                        newPokemon = user.GetTrainer().GetTeam()[switchCommand]
-                        if (newPokemon.GetHealth() == 0):
-                            renpy.say(None, "{} has fainted, and cannot fight!".format(newPokemon.GetNickname()))
-                        elif (newPokemon in Battlers()):
-                            renpy.show_screen("battleui")
-                            renpy.say(None, "{} is already in battle!".format(newPokemon.GetNickname()))
-                        else:
-                            validswitch = True
-                    team = usertrainer.GetTeam()
-                    usertrainer.ShiftTeam(team.index(user), switchCommand, True)
-                    posttext += "{} teleported out, and {} switched in!".format(username, newPokemon.GetNickname())
-                    forcedswitch = newPokemon
-                else:
-                    newPokemon = random.choice(newlist)
-                    team = usertrainer.GetTeam()
-                    usertrainer.ShiftTeam(team.index(user), team.index(newPokemon), True)
-                    posttext += "{} teleported out, and {} switched in!".format(username, newPokemon.GetNickname())
-                    forcedswitch = newPokemon
             elif (name in ["U-turn", "Flip Turn", "Parting Shot", "Volt Switch"]):
-                usertrainer = user.GetTrainer()
-                newlist = []
-                for mon in usertrainer.GetTeam():
-                    if (mon.Health >= 1 and mon not in Battlers()):
-                        newlist.append(mon)
-                if (len(newlist) != 0):
-                    team = usertrainer.GetTeam()
-                    if (name == "Parting Shot"):
-                        posttext += target.ChangeStats(Stats.Attack, -1, user)
-                        posttext += target.ChangeStats(Stats.SpecialAttack, -1, user)
-                    if (usertrainer.Type != TrainerType.Enemy):
-                        validswitch = False
-                        while not validswitch:
-                            renpy.say(None, "Pick a Pokémon to switch in.")
-                            switchCommand = renpy.call_screen('switch', user.GetTrainer(), True)
-                            newPokemon = user.GetTrainer().GetTeam()[switchCommand]
-                            if (newPokemon.GetHealth() == 0):
-                                renpy.say(None, "{} has fainted, and cannot fight!".format(newPokemon.GetNickname()))
-                            elif (newPokemon in Battlers()):
-                                renpy.show_screen("battleui")
-                                renpy.say(None, "{} is already in battle!".format(newPokemon.GetNickname()))
-                            else:
-                                validswitch = True
-                    else:
-                        switchCommand = team.index(RandomChoice(newlist))
-                    newPokemon = usertrainer.GetTeam()[switchCommand]
-                    usertrainer.ShiftTeam(team.index(user), switchCommand, True, selfforced=True)
-                    posttext += "{} switched out, and {} switched in!".format(username, newPokemon.GetNickname())
-                    forcedswitch = newPokemon
+                if (name == "Parting Shot"):
+                    posttext += target.ChangeStats(Stats.Attack, -1, user)
+                    posttext += target.ChangeStats(Stats.SpecialAttack, -1, user)
+                forcedswitch = SwitchAction(user)
+                if forcedswitch:
+                    posttext += "{} switched out, and {} switched in!".format(username, forcedswitch.GetNickname())
             elif (name == "Shed Tail"):
                 usertrainer = user.GetTrainer()
                 newlist = []
@@ -1251,29 +1310,11 @@ init python:
                     user.AdjustHealth(-user.GetStat(Stats.Health) / 2.0)
                     user.ApplyStatus("substitute", user.GetStat(Stats.Health) / 4.0, user)
                     statuscount = user.GetStatusCount("substitute")
-                    if (usertrainer.Type != TrainerType.Enemy):
-                        validswitch = False
-                        while not validswitch:
-                            renpy.say(None, "Pick a Pokémon to switch in.")
-                            switchCommand = renpy.call_screen('switch', user.GetTrainer(), True)
-                            newPokemon = user.GetTrainer().GetTeam()[switchCommand]
-                            if (newPokemon.GetHealth() == 0):
-                                renpy.say(None, "{} has fainted, and cannot fight!".format(newPokemon.GetNickname()))
-                            elif (newPokemon in Battlers()):
-                                renpy.show_screen("battleui")
-                                renpy.say(None, "{} is already in battle!".format(newPokemon.GetNickname()))
-                            else:
-                                validswitch = True
-                    else:
-                        switchCommand = team.index(RandomChoice(newlist))
-                    newPokemon = user.GetTrainer().GetTeam()[switchCommand]
-                    usertrainer.ShiftTeam(team.index(user), switchCommand, True)
-                    posttext += "{} put up a substitute for {}!".format(username, newPokemon.GetNickname())
-                    forcedswitch = newPokemon
-                    newPokemon.ApplyStatus("substitute", statuscount)
+                    forcedswitch = SwitchAction(user)
+                    posttext += "{} put up a substitute for {}!".format(username, forcedswitch.GetNickname())
+                    forcedswitch.ApplyStatus("substitute", statuscount)
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Curse"):
                 if (not user.HasType("Ghost")):
                     posttext += user.ChangeStats(Stats.Attack, 1, user)
@@ -1314,8 +1355,7 @@ init python:
                 sideeffects.append(SideEffect(user, target, Stats.SpecialAttack, -1))
             elif (name == "Helping Hand"):
                 if (len(GetBattlers(user)) == 1):
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
                 else:
                     helpcount = target.GetStatusCount("helped")                
                     posttext += target.ApplyStatus("helped", helpcount + 1, user, True)
@@ -1329,7 +1369,7 @@ init python:
                     user.ApplyStatus("asleep", 2, user, True)
                     usedcurer = hascurer and user.Item == None
                     if ((usedcurer or user.HasStatus("asleep"))):
-                        user.ClearStatus("everything", nonvolatilesandconfusion=True)
+                        user.ClearStatus("everything", basicafflictions=True)
                         if (not usedcurer):
                             posttext += user.ApplyStatus("asleep", 3, user)
                         else:
@@ -1342,6 +1382,9 @@ init python:
                         user.ClearStatus("asleep")
                         posttext += "But it failed!"
                         action.ChangeSuccess(False)
+                else:
+                    posttext += "But it failed!"
+                    action.ChangeSuccess(False)
             elif (name == "Facade"):
                 for affliction in normalstatuses:
                     if (user.HasStatus(affliction)):
@@ -1358,8 +1401,7 @@ init python:
                 if (target.GetHealthPercentage() < 1):
                     target.AdjustHealth(target.GetStat(Stats.Health) / 2.0)
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Floral Healing"):
                 if (target.GetHealthPercentage() < 1 and not target.HasStatus("substitute")):
                     if (BattlefieldExists("Grassy Terrain")):
@@ -1384,8 +1426,7 @@ init python:
                         user.ClearStatus("asleep")
                         user.ClearStatus("frozen")
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Light Screen"):
                 posttext += ApplyEffect(user, "light screen", 5, False)
             elif (name == "Reflect"):
@@ -1394,22 +1435,19 @@ init python:
                 if (WeatherIs("hailing") or WeatherIs("snowy")):
                     posttext += ApplyEffect(user, "aurora veil", 5, False)
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Trick-or-Treat"):
                 if (not target.HasType("Ghost")):
                     target.ClearStatus("forest curse")
                     posttext += target.ApplyStatus("trick-or-treating")
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Forest's Curse"):
                 if (not target.HasType("Grass")):
                     target.ClearStatus("trick-or-treating")
                     posttext += target.ApplyStatus("forest curse")
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Metallize"):
                 posttext += target.ApplyStatus("metallic")
             elif (name == "Nuzzle"):
@@ -1566,9 +1604,10 @@ init python:
                 posttext += user.ChangeStats(Stats.Defense, 1)
                 posttext += user.ChangeStats(Stats.SpecialDefense, 1)
                 if (name == "Defend Order" and "Defend Order" in moveboosts):
-                    AddNewWildPokemon(Pokemon("Beedrill", level=22, moves=["Bug Bite", "Twineedle", "Pursuit", "Poison Jab"], gender=Genders.Male), True)
-                    if (len(EnemyBattlers()) < 3):
-                        AddNewWildPokemon(Pokemon("Beedrill", level=22, moves=["Bug Bite", "Twineedle", "Pursuit", "Poison Jab"], gender=Genders.Male))
+                    if (len(EnemyBattlers()) < 2):
+                        AddNewWildPokemon(Pokemon("Beedrill", level=22, moves=["Bug Bite", "Twineedle", "Pursuit", "Poison Jab"], gender=Genders.Male), True)
+                        if (len(EnemyBattlers()) < 3):
+                            AddNewWildPokemon(Pokemon("Beedrill", level=22, moves=["Bug Bite", "Twineedle", "Pursuit", "Poison Jab"], gender=Genders.Male))
                     posttext += "Combee calls the swarm!"
             elif (name == "Stockpile"):
                 if (user.GetStatusCount("stockpiled") < 3):
@@ -1576,8 +1615,7 @@ init python:
                     posttext += user.ChangeStats(Stats.SpecialDefense, 1)
                     user.ApplyStatus("stockpiled", min(user.GetStatusCount("stockpiled") + 1, 3), overwrite=True)
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Spit Up"):
                 stockcount = user.GetStatusCount("stockpiled")
                 if (stockcount != 0):
@@ -1586,8 +1624,7 @@ init python:
                     posttext += user.ChangeStats(Stats.SpecialDefense, -stockcount)
                     user.ClearStatus("stockpiled")
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Swallow"):
                 stockcount = user.GetStatusCount("stockpiled")
                 if (stockcount != 0):
@@ -1601,8 +1638,7 @@ init python:
                     posttext += user.ChangeStats(Stats.SpecialDefense, -stockcount)
                     user.ClearStatus("stockpiled")
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Dragon Dance"):
                 posttext += user.ChangeStats(Stats.Attack, 1)
                 posttext += user.ChangeStats(Stats.Speed, 1)
@@ -1635,21 +1671,18 @@ init python:
                 if (not EffectOnOwnField(user, "wishing star")):
                     ApplyEffect(user, "wishing star", [2, GetBattlers(user).index(user), user.GetStat(Stats.Health) / 2.0], False)
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Mimic"):
                 lastmove = GetLastMove(ActionLog, target)
                 if (not user.HasStatus("mimicking") and lastmove != None):
                     user.ApplyStatus("mimicking", GetMove(lastmove.Name))
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Attract"):
                 if (user.GetGender() == Genders.Male and target.GetGender() == Genders.Female or user.GetGender() == Genders.Female and target.GetGender() == Genders.Male):
                     posttext += target.ApplyStatus("infatuated", user, user)
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Captivate"):
                 if (user.GetGender() == Genders.Male and target.GetGender() == Genders.Female or user.GetGender() == Genders.Female and target.GetGender() == Genders.Male):
                     posttext += target.ChangeStats(Stats.SpecialAttack, -2, user)
@@ -1744,8 +1777,7 @@ init python:
                 if (raising != None):
                     posttext += target.ChangeStats(raising, 2, user)
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Tearful Look"):
                 posttext += target.ChangeStats(Stats.Attack, -1, user)
                 posttext += target.ChangeStats(Stats.SpecialAttack, -1, user)
@@ -1805,8 +1837,7 @@ init python:
                 move.PP -= 1
                 lastmove = GetLastMove(ActionLog, target=user, ignorepp=True)
                 if (lastmove == None):
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
                 else:
                     newtargets = [target]
                     if (GetMoveRange(lastmove) not in [Range.Adjacent, Range.AdjacentAlly, Range.AdjacentAllyOrSelf, Range.AdjacentFoe, Range.Any, Range.AnyOrSelf, Range.Self, Range.All]):
@@ -1814,14 +1845,14 @@ init python:
                     DoMove(action, user, copy.deepcopy(lastmove), newtargets, alreadypretext=pretext + " {} mirrored {}! ".format(username, lastmove.Name))
                     return
             elif (name == "Destiny Bond"):
-                if (dawnbattle):
+                if (HasEvent("Dawn", "LiberationBattle")):
                     posttext += "Your destiny diverges from Altaria, and cannot be bound!"
                 else:
                     user.ApplyStatus("bound to destiny")
             elif (name == "Sky Attack"):
                 if (not user.HasStatus("cloaked in light")):
                     doDamage = False
-                    posttext += user.ApplyStatus("cloaked in light")
+                    posttext += user.ApplyStatus("cloaked in light", 2)
                 else:
                     critstage += 1
                     sideeffects.append(SideEffect(user, target, "flinching", chance=0.3))
@@ -1829,20 +1860,20 @@ init python:
             elif (name == "Solar Beam"):
                 if (not (user.HasStatus("charging light") or WeatherIs("sunny"))):
                     doDamage = False
-                    posttext += user.ApplyStatus("charging light")
+                    posttext += user.ApplyStatus("charging light", 2)
                 else:
                     user.ClearStatus("charging light")
             elif (name == "Skull Bash"):
                 if (not (user.HasStatus("hardheaded"))):
                     doDamage = False
                     posttext += user.ChangeStats(Stats.Defense, 1, user)
-                    posttext += user.ApplyStatus("hardheaded")
+                    posttext += user.ApplyStatus("hardheaded", 2)
                 else:
                     user.ClearStatus("hardheaded")
             elif (name == "Razor Wind"):
                 if (not user.HasStatus("whipping up winds")):
                     doDamage = False
-                    posttext += user.ApplyStatus("whipping up winds")
+                    posttext += user.ApplyStatus("whipping up winds", 2)
                 else:
                     critstage += 1
                     user.ClearStatus("whipping up winds")
@@ -1862,7 +1893,7 @@ init python:
             elif (name == "Magnet Rise"):
                 user.ApplyStatus("levitating", count=5)
             elif (name == "Perish Song"):
-                if (dawnbattle):
+                if (HasEvent("Dawn", "LiberationBattle")):
                     posttext += "The Altaria's angelic cry drowns out the Perish Song!"
                 else:
                     for mon in Battlers():
@@ -1874,8 +1905,7 @@ init python:
                         validmove = True
                 if (not validmove):
                     doDamage = False
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Me First"):
                 foehasmoved = False
                 validmove = None
@@ -1893,8 +1923,7 @@ init python:
 
                 if (foehasmoved or validmove == None):
                     doDamage = False
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
                 else:
                     movecopy = copy.deepcopy(validmove)
                     movecopy.Power *= 1.5
@@ -1906,11 +1935,7 @@ init python:
                     ActionLog.append(Action(0, user.GetStat(Stats.Speed), ActionTypes.Move, user.GetTrainer(), user, GetMove(movecopy.Name), GetTrainers(newtargets), newtargets, Turn))
                     return
             elif (name in ["Water Spout", "Eruption"]):
-                power = user.GetHealthPercentage() * 150.0 
-            elif (name == "Petal Dance"):
-                target = random.choice(GetTargets(user, Range.AdjacentFoe))
-                if (not user.HasStatus("petal dancing")):
-                    user.ApplyStatus("petal dancing", random.choice([3, 4]))
+                power = user.GetHealthPercentage() * 150.0
             elif (name == "Pollen Puff"):
                 if (target in GetBattlers(user)):
                     doDamage = False
@@ -1938,10 +1963,8 @@ init python:
                             target.ClearStatus("paralyzed")
                             target.ClearStatus("asleep")
                             target.ClearStatus("frozen")
-            elif (name in ["Rock Wrecker", "Giga Impact", "Hyper Beam", "Frenzy Plant", "Hydro Cannon", "Blast Burn", "Roar of Time"]):
-                user.ApplyStatus("recharging", 2)
             elif (name == "Frustration"):
-                power = 102#Yes, good... let the hate flow through you...
+                power = (min(1, AimLevel() / 100.0) * 102)#Whoops, too much hate.
             elif (name == "Return"):
                 if (user not in AllPokemon()):#default to 99 power for non-red characters
                     power = 99
@@ -1979,15 +2002,13 @@ init python:
                     user.AdjustHealth(-user.GetStat(Stats.Health) / 4.0)
                     user.ApplyStatus("substitute", user.GetStat(Stats.Health) / 4.0, user)
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Belly Drum"):
                 if (user.GetHealthPercentage() > 0.5 and user.GetStatChanges(Stats.Attack) < 6):
                     user.AdjustHealth(-user.GetStat(Stats.Health) / 2.0)
                     posttext += user.ChangeStats(Stats.Attack, 99)
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Fillet Away"):
                 if (user.GetHealthPercentage() > 0.5 and (user.GetStatChanges(Stats.Attack) < 6 or user.GetStatChanges(Stats.SpecialAttack) < 6 or user.GetStatChanges(Stats.Speed) < 6)):
                     user.AdjustHealth(math.floor(-user.GetStat(Stats.Health) / 2.0))
@@ -2000,8 +2021,7 @@ init python:
                         user.ClearStatus("poisoned")
                         user.ClearStatus("paralyzed")
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "No Retreat"):
                 if (CanSwitch(user, False)):
                     if ("No Retreat" in moveboosts):
@@ -2022,8 +2042,7 @@ init python:
                         user.ApplyStatus("no retreat")
                         posttext += "{} will not retreat!".format(username)
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Mind Reader"):
                 posttext += target.ApplyStatus("mind read", 2, user)
                 user.ApplyStatus(".mindreading", 2)
@@ -2044,10 +2063,8 @@ init python:
                 posttext += user.ChangeStats(Stats.SpecialAttack, 2)
                 posttext += user.ChangeStats(Stats.SpecialDefense, -1)
                 posttext += user.ChangeStats(Stats.Speed, 2)
-            elif (name in ["Follow Me", "Rage Powder"]):
+            elif (name in ["Follow Me", "Rage Powder", "Spotlight"]):
                 posttext += user.ApplyStatus("the standout")
-            elif (name == "Spotlight"):
-                posttext += target.ApplyStatus("the standout")
             elif (name == "Secret Power"):
                 if (GetCamoType() in ["Normal", "Electric"]):
                     sideeffects.append(SideEffect(user, target, "paralyzed", chance=0.3))
@@ -2077,8 +2094,7 @@ init python:
                 if (not (IsSpecialAbility(user.GetAbility()) or IsSpecialAbility(target.GetAbility()))):
                     target.ApplyStatus(".tracing", user.GetAbility(), user)
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Skill Swap"):
                 myability = user.GetAbility()
                 theirability = target.GetAbility()
@@ -2086,19 +2102,20 @@ init python:
                     user.ApplyStatus(".tracing", theirability, user)
                     target.ApplyStatus(".tracing", myability, user)
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Metronome"):
                 move.PP -= 1
                 lastmove = GetMove(random.choice(movesin))
                 while (lastmove.Name in ["Stone Cold Stunner", "Liberage", "ERROR", "nothing"]):
                     lastmove = GetMove(random.choice(movesin))
                 newtargets = GetTargets(user, GetMoveRange(lastmove), True)
-                if (GetMoveRange(lastmove) in [Range.Adjacent, Range.AdjacentAlly, Range.AdjacentAllyOrSelf, Range.AdjacentFoe, Range.Any, Range.AnyOrSelf, Range.Self, Range.All]):
+                if (newtargets == None or len(newtargets) == 0):
+                    FailMove(posttext, action)
+                elif (GetMoveRange(lastmove) in [Range.Adjacent, Range.AdjacentAlly, Range.AdjacentAllyOrSelf, Range.AdjacentFoe, Range.Any, Range.AnyOrSelf, Range.Self, Range.All]):
                     newtargets = [random.choice(newtargets)]
-                DoMove(action, user, copy.deepcopy(lastmove), newtargets, alreadypretext=pretext)
-                ActionLog.append(Action(0, user.GetStat(Stats.Speed), ActionTypes.Move, user.GetTrainer(), user, GetMove(lastmove.Name), GetTrainers(newtargets), newtargets, Turn))
-                return
+                    DoMove(action, user, copy.deepcopy(lastmove), newtargets, alreadypretext=pretext)
+                    ActionLog.append(Action(0, user.GetStat(Stats.Speed), ActionTypes.Move, user.GetTrainer(), user, GetMove(lastmove.Name), GetTrainers(newtargets), newtargets, Turn))
+                    return
             elif (name == "Gastro Acid"):
                 target.ApplyStatus(".tracing", "Suppressed", user)
             elif (name == "Defog"):
@@ -2147,28 +2164,22 @@ init python:
             elif (name == "Acrobatics"):
                 if user.HasItem(None):
                     power *= 2
-            elif (name == "Thrash"):
+            elif (name in ["Thrash", "Outrage", "Petal Dance", "Raging Fury"]):
+                movestatus = {move: status for status, moves in movestatuses.items() for move in moves}[name]
                 if (target == None):
                     doDamage = False
                     action.ChangeSuccess(False)
                     posttext += "But it failed!"
-                if (not user.HasStatus("thrashing")):
-                    user.ApplyStatus("thrashing", random.randint(2, 3), user)
-            elif (name == "Outrage"):
-                if (target == None):
-                    doDamage = False
-                    action.ChangeSuccess(False)
-                    posttext += "But it failed!"
-                if (not user.HasStatus("outraged")):
-                    user.ApplyStatus("outraged", random.randint(2, 3), user)
+                if (not user.HasStatus(movestatus)):
+                    user.ApplyStatus(movestatus, random.randint(2, 3), user)
+                if (user.GetStatusCount(movestatus) == 1):
+                    user.ApplyStatus("confused", random.randint(2, 3), user)
             elif (name == "Super Fang"):
                 fixeddamage = math.floor(target.GetHealth() / 2.0)
             elif (name == "Anchor Shot"):
                 posttext += target.ApplyStatus("anchored", user, user)
                 if ("Anchor Shot" in moveboosts):
-                    power = 90
-                    sideeffects.append(SideEffect(user, target, Stats.Attack, -1))
-                    sideeffects.append(SideEffect(user, target, Stats.Speed, -1))
+                    power = 60
             elif (name == "Spirit Shackle"):
                 posttext += target.ApplyStatus("shackled", user, user)
             elif (name == "After You"):
@@ -2180,50 +2191,25 @@ init python:
                 posttext += "But it failed!"
                 action.ChangeSuccess(False)
             elif (name == "Baton Pass"):
-                usertrainer = user.GetTrainer()
-                newlist = []
-                for mon in usertrainer.GetTeam():
-                    if (mon.Health >= 1 and mon not in Battlers()):
-                        newlist.append(mon)
-                if (len(newlist) == 0):
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
-                else:
-                    statchanges = copy.copy(user.GetAllStatChanges())
-                    statuslist = ["confused", "focused", ".mindreading", ".lockingon", ".tracing", "blocked", "webbed", "seeded", "cursed", "substitute", "ingrained", "power tricked", "heal blocked", "embargoed", "perishing", "levitating", "aqua ring"]
-                    newstatus = {}
-                    for status in user.GetStatusKeys():
-                        newstatus[status] = user.Status[status]
-                       
-                    team = usertrainer.GetTeam()
-                    if (usertrainer.Type != TrainerType.Enemy):
-                        validswitch = False
-                        while not validswitch:
-                            renpy.say(None, "Pick a Pokémon to switch in.")
-                            switchCommand = renpy.call_screen('switch', user.GetTrainer(), True)
-                            newPokemon = user.GetTrainer().GetTeam()[switchCommand]
-                            if (newPokemon.GetHealth() == 0):
-                                renpy.say(None, "{} has fainted, and cannot fight!".format(newPokemon.GetNickname()))
-                            elif (newPokemon in Battlers()):
-                                renpy.show_screen("battleui")
-                                renpy.say(None, "{} is already in battle!".format(newPokemon.GetNickname()))
-                            else:
-                                validswitch = True
-                    else:
-                        switchCommand = team.index(RandomChoice(newlist))
-                    
-                    newPokemon = user.GetTrainer().GetTeam()[switchCommand]
-                    usertrainer.ShiftTeam(team.index(user), switchCommand, True, selfforced=True)
-                    posttext += "{} passed the baton to {}!".format(username, newPokemon.GetNickname())
-                    forcedswitch = newPokemon
+                statchanges = copy.copy(user.GetAllStatChanges())
+                statuslist = ["confused", "focused", ".mindreading", ".lockingon", ".tracing", "blocked", "webbed", "seeded", "cursed", "substitute", "ingrained", "power tricked", "heal blocked", "embargoed", "perishing", "levitating", "aqua ring"]
+                newstatus = {}
+                for status in user.GetStatusKeys():
+                    newstatus[status] = user.Status[status]
+                forcedswitch = SwitchAction(user)
+                if forcedswitch:
+                    posttext += "{} passed the baton to {}!".format(username, forcedswitch.GetNickname())
                     preservestats = True
                     for status, count in newstatus.items():
-                        newPokemon.ApplyStatus(status, count)
-                    newPokemon.StatChanges = {}
+                        forcedswitch.ApplyStatus(status, count)
+                    forcedswitch.StatChanges = {}
                     for statchange, count in statchanges.items():
-                        #newPokemon.StatChanges = statchanges
+                        #forcedswitch.StatChanges = statchanges
                         #print(str(statchange) + ", " + str(count))
-                        newPokemon.ChangeStats(statchange, count)
+                        forcedswitch.ChangeStats(statchange, count)
+                else:
+                    posttext += "But it failed!"
+                    action.ChangeSuccess(False)
             elif (name == "Snatch"):
                 user.ApplyStatus("snatching")
             elif (name == "Assist"):
@@ -2235,8 +2221,7 @@ init python:
                             if (AssistCanCall(move)):
                                 moveslist.append(GetMove(move))
                 if (moveslist == []):
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
                 else:
                     newmove = random.choice(moveslist)
                     pretext += "{} called {}!".format(username, newmove.Name)
@@ -2259,8 +2244,7 @@ init python:
                 if (user.HasStatus("asleep")):
                     sideeffects.append(SideEffect(user, target, "flinching", chance=0.3))
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name in ["Bug Bite", "Pluck"]):
                 if not target.HasAbility("Sticky Hold"):
                     RunItemFunction("forceReceived", user, [target])
@@ -2270,8 +2254,7 @@ init python:
                     user.MarkItemUsed()
                 else:
                     doDamage = False
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Recycle"):
                 if user.HasItem(None):
                     for itemaction, item, turn in reversed(user.GetItemHistory()):
@@ -2279,8 +2262,7 @@ init python:
                             posttext += user.GiveItem(item)
                             break
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Knock Off"):
                 if (not target.HasAbility("Sticky Hold")):
                     msg = target.TakeItem()
@@ -2293,8 +2275,7 @@ init python:
                     posttext += user.TakeItem()
                     posttext += target.GiveItem(ownitem)
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Belch"):
                 consumedberry = False
                 for itemaction, item, turn in reversed(user.GetItemHistory()):
@@ -2303,8 +2284,7 @@ init python:
                         break
                 if (not consumedberry):
                     doDamage = False
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Throat Chop"):
                 sideeffects.append(SideEffect(user, target, "gasping", 3))
             elif (name == "Wring Out"):
@@ -2323,8 +2303,7 @@ init python:
                         possiblemoves.remove(notmove)
 
                 if (not user.HasStatus("sleeping") or possiblemoves == []):
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
                 else:
                     newmove = GetMove(random.choice(possiblemoves))
                     pretext += "{} called {}!".format(username, newmove.Name)
@@ -2350,15 +2329,13 @@ init python:
                             if (othermon != user):
                                 usertrainer.ShiftTeam(team.index(user), team.index(othermon), positionswitch=True)
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Role Play"):
                 if (not IsSpecialAbility(user.GetAbility()) and not IsSpecialAbility(target.GetAbility())):
                     user.ApplyStatus(".tracing", target.GetAbility())
                     posttext += "{} copied the ability {}!".format(username, target.GetAbility())
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Doodle"):
                 if (not IsSpecialAbility(user.GetAbility()) and not IsSpecialAbility(target.GetAbility())):
                     for battler in GetBattlers(user):
@@ -2366,8 +2343,7 @@ init python:
                             battler.ApplyStatus(".tracing", target.GetAbility())
                             posttext += "{} copied the ability {} onto {}!".format(username, target.GetAbility(), battler.GetNickname())
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Frost Breath"):
                 iscrit = True
             elif (name == "Salt Cure"):
@@ -2400,8 +2376,7 @@ init python:
                     target.ApplyStatus(user.GetNormalStatus(), user.GetStatusCount(user.GetNormalStatus()), user)
                     user.ClearStatus(user.GetNormalStatus())
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Quash"):
                 for otheraction in CurrentActions:
                     if (otheraction.GetUser() == target):
@@ -2458,8 +2433,7 @@ init python:
                     user.LearnNewMove([(0, lastmove.Name)])
                     posttext += "{} sketched {}!".format(username, lastmove.Name)
                 else:
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Zippy Zap"):
                 sideeffects.append(SideEffect(user, user, Stats.Evasion))
             
@@ -2469,7 +2443,7 @@ init python:
                 posttext += "{} transformed into the opponent {}!".format(username, target.GetNickname())
             
             elif (name == "Kasa's Transform"):
-                whichbeast = CalculateHocusTransform(user)
+                whichbeast = CalculateKasaTransform(user)
                 if (whichbeast == None):
                     whichbeast == random.choice(pokedexlookupname("Entei", DexMacros.Id), pokedexlookupname("Raikou", DexMacros.Id), pokedexlookupname("Suicune", DexMacros.Id))
                 moveset = []
@@ -2512,8 +2486,7 @@ init python:
                 posttext += target.ApplyStatus("simplified")
             elif (name == "Burn Up"):
                 if (not user.HasType("Fire")):
-                    posttext += "But it failed!"
-                    action.ChangeSuccess(False)
+                    FailMove(posttext, action)
             elif (name == "Fling"):
                 if (CalculateFling(user) != 0) and not (user.HasAbility("Klutz") or user.HasStatus("embargoed") or BattlefieldExists("Magic Room")):
                     power = CalculateFling(user)
@@ -2564,6 +2537,8 @@ init python:
                 for mon in Battlers():
                     if (IsBerry(mon.GetItem())):
                         RunItemFunction("forceReceived", mon, [mon])
+            elif (name == "Conversion"):
+                posttext += user.ApplyStatus("converted", [target.GetMoves()[0].Type], user)
 
 
 
@@ -2585,15 +2560,18 @@ init python:
             else:
                 doDamage = True
 
+            if (not abortmove and user.HasAbility("Truant")):
+                user.ApplyStatus("loafing")
+
             if (not [element] == user.GetTypes() and (user.HasAbility("Protean") or user.HasAbility("Libero"))):
                 user.ApplyStatus("versatile", element)
 
             typebonus = GetTypeBonus(name, element, target, user)
 
-            if (BattlefieldExists("Psychic Terrain") and action.GetPriority() > 0 and user not in GetBattlers(target)):
+            if (action.GetPriority() > 0 and user not in GetBattlers(target) and (BattlefieldExists("Psychic Terrain") and IsGrounded(target) or target.HasAbility("Dazzling") or target.HasAbility("Queenly Majesty"))):
                 typebonus = 0
 
-            if (doDamage and math.floor(user.GetId()) == 334 and dawnbattle and len(FriendlyUnfainteds()) == 1):
+            if (doDamage and math.floor(user.GetId()) == 334 and HasEvent("Dawn", "LiberationBattle") and len(FriendlyUnfainteds()) == 1):
                 movesdodged.append(move.Name)
 
             if (doDamage and typebonus != 0):
@@ -2661,6 +2639,8 @@ init python:
                     RunItemFunction("takingDirectDamage", target, [])
                     posttext += ItemText
                     
+                    if (name in ["Rock Wrecker", "Giga Impact", "Hyper Beam", "Frenzy Plant", "Hydro Cannon", "Blast Burn", "Roar of Time"] and damage > 0):
+                        user.ApplyStatus("recharging", 2)
                     if (name == "Burn Up"):
                         user.ApplyStatus("burnt out")
                     if (damage > 0 and user.HasAbility("Stench")):
@@ -2833,49 +2813,21 @@ init python:
                             if (mon.Health >= 1 and mon != target and mon not in Battlers()):
                                 newlist.append(mon)
                         if (len(newlist) != 0):
-                            randpkmn = random.choice(newlist)
-                            trainer = target.GetTrainer()
-                            team = trainer.GetTeam()
-                            trainer.ShiftTeam(team.index(target), team.index(randpkmn), True)
-                            posttext += "{} was forced out!".format(randpkmn.GetNickname())
-                            forcedswitch = randpkmn
-                    if (prehealth >= 0.5 and target.GetHealthPercentage() < 0.5 and target.GetHealth() > 0 and (target.HasAbility("Wimp Out") or target.HasAbility("Emergency Exit"))):
-                        if (target.GetTrainer().GetType() != TrainerType.Enemy):
-                            usertrainer = target.GetTrainer()
-                            newlist = []
-                            for mon in usertrainer.GetTeam():
-                                if (mon.Health >= 1 and mon not in Battlers()):
-                                    newlist.append(mon)
-                            if (len(newlist) != 0):
-                                newPokemon = FriendlyBattlers()[0]
-                                while (newPokemon in Battlers() or newPokemon.GetHealth() == 0):
-                                    renpy.say(None, "Pick a Pokémon to switch in.")
-                                    switchCommand = renpy.call_screen('switch', usertrainer, True)
-                                    if (switchCommand != "back"):
-                                        newPokemon = usertrainer.GetTeam()[switchCommand]
-                                        if (newPokemon.GetHealth() == 0):
-                                            renpy.show_screen("battleui")
-                                            renpy.say(None, "{} has fainted, and cannot fight!".format(newPokemon.GetNickname()))
-                                        elif (newPokemon in Battlers()):
-                                            renpy.show_screen("battleui")
-                                            renpy.say(None, "{} is already in battle!".format(newPokemon.GetNickname()))
-                                team = usertrainer.GetTeam()
-                                usertrainer.ShiftTeam(team.index(target), switchCommand, True)
-                                posttext += "{} retreated with {}, and {} switched in!".format(target.GetNickname(), target.GetAbility(), newPokemon.GetNickname())
-                                SwitchInEffects(newPokemon)
-                        else:                        
-                            targettrainer = target.GetTrainer()
-                            newlist = []
-                            for mon in targettrainer.GetTeam():
-                                if (mon.Health >= 1 and mon != target):
-                                    newlist.append(mon)
-                            if (len(newlist) != 0):
+                            if (not target.HasStatus("tyrannic")):
                                 randpkmn = random.choice(newlist)
                                 trainer = target.GetTrainer()
                                 team = trainer.GetTeam()
                                 trainer.ShiftTeam(team.index(target), team.index(randpkmn), True)
-                                posttext += "{} retreated with {}, and {} shifted in!".format(target.GetNickname(), target.GetAbility(), randpkmn.GetNickname())
-                                SwitchInEffects(randpkmn)
+                                posttext += "{} was forced out!".format(randpkmn.GetNickname())
+                                forcedswitch = randpkmn
+                            elif (target.HasStatus("tyrannic")):
+                                posttext += "The reinforcements prevent the Tyrannic Pokémon from being switched out!"
+                                action.ChangeSuccess(False)
+                        
+                    if not forcedswitch and (prehealth >= 0.5 and target.GetHealthPercentage() < 0.5 and target.GetHealth() > 0 and (target.HasAbility("Wimp Out") or target.HasAbility("Emergency Exit"))):
+                        forcedswitch = SwitchAction(target)
+                        if forcedswitch:
+                            posttext += "{} retreated with {}, and {} switched in!".format(target.GetNickname(), target.GetAbility(), forcedswitch.GetNickname())
                     if (name == "Rapid Spin"):
                         removeeffects = ["sticky web", "toxic spikes", "stealthy rocks", "spikes"]
                         removestatus = ["wrapped", "bound", "clamped", "infested", "firespun", "whirlpooled", "seeded", "entombed", "ingrained", "anchored", "shackled", "octolocked"]
@@ -2915,20 +2867,36 @@ init python:
                 for posteffect in posteffects:
                     posttext += posteffect.Apply()
 
-        if (len(targets) == 1 and not repeating and not repeat and doDamage and not parentalbond and user.HasAbility("Parental Bond")):
+        if (len(targets) == 1 and not repeating and not repeat and doDamage and not abortmove and not parentalbond and user.HasAbility("Parental Bond")):
             DoMove(action, user, move, targets, pretext + posttext, "", False, True)
             return
 
-        if (forcedswitch != None):
+        if (forcedswitch):
             SwitchInEffects(forcedswitch, preserveStats=preservestats)
 
         if (user.HasAbility("Gorilla Tactics")):
             user.ApplyStatus(".fixated", move.Name)
 
+        #aborting rampage moves
         if (user.HasStatus("thrashing") and not doDamage):
             user.ClearStatus("thrashing")
         if (user.HasStatus("outraged") and not doDamage):
             user.ClearStatus("outraged")
+        if (user.HasStatus("petal dancing") and not doDamage):
+            user.ClearStatus("petal dancing")
+
+        #aborting the second turn of two-turn moves
+        if (user.GetStatusCount("hardheaded") == 1 and not doDamage):
+            user.ClearStatus("hardheaded")
+        if (user.GetStatusCount("charging light") == 1 and not doDamage):
+            user.ClearStatus("charging light")
+        if (user.GetStatusCount("hardening light") == 1 and not doDamage):
+            user.ClearStatus("hardening light")
+        if (user.GetStatusCount("whipping up winds") == 1 and not doDamage):
+            user.ClearStatus("whipping up winds")
+        if (user.GetStatusCount("cloaked in light") == 1 and not doDamage):
+            user.ClearStatus("cloaked in light")
+
         if (user.HasStatus(".furycutter") and not doDamage):
             user.ClearStatus(".furycutter")
 

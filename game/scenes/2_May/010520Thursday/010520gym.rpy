@@ -78,13 +78,13 @@ pause 2.0
 
 yellow @closedbrow talking2mouth "{size=30}No such luck.{/size}"
 
-nessa @talkingmouth "Hey."
+nessa @talking2mouth "Hey."
 
 sonia @talking2mouth "So we're battling you two? Right, then. Let's get on with it."
 
 narrator "Nessa looks at Yellow, then back at you."
 
-nessa @talkingmouth "Here's an idea. How about we just use one Pokémon for this battle? All of us just using one?"
+nessa @talking2mouth "Here's an idea. How about we just use one Pokémon for this battle? All of us just using one?"
 
 yellow @surprised "Oh! That's... that's an idea. What do you think, [first_name]?"
 
@@ -131,7 +131,7 @@ if (WonBattle("NessaSonia1")):
         $ ValueChange("Nessa", 2, 0.5, False)
         $ ValueChange("Sonia", 2, 0.75)
 
-        nessa @talkingmouth "Nice. That was actually kinda fun."
+        nessa @talking2mouth "Nice. That was actually kinda fun."
 
         sonia @happy "Solid, all-around. You surprised me!"
 
@@ -139,7 +139,7 @@ if (WonBattle("NessaSonia1")):
         $ ValueChange("Nessa", 3, 0.5, False)
         $ ValueChange("Sonia", 3, 0.75)
         
-        nessa @talkingmouth "Impressive. You aren't bad at all."
+        nessa @talking2mouth "Impressive. You aren't bad at all."
 
         sonia @talking2mouth "Forgive me for this one, but I honestly didn't expect you to pull it off."
 
@@ -150,21 +150,21 @@ red uniform @happy "Hey, what's that mean? We're Battle Teammates, right?"
 
 sonia @talking2mouth "Sure, but I've got a whole year of experience on you."
 
-nessa @talkingmouth "Come to think of it, Sunny, what happened to your Pokémon last year?"
+nessa @talking2mouth "Come to think of it, Sunny, what happened to your Pokémon last year?"
 
 sonia @confused "What do you mean, Ness?"
 
-nessa @talkingmouth "Well, your Pokémon are a bit low-level, aren't they? And they're unevolved, too."
+nessa @talking2mouth "Well, your Pokémon are a bit low-level, aren't they? And they're unevolved, too."
 
 sonia @sad "Er... that's sort of what happens when you fall out of practice, when you don't pick up a Poké Ball for a year. And I never evolved most of my Pokémon because... well..."
 sonia @happy "Would you throw something at me if I said it was because Yamper's too bloody cute to give up?"
 
-nessa @closedbrow talkingmouth "You're impossible."
+nessa @closedbrow talking2mouth "You're impossible."
 
 sonia @sadbrow talking2mouth "It wasn't {i}really{/i} that, though. Truth be told, evolved Pokémon are harder to command, and I wasn't sure... if, you know..."
 
 nessa @frownmouth "{w=0.5}.{w=0.5}.{w=0.5}."
-nessa @closedbrow talkingmouth "Well, no wonder you lost, then."
+nessa @closedbrow talking2mouth "Well, no wonder you lost, then."
 
 sonia @angry "Ness!"
 
@@ -174,11 +174,11 @@ sonia @talking2mouth "Er... thanks. But you failed to clear the first round of t
 
 yellow @closedbrow talking2mouth "Yes."
 
-nessa @talkingmouth "Wonder if there's a connection there."
+nessa @talking2mouth "Wonder if there's a connection there."
 
 sonia @angry "Ness! Honestly, when did you get so sassy?"
 
-nessa @talkingmouth "Being around Raihan again's reforged all the 'sass' synapses in my mind, I think. I didn't have anyone to match up against before now."
+nessa @talking2mouth "Being around Raihan again's reforged all the 'sass' synapses in my mind, I think. I didn't have anyone to match up against before now."
 
 redmind @thinking "I think I just realized the importance of keeping Nessa and Leaf away from each other..."
 

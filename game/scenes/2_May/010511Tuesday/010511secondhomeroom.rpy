@@ -629,22 +629,22 @@ show nessa -surprisedbrow -frownmouth -surprised with dis
 if (GetRelationshipRank("Nessa") > 0 and not HasEvent("Nessa", "DateDeny")):
     $ AddEvent("Rosa", "KnowsNessaDate")
 
-    nessa @talkingmouth "So you're a mind-reader. You might've mentioned that on our date."
+    nessa @talking2mouth "So you're a mind-reader. You might've mentioned that on our date."
 
     red @closedbrow talkingmouth "Yeah, there was just a whole parcel of different psychic powers I was keeping hidden from you."
 
 else: 
-    nessa @talkingmouth "So he's a mind-reader."
+    nessa @talking2mouth "So he's a mind-reader."
 
     red @closedbrow talking2mouth "Jeez, don't even joke about that. Someone might hear you and start this whole thing over again."
 
 pause 1.0
 
-nessa @talkingmouth "Your speech on Friday..."
+nessa @talking2mouth "Your speech on Friday..."
 
 pause 0.5
 
-nessa @sadbrow talkingmouth "That was real. It mattered. That was the kind of thing Leon would do. I'm impressed."
+nessa @sadbrow talking2mouth "That was real. It mattered. That was the kind of thing Leon would do. I'm impressed."
 
 red @surprised "Oh. Well, uh--"
 
@@ -682,11 +682,11 @@ rosa @sadbrow talkingmouth "Sorry?"
 
 red @surprised "Oh, no, sorry, I wasn't talking to you!"
 
-nessa @surprisedbrow talkingmouth "Talking to Sabrina?"
+nessa @surprisedbrow talking2mouth "Talking to Sabrina?"
 
 red @talkingmouth "No, I haven't heard from her since Saturday."
 
-nessa @talkingmouth "Damn. I was really hoping I could avoid going into the forest."
+nessa @talking2mouth "Damn. I was really hoping I could avoid going into the forest."
 
 rosa @talkingmouth "Oh, right, you're not good against Grass-types..."
 
@@ -699,12 +699,12 @@ rosa @talkingmouth "Plus, Pikachu-trainer to Pikachu-trainer, I'm insanely curio
 
 red @talkingmouth "Sure. But between the other two rescue teams, I'll be pretty busy."
 
-nessa @talkingmouth "It's fine. I spent all weekend preparing, so we're ready at a moment's notice. I knew that Rosa would end up making us do something like this."
+nessa @talking2mouth "It's fine. I spent all weekend preparing, so we're ready at a moment's notice. I knew that Rosa would end up making us do something like this."
 
 rosa @surprised "What does {i}that{/i} mean?"
 
 nessa @happy "It means you've got a good heart."
-nessa @closedbrow talkingmouth "Anyway, I've packed rations, medical equipment, and set up a GPS on my phone, with a dead-man's switch to call the school if we're gone too long."
+nessa @closedbrow talking2mouth "Anyway, I've packed rations, medical equipment, and set up a GPS on my phone, with a dead-man's switch to call the school if we're gone too long."
 
 menu:
     "You really thought ahead, Nessa.":
@@ -737,12 +737,12 @@ menu:
 
 pause 0.5
 
-nessa @talkingmouth "...Oh, yeah, Sonia will be coming, too."
-nessa @closedbrow talkingmouth "We're just heading to the lab to get her now, actually."
+nessa @talking2mouth "...Oh, yeah, Sonia will be coming, too."
+nessa @closedbrow talking2mouth "We're just heading to the lab to get her now, actually."
 
 pause 1.0
 
-nessa @talkingmouth "Give us a call when you're ready to go. You've got my number."
+nessa @talking2mouth "Give us a call when you're ready to go. You've got my number."
 
 red @talkingmouth "Sure thing."
 
@@ -762,7 +762,7 @@ pause 0.3
 
 sonia @talking2mouth "Wait!"
 
-nessa -surprisedbrow -frownmouth -surprised @closedbrow talkingmouth "Speak of the devil."
+nessa -surprisedbrow -frownmouth -surprised @closedbrow talking2mouth "Speak of the devil."
 
 rosa -surprisedbrow -frownmouth -surprised @talkingmouth "Hey, Sonia. What's up?"
 
@@ -782,13 +782,13 @@ pause 1.5
 
 red @confused "What? I can know stuff, too."
 
-nessa -surprisedbrow -frownmouth -surprised @talkingmouth "Full of surprises, this one."
+nessa -surprisedbrow -frownmouth -surprised @talking2mouth "Full of surprises, this one."
 
 rosa -surprisedbrow -frownmouth -surprised @talkingmouth "Okay, but why's this important?"
 
 sonia @talking2mouth "Right. The issue is that the Mysteriosity is extremely unpredictable. It can do pretty much anything, given half the chance."
 
-nessa @closedbrow talkingmouth "What, specifically, can it do?"
+nessa @closedbrow talking2mouth "What, specifically, can it do?"
 
 sonia @sad "There's no specifics when it comes to Mysteriosity. It's not really a phenomenon even the best researchers understand, since it's so hard to study."
 sonia @closedbrow talkingmouth "It might help you or hurt you. Sometimes it just drops random objects, or even entire places, in the middle of other places."
@@ -798,12 +798,12 @@ sonia @closedbrow talking2mouth "They become {i}Frenzied.{/i}"
 rosa @closedbrow talkingmouth "Alright. That's something we'll need to keep track of, then."
 rosa @happy "But it's fine! If we all work together, we'll still be able to beat all the baddies and save the day!"
 
-nessa @closedbrow talkingmouth "{size=30}I'm not sure... I might need to call {i}him{/i} in for this one.{/size}"
+nessa @closedbrow talking2mouth "{size=30}I'm not sure... I might need to call {i}him{/i} in for this one.{/size}"
 
 sonia @sad "Sorry to be, er, the bad news Bewear."
 
-nessa @closedbrow talkingmouth "Better than us going in there and immediately having our Pokémon turn on us."
-nessa @talkingmouth "You're good, Sunny. Don't worry about it."
+nessa @closedbrow talking2mouth "Better than us going in there and immediately having our Pokémon turn on us."
+nessa @talking2mouth "You're good, Sunny. Don't worry about it."
 
 rosa @talkingmouth "Alright! Let's make plans! I think..."
 
@@ -816,38 +816,38 @@ pause 1.0
 
 show nessa with dis
 
-nessa @talking2mouth "Hey."
+nessa @talkingmouth "Hey."
 
 red @talkingmouth "...Yeah?"
 
 if (GetRelationshipRank("Nessa") > 0 and not HasEvent("Nessa", "DateDeny")):
-    nessa @talking2mouth "You remember our date?"
+    nessa @talkingmouth "You remember our date?"
 
     red @happy "Can't forget it."
 
-    nessa @sadbrow talkingmouth "If that meant... {i}anything{/i} to you... even a little bit... I need to ask a favor."
+    nessa @sadbrow talking2mouth "If that meant... {i}anything{/i} to you... even a little bit... I need to ask a favor."
 
 else:
-    nessa @talking2mouth "I need to ask a favor."
+    nessa @talkingmouth "I need to ask a favor."
 
 red @talking2mouth "Yeah?"
 
-nessa @talkingmouth "Wait until Thursday to go rescue Sabrina. I'm going to call someone who I think will be a massive help on this, but it'll take a while for them to get here."
-nessa @closedbrow talkingmouth "If you can just wait {i}two{/i} more days, then we're much more likely to succeed."
-nessa @sadbrow talkingmouth "Please. Show me you can be patient."
+nessa @talking2mouth "Wait until Thursday to go rescue Sabrina. I'm going to call someone who I think will be a massive help on this, but it'll take a while for them to get here."
+nessa @closedbrow talking2mouth "If you can just wait {i}two{/i} more days, then we're much more likely to succeed."
+nessa @sadbrow talking2mouth "Please. Show me you can be patient."
 
 menu:
     "Alright, but this better pay off.":
         $ ValueChange("Nessa", 1, 0.5)
 
-        nessa @talkingmouth "...It will. Promise."
+        nessa @talking2mouth "...It will. Promise."
 
         hide nessa with dis
 
     "I'll think about it.":
         $ ValueChange("Nessa", 1, 0.5)
 
-        nessa @talkingmouth "...Thanks."
+        nessa @talking2mouth "...Thanks."
 
         hide nessa with dis
 

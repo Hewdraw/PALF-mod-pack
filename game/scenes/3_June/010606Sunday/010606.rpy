@@ -4,7 +4,6 @@ $ timeOfDay = "Morning"
 call clearscreens() from _call_clearscreens_269
 call calendar(1) from _call_calendar_62
 
-
 $ renpy.music.queue("Audio/Music/Pallet Town A.ogg", channel='music', loop=True, fadein=1.0, tight=None)
 
 $ calDate = calDate.replace(day=6, month=6, year=2004)
@@ -83,7 +82,7 @@ pause 1.0
 
 red @confused "Uh... hi, guys. Hi, Brendan. What happened? Why are you here?"
 
-if (HasEvent("Klara", "AgreePartner")):
+if (HasEvent("Klara", "AcceptPartner")):
     blue @talking2mouth "Nice partner you chose, [first_name]. Real nice."
 
     red @confusedeyebrows talking2mouth "I expected you to yell at me as soon as I got back to the dorm, but I really have no idea what you're yelling at me about here."
@@ -102,7 +101,7 @@ brendan @sadbrow talking2mouth "Klara said that Leaf just made a mistake, and, y
 
 pause 1.0
 
-if (HasEvent("Klara", "AgreePartner")):
+if (HasEvent("Klara", "AcceptPartner")):
     narrator "Your head is swimming with mixed emotions. Partnering with Klara during the tryouts, you saw a side of her that you hadn't seen before."
     narrator "She seemed to truly love the stage, the spotlight, and coordinating, and her bond with her Pokémon was strong."
 
@@ -135,7 +134,7 @@ else:
 
 red @closedbrow talking2mouth "I know. Where's her dorm?"
 
-brendan @talking2mouth "Pledge Hall. 303."
+brendan @talking2mouth "This Hall. Dorm 303."
 
 pause 1.0
 
@@ -143,7 +142,7 @@ red @sad2eyes talking2mouth "I'll be back."
 
 scene blank2 with splitfade
 
-narrator "You march firmly toward Pledge Hall, uncaring of the rapidly-approaching curfew. If Cheren wants to cause a problem, he'll have a {i}much{/i} bigger problem on his hands."
+narrator "You march firmly toward Klara's dorm, uncaring of the rapidly-approaching curfew. If Cheren wants to cause a problem, he'll have a {i}much{/i} bigger problem on his hands."
 
 narrator "Your mind is spinning, with possibilities, frustrations, and words that you hope you manage to sift through before you arrive at the dorm door."
 
@@ -180,7 +179,7 @@ $ hideside = False
 if (HasEvent("Klara", "FirstBase")):
     klara @talking2mouth "Are you[ellipses] you know, in the mood? My dormmates are home, but we could see if the pool's open?"
 
-elif (HasEvent("Klara", "AgreePartner")):
+elif (HasEvent("Klara", "AcceptPartner")):
     if (HasEvent("Game", "WonMDTryouts")):
         klara @talking2mouth "Did you want to go over our routine for the Millennium Drop again?"
     else:
@@ -199,7 +198,7 @@ klara @closedbrow talking2mouth "Well, {i}I{/i} didn't say it, but the people I 
 
 pause 1.0
 
-if (HasEvent("Klara", "AgreePartner")):
+if (HasEvent("Klara", "AcceptPartner")):
     narrator "It is {i}hard{/i} to believe that this was an accident. But[ellipses] if it was, even if there was even the {i}smallest{/i} possible chance, it's worth pursuing to the end."
     narrator "One thing you are certain of is that yelling at Klara will not make Leaf feel better, will not make Klara feel guilty, and will not make your chest stop hurting."
     narrator "There must be another way to handle this--one that results in the least amount of harm for everyone."
@@ -314,7 +313,17 @@ else:
 
     pause 2.0
 
-    klara -surprisedbrow @talking2mouth "Partner with me in the Millennium Drop. I passed the tryouts, even without your help. You can get us to the end. If you let me take the scholarship, I'll give you your 'why.'"
+    klara -surprisedbrow @talking2mouth "Partner with me in the Millennium Drop. I passed the tryouts, even without your help."
+
+    if (HasEvent("Game", "WonMDTryouts")): 
+        klara -surprisedbrow @talking2mouth "You can get us to the end. If you let me take the scholarship, I'll give you your 'why.'"
+    elif (HasEvent("Yellow", "AcceptPartner")):
+        klara -surprisedbrow @talking2mouth "The only reason you didn't win your tryouts was because you were with Yellow. The two of us, together, can get to the end. If you let me take the scholarship, I'll give you your 'why.'"
+    elif (HasEvent("Game", "ParticipateMDTryouts")):
+        klara -surprisedbrow @talking2mouth "The only reason you didn't win your tryouts was because you were alone. The two of us, together, can get to the end. If you let me take the scholarship, I'll give you your 'why.'"
+    else:
+        klara -surprisedbrow @talking2mouth "It doesn't matter that you're 'not a coordinator.' It's all subjective, and people love you."
+
     klara @closedbrow talking2mouth "Leaf's mistake doesn't have to get between us working together."
 
     pause 2.0
@@ -348,13 +357,15 @@ else:
     
 scene blank2 with splitfade
 
-if (not (HasEvent("Klara", "BrokeBond") or HasEvent("Klara", "AgreePartner"))):
+if (not (HasEvent("Klara", "BrokeBond") or HasEvent("Klara", "AcceptPartner"))):
     narrator "You're confused and hurt. The one thing you {i}can{/i} understand, though, is that your understanding of Klara was entirely incorrect."
     narrator "[bluecolor]Your bond with Klara has been revealed to be fake.{/color}"
 
     python:
         AddEvent("Klara", "FormerBond" + str(GetValue("Klara")))
         AddEvent("Klara", "BrokeBond")
+        if (coordinatorpartner == "Klara"):
+            coordinatorpartner = None
         persondex["Klara"]["Mood"] = 0
         persondex["Klara"]["Value"] = 0
         persondex["Klara"]["Nature"] = TrainerNature.Special
@@ -374,7 +385,7 @@ with splitfade
 
 yellow @talking2mouth "You're back?"
 
-if (HasEvent("Klara", "AgreePartner")):
+if (HasEvent("Klara", "AcceptPartner")):
     red @sadbrow talkingmouth "Yeah."
 
     yellow @talking2mouth "What did you learn?"
@@ -563,7 +574,7 @@ show ethan surprisedbrow frownmouth
 show brendan surprisedbrow frownmouth
 with dis
 
-yellow -frownmouth angryeyebrows @challengingmouth "And the tailor needs a {i}lot{/i} of clothes, and she needs them before next Sunday."
+yellow -frownmouth angrybrow @challengingmouth "And the tailor needs a {i}lot{/i} of clothes, and she needs them by Saturday."
 
 pause 1.0
 
@@ -583,5 +594,4 @@ scene blank2
 
 pause 2.0
 
-jump enddemo
-jump demoend
+jump day010607

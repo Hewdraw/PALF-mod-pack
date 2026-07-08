@@ -71,7 +71,7 @@ melody @talking2mouth "So, it's mine, now? I can do whatever with it...?"
 
 wallace angrybrow talking2mouth "Do not {i}dare{/i}."
 
-if (HasEvent("Professor Oak", "ParticipateMDTryouts")):
+if (IsCoordinator()):
     show melody:
         xpos 0.66 ypos 1.0 zoom 1.0
         ease 0.5 ypos 1.2 zoom 1.3
@@ -92,7 +92,7 @@ if (HasEvent("Professor Oak", "ParticipateMDTryouts")):
 
     if (not HasEvent("Instructor Wallace", 1)):
         wallace "You do not {i}re-gift{/i} the favor of a Champion! He has not, even {i}once{/i}, attended my Water-type class! He cannot even train it!"
-    elif (classstats["Water"] < 11):
+    elif (GetElective("Water") < 11):
         wallace "You do not {i}re-gift{/i} the favor of a Champion! He has {i}barely{/i} attended my Water-type class! Do you expect him to train it?"
     else:
         wallace "You do not {i}re-gift{/i} the favor of a Champion! {i}You{/i} will train my Lucy's daughter, not him!"

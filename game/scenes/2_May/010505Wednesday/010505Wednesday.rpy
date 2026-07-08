@@ -19,7 +19,6 @@ queue music "audio/music/runawayfugitives_loop.ogg"
 
 python:
     playercharacter = "Ethan"
-
     ethanparty = [Pokemon(172.1, level=max(1, pikachuobj.Level - 1), ivs=[1, 1, 1, 1, 1, 1], evs=[0, 0, 0, 0, 0, 0], gender=Genders.Female, ability="Small World", nature=Natures.Lonely)]
     for mon in oldparty:
         ethanparty.append(Pokemon(mon.Id, level=max(1, mon.Level - 1), ivs=[1, 1, 1, 1, 1, 1], evs=[0, 0, 0, 0, 0, 0], moves=copy.deepcopy(mon.Moves), gender=mon.Gender, ability=mon.Ability))
@@ -44,6 +43,7 @@ python:
         "Patience" : 69
     }
 
+    oldpersondex = copy.deepcopy(persondex)
     persondex = copy.deepcopy(defaultpersondex)
     persondex["Professor Cherry"] = {"Named" : True, "Value" : 247, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [] }
     persondex[first_name] = {"Named" : True, "Value" : oldpersondex["Ethan"]["Value"] * 3, "Contact": False, "Sex": Genders.Male, "Relationship": "Wannabe", "RelationshipRank": 0, "Events": [] }
@@ -286,7 +286,7 @@ if (hascyclizar):
     narrator "After a bit of bribing, begging, and nagging, your Cyclizar agrees to let you mount it, and begin the journey up the mountain."
 
 else:
-    if (12 * (1 + (hash("Ethan") % 100) / 100) >= 200):
+    if (money * 12 * (1 + (hash("Ethan") % 100) / 100) >= 200):
         $ AddEvent("Ethan", "Spent200")
         narrator "After requesting the assistance of one of the school's Ride Cyclizar (and paying $200), you mount it, and begin the journey up the mountain."
     else:
@@ -2993,7 +2993,7 @@ red @surprised "What?"
 
 narrator "Janine wordlessly holds up a card, much like your own, that says '#1' on it."
 
-janine @closedbrow talking2mouth "I figured you were our best shot at placing in the national tournament."
+janine @closedbrow talking2mouth "I figured you were our best shot at placing in the National Tournament."
 janine @sadbrow talking2mouth "When you left, I signed myself up."
 
 red @surprised "You... signed yourself up a couple days ago, but you got the number one spot?"
@@ -3430,7 +3430,7 @@ pause 1.0
 
 janine @sadbrow talking2mouth "That... actually makes me a bit sad. I'm not heartless, you know. I mean, sure, I'm strict, but I've always said that working together is the best way to succeed as a team..."
 
-red @surprised "W-wait! Sorry! I didn't mean to imply you were heartless or anything! I just... you're so tough, it's surprising to hear that you care about my friendships. Even if they're not battle team friendships, you know?"
+red @surprised "W-wait! Sorry! I didn't mean to imply you were heartless or anything! I just... you're so tough, it's surprising to hear that you care about my friendships. Even if they're not Battle Team friendships, you know?"
 
 janine @closedbrow talking2mouth "...Okay, I see where you're coming from."
 
@@ -3987,7 +3987,7 @@ elif (_return == "Baseball Field"):
         hide flannery
         with dis
 
-        flannery @angrybrow happymouth "So, you know that fanfic you commissioned? {gradualsize=32-16}Cynthia. Steven. A hot tub. And fifty pounds of butter...{/gradualsize}"
+        flannery @angrybrow happymouth "So, you know that fanfic you commissioned? {gradualsize=36-20}Cynthia. Steven. A hot tub. And fifty pounds of butter...{/gradualsize}"
 
         pause 1.0
 
@@ -4027,13 +4027,13 @@ elif (_return == "Aura Hall"):
 
         pause 2.0
 
-        hilda @talkingmouth "...Guess this is it, then."
+        hilda @talking2mouth "...Guess this is it, then."
 
         may @sadmouth "...I'll miss you guys."
 
         serena @talkingmouth "Oh, we'll still see each other, May. We take Fire classes together, after all."
 
-        hilda @talkingmouth "Yeah... and we can still, like, chat at lunch, or whatever."
+        hilda @talking2mouth "Yeah... and we can still, like, chat at lunch, or whatever."
 
         pause 1.0
 
@@ -4053,9 +4053,9 @@ elif (_return == "Aura Hall"):
 
         bianca @talkingmouth "Because I'm friends with Nate, and I know Hilbert wants to room with Nate, and I know you want to room with Hilbert, and I want to room with you and Hilbert, so it just makes sense if we room together!"
 
-        hilda -surprisedbrow @closedbrow talkingmouth "Uh... yeah, I guess that's true..."
+        hilda -surprisedbrow @closedbrow talking2mouth "Uh... yeah, I guess that's true..."
 
-        hilda @sadbrow talking2mouth "Are you sure that you want to dorm with Hilbert, though? You're kinda setting yourself up for... a {i}really{/i} tough time."
+        hilda @sadbrow talkingmouth "Are you sure that you want to dorm with Hilbert, though? You're kinda setting yourself up for... a {i}really{/i} tough time."
 
         bianca @happy "I'm already the go-fer for the entire school. It might be nice to help a single person for a while."
         bianca @talkingmouth "Besides, Ms. Miriam is always saying that the most important part of a nurse's job is handling different personalities."
@@ -4074,7 +4074,7 @@ elif (_return == "Aura Hall"):
 
         serena @sadbrow sadmouth "It's... not as I dreamed it."
 
-        hilda @angrybrow talkingmouth "Hey, isn't the {i}entire{/i} reason you tried to get on the student council so you could dorm with him?"
+        hilda @angrybrow talking2mouth "Hey, isn't the {i}entire{/i} reason you tried to get on the student council so you could dorm with him?"
 
         serena poutbrow poutmouth "No!"
 
@@ -4101,7 +4101,7 @@ elif (_return == "Aura Hall"):
 
         pause 1.0
 
-        hilda @talkingmouth "Well, what are your dorm plans, May?"
+        hilda @talking2mouth "Well, what are your dorm plans, May?"
 
         may @talkingmouth "I'm dorming with Brendan. He says he's found a guy to dorm with, so I guess I'm going to meet some new people." 
         may @closedbrow happymouth "I'll sure miss you guys, though."
@@ -4110,7 +4110,7 @@ elif (_return == "Aura Hall"):
 
         may @surprised "Is there a chance you'll join the Coordinator's club?"
 
-        hilda @sadbrow talkingmouth "...{i}Technically.{/i}"
+        hilda @sadbrow talking2mouth "...{i}Technically.{/i}"
 
         serena @talkingmouth "How are things with Brendan?"
 
@@ -4139,7 +4139,7 @@ elif (_return == "Aura Hall"):
             serena @closedbrow frownmouth "{w=0.5}.{w=0.5}.{w=0.5}."
 
         if (GetRelationshipRank("Hilda") == 1):
-            hilda @angrybrow talkingmouth "He goes out of his way to do shit for me. Even if I told him not to. It's a tiny bit annoying, but that kinda guy isn't going to be some evil mastermind, you know?"
+            hilda @angrybrow talking2mouth "He goes out of his way to do shit for me. Even if I told him not to. It's a tiny bit annoying, but that kinda guy isn't going to be some evil mastermind, you know?"
 
         else:
             hilda @closedbrow frownmouth "{w=0.5}.{w=0.5}.{w=0.5}."
@@ -4148,17 +4148,17 @@ elif (_return == "Aura Hall"):
 
         bianca @talkingmouth "If he had that power, I'm pretty sure none of us would know."
 
-        hilda @talkingmouth "Oh, yeah? Where are you getting that from?"
+        hilda @talking2mouth "Oh, yeah? Where are you getting that from?"
 
         bianca @talkingmouth "My AP Psychology class."
 
         pause 1.0
 
-        hilda @talkingmouth "Yup. That'd do it."
+        hilda @talking2mouth "Yup. That'd do it."
 
         pause 1.0
 
-        hilda @talkingmouth "Alright. Let's go. I've got my battle in a while, so..."
+        hilda @talking2mouth "Alright. Let's go. I've got my battle in a while, so..."
 
         hide hilda
         hide may
@@ -4166,7 +4166,7 @@ elif (_return == "Aura Hall"):
         hide serena
         with dis
 
-        bianca "Have you ever noticed how {gradualsize=32-16}we only ever stand around and talk about boys?{/gradualsize}"
+        bianca "Have you ever noticed how {gradualsize=36-20}we only ever stand around and talk about boys?{/gradualsize}"
 
         pause 1.0
 
@@ -4879,32 +4879,32 @@ elif (_return == "Recreation Center"):
             xpos 0.33 xzoom -1
         with dis
 
-        nessa @closedbrow talkingmouth "What a mess."
+        nessa @closedbrow talking2mouth "What a mess."
 
         rosa @talkingmouth "Yeeeep."
 
         pause 1.0
 
-        nessa @talkingmouth "It must be nice to not be the biggest thing at the school for a while, though."
+        nessa @talking2mouth "It must be nice to not be the biggest thing at the school for a while, though."
 
-        rosa @sadbrow sadmouth "Maybe a little bit... but I didn't want this. Poor Sabrina... I take classes with her. I really thought she had a bit of an actresses' spirit in her. I had no idea about... everything else."
+        rosa @sadbrow talking2mouth "Maybe a little bit... but I didn't want this. Poor Sabrina... I take classes with her. I really thought she had a bit of an actresses' spirit in her. I had no idea about... everything else."
 
-        nessa @talkingmouth "Yeah. I asked [first_name] on a date."
+        nessa @talking2mouth "Yeah. I asked [first_name] on a date."
 
         rosa @surprised "Oh? You're dating?"
 
         if (GetRelationshipRank("Nessa") == 1 and not HasEvent("Nessa", "DateDeny")):
             if (IsDate(5, 5, 2004)):
-                nessa @talkingmouth "We went on one date. I guess we probably aren't any more, though. He's not answering my calls."
+                nessa @talking2mouth "We went on one date. I guess we probably aren't any more, though. He's not answering my calls."
 
             else:
-                nessa @talkingmouth "We went on one date. I guess we probably aren't any more, though. Sonia told me he came back, but I haven't seen him."
+                nessa @talking2mouth "We went on one date. I guess we probably aren't any more, though. Sonia told me he came back, but I haven't seen him."
 
         elif (GetRelationshipRank("Nessa") == 1):
-            nessa @talkingmouth "Nah. He didn't want to date me. We just hung out."
+            nessa @talking2mouth "Nah. He didn't want to date me. We just hung out."
 
         else:
-            nessa @talkingmouth "No. He never took me up on it."
+            nessa @talking2mouth "No. He never took me up on it."
 
         pause 1.0
 
@@ -4912,88 +4912,88 @@ elif (_return == "Recreation Center"):
 
         if (GetRelationshipRank("Nessa") == 1 and not HasEvent("Nessa", "DateDeny")):
             if (IsDate(5, 5, 2004)):
-                nessa @talkingmouth "He's not answering my calls. Nessa--the model--is banging down his door, and he's not answering."
+                nessa @talking2mouth "He's not answering my calls. Nessa--the model--is banging down his door, and he's not answering."
 
             else:
-                nessa @talkingmouth "He came back, but we haven't even talked. ...Maybe I should go find him. But he {i}is{/i} the guy, so..."
+                nessa @talking2mouth "He came back, but we haven't even talked. ...Maybe I should go find him. But he {i}is{/i} the guy, so..."
 
                 rosa @surprisedmouth "...He's probably still nervous about going out in public, you know? He's probably scared of how you'll react to {i}him.{/i} Maybe you should go try to find him."
 
-                nessa @closedbrow talkingmouth "Maybe."
+                nessa @closedbrow talking2mouth "Maybe."
 
                 pause 1.0
             
         else:
-            nessa @talkingmouth "Nessa--the model--asked him on a date, and he was, like, 'no thanks.'"
+            nessa @talking2mouth "Nessa--the model--asked him on a date, and he was, like, 'no thanks.'"
 
-        nessa @sadbrow talkingmouth "...Ugh, look at me. Here I am, acting like it was ever anything serious."
+        nessa @sadbrow talking2mouth "...Ugh, look at me. Here I am, acting like it was ever anything serious."
 
         pause 1.0
 
-        nessa @talkingmouth "What do you think about this whole situation?"
+        nessa @talking2mouth "What do you think about this whole situation?"
 
-        rosa @sadmouth "I... don't know. This whole thing about mind control sounds really far-fetched, like something a D-list director would come up with."
+        rosa @talking2mouth "I... don't know. This whole thing about mind control sounds really far-fetched, like something a D-list director would come up with."
 
-        rosa @sadbrow sadmouth "...But I don't think Cheren was lying. I know an actor when I see one, and I didn't see anyone lying up on that stage."
+        rosa @sadbrow talking2mouth "...But I don't think Cheren was lying. I know an actor when I see one, and I didn't see anyone lying up on that stage."
 
         pause 1.0
 
         rosa @angry "Those purple students were full of it, though! They were lying out their noses the entire time!"
 
-        nessa @closedbrow talkingmouth "...I'll take your word for it."
+        nessa @closedbrow talking2mouth "...I'll take your word for it."
 
         pause 1.0
 
         rosa @sadbrow surprisedmouth "What are you going to do?"
 
-        nessa @surprisedbrow talkingmouth "Me?"
-        nessa @closedbrow talkingmouth "Lay back and wait for this all to blow over, mostly."
+        nessa @surprisedbrow talking2mouth "Me?"
+        nessa @closedbrow talking2mouth "Lay back and wait for this all to blow over, mostly."
 
-        rosa @sadmouth "...Don't you think we should do something?"
+        rosa @talking2mouth "...Don't you think we should do something?"
         
-        nessa @surprisedbrow talkingmouth "What do you mean?"
+        nessa @surprisedbrow talking2mouth "What do you mean?"
 
         rosa @talkingmouth "Well... we're kinda famous, right? Maybe we can do something about this situation. Protect some people who need it. Or... give a speech or something..."
 
-        nessa @talkingmouth "...Would your contracts allow you to?"
+        nessa @talking2mouth "...Would your contracts allow you to?"
 
         pause 1.0
 
-        rosa @sadmouth "No..."
+        rosa @talking2mouth "No..."
 
         pause 2.0
 
-        nessa @talkingmouth "Hey. Your net worth is about thirty times mine, so I'm probably not in any position to be giving advice, but..."
-        nessa @talkingmouth "You can just ignore those."
+        nessa @talking2mouth "Hey. Your net worth is about thirty times mine, so I'm probably not in any position to be giving advice, but..."
+        nessa @talking2mouth "You can just ignore those."
 
         rosa @surprised "What?"
 
-        nessa @talkingmouth "Yeah, those contracts. I had to sign a bunch, too."
-        nessa @closedbrow talkingmouth "No going to clubs, no posting swimsuit pics online, no drinking, no stuff like that."
-        nessa @closedbrow talkingmouth "But I never paid attention to any of them."
+        nessa @talking2mouth "Yeah, those contracts. I had to sign a bunch, too."
+        nessa @closedbrow talking2mouth "No going to clubs, no posting swimsuit pics online, no drinking, no stuff like that."
+        nessa @closedbrow talking2mouth "But I never paid attention to any of them."
 
         rosa @surprised "Really?"
 
-        nessa @talkingmouth "Yeah."
+        nessa @talking2mouth "Yeah."
         
         pause 1.0
 
-        nessa @talkingmouth "They set up all these 'rules.'"
+        nessa @talking2mouth "They set up all these 'rules.'"
         nessa @angry "They try to control you--act like they own you. That's what they want you to think. Because what they're terrified of you figuring out is that {i}you{/i} own {i}them{/i}."
 
         pause 1.0
 
-        nessa @closedbrow talkingmouth "Girl, you can just ignore those rules. What are they going to do? Fire you? You earn them billions a year."
+        nessa @closedbrow talking2mouth "Girl, you can just ignore those rules. What are they going to do? Fire you? You earn them billions a year."
 
         rosa @sadbrow talkingmouth "...Couldn't they sue me?"
 
-        nessa @talkingmouth "Probably. If they did sue you, would you ever work for them again?"
+        nessa @talking2mouth "Probably. If they did sue you, would you ever work for them again?"
 
         rosa @angry "No way!"
 
         show rosa surprisedbrow frownmouth with dis
 
-        nessa @closedbrow talkingmouth "Then they can't sue you."
+        nessa @closedbrow talking2mouth "Then they can't sue you."
 
         rosa -surprisedbrow @talkingmouth "Oh. That's...{w=0.5} okay."
 
@@ -5001,26 +5001,26 @@ elif (_return == "Recreation Center"):
 
         rosa @sweat sadbrow happymouth "I have to be honest--the thought of that is super-scary."
 
-        nessa @talkingmouth "Hey."
+        nessa @talking2mouth "Hey."
 
         pause 1.0
 
-        nessa @happybrow talkingmouth "Let's do it together."
+        nessa @happybrow talking2mouth "Let's do it together."
 
         rosa @surprised "Wh-what?"
 
         show nessa:
             ease 0.5 xpos 0.5
 
-        nessa @talkingmouth "Let's do something you're not allowed to. {i}Right now.{/i}"
+        nessa @talking2mouth "Let's do something you're not allowed to. {i}Right now.{/i}"
         
         rosa @surprised "Wh... I... are you coming onto me?"
 
         show nessa:
             ease 0.5 xpos 0.66
 
-        nessa @closedbrow talkingmouth "No. But, god, wouldn't {i}that{/i} be a headline? 'Movie Star Rosa and Model Nessa found making out in a college pool!'"
-        nessa @closedbrow talkingmouth "If we sold pictures of that, we could both retire early."
+        nessa @closedbrow talking2mouth "No. But, god, wouldn't {i}that{/i} be a headline? 'Movie Star Rosa and Model Nessa found making out in a college pool!'"
+        nessa @closedbrow talking2mouth "If we sold pictures of that, we could both retire early."
 
         rosa -frownmouth @happy "...Hee. Hee hee hah hah hah!"
 
@@ -5028,39 +5028,39 @@ elif (_return == "Recreation Center"):
 
         rosa @talkingmouth "Sonia's told me about you, Nessa. But she told me you were really stoic and serious."
 
-        nessa @closedbrow talkingmouth "'Stoic and serious?' Those were her words?"
+        nessa @closedbrow talking2mouth "'Stoic and serious?' Those were her words?"
 
         rosa @talkingmouth "Yup."
 
-        nessa @closedbrow talkingmouth "That minx. I'm {i}fun{/i}. I'm {i}spontaneous{/i}."
+        nessa @closedbrow talking2mouth "That minx. I'm {i}fun{/i}. I'm {i}spontaneous{/i}."
 
         pause 1.0
 
-        nessa @sadbrow talkingmouth "...No, she's right. I wouldn't normally do something like this."
+        nessa @sadbrow talking2mouth "...No, she's right. I wouldn't normally do something like this."
 
         pause 1.0
 
-        nessa @talkingmouth "I don't like seeing people trapped. And you seemed... trapped. I don't know if my key will work for you, but... hey, at least you know it exists now."
+        nessa @talking2mouth "I don't like seeing people trapped. And you seemed... trapped. I don't know if my key will work for you, but... hey, at least you know it exists now."
 
         rosa @happy "Thanks, Nessa."
 
-        nessa @talkingmouth "...You can call me Ness."
+        nessa @talking2mouth "...You can call me Ness."
 
         rosa @happy "Alright, Ness."
 
         pause 1.0
 
-        nessa @talkingmouth "I normally just... lay back and let things happen. But, about the school... I think that might {i}actually{/i} be the right call here."
+        nessa @talking2mouth "I normally just... lay back and let things happen. But, about the school... I think that might {i}actually{/i} be the right call here."
 
-        rosa @surprisedbrow sadmouth "Really?"
+        rosa @surprisedbrow talking2mouth "Really?"
 
-        nessa @closedbrow talkingmouth "Yeah. If we made any sort of 'public statement' or whatever... it might just make things worse."
+        nessa @closedbrow talking2mouth "Yeah. If we made any sort of 'public statement' or whatever... it might just make things worse."
 
         rosa @talkingmouth "I get you. If we said that [first_name] didn't have mind-control powers, or Sabrina didn't mean to read our minds, then..."
-        rosa @sweat sadmouth "My entire job is lying to people. So I guess people might not believe me..."
+        rosa @sweat talking2mouth "My entire job is lying to people. So I guess people might not believe me..."
         rosa @angrybrow talkingmouth "Though I'm {i}really{/i} good at lying! But... I guess that would be telling the truth."
 
-        nessa @talkingmouth "You get it. So... we'll just sit back and wait for this to blow over."
+        nessa @talking2mouth "You get it. So... we'll just sit back and wait for this to blow over."
 
         rosa @angrybrow happymouth "...I don't think so."
 
@@ -5070,18 +5070,18 @@ elif (_return == "Recreation Center"):
 
         nessa @surprised "Run that by me, slowly?"
 
-        rosa @sadmouth "She's famous, now. And can hear everyone's thoughts about her, all the time. But she's alone. Doesn't that sound familiar?"
+        rosa @talking2mouth "She's famous, now. And can hear everyone's thoughts about her, all the time. But she's alone. Doesn't that sound familiar?"
 
-        nessa @sadbrow talkingmouth "Yeah... I see what you mean."
+        nessa @sadbrow talking2mouth "Yeah... I see what you mean."
 
         rosa @happy "We know how to handle that. So we can help her."
         rosa @sweat happy "Besides... I don't know about you, but all my secrets are already public, and on the internet, so I'm not sure what Sabrina could accidentally read that millions of other people don't already know."
 
-        nessa @closedbrow talkingmouth "Same."
+        nessa @closedbrow talking2mouth "Same."
 
         pause 1.0
 
-        nessa @talkingmouth "Is it cool if I bring Sonia along? She still seems scared of trying to... 'reconnect'. I'm hoping that if I give her something to do, she'll be more comfortable."
+        nessa @talking2mouth "Is it cool if I bring Sonia along? She still seems scared of trying to... 'reconnect'. I'm hoping that if I give her something to do, she'll be more comfortable."
 
         rosa @happy "Of course! The more the merrier."
 
@@ -5105,11 +5105,11 @@ elif (_return == "Recreation Center"):
 
         rosa @happy "That's alright. Let's go to the forest! It's a Bug-type, so I bet it must be there!"
 
-        nessa @closedbrow talkingmouth "I... alright."
+        nessa @closedbrow talking2mouth "I... alright."
 
         pause 1.0
 
-        nessa @talkingmouth "Alright."
+        nessa @talking2mouth "Alright."
 
         hide nessa
         hide rosa
@@ -5575,12 +5575,12 @@ falkner @talkingmouth "What {i}is{/i} the situation at hand, [first_name]?"
 
 red @sadbrow frownmouth "[ellipses]"
 
-ethan @talkingmouth "Uh, we're looking for a new dorm. Our roomies are dorming with other people, since we can dorm with the opposite sex now, so we're looking for a new room."
+ethan @talkingmouth "Uh, we're looking for a new dorm. Our roomies are dorming with other people, since we can dorm with anyone now, so we're looking for a new room."
 
 brawly @happy "Oh, just that? Phew! I thought you wanted to yell at us, like everyone else we've talked to today!"
 
 falkner @closedbrow talking2mouth "Yes, that's an easy fix."
-falkner @talkingmouth "Please just sign this paperwork, and..."
+falkner @talkingmouth "Please just sign this paperwork, and[ellipses]"
 
 scene blank2 with splitfade
 
@@ -5588,14 +5588,14 @@ pause 1.0
 
 narrator "You wordlessly sign the paperwork and submit a new room request. Falkner thumbs through a file, surveying it intensely."
 
-falkner @happymouth "So... there are two of you, so a room that only has three people in it would suit you most, I think. How about... Dorm 25? It's in Pledge Hall."
+falkner @happymouth "So[ellipses] there are two of you, so a room that only has three people in it would suit you most, I think. How about[ellipses] Dorm 25? It's in Pledge Hall. You should be familiar."
 falkner @closedbrow happymouth "This room was newly-formed, as well, so you won't be going into a room where everyone else has been dorming together for a month."
 
 ethan @talking2mouth "Yeah, sure, sounds great, but why are you smirking?" 
 
 falkner @surprised "Me? Smirk? Perish the thought."
 
-ethan @playfuleyes angryeyebrows frownmouth "Hmm..."
+ethan @playfuleyes angryeyebrows frownmouth "Hmm[ellipses]"
 
 pause 1.0
 

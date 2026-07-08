@@ -39,18 +39,18 @@ else:
 
 rosa @talkingmouth "Okay, are we all ready?"
 
-nessa @talkingmouth "Not so fast. Sonia, what did your survey say?"
+nessa @talking2mouth "Not so fast. Sonia, what did your survey say?"
 
 sonia @talking2mouth "Looks like this part of the forest is called the 'Windswept Woods.' The especially tall trees cause wicked air currents up top. Flying-types make this place their home, in addition to the expected Grass-types."
 
 rosa @surprised "Huh?"
 
-nessa @talkingmouth "We staked the place out to figure out what kind of wild Pokémon we might find. Honestly, Rosa, you could stand to think ahead a bit."
-nessa @closedbrow talkingmouth "There's no stunt double to take your place. No reshoots on this stage, if anything goes wrong."
+nessa @talking2mouth "We staked the place out to figure out what kind of wild Pokémon we might find. Honestly, Rosa, you could stand to think ahead a bit."
+nessa @closedbrow talking2mouth "There's no stunt double to take your place. No reshoots on this stage, if anything goes wrong."
 
-rosa @sadbrow sweat sadmouth "I'm... yeah. You're right."
+rosa @sadbrow sweat talking2mouth "I'm... yeah. You're right."
 
-nessa @closedbrow talkingmouth "You're doing the right thing. Let's just do it smartly."
+nessa @closedbrow talking2mouth "You're doing the right thing. Let's just do it smartly."
 
 if (IsPresent("Raihan")):
     raihan @happy "We don't need to do this smartly, girls. You've got The Great Raihan here. My Rock-types will make these Flying-types embarrassed to have wings!"
@@ -62,7 +62,7 @@ menu:
     "I'm ready.":
         rosa @talkingmouth "Allllright! We're {i}totally{/i} going to write a story here! A {i}real{/i} adventure!"
 
-        nessa @talkingmouth "...This'd all sort itself out in the end, but... why wait?"
+        nessa @talking2mouth "...This'd all sort itself out in the end, but... why wait?"
 
         sonia @talking2mouth "[first_name]. Reckon you could use [pika_name] in battle a good bit? I'd like to get some more data on him."
 
@@ -89,22 +89,15 @@ menu:
             jump aftersetup
 
 python:
+    showscrimblo = True#Rosa will unleash her full buggy power here
     dungeon = Dungeon(name = "Windswept Woods",#a string
         endname = "Towering Arborage",#a string
         backgrounds = {"Night" : "midnightforest", "Default": "eveningforest"},#a dictionary of timeofdays to check against. If the current timeofday is not listed, then the "Default" value is picked.
         music = ("audio/music/duskforest.ogg"),#a tuple that contains one or two elements. If it contains two, the first is nolooped, and the second is looped. if it contains one, then it's looped
-        encounterpool = {# a dictionary encounterpool, in the same format as the ones for normal wildareas
-            pokedexlookupname("Swablu", DexMacros.Id) : 10, 
-            pokedexlookupname("Rowlet", DexMacros.Id) : 1, 
-            pokedexlookupname("Hoothoot", DexMacros.Id) : 5,
-            pokedexlookupname("Hoppip", DexMacros.Id) : 7,
-            pokedexlookupname("Paras", DexMacros.Id) : 10,
-            pokedexlookupname("Foongus", DexMacros.Id): 7
-        },
+        encounterpool = wildpools["windswept woods"],# a dictionary encounterpool, in the same format as the ones for normal wildareas
         difficulty = 18,#an int, 1-100, indicating the dungeon's difficulty. Should be roughly equivalent to AimLevel()
         floors = 5,#the number of battles you need to win to go through the level
         floorlength = 5,#the number of turns a battle will last, at max, before you find the stairs
-        levelrange = range(13, 17),#a level range, set up the same way as normal wildarea level ranges
         startingmysteriosity=10,#the base chance that mysteriosity happenings will occur
         startingferocity=20,#the base chance that strong Pokémon will appear
         startinggenerosity=20,#the base chance that good things will happen
@@ -136,11 +129,6 @@ init python:
     def WindsweptWoodsCutscenes(parameters):
         currentscene = None
         
-        tiafainted = False
-        for mon in FaintedMons:
-            if (mon.GetId() == pokedexlookupname("Latias", DexMacros.Id)):
-                tiafainted = True
-
         if (parameters == "DungeonTurn5"):
             currentscene = "WindsweptWoodsBossIntro"
         elif (parameters == "DungeonBattle5"):
@@ -212,14 +200,14 @@ label WindsweptWoodsBossIntro:
 
     sonia @sadbrow talkingmouth "...Brr. It's chilly."
 
-    nessa @talkingmouth "Are you two seriously whining about this? It was just a short hike."
+    nessa @talking2mouth "Are you two seriously whining about this? It was just a short hike."
 
     if (IsPresent("Raihan")):
         raihan @happy "Yeah, I'm with Ness! That was nothing."
 
     rosa @angrybrow talking2mouth "Speak for yourself! I'm used to having my air-conditioned trailer whenever I'm within fifty feet of a tree!"
 
-    nessa @closedbrow talkingmouth "What a surprise. You're more of a princess than I thought."
+    nessa @closedbrow talking2mouth "What a surprise. You're more of a princess than I thought."
 
     rosa @surprised "P-Princess?! I-- {i}why, I never!{/i}"
 
@@ -247,7 +235,7 @@ label WindsweptWoodsBossIntro:
     queue music "audio/music/lavenderintense_start.ogg" noloop
     queue music "audio/music/lavenderintense_loop.ogg"
 
-    nessa @talkingmouth "There."
+    nessa @talking2mouth "There."
 
     hide sonia
     hide rosa
@@ -310,12 +298,12 @@ label WindsweptWoodsBossIntro:
 
     rosa @angrybrow talking2mouth "Now's not the time for jokes! We have to save her!"
 
-    nessa @talkingmouth "Granted, but from what? She looks fine... if a bit exposed."
+    nessa @talking2mouth "Granted, but from what? She looks fine... if a bit exposed."
 
     if (not HasEvent("Nessa", "OutfitSwap")):
         sonia @talkingmouth "{i}You're{/i} saying that, Ness?"
 
-        nessa @closedbrow talkingmouth "It's {i}my{/i} choice. I just want to make sure that that was hers."
+        nessa @closedbrow talking2mouth "It's {i}my{/i} choice. I just want to make sure that that was hers."
 
     if (timeOfDay == "Night"):
         red night @angrybrow talking2mouth "...Sabrina?"
@@ -482,7 +470,7 @@ else:
 
 pause 1.0
 
-rosa @sadmouth "...Sabrina?"
+rosa @talking2mouth "...Sabrina?"
 
 if (IsPresent("Raihan")):
     if (timeOfDay == "Evening"):
@@ -621,7 +609,7 @@ rosa @talking2mouth "Sabrina? You're safe, now. We came here to get you back."
 sabrina @sadbrow talking2mouth "Get... get me back? What do you...? No, I came out here on purpose..."
 sabrina @sadbrow talking2mouth "This... this was all part of the plan, but then... headaches, and... I was attacked. But... the plan..."
 
-nessa @talkingmouth "Was being out here for almost a week part of your plan?"
+nessa @talking2mouth "Was being out here for almost a week part of your plan?"
 
 sonia @confusedbrow talkingmouth "What have you been {i}eating?{/i}"
 
@@ -634,9 +622,9 @@ if (IsPresent("Raihan")):
 
     $ ValueChange("Sabrina", 10, 2.0/6.0)
 
-    sabrina @talking2mouth "I... follow your RotoPhoto stories..."
+    sabrina @talking2mouth "I... follow your RotoPhotos stories..."
 
-    nessa @talkingmouth "Sabrina. Don't blow up his head any more than it already is, okay? I need you to think back. What do you remember?"
+    nessa @talking2mouth "Sabrina. Don't blow up his head any more than it already is, okay? I need you to think back. What do you remember?"
 
 pause 2.0
 
@@ -647,10 +635,10 @@ if (GetRelationshipRank("Sabrina") > 0):
     sabrina @surprised "Wait... [first_name]?"
 
     if (timeOfDay == "Night"):
-        red @happy "'Bout time you noticed. Just cause I'm not a supermodel doesn't mean I'm not here."
+        red night @happy "'Bout time you noticed. Just cause I'm not a supermodel doesn't mean I'm not here."
 
     else:
-        red night @happy "'Bout time you noticed. Just cause I'm not a supermodel doesn't mean I'm not here."
+        red @happy "'Bout time you noticed. Just cause I'm not a supermodel doesn't mean I'm not here."
 
     sabrina @talking2mouth "I... I thought you were leaving... I read--I heard--"
 
@@ -734,13 +722,13 @@ rosa @happy "Where did you get that {i}adorable{/i} tank top?"
 
 sabrina surprised "Huh?"
 
-nessa @talkingmouth "Seriously, a crop/tank-top with low-rise jeans? That's fashion, if I've ever seen it. You're more daring than I thought."
+nessa @talking2mouth "Seriously, a crop/tank-top with low-rise jeans? That's fashion, if I've ever seen it. You're more daring than I thought."
 
 sabrina sadbrow surprisedmouth "I... it's just... a grocery store..."
 
 sonia @confused "Hold on, you're telling me you picked out {i}that{/i} cute outfit at a grocery store? What could you do in an actual clothes store?!"
 
-nessa @closedbrow talkingmouth "I don't know, but I want to find out."
+nessa @closedbrow talking2mouth "I don't know, but I want to find out."
 
 rosa @happy "Sounds like a trip to Forever 151 is in order!"
 rosa @sadbrow talkingmouth "I... can't buy anything, but I can lend an eye, and--"
@@ -793,7 +781,7 @@ sabrina @sadbrow talking2mouth "...Yes."
 
 rosa @happy "And so does everyone else. It's literally on every single one of my wiki pages."
 
-nessa @talkingmouth "I've made a couple of mistakes. Most of them involving Raihan. And he told {i}everyone.{/i} He didn't even have Esper powers as an excuse."
+nessa @talking2mouth "I've made a couple of mistakes. Most of them involving Raihan. And he told {i}everyone.{/i} He didn't even have Esper powers as an excuse."
 
 if (IsPresent("Raihan")):
     raihan @sad "Guilty as charged. Not proud of it, though. I just have trouble keeping my mouth shut when something great happens."
@@ -802,7 +790,7 @@ sonia @talkingmouth "I'm not quite sure I have anything like a 'secret,' but... 
 
 sabrina @talking2mouth "I... maybe, then, but..."
 
-nessa @talkingmouth "Come on. You don't need to make any decisions right now. The thing we need to do now is get you back to the school."
+nessa @talking2mouth "Come on. You don't need to make any decisions right now. The thing we need to do now is get you back to the school."
 
 if (IsAbsent("Raihan")):
     if (timeOfDay == "Evening"):
@@ -835,7 +823,7 @@ if (IsAbsent("Raihan")):
 
     red @talkingmouth "Oh, so just because I'm the only guy here, I'm the one who has to carry her."
 
-    nessa @talkingmouth "Go on. Be a gentleman."
+    nessa @talking2mouth "Go on. Be a gentleman."
 
 else:
     sonia @talking2mouth "Rai, could you give her a hand?"
@@ -846,7 +834,7 @@ else:
     else:
         raihan phone @talking2mouth "Sorry. Gotta keep my hands free for this victory selfie I'm about to snap. [last_name], think you've got a hand free for a pretty girl?"
 
-        nessa @closedbrow talking2mouth "{size=30}Ugh. The only thing worse than Raihan's flirting is when he tries to wingman for you.{/size}"
+        nessa @closedbrow talkingmouth "{size=30}Ugh. The only thing worse than Raihan's flirting is when he tries to wingman for you.{/size}"
 
         show raihan -phone with dis
 
@@ -991,7 +979,7 @@ sabrina @sad "I... I don't want to seem ungrateful."
 
 sonia -sad @talking2mouth "You've been through a lot. Anyone would get it."
 
-nessa @talkingmouth "I'm sure I'd feel the same."
+nessa @talking2mouth "I'm sure I'd feel the same."
 
 if (IsPresent("Raihan")):
     raihan @talkingmouth "I just joined up to help a friend."
@@ -1022,7 +1010,7 @@ if (IsAbsent("Raihan")):
 else:
     $ ValueChange("Rosa", 5, 1.0/6.0)
 
-nessa -sad @talkingmouth "...I'm not going to say you were right, Rosa, but maybe doing the proactive thing was the right call. {i}This{/i} time."
+nessa -sad @talking2mouth "...I'm not going to say you were right, Rosa, but maybe doing the proactive thing was the right call. {i}This{/i} time."
 
 if (IsAbsent("Raihan")):
     $ ValueChange("Nessa", 5, 0.85)
@@ -1039,7 +1027,7 @@ sonia -sad @happy "The important thing is that we succeeded. Worse for wear or n
 
 sonia @sadbrow talkingmouth "Kinda reminds you of the Galarian Stars, Ness?"
 
-nessa @closedbrow talkingmouth "Hm."
+nessa @closedbrow talking2mouth "Hm."
 
 if (IsPresent("Raihan")):
     $ ValueChange("Raihan", 5, 5.0/6.0)
@@ -1048,7 +1036,7 @@ if (IsPresent("Raihan")):
     raihan @surprised "But could someone explain what this was all about? Who are you, Sabrina? Why did you run out here? What did you mean, exposing secrets?"
     raihan @closedbrow sadmouth "I kinda got the idea that you're a Mental, but--"
 
-    nessa @talkingmouth "Uh, ixnay on the ental-May. They call them 'Espers' in this region."
+    nessa @talking2mouth "Uh, ixnay on the ental-May. They call them 'Espers' in this region."
 
     raihan @talking2mouth "Okay. ...Context?"
 
@@ -1069,6 +1057,7 @@ if (IsPresent("Raihan")):
 $ rescuedsabrina = True
 $ lastsaved = "Sabrina"
 $ _rollback = True
+$ showscrimblo = False
 $ renpy.block_rollback()
 
 jump infirmary

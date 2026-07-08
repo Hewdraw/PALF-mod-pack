@@ -1,11 +1,6 @@
 init python:
-    def GetCC(name):
-        if (name == first_name):
-            return red
-        for char in charlist:
-            if (char.name == name):
-                return char
-        return name
+    def donothing(*args, **kwargs):
+        pass
 
     class TempCharacter():
         def __init__(self, name, addquotes=True):
@@ -40,7 +35,7 @@ init python:
                 dynamic = False
                 formatcolor = self.color
                 
-                if ("persondex" in globals() and formatname in persondex.keys() and not persondex[formatname]["Named"] and not self.image == "latias"):
+                if ("persondex" in globals() and formatname in persondex.keys() and not IsNamed(formatname) and not self.image == "latias"):
                     formatname = (lambda: "???")
                 elif (formatname == "Red"):
                     formatname = (lambda: first_name)
@@ -64,7 +59,9 @@ init python:
                     formatcolor = GetColor(sidemonnum)
                     formatname = (lambda: (pokedexlookup(sidemonnum, DexMacros.Name) if sidemonoverride == None else sidemonoverride))
                 elif (formatname == "Sensei Marshal"):
-                    if (not HasEvent("Sensei Marshal", "EndedRename")):
+                    if (playercharacter != None):
+                        formatname = (lambda: "Marshal")
+                    elif (not HasEvent("Sensei Marshal", "EndedRename")):
                         if (HasEvent("Sensei Marshal", "Renamed2")):
                             formatname = (lambda: "{size=8}Sensei Jugemu Jugemu Goko-no Surikire Suigyomatsu Unraimatsu Furaimatsu Kuunerutokoro-ni Sumutokoro Yaburakoji-no Burakoji Paipopaipo Paipo-no Shuringan Shuringan-no Gurindai Gurindai-no Ponpokopii-no Ponpokona-no Chokyumei-no Chosuke{/size}")
                         elif (HasEvent("Sensei Marshal", "Renamed1")):
@@ -121,7 +118,7 @@ init python:
                 #if formatcallback == callbackcontinue and beepboop: # AND Var for beep boops are ON.
                 #    formatcallback=functools.partial(boopy_voice, boopfile="Audio/pmd_speak.ogg")
                 #elif not beepboop:
-                formatcallback=callbackcontinue
+                formatcallback=smalltalkcallback
 
                 # Except the narrator while in battle, they need silencing.
                 #if formatname == "" and inbattle: 
@@ -155,106 +152,125 @@ init python:
                     else: # If formatcallback != callbackcontinue, then we know beepboops are activated.
                         formatcallback=functools.partial(formatcallback, no_click=True)
                     formatwhat = "\"{}".format(formatwhat)#remove the ending quote
-                #elif ("{glitch=" in what):
-                    
                 elif (autoquote):
                     formatwhat = "\"{}\"".format(formatwhat)
+                #elif ("{glitch=" in what):
 
                 formatwhat.replace("first_name", first_name)
 
                 if (not profanity):
-                    profanitylist = ["fuck", "shit", "Crap", " crap", "...crap", "...Crap", "damn", "dick", " ass ", "asshole", "goddamn", "bullshit", "horseshit", "bullcrap", "dickhead", "dickheads", "bitch", "bastard", "kickASS", "ASSBAGS", "jackass", "douchebag", "pussy", "SHIT", "shitty", "shitting", "GODDAMN", "fucking", "fucker", "piss", "pissed", "FUCKING", "motherfucker", "Bullshit.", "FUCK", "BULLSHIT", "GODDAMN", "SHITTING"] #The Lt. Surge update
-                    for word in profanitylist:
-                        replacement = "*" * len(word)
-                        formatwhat = formatwhat.replace(word, replacement).replace(word.title(), replacement).replace(word.capitalize(), replacement).replace(word.upper(), replacement).replace(word + "s", replacement + "s").replace(word + "es", replacement + "es")
+                    profanitylist = {
+                        "fuck", "shit", "crap", "dick", "ass", "asshole", "goddamn", "bullshit", "horseshit", "bullcrap",
+                        "dickhead", "dickheads", "bitch", "bastard", "jackass", "douchebag", "pussy", "shitty", "shitting",
+                        "fucking", "fucker", "piss", "pissed", "motherfucker", "damn"
+                    }
+
+                    # Regex: optional leading punct, word, optional trailing punct
+                    pattern = re.compile(
+                        r'(?P<pre>\W*)(?P<word>\b(?:' + '|'.join(re.escape(word) for word in profanitylist) + r')\b)(?P<post>\W*)',
+                        re.IGNORECASE
+                    )
+
+                    def replace(match):
+                        word = match.group("word")
+                        return f"{match.group('pre')}{'*' * len(word)}{match.group('post')}"
+                    
+                    formatwhat = pattern.sub(replace, formatwhat)
 
                 return Character(name=formatname, color=formatcolor, image=self.image, ctc=(None if InContest else "ctc_blink"), ctc_position="fixed", callback=formatcallback, dynamic=dynamic)(formatwhat, **kwargs)
 
 define defaultpersondex = {
-    "Professor Oak" : {"Region": "Kanto", "Named" : True, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Blue" : {"Region": "Kanto", "Named" : True, "Value" : 0, "Contact": True, "Sex": Genders.Male, "Relationship": "Rival", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Distant},
-    "Silver" : {"Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Moody},
-    "Brawly" : {"Region": "Hoenn", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Underclassman", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Roxanne" : {"Region": "Hoenn", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Underclassman", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Falkner" : {"Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Underclassman", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Leaf" : {"Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Devoted},
-    "Ethan" : {"Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Distant},
-    "Calem" : {"Region": "Kalos", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Friendly},
-    "Hilbert" : {"Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Dormmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Moody},
-    "Brendan" : {"Region": "Hoenn", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Friendly},
-    "May" : {"Region": "Hoenn", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral},
-    "Flannery" : {"Region": "Hoenn", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Moody},
-    "Whitney" : {"Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Friendly},
-    "Sabrina" : {"Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Distant},
-    "Serena" : {"Region": "Kalos", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral},
-    "Cheren" : {"Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Political Rival", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Distant},
-    "Misty" : {"Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Moody},
-    "Bianca" : {"Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Friendly},
-    "Dawn" : {"Region": "Sinnoh", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral},
-    "Nate" : {"Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Friendly},
-    "Rosa" : {"Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral},
-    "Bea" : {"Region": "Galar", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Training Partner", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral},
-    "Nessa" : {"Region": "Galar", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Date", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral},
-    "Hilda" : {"Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Moody},
-    "Gardenia" : {"Region": "Sinnoh", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Friendly},
-    "Skyla" : {"Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Friendly},
-    "Brock" : {"Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Erika" : {"Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Distant},
-    "Janine" : {"Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Tool", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Tia" : {"Region": "Hoenn", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Protector", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Devoted},
-    "Sonia" : {"Region": "Galar", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral},
-    "Jasmine" : {"Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Political Rival", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Friendly},
-    "Grusha" : {"Region": "Paldea", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Political Rival", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Moody},
-    "Professor Cherry" : {"Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Distant},
-    "Instructor Lenora" : {"Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Instructor Blaine" : {"Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Instructor Wallace" : {"Region": "Hoenn", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Instructor Ramos" : {"Region": "Kalos", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Lieutenant Surge" : {"Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Instructor Melony" : {"Region": "Galar", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Sensei Marshal" : {"Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Grasshopper", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Instructor Koga" : {"Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Instructor Bertha" : {"Region": "Sinnoh", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Instructor Will" : {"Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Burgh" : {"Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Instructor Olivia" : {"Region": "Alola", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Instructrice Fantina" : {"Region": "Sinnoh", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Instructor Karen" : {"Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Instructor Clair" : {"Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Instructor Byron" : {"Region": "Sinnoh", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Instructor Valerie" : {"Region": "Kalos", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Instructor Winona" : {"Region": "Hoenn", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Bruno" : {"Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Alder" : {"Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Lance" : {"Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Iris" : {"Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Mentor", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Dean Drayden" : {"Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Mentor", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Yellow" : {"Region": "Kanto", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Dormmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Lisia" : {"Region": "Hoenn", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Mentee", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Wally" : {"Region": "Hoenn", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral},
-    "Nurse Miriam" : {"Region": "Paldea", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Patient", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Raihan" : {"Region": "Galar", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "Acquaintance", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral},
-    "Eri" : {"Region": "Paldea", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Mentee", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Anabel" : {"Region": "Hoenn", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Liability", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Mallow" : {"Region": "Alola", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Allister" : {"Region": "Galar", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "None", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Lawrence" : {"Region": "Johto", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "Benefactee", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special},
-    "Klara" : {"Region": "Galar", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Crush", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Devoted },
-    "Melody" : {"Region": "Johto", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special },
-    "Kate" : {"Region": "Almia", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Citizen", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special },
-    "Summer" : {"Region": "Oblivia", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Citizen", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special },
-    "Shauna" : {"Region": "Kalos", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special },
-    "Professor Rowan" : {"Region": "Sinnoh", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special },
-    "Zinnia" : {"Region": "Hoenn", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "None", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special },
-    "Iono" : {"Region": "Paldea", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Collaborator", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Distant },
-    "Duplica" : {"Region": "Kanto", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Faker", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special },
-    "Wes" : {"Region": "Orre", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "Hero", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special },
-    "Cynthia" : {"Region": "Sinnoh", "Named" : True, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Unmet", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special },
-    "Shauntal" : {"Region": "Unova", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Acquaintance", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special },
-    "Morty" : {"Region": "Johto", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special },
-    "Bugsy" : {"Region": "Johto", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Unknown, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special },
-    "Roark" : {"Region": "Sinnoh", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "Acquaintance", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special }
+    "Professor Oak" : {"Role" : "Staff", "Region": "Kanto", "Named" : True, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#000000", "Image": "oak", "Direction": "Front"},
+    "Blue" : {"Role" : "Student", "Region": "Kanto", "Named" : True, "Value" : 0, "Contact": True, "Sex": Genders.Male, "Relationship": "Rival", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Distant, "Color": "#3110dd", "Image": "blue", "Direction": "Right"},
+    "Silver" : {"Role" : "Student", "Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Moody, "Color": "#686080", "Image": "silver", "Direction": "Right"},
+    "Brawly" : {"Role" : "Senior Student", "Region": "Hoenn", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Underclassman", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#467595", "Image": "brawly", "Direction": "Right"},
+    "Roxanne" : {"Role" : "Senior Student", "Region": "Hoenn", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Underclassman", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#a2254b", "Image": "roxanne", "Direction": "Left"},
+    "Falkner" : {"Role" : "Senior Student", "Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Underclassman", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#1d8fc5", "Image": "falkner", "Direction": "Left"},
+    "Leaf" : {"Role" : "Student", "Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Devoted, "Color": "#00b23f", "Image": "leaf", "Direction": "Left"},
+    "Ethan" : {"Role" : "Student", "Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Distant, "Color": "#c1861e", "Image": "ethan", "Direction": "Front"},
+    "Calem" : {"Role" : "Student", "Region": "Kalos", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Friendly, "Color": "#4d7ac4", "Image": "calem", "Direction": "Right"},
+    "Hilbert" : {"Role" : "Student", "Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Dormmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Moody, "Color": "#353535", "Image": "hilbert", "Direction": "Left"},
+    "Brendan" : {"Role" : "Student", "Region": "Hoenn", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Friendly, "Color": "#db4039", "Image": "brendan", "Direction": "Left"},
+    "May" : {"Role" : "Student", "Region": "Hoenn", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral, "Color": "#493bff", "Image": "may", "Direction": "Front"},
+    "Flannery" : {"Role" : "Student", "Region": "Hoenn", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Moody, "Color": "#d62e0d", "Image": "flannery", "Direction": "Right"},
+    "Whitney" : {"Role" : "Student", "Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Friendly, "Color": "#e47282", "Image": "whitney", "Direction": "Front"},
+    "Sabrina" : {"Role" : "Student", "Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Distant, "Color": "#600080", "Image": "sabrina", "Direction": "Left"},
+    "Serena" : {"Role" : "Student", "Region": "Kalos", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral, "Color": "#cb6e8b", "Image": "serena", "Direction": "Right"},
+    "Cheren" : {"Role" : "Student", "Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Political Rival", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Distant, "Color": "#1f67df", "Image": "cheren", "Direction": "Right"},
+    "Misty" : {"Role" : "Student", "Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Moody, "Color": "#eb6400", "Image": "misty", "Direction": "Left"},
+    "Bianca" : {"Role" : "Student", "Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Friendly, "Color": "#55b13c", "Image": "bianca", "Direction": "Front"},
+    "Dawn" : {"Role" : "Student", "Region": "Sinnoh", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral, "Color": "#cc8fdb", "Image": "dawn", "Direction": "Front"},
+    "Nate" : {"Role" : "Student", "Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Friendly, "Color": "#36A8CB", "Image": "nate", "Direction": "Right"},
+    "Rosa" : {"Role" : "Student", "Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral, "Color": "#ff5a73", "Image": "rosa", "Direction": "Left"},
+    "Bea" : {"Role" : "Student", "Region": "Galar", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Training Partner", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral, "Color": "#F87816", "Image": "bea", "Direction": "Right"},
+    "Nessa" : {"Role" : "Student", "Region": "Galar", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Date", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral, "Color": "#5B81D9", "Image": "nessa", "Direction": "Left"},
+    "Hilda" : {"Role" : "Student", "Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Moody, "Color": "#ea5091", "Image": "hilda", "Direction": "Left"},
+    "Gardenia" : {"Role" : "Student", "Region": "Sinnoh", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Friendly, "Color": "#00712b", "Image": "gardenia", "Direction": "Left"},
+    "Skyla" : {"Role" : "Student", "Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Friendly, "Color": "#5c87b9", "Image": "skyla", "Direction": "Right"},
+    "Brock" : {"Role" : "?", "Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#6D211D", "Image": "brock", "Direction": "Right"},
+    "Erika" : {"Role" : "Student", "Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Friend", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Distant, "Color": "#34a59a", "Image": "erika", "Direction": "Left"},
+    "Janine" : {"Role" : "Senior Student", "Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Tool", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#6f4097", "Image": "janine", "Direction": "Right"},
+    "Tia" : {"Role" : "Student", "Region": "Hoenn", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Protector", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Devoted, "Color": "#C96A70", "Image": "tia", "Direction": "Left"},
+    "Sonia" : {"Role" : "Student", "Region": "Galar", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral, "Color": "#F19272", "Image": "sonia", "Direction": "Left"},
+    "Jasmine" : {"Role" : "Student", "Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Political Rival", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Friendly, "Color": "#939393", "Image": "jasmine", "Direction": "Left"},
+    "Grusha" : {"Role" : "Student", "Region": "Paldea", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Political Rival", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Moody, "Color": "#00b8d0", "Image": "grusha", "Direction": "Left"},
+    "Professor Cherry" : {"Role" : "Staff", "Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Distant, "Color": "#1dcc88", "Image": "kris", "Direction": "Right"},
+    "Instructor Lenora" : {"Role" : "Staff", "Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#aa4a1b", "Image": "lenora", "Direction": "Right"},
+    "Instructor Blaine" : {"Role" : "Staff", "Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#cd5733", "Image": "blaine", "Direction": "Right"},
+    "Instructor Wallace" : {"Role" : "Staff", "Region": "Hoenn", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#46897c", "Image": "wallace", "Direction": "Right"},
+    "Instructor Ramos" : {"Role" : "Staff", "Region": "Kalos", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#657f61", "Image": "ramos", "Direction": "Right"},
+    "Lieutenant Surge" : {"Role" : "Staff", "Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#545241", "Image": "surge", "Direction": "Front"},
+    "Instructor Melony" : {"Role" : "Staff", "Region": "Galar", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#288cff", "Image": "melony", "Direction": "Front"},
+    "Sensei Marshal" : {"Role" : "Staff", "Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Grasshopper", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#6e492d", "Image": "marshal", "Direction": "Right"},
+    "Instructor Koga" : {"Role" : "Staff", "Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#5f3869", "Image": "koga", "Direction": "Right"},
+    "Instructor Bertha" : {"Role" : "Staff", "Region": "Sinnoh", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#906438", "Image": "bertha", "Direction": "Front"},
+    "Instructor Will" : {"Role" : "Staff", "Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#664f79", "Image": "will", "Direction": "Left"},
+    "Burgh" : {"Role" : "Staff", "Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#71a230", "Image": "burgh", "Direction": "Right"},
+    "Instructor Olivia" : {"Role" : "Staff", "Region": "Alola", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#595554", "Image": "olivia", "Direction": "Left"},
+    "Instructrice Fantina" : {"Role" : "Staff", "Region": "Sinnoh", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#784972", "Image": "fantina", "Direction": "Front"},
+    "Instructor Karen" : {"Role" : "Staff", "Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#314876", "Image": "karen", "Direction": "Left"},
+    "Instructor Clair" : {"Role" : "Staff", "Region": "Johto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#5a94c6", "Image": "clair", "Direction": "Left"},
+    "Instructor Byron" : {"Role" : "Staff", "Region": "Sinnoh", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#4a4a5b", "Image": "byron", "Direction": "Left"},
+    "Instructor Valerie" : {"Role" : "Staff", "Region": "Kalos", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#de5b99", "Image": "valerie", "Direction": "Right"},
+    "Instructor Winona" : {"Role" : "Staff", "Region": "Hoenn", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#52adbe", "Image": "winona", "Direction": "Left"},
+    "Bruno" : {"Role" : "Staff", "Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#585355", "Image": "bruno", "Direction": "Left"},
+    "Alder" : {"Role" : "Staff", "Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#af4c2e", "Image": "alder", "Direction": "Right"},
+    "Lance" : {"Role" : "Staff", "Region": "Kanto", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#16367a", "Image": "lance", "Direction": "Front"},
+    "Iris" : {"Role" : "Champion", "Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Female, "Relationship": "Mentor", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#82007e", "Image": "iris", "Direction": "Left"},
+    "Dean Drayden" : {"Role" : "Staff", "Region": "Unova", "Named" : False, "Value" : 0, "Contact": False, "Sex": Genders.Male, "Relationship": "Mentor", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#583C68", "Image": "drayden", "Direction": "Front"},
+    "Yellow" : {"Role" : "Student", "Region": "Kanto", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Dormmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#f2a634", "Image": "yellow", "Direction": "Left"},
+    "Lisia" : {"Role" : "Staff", "Region": "Hoenn", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Mentee", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#71BBA2", "Image": "lisia", "Direction": "Left"},
+    "Wally" : {"Role" : "Student", "Region": "Hoenn", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral, "Color": "#377227", "Image": "wally", "Direction": "Right"},
+    "Nurse Miriam" : {"Role" : "Staff", "Region": "Paldea", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Patient", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#966EFF", "Image": "miriam", "Direction": "Left"},
+    "Raihan" : {"Role" : "Student", "Region": "Galar", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "Acquaintance", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Neutral, "Color": "#EB5334", "Image": "raihan", "Direction": "Front"},
+    "Eri" : {"Role" : "Forthcoming", "Region": "Paldea", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Mentee", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#3C468D", "Image": "eri", "Direction": "Right"},
+    "Anabel" : {"Role" : "Offcampus", "Region": "Hoenn", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Liability", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#a367c0", "Image": "anabel", "Direction": "Left"},
+    "Mallow" : {"Role" : "Student", "Region": "Alola", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#608946", "Image": "mallow", "Direction": "Right"},
+    "Allister" : {"Role" : "Offcampus", "Region": "Galar", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "None", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#9C96C5", "Image": "allister", "Direction": "Left"},
+    "Lawrence" : {"Role" : "Offcampus", "Region": "Johto", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "Benefactee", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#333", "Image": "phobos", "Direction": "Front"},
+    "Klara" : {"Role" : "Student", "Region": "Galar", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Crush", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Devoted, "Color": "#EE8FB5", "Image": "klara", "Direction": "Left"},
+    "Melody" : {"Role" : "Student", "Region": "Johto", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#FF8D6C", "Image": "melody", "Direction": "Right"},
+    "Kate" : {"Role" : "Ranger", "Region": "Almia", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Citizen", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#59BB83", "Image": "kate", "Direction": "Right"},
+    "Summer" : {"Role" : "Ranger", "Region": "Oblivia", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Citizen", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#EF2F30", "Image": "summer", "Direction": "Right"},
+    "Shauna" : {"Role" : "Student", "Region": "Kalos", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#E779AC", "Image": "shauna", "Direction": "Left"},
+    "Professor Rowan" : {"Role" : "Staff", "Region": "Sinnoh", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#3A4D7E", "Image": "rowan", "Direction": "Right"},
+    "Zinnia" : {"Role" : "Student", "Region": "Hoenn", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "None", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#50C878", "Image": "zinnia", "Direction": "Front"},
+    "Iono" : {"Role" : "Student", "Region": "Paldea", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Collaborator", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Distant, "Color": "#EE8FB5", "Image": "iono", "Direction": "Left"},
+    "Duplica" : {"Role" : "Offcampus", "Region": "Kanto", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Faker", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#737373", "Image": "duplica", "Direction": "Left"},
+    "Wes" : {"Role" : "Offcampus", "Region": "Orre", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "Hero", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#135C87", "Image": "wes", "Direction": "Right"},
+    "Cynthia" : {"Role" : "Champion", "Region": "Sinnoh", "Named" : True, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Unmet", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#cfb000", "Image": "cynthia", "Direction": "Left"},
+    "Shauntal" : {"Role" : "Offcampus", "Region": "Unova", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Acquaintance", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#FF9D8F", "Image": "shauntal", "Direction": "Right"},
+    "Morty" : {"Role" : "Student", "Region": "Johto", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#A0528B", "Image": "morty", "Direction": "Left"},
+    "Bugsy" : {"Role" : "Student", "Region": "Johto", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Unknown, "Relationship": "Classmate", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#00c54b", "Image": "bugsy", "Direction": "Front"},
+    "Roark" : {"Role" : "Student", "Region": "Sinnoh", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "Acquaintance", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#ff5121", "Image": "roark", "Direction": "Right"},
+    "Caitlin" : {"Role" : "Offcampus", "Region": "Unova", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Female, "Relationship": "Unknown", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#ff54e5", "Image": "caitlin", "Direction": "Left"},
+    "Professor Sycamore" : {"Role" : "Staff", "Region": "Kalos", "Named" : False, "Value" : 0, "Contact" : False, "Sex": Genders.Male, "Relationship": "Student", "RelationshipRank": 0, "Events": [], "Mood": 0, "Nature": TrainerNature.Special, "Color": "#4B5A9A", "Image": "sycamore", "Direction": "Front"}
 }
+
+init python:
+    imageToCharDict = {}
+    for key, value in defaultpersondex.items():
+        imageToCharDict[value["Image"]] = key
 
 default dateabase = {
     "Kisses": [],
@@ -323,6 +339,7 @@ define cynthia = CustomCharacter("Cynthia", "#cfb000", "cynthia")
 define oak = CustomCharacter("Professor Oak", "#000000", "oak")
 define pikachu = CustomCharacter("Pikachu", "#fca600", "pikachu")
 define libpikachu = CustomCharacter("Pikachu", "#fca600", "libpikachu")
+define cospikachu = CustomCharacter("Chuchu", "#fca600", "cospikachu")
 define starter = CustomCharacter("Your Starter", "#fca600", "starterportrait")
 define red = CustomCharacter("Red", "#cf0000", "red")
 define redmind = CustomCharacter("You", "#cf0000", "red")
@@ -424,6 +441,7 @@ define kris = CustomCharacter("Professor Cherry", "#1dcc88", "kris")
 define drayden = CustomCharacter("Dean Drayden", "#583C68", "drayden")
 define miriam = CustomCharacter("Nurse Miriam", "#966EFF", "miriam")
 define rowan = CustomCharacter("Professor Rowan", "#3A4D7E", "rowan")
+define sycamore = CustomCharacter("Professor Sycamore", "#4B5A9A", "sycamore")
 
 #others...?
 define narrator = CustomCharacter("", "#000", "")
@@ -436,6 +454,9 @@ define roughneck3 = CustomCharacter("Buffneck", "#ff4400", "roughneck3")
 define hiker = CustomCharacter("Burly Man", "#ff4400", "hiker")
 define hiker2 = CustomCharacter("Brawny Man", "#ff4400", "hiker2")
 define hiker3 = CustomCharacter("Boisterous Man", "#ff4400", "hiker3")
+define silhouettebunny = CustomCharacter("Buxom Bunny", "#ff4400", "silhouettebunny")
+define silhouettebunny2 = CustomCharacter("Ravishing Rabbit", "#ff4400", "silhouettebunny2")
+define silhouettebunny3 = CustomCharacter("Languid Lepine", "#ff4400", "silhouettebunny3")
 define femthug = CustomCharacter("Punk Girl", "#ff4400", "femthug")
 define hexmaniac = CustomCharacter("Hex Maniac", "#ff4400", "hexmaniac")
 define sidemon = CustomCharacter("Sidemon", "#000", "sidemonportrait")
@@ -447,6 +468,10 @@ define phobos = CustomCharacter("Lawrence", "#333", "phobos")#COMPLIMENT ME!!! T
 define kate = CustomCharacter("Kate", "#59BB83", "kate")
 define summer = CustomCharacter("Summer", "#EF2F30", "summer")
 define shauntal = CustomCharacter("Shauntal", "#FF9D8F", "shauntal")
+define caitlin = CustomCharacter("Caitlin", "#ff54e5", "caitlin")
+define deoxysa = CustomCharacter("Spiky Entity", "#ff4400", "deoxysa")
+define deoxysd = CustomCharacter("Sturdy Entity", "#ff4400", "deoxysd")
+define deoxyss = CustomCharacter("Swift Entity", "#ff4400", "deoxyss")
 
 define gardeniamom = CustomCharacter("Mom", "#8EC300", None)
 define gardeniadad = CustomCharacter("Dad", "#4F6552", None)
@@ -561,9 +586,9 @@ define starters = {
     "Flying":[396,198,357],
     "Psychic":[280,79,561],
     "Bug":[540,290,213],
-    "Rock":[246,566,774],
+    "Rock":[246,557,774],
     "Ghost":[607,200,778],
-    "Dragon":[371,696,780],
+    "Dragon":[371,714,780],
     "Steel":[304,597,227],
     "Fairy":[669,742,303],
     "Dark":[551,215,302]

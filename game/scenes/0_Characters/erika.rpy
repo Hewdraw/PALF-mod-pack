@@ -35,8 +35,8 @@ label Erika1:
 
     pause 0.5
 
-    redmind @unamusedbrow unamusedmouth "...All roads lead to slapping, I guess."
-    red @closedbrow talking2mouth "C'mon, [pika_name], let's get out of here. Even if it didn't hurt, I don't want to give her another chance to accuse me of something I didn't do..."
+    redmind @unamusedbrow unamusedmouth "...All roads lead to Erika, I guess."
+    red @closedbrow talking2mouth "C'mon, [pika_name], let's get out of here. I don't want to give her another chance to accuse me of something I didn't do."
 
     $ PlaySound("Pokemon/pikachu_sad.ogg")
     libpikachu @angrybrow poutmouth "Pi..."
@@ -142,7 +142,7 @@ label Erika1:
 
     pause 1.0
 
-    redmind @unamusedbrow unamusedeyes "Is she for real?"
+    redmind @unamusedbrow "Is she for real?"
 
     pause 0.5
 
@@ -234,7 +234,7 @@ label Erika1:
 
     erika @surprised "I... well, yes. I am the delicate flower of the Tamamushi family, as he always says. My mere existence invites kidnappers, ransomers... even duplicitous business partners."
     erika @talkingmouth "'Every friend is one fey mood away from becoming a creditor--every relationship must be looked at from the angle of one who has much to lose from it.'"
-    erika surprisedbrow frownmouth @talking2mouth "And he also warned that they may send handsome men as scouts, to pry into Silph Co.'s plans... I shall not be lead astray by such an obvious ploy."
+    erika surprisedbrow frownmouth @talking2mouth "And he also warned that they may send handsome men as scouts, to pry into Silph Co.'s plans... I shall not be led astray by such an obvious ploy."
 
     red @happy "Hey, thanks."
 
@@ -354,7 +354,7 @@ label Erika1:
     pause 1.0
 
     if (not HasEvent("Erika", "AcceptApology")):
-        erika @talking2mouth "I must ask again. Will you accept my most ardent apology for my transgressions? For slapping you the day we met, and for attempting to have you removed from the Battle Team?"
+        erika @talking2mouth "I must ask again. Will you accept my most ardent apology for my transgressions? For forcing a battle on you the day we met, and for attempting to have you removed from the Battle Team?"
 
         menu:
             "Sorry, no.":

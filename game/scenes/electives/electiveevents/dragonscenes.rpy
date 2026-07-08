@@ -674,7 +674,7 @@ label dragon_class_x3:
     clair @closedbrow talking2mouth "Yes; I am aware of Instructor Will's plight. But I can do nothing about it."
     clair @angrybrow talking2mouth "Do not misunderstand me! It is not that I am apathetic--Instructor Will is a colleague, if also a meddlesome pest!"
     clair @sadbrow talking2mouth "It is... my Pokémon. The dragons, in their infinite wisdom, sense {i}something{/i} in the forest that even they fear."
-    clair @closedbrow angrymouth "I do not know what this could be. To know that it is anethema to {i}dragons{/i} enrages me--particularly at my helplessness!"
+    clair @closedbrow angrymouth "I do not know what this could be. To know that it is anathema to {i}dragons{/i} enrages me--particularly at my helplessness!"
     clair @sad "But I will not endanger my Pokémon for Instructor Will's sake. I am sure you will think me callous, but... you do not understand."
     clair sad "They have followed me to places darker than you know. If there is somewhere they believe they cannot follow... I will listen."
     narrator "Clair ruminates on the natural enemies of dragons... Perhaps the forest hides a powerful fairy?"

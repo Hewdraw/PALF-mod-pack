@@ -33,7 +33,7 @@ if (not IsNamed("Hilda")):
 
     red @happy "Hey, no need to apologize on his behalf."
 
-    hilda closedbrow smirkmouth -sweat @talkingmouth "I kinda do... we go way back. And if I'd known which lever to pull way back then, I sure as hell would have."
+    hilda closedbrow smirkmouth -sweat @talking2mouth "I kinda do... we go way back. And if I'd known which lever to pull way back then, I sure as hell would have."
 
     red @talkingmouth "Well, trolley problems always look easiest from an omniscient perspective. Don't beat yourself up for past decisions."
 
@@ -47,7 +47,7 @@ if (not IsNamed("Hilda")):
     red @talkingmouth "The ol' carrot and stick. Got it. Well, all I know about you, I've heard Hilbert muttering under his breath."
     red @happy "What's the real Hilda like?"
     
-    hilda closedbrow talking2mouth "Well, ignoring my full-time job as a Hilbert wrangler, then..."
+    hilda closedbrow talkingmouth "Well, ignoring my full-time job as a Hilbert wrangler, then..."
     hilda "[ellipses]"
     hilda sad "I play tennis. Sometimes."
 
@@ -57,8 +57,8 @@ if (not IsNamed("Hilda")):
 
     red @talkingmouth "I'd figure you'd be more of a Baseball girl, then."
 
-    hilda sadbrow -happymouth @talkingmouth "I did try that. Couldn't keep up with the speed, though. And that tiny little ball heading at you at, like, five hundred miles per hour?"
-    hilda closedbrow talking2mouth "A baseball hit my ass once, left a bruise for weeks. I beat the hell out of the pitcher--because the punk totally did it on purpose--but that definitely sealed me as a tennis girl."
+    hilda sadbrow -happymouth @talking2mouth "I did try that. Couldn't keep up with the speed, though. And that tiny little ball heading at you at, like, five hundred miles per hour?"
+    hilda closedbrow talkingmouth "A baseball hit my ass once, left a bruise for weeks. I beat the hell out of the pitcher--because the punk totally did it on purpose--but that definitely sealed me as a tennis girl."
     hilda sad "God, though, it's been so long since I've actually played..."
 
     red @talkingmouth "Want to?"
@@ -68,11 +68,11 @@ if (not IsNamed("Hilda")):
 
     red @talkingmouth "Mmm. Well, if I found you outside of classes, and asked if you had some time then... would you hate that?"
 
-    hilda -thinking -veins @talkingmouth "[ellipses]"
+    hilda -thinking -veins @frownmouth "[ellipses]"
     hilda happy "Nah. I wouldn't hate that."
 
     red @talkingmouth "Sounds like a plan, then. See you around, Hilda."
-    hilda -happy @talkingmouth "Yeah, see ya."
+    hilda -happy @talking2mouth "Yeah, see ya."
 
     hide hilda with dis
 

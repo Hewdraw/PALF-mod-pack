@@ -1,47 +1,3 @@
-label testcontest:
-
-python:
-    coordinators = [
-        CoordinatorGroup([
-            Coordinator(first_name, condition=0, isprotag=True)
-        ]),
-        CoordinatorGroup([
-            Coordinator("Brendan", condition=30)
-        ]),
-        CoordinatorGroup([
-            Coordinator("May", condition=15)
-        ]),
-        CoordinatorGroup([
-            Coordinator("Jasmine", condition=5)
-        ]),
-        CoordinatorGroup([
-            Coordinator("Dawn", condition=45)
-        ])        
-    ]
-
-    judges = [
-        Judge(wallace, biases={ ContestMoveType.Cute : 20, ContestMoveType.Beautiful : 30, ContestMoveType.Cool : 30, ContestMoveType.Clever : 10, ContestMoveType.Tough : 30 }),
-        Judge(fantina, biases={ ContestMoveType.Cute : 10, ContestMoveType.Beautiful : 30, ContestMoveType.Cool : 30, ContestMoveType.Clever : 30, ContestMoveType.Tough : 20 }),
-        Judge(phobos, biases={ ContestMoveType.Cute : 30, ContestMoveType.Beautiful : 30, ContestMoveType.Cool : 20, ContestMoveType.Clever : 30, ContestMoveType.Tough : 10 })
-    ]
-
-    contestconditions = {
-        "Types" : ["Water", "Ghost", "Flying"],
-        "Region" : range(252, 387),#Hoenn
-        "Traits" : [ContestMoveType.Beautiful, ContestMoveType.Cool]
-    }
-
-call Contest("Test Contest", coordinators, judges, contestconditions) from _call_Contest
-
-"reached here"
-
-return
-
-
-
-
-
-
 label Contest(contestname, coordinators, judges, contestconditions):
 
 call clearscreens() from _call_clearscreens_233
@@ -59,11 +15,6 @@ python:
     Judges = judges
     Coordinators = coordinators
     Coordinators = sorted(Coordinators, key=lambda coord: -coord.EvaluateCondition())
-    ProtagCoordinator = None
-    for coord in Coordinators:
-        if (coord.IsProtag()):
-            ProtagCoordinator = coord
-            break
     showround = False
     RealignTextbox()
 
@@ -75,6 +26,9 @@ show screen ContestUI
 
 if (contestname == "Dorm 25 Central Suite Grand Open"):
     Character("Announcer") "\"The peasants are revolting, and they're not happy, either! Words and weapons won't work here! Only a stylish and cool Contest Performance can possibly soothe their aggravated hearts.\""
+
+elif (contestname == "Cute 'n' Sexy Bunny Party Dance-Off Spectacular"):
+    Character("Announcer") "\"On this this sexy and secretive Saturday, it's a battle of the bunnies! Which rabbit will rock the stage? Which lagomorph will live it large? Let's find out!\""
 
 else:
     $ AddEvent("Professor Oak", "LearnedAboutContestColiseum")
@@ -119,7 +73,7 @@ python:
 
 pause 1.0
 
-Character("Announcer") "\"The performers are all ready! The lights are queued! The audience is on the edge of their seats... so, without any further ado, let's start the music!"
+Character("Announcer") "\"The performers are all ready! The lights are cued! The audience is on the edge of their seats... so, without any further ado, let's start the music!"
 
 label ContestRound:
 
@@ -153,7 +107,7 @@ python:
     for i in range(len(Coordinators)):
         coord = Coordinators[i]
         coord.ResetCurrentPoints()
-        if (not coord.IsProtag()):
+        if (not coord.GetIsControllable()):
             movevals = {}
             maxpointsearned = 0
             for move in coord.GetMoves():
@@ -183,7 +137,7 @@ python:
     for i, coord in enumerate(Coordinators):
         coord.ResetCurrentPoints()
         for j, coordinator in enumerate(coord.GetImage()): 
-            renpy.show(coordinator, at_list=[moveincontest( (i + 1) / 7.3, j, len(coord.GetImage()), 1.35, 2.5 )])
+            renpy.show(coordinator, at_list=[moveincontest((i + 1) / 7.3, j, len(coord.GetImage()), 1.35, 2.5)])
 
 python:
     InActiveContestRound = True
@@ -200,7 +154,7 @@ python:
         sidemonnew = coord.GetMon()
         renpy.show("sideportraitnew", at_list=[slideinmoncontest()])
         if (switchingout):
-            if not coord.IsProtag():
+            if not coord.GetIsControllable():
                 coord.Reorder(movemon)
             coord.UnNoteReaction()
             renpy.say(Character("Announcer"), "\"Looks like {} is switching out to {} {}! What will this new Pokémon bring to the table, I wonder?\"".format(coord.GetName(), coord.GetHisPronoun(), coord.GetFirstMonName()))
@@ -212,12 +166,18 @@ python:
         renpy.pause(0.6)
         renpy.sound.play("normaldamage.ogg")
         repetitive = False
+        announcerline = ""
         if (RepeatedMove(coord, Turn, movemon)):
             repetitive = True
             isare = "is" if coord.IsSolo() else "are"
-            renpy.say(Character("Announcer"), "\"Oh... it looks like [coord.GetName()] [isare] having [coord.GetFirstMonName()] use [movemon.Name] again... I'm not sure the judges will be excited to see that!\"")
+            announcerline = "Oh[ellipses] it looks like [coord.GetName()] [isare] having [coord.GetFirstMonName()] use [movemon.Name] again[ellipses] I'm not sure the judges will be excited to see that!"
         else:
-            renpy.say(Character("Announcer"), "\"" + coord.GetPerformanceDialog(movemon, investedenergy) + "\"")
+            simplified = (Turn not in [1, 5, 10])
+            announcerline = coord.GetPerformanceDialog(movemon, investedenergy, simplified)
+            if (not simplified):
+                renpy.say(None, FormatText(announcerline))
+                announcerline = ""
+
         if investedenergy and not switchingout:
             coord.AwardedPoints(3*investedenergy, None)
 
@@ -249,66 +209,66 @@ python:
             images = coord.GetImage("happy")
             for image in images:
                 renpy.show(image)
-            renpy.say(None, "The performance went over incredibly well with [jackpotjudge.GetName()]! [jackpotjudge.GetHePronoun().title()]'s clapping and shouting! What a show!")
+            announcerline += "The performance went over incredibly well with [jackpotjudge.GetName()]!"
             jackpotjudge.ResetSparks()
 
         extrapoints = 0
         if (GetmoveincontestEffect(movemon) == ContestEffects.Jamming):
             for otherplannedmove in PlannedMoves[:i]:
                 othercoord, othereffect, othermovemon, otherpredictedpoints, otherswitchingout, otherinvestedenergy = otherplannedmove
-                if (not otherswitchingout and Jams(othermovemon.Contest, movemon)): 
+                if (not otherswitchingout and Jams(movemon.Contest, othermovemon.Contest)): 
                     if (GetmoveincontestEffect(othermovemon) == ContestEffects.Unjammable):
-                        renpy.say(Character("Announcer"), "\"Remarkable! Even in the face of a jamming [movemon.Name], [othercoord.GetName()] maintains [othercoord.GetHisPronoun()] routine! Such concentration!\"")
+                        announcerline += "Remarkable! Even in the face of a jamming [movemon.Name], [othercoord.GetName()] maintains [othercoord.GetHisPronoun()] routine! Such concentration!"
                     else:
-                        renpy.say(Character("Announcer"), "\"Oh no! The jamming [movemon.Name] completely threw off [othercoord.GetName()]'s appeal! Can [othercoord.GetHePronoun()] recover from this?!\"")
-                        othercoord.JamPoints()
+                        announcerline += "Oh no! The jamming [movemon.Name] completely threw off [othercoord.GetName()]'s appeal! Can [othercoord.GetHePronoun()] recover from this?!"
+                        othercoord.JamPoints(sidebar=True)
         elif (GetmoveincontestEffect(movemon) == ContestEffects.Unjammable):
-            renpy.say(Character("Announcer"), "\"Look at [coord.GetName()] pull off that routine so flawlessly! There's something to be said for simple perfection, folks!\"")
+            announcerline += "Look at [coord.GetName()] pull off that routine so flawlessly! There's something to be said for simple perfection, folks!"
         elif (GetmoveincontestEffect(movemon) == ContestEffects.Dull and movemon.Contest not in DulledPerformances):
             dulledimmune = True
             DulledPerformances.append(movemon.Contest)
-            renpy.say(Character("Announcer"), "\"What's this?! The judges are keeping a keen eye on [coord.GetName()] now! I'm not sure that any other [movemon.Contest] performances will stand out, now!\"")
+            announcerline += "What's this?! The judges are keeping a keen eye on [coord.GetName()] now! I'm not sure that any other [movemon.Contest] performances will stand out, now!"
         elif (GetmoveincontestEffect(movemon) == ContestEffects.Showoff):
-            renpy.say(Character("Announcer"), "\"What a flashy performance! I'd wager [coord.GetName()] will definitely be going to the first seed of the next round!\"")
+            announcerline += "What a flashy performance! I'd wager [coord.GetName()] will definitely be going to the first seed of the next round!"
             coord.SetPriority(i * 1000)
         elif (GetmoveincontestEffect(movemon) == ContestEffects.Soothe):
-            renpy.say(Character("Announcer"), "\"What's [coord.GetName()] hiding up their sleeve? If they're trying to grab the fifth seed of the next round, they've just done it!\"")
+            announcerline += "What's [coord.GetName()] hiding up [coord.GetHisPronoun()] sleeve? If it's a ploy to grab the fifth seed of the next round, brilliantly executed!"
             coord.SetPriority(i * -1000)
         elif (GetmoveincontestEffect(movemon) == ContestEffects.Finale and i == 4):
             images = coord.GetImage("angrybrow")
             for image in images:
                 renpy.show(image)
             extrapoints += 3
-            renpy.say(Character("Announcer"), "\"Wow! What an incredible way to wrap up the round, ladies and gentleman! [coord.GetName()]'s finale absolutely blew out the competition!\"")
+            announcerline += "Wow! What an incredible way to wrap up the round, ladies and gentlemen! [coord.GetName()]'s finale absolutely blew out the competition!"
         elif (GetmoveincontestEffect(movemon) == ContestEffects.Spark and i == 0):
             images = coord.GetImage("angrybrow")
             for image in images:
                 renpy.show(image)
             extrapoints += 3
-            renpy.say(Character("Announcer"), "\"That's a {i}very{/i} strong start to the round, ladies and gentleman! [coord.GetName()]'s performance will be a tough act to follow!\"")
+            announcerline += "That's a {i}very{/i} strong start to the round, ladies and gentlemen! [coord.GetName()]'s performance will be a tough act to follow!"
 
         if (not dulledimmune and GetmoveincontestEffect(movemon) != ContestEffects.Unjammable and movemon.Contest in DulledPerformances):
             images = coord.GetImage("sad")
             for image in images:
                 renpy.show(image)
-            renpy.say(Character("Announcer"), "\"Oh, but what a shame! Did [coord.GetName()] forget? There's already been a very impressive [movemon.Contest] performance this round, and you don't stand out as a follower! It's a jam for [coord.GetHimPronoun()] now!\"")
+            announcerline += "Oh, but what a shame! Did [coord.GetName()] forget? There's already been a very impressive [movemon.Contest] performance this round, and you don't stand out as a follower! It's a jam for [coord.GetHimPronoun()] now!"
             coord.JamPoints()
 
         preposition = ("is" if coord.IsSolo() else "are")
         if (coord.GetEnergy() == 1):
             extrapoints += 1
-            renpy.say(Character("Announcer"), "\"[coord.GetName()] [preposition] showing great energy right now!\"")
+            announcerline += "[coord.GetName()] [preposition] showing great energy right now!"
         elif (coord.GetEnergy() == 2):
             extrapoints += 2
-            renpy.say(Character("Announcer"), "\"[coord.GetName()] has seriously found [coord.GetHisPronoun()] flow! Look at that energy!\"")
+            announcerline += "[coord.GetName()] has seriously found [coord.GetHisPronoun()] flow! Look at that energy!"
         elif (coord.GetEnergy() == 3):
             extrapoints += 3
-            renpy.say(Character("Announcer"), "\"[coord.GetName()] [preposition] absolutely bursting with energy! It's a runaway train, and we're all onboard!\"")
+            announcerline += "[coord.GetName()] [preposition] absolutely bursting with energy! It's a runaway train, and we're all onboard!"
 
         if (not (isinstance(predictedpoints, str) or (switchingout and Turn != 1))):
             if (movemon.Type in coord.GetMon().GetTypes(pureraw=True)):
                 if (coord.GainEnergy()):
-                    if (coord.IsProtag()):
+                    if (coord.GetIsControllable()):
                         renpy.show_screen("energyupleft", coord.GetName())
                     else:
                         renpy.show_screen("energyupright", coord.GetName())
@@ -316,23 +276,58 @@ python:
         if (extrapoints > 0):
             coord.AwardedPoints(extrapoints, None)
 
+        if (announcerline):
+            renpy.say(TempCharacter("Announcer"), FormatText(announcerline))
+
         if (coord.GetCurrentPoints() < 3):
             images = coord.GetImage("sadbrow")
             for image in images:
                 renpy.show(image)
-            renpy.say(None, "The judges don't seem impressed...")
         elif (coord.GetCurrentPoints() > 7 and coord.GetCurrentPoints() < 11):
             images = coord.GetImage("happybrow")
             for image in images:
                 renpy.show(image)
-            renpy.say(None, "The judges seem impressed!")
         elif (coord.GetCurrentPoints() > 10):
             images = coord.GetImage("happy")
             for image in images:
                 renpy.show(image)
-            renpy.say(None, "The judges are ecstatic!")
 
-        images = coord.GetImage("-sadbrow -happy -angrybrow")
+        #feebas evolution interruption
+        if (Turn == 10 and coord.GetIsControllable() and coord.GetFirstMonSpeciesName() == "Feebas"):
+            AddEvent("Game", "EvolvedFeebas")
+            renpy.pause(3.0)
+
+            renpy.say(Character("Announcer"), "\"Wait[ellipses] what's going on with that Feebas? It's not leaving the stage[ellipses]\"")
+            renpy.say(Character("Announcer"), "\"[coord.GetName()]! Is something wrong?\"")
+
+            renpy.transition(Dissolve(3.0))
+            renpy.show("blank2", [Transform(alpha=0.5)])
+
+            renpy.say(narrator, "[coord.GetFirstMonName()] looks back at you pridefully as she refuses to vacate the stage.")
+            renpy.say(narrator, "Such a comely fish[ellipses] this stage is not the place for one such at her. It's {i}far{/i} too small.")
+            renpy.say(narrator, "This stage has become a puddle--no longer content to be the big fish of it, [coord.GetFirstMonName()] yearns for the sea.")
+            renpy.say(narrator, "What star can endure a crowd who cheers for trickles, when they know they are capable of waves?")
+            renpy.say(narrator, "{color=#46897c}Let us hear their screams as the ocean embraces them!{/color}")
+
+            coord.GetMon().Evolve(350, force=True)
+
+            renpy.transition(Dissolve(1.5))
+            renpy.hide("blank2")
+
+            renpy.pause(3.0)
+
+            PlaySound("crowd_cheer.ogg")
+            PlaySound("crowd_cheer.ogg")
+            PlaySound("crowd_cheer.ogg")
+
+            renpy.say(Character("Announcer"), "\"Aaaaaabsolutely incredible, ladies and gentlemen! Look at that, the crowd's screaming their heads off!\"")
+            renpy.say(Character("Announcer"), "\"A mid-contest evolution! How incredible! How stellar! How beautiful! The judges are conferring amongst themselves--extra points? Sounds like it!\"")
+
+            for judge in Judges:
+                coord.AwardedPoints(10, judge)
+
+            renpy.say(Character("Announcer"), "\"What a show! What a remarkable show!\"")
+
         for j, image in enumerate(images):
             renpy.show(image, at_list=[moveincontest(0.33, 0, 1, 1.0, 2.5)])
         renpy.show("sideportraitnew", at_list=[slideoutmoncontest()])
@@ -342,7 +337,7 @@ python:
         coord, stance, movemon, predictedpoints, switchingout, investedenergy = plannedmove
         suitability = EvaluateSuitability(coord.GetMon(), ContestConditions)
 
-        if (coord.IsProtag()):
+        if (coord.GetIsControllable()):
             if (coord.NotReactionNoted()):
                 coord.NoteReaction()
                 if (suitability == -1):
@@ -375,7 +370,6 @@ python:
     for plannedmove in PlannedMoves:
         coord, stance, movemon, predictedpoints, switchingout, investedenergy = plannedmove
         coord.RecordRound(Turn, coord.GetCurrentPoints())
-
 
 Character("Announcer") "\"The rankings are in for this round, folks! Let's see what the placings are, then...\""
 show screen ContestUIAbove
@@ -414,12 +408,7 @@ python:
             renpy.hide(image)
             renpy.show(image, at_list=[coordposswitch((i+1) / 7.3, (i+1) / 7.3, j, len(images))])
 
-Character("Announcer") "\"The judges are deliberating...\""
-
-Character("Announcer") "\"{w=0.5}.{w=0.5}.{w=0.5}.\""
-Character("Announcer") "\"{w=0.5}.{w=0.5}.{w=0.5}.\""
-Character("Announcer") "\"{w=0.5}.{w=0.5}.{w=0.5}.\""
-
+Character("Announcer") "\"The judges are deliberating[ellipses]\""
 Character("Announcer") "\"While we're waiting on them to reach a decision, let's check in with the audience! Points will be awarded based on how much the Coordinators' Pokémon resonated with the audience--let's find out!\""
 
 show screen ContestUIAbove(False) with dis
@@ -465,10 +454,12 @@ $ showround = False
 Character("Announcer") "\"And that's everything, ladies and gentlemen! As always, the Coordinator or Coordinators with the most points is the winner, and that means the winner can only be...!\""
 pause 1.0
 
+label skiptoend:#can get navigated here from the deoxyscontest as well, but since the d-contest is a one-off, and only a bugtesting feature has that incorrect behavior, this should be fine
+
 python:
     for i, coord in enumerate(Coordinators):
         for j, coordinator in enumerate(coord.GetImage()): 
-            renpy.show(coordinator, at_list=[moveincontest( (i + 1) / 7.3, j, len(coord.GetImage()), 1.35, 2.5 )])
+            renpy.show(coordinator, at_list=[moveincontest((i + 1) / 7.3, j, len(coord.GetImage()), 1.35, 2.5 )])
         renpy.pause(0.5)
     StrictlyInContest = False
     RealignTextbox()
@@ -501,7 +492,7 @@ python:
         renpy.show(coordinator, at_list=[contestwinnerreveal(i, lastwinner.GroupSize())])
 play sound "audio/Button_Back.ogg"
 pause 0.5
-play sound "audio/Get.ogg"
+$ PlaySound("Get.ogg")
 pause 8
 Character("Announcer") "\"[lastwinner.GetName()]!\""
 play sound "audio/crowd_cheer.ogg"

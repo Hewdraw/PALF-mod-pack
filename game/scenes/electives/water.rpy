@@ -246,7 +246,7 @@ if (HasEvent("Instructor Wallace", 1) and IsPresent("Klara", "Water") and not Ha
         show nessa uniform with dis:
             xpos 1/6 xzoom -1
 
-        nessa @talkingmouth "I guess we should... probably study by ourselves?"
+        nessa @talking2mouth "I guess we should... probably study by ourselves?"
 
     if (IsPresent("Brendan", "Water")):
         show brendan uniform sad with dis:
@@ -347,43 +347,89 @@ elif (not HasEvent("Instructor Wallace", 1)): #first class
     wallace "If you won't talk, then I shall make you!"
     wallace "Hmm[ellipses] YOU!"
 
-    narrator "Wallace flamboyantly points straight at Nessa."
+    if (IsPresent("Nessa")):
+        if (IsNamed("Nessa")):
+            narrator "Wallace flamboyantly points straight at Nessa."
+        else:
+            narrator "Wallace flamboyantly points straight at a beautiful woman sitting near the back of the room."
 
-    show nessa uniform:
-        alpha 0.0 xpos 500
-        ease 0.5 alpha 1.0
+        show nessa uniform with dis:
+            xpos 0.25
 
-    nessa "[ellipses]"
+        nessa "[ellipses]"
 
-    nessa @talkingmouth "Um, are you pointing at me?"
-    
-    if (not IsDate(5, 4, 2004)):
-        wallace "Yes, Nessa! Stand up and introduce yourself to the new students."
-        redmind "Didn't he kind of just do that for her...?"
-    else:
-        wallace "Yes, you! Stand up and introduce yourself."
+        nessa @talking2mouth "Um, are you pointing at me?"
+        
+        if (not IsDate(5, 4, 2004)):
+            $ BecomeNamed("Nessa")
 
-    nessa @talkingmouth "Uh, okay..."
-    nessa @closedbrow talkingmouth "But, like, we already know each other."
-    
-    nessa @talkingmouth "I'm Nessa. I'm from Hulbury, in Galar."
-    nessa @talkingmouth "I specialize in Water-type Pokémon. I also work as a model." 
-    nessa @sadbrow talkingmouth "Sometimes."
-    wallace "Oh, really? What a coincidence--so do I. Ahahaha!{w=0.5} And {i}why{/i} are you in this class?"
+            wallace "Yes, Nessa! Stand up and introduce yourself to the new students."
+            redmind "Didn't he kind of just do that for her...?"
+        else:
+            wallace "Yes, you! Stand up and introduce yourself."
 
-    pause 1.5
+        nessa @talking2mouth "Uh, okay..."
+        nessa @closedbrow talking2mouth "But, like, we already know each other."
 
-    nessa @surprised "{cps=26}...because I want to learn more about Water Pokémon?{/cps}"
-    wallace "Wonderful! Anything else?"
-    nessa @talkingmouth closedbrow "...No, I think I'm good."
-    
-    show nessa uniform:
-        alpha 1.0 xpos 500 ypos 1.0
-        ease 0.5 ypos 2.0 alpha 0.0
+        $ BecomeNamed("Nessa")
+        
+        nessa @talking2mouth "I'm Nessa. I'm from Hulbury, in Galar."
+        nessa @talking2mouth "I specialize in Water-type Pokémon. I also work as a model." 
+        nessa @sadbrow talking2mouth "Sometimes."
+        wallace "Oh, really? What a coincidence--so do I. Ahahaha!{w=0.5} And {i}why{/i} are you in this class?"
 
-    wallace "Very good, Nessa! A brilliant start."
+        pause 1.5
 
-    wallace "Now[ellipses] YOU!"
+        nessa @surprised "{cps=26}...because I want to learn more about Water Pokémon?{/cps}"
+        wallace "Wonderful! Anything else?"
+        nessa @talking2mouth closedbrow "...No, I think I'm good."
+        
+        hide nessa with dis
+
+        wallace "Very good, Nessa! A brilliant start."
+
+        wallace "Now[ellipses] YOU!"
+
+    elif (IsPresent("Wallace")):
+        narrator "Wallace flamboyantly points straight at Brendan."
+
+        show brendan uniform with dis
+
+        brendan @surprisedbrow frownmouth "[ellipses]"
+
+        brendan @talkingmouth "Uh, sir, are you--are you pointing at {i}me?{/i}"
+        
+        if (not IsDate(5, 4, 2004)):
+            wallace "Yes, Brendan! Stand up and introduce yourself to the new students."
+            redmind "Didn't he kind of just do that for him...?"
+        else:
+            wallace "Yes, you! Stand up and introduce yourself."
+
+        brendan @talkingmouth "Uh, okay..."
+        
+        if (IsBefore(1, 5, 2004)):
+            brendan @happybrow talkingmouth sweat "But we're actually kinda tight already. We're dormmates."
+        else:
+            brendan @happybrow talkingmouth sweat "But we're actually kinda tight already. We were dormmates."
+        
+        nessa @talking2mouth "I'm Brendan. I'm from Petalburg, in Hoenn. Olivine before that, but, uh, yeah, Hoenn now."
+        nessa @happy sweat "My Dad's a gym leader, and, uh[ellipses] I {i}really{/i} like contests."
+
+        wallace "Oh, really? What a coincidence--so do I. Ahahaha!{w=0.5} And {i}why{/i} are you in this class?"
+
+        pause 1.5
+
+        brendan @surprised "[ellipses]Because you're teaching it, sir? You're probably the best coordinator alive?"
+
+        wallace "'Probably'? Ahahaha! Wonderful to hear. Anything else?"
+
+        brendan @talkingmouth "Well, I want to learn more about Water-types in general, but mostly the contest thing."
+
+        hide brendan with dis
+
+        wallace "Very good, Brendan! A brilliant start."
+
+        wallace "Now[ellipses] YOU!"
 
     narrator "Wallace proceeds to go down the entire roster and makes everyone introduce themselves."
     narrator "Nothing of value is accomplished, and you sit around awkwardly for an hour."
@@ -393,7 +439,7 @@ elif (not HasEvent("Instructor Wallace", 1)): #first class
     wallace "...Well! I hope you've all learned the importance of class participation!"
     wallace "All right, that is all the time we have for today.{w=0.5} But best be prepared--next time we'll {i}really{/i} get swimming."
     wallace "Class dismissed!"
-elif (not HasEvent("Instructor Wallace", 2.1) and classstats["Water"] >= 10):#Healing Spring
+elif (not HasEvent("Instructor Wallace", 2.1) and GetElective("Water") >= 10):#Healing Spring
     show wallace with dis
     if (not HasEvent("Instructor Wallace", 2)):
         $ renpy.pause(1.0, hard=True)
@@ -488,7 +534,7 @@ elif (not HasEvent("Instructor Wallace", 2.1) and classstats["Water"] >= 10):#He
         wallace @happy "Any time, darling!"
 
     hide wallace with dis
-elif (not HasEvent("Instructor Wallace", 3.1) and classstats["Water"] >= 20):#Mystic Water
+elif (not HasEvent("Instructor Wallace", 3.1) and GetElective("Water") >= 20):#Mystic Water
     show wallace with dis
     if (not HasEvent("Instructor Wallace", 3)):
         $ renpy.pause(1.0, hard=True)
@@ -584,7 +630,7 @@ elif (not HasEvent("Instructor Wallace", 3.1) and classstats["Water"] >= 20):#My
         wallace @happy "Any time, darling!"
 
     hide wallace with dis
-elif (not HasEvent("Instructor Wallace", 4.1) and classstats["Water"] >= 30):#Aqua Jet
+elif (not HasEvent("Instructor Wallace", 4.1) and GetElective("Water") >= 30):#Aqua Jet
     show wallace with dis
     if (not HasEvent("Instructor Wallace", 4)):
         $ renpy.pause(1.0, hard=True)
@@ -723,6 +769,7 @@ menu:
 
         if (passedclass):
             $ renpy.pop_call()
+            hide wallace with dis
             jump aftertutoring
         else:
             jump afterwatersetup
@@ -738,6 +785,7 @@ if (newindex == "back"):
 elif (MonCanLearn(newmon, taughtmove)):
     $ newmon.LearnNewMove([(1, taughtmove)])
     if (taughtmove in newmon.GetMoveNames()):
+        hide wallace with dis
         jump endclass
 else:
     wallace @sad "Oh, darling, there are some things not even a Champion can do. That Pokémon simply can't learn [taughtmove]."

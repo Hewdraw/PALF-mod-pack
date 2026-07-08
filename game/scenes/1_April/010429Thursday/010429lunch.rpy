@@ -25,20 +25,20 @@ if (GetRelationshipRank("Tia") >= 1):
     red @closedbrow talking2mouth "Hm. Is this about the bad person?"
 
     tia @sadbrow talkingmouth "Not exactly."
-    tia @sad2eyes sadeyebrows talkingmouth "It's more about why I was sent here to {font=fonts/sign.ttf}fight them{/font}."
+    tia @sad2eyes sadeyebrows talkingmouth "It's more about why I was sent here to [tiafont]fight them{/font}."
 
     red @talkingmouth "Sure thing. You want to go out into the garden, and tell me now?"
 
-    tia @sad2eyes talking2mouth "I think... we {font=fonts/sign.ttf}might{/font} need more privacy."
+    tia @sad2eyes talking2mouth "I think... we [tiafont]might{/font} need more privacy."
 
     red @confused "Oh, yeah, the garden's always pretty full at lunchtime."
     red @talkingmouth "<After school, then?>"
 
-    tia @talkingmouth "Would Sunday work? {font=fonts/sign.ttf}Sunday{/font} morning?"
+    tia @talkingmouth "Would Sunday work? [tiafont]Sunday{/font} morning?"
 
     red @closedbrow talking2mouth "Well, my Sunday is pretty busy already, but I think I can manage that."
 
-    tia @talkingmouth "Thanks, {font=fonts/sign.ttf}trainer{/font}."
+    tia @talkingmouth "Thanks, [tiafont]trainer{/font}."
 
     red @happy "<You're welcome.>"
 

@@ -837,7 +837,7 @@ roxanne @talking2mouth "In lieu of perfect information, one can only act on the 
 
 raihan @talking2mouth "Well, thanks for the news. Won't spread it around, honest."
 
-brawly @happy "Not worried about that. I follow your Rotophotos. Know you're a good guy. Happy birthday, by the way!"
+brawly @happy "Not worried about that. I follow your RotoPhotos. Know you're a good guy. Happy birthday, by the way!"
 
 red @surprised "It's your birthday, Raihan?"
 

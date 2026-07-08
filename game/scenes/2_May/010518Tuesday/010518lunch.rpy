@@ -248,23 +248,23 @@ elif (rustiestsword == "Hilda"):
     show hilda uniform with dis:
         xpos 0.75
 
-    hilda @talkingmouth "Heya, [first_name]."
+    hilda @talking2mouth "Heya, [first_name]."
 
     if (GetRelationshipRank("Hilda") > 0):
-        hilda @talkingmouth "You know how you're doing all that shit for me? Stuff I never asked for?"
+        hilda @talking2mouth "You know how you're doing all that shit for me? Stuff I never asked for?"
 
         red @happy "Yes, I remember."
 
-        hilda @talkingmouth "Well, now I'm actually {i}asking{/i} for something."
-        hilda @sweat closedbrow talkingmouth "So... uh... it would mean a hell of a lot if you helped me out here."
+        hilda @talking2mouth "Well, now I'm actually {i}asking{/i} for something."
+        hilda @sweat closedbrow talking2mouth "So... uh... it would mean a hell of a lot if you helped me out here."
 
     else:
-        hilda @talkingmouth "I need a favor."
-        hilda @sweat closedbrow talkingmouth "So... uh... it would mean a hell of a lot if you helped me out here."
+        hilda @talking2mouth "I need a favor."
+        hilda @sweat closedbrow talking2mouth "So... uh... it would mean a hell of a lot if you helped me out here."
 
     red @talkingmouth "Sure. What's up?"
 
-    hilda frownmouth @talkingmouth "I want to follow Bianca."
+    hilda frownmouth @talking2mouth "I want to follow Bianca."
 
     leaf @happy "{i}Hah!{/i}"
 
@@ -405,7 +405,7 @@ if (rustiestsword == "Nate"):
     red uniform @confused "{size=30}So commanding, all of a sudden.{/size}"
 
 elif (rustiestsword == "Hilda"):
-    hilda uniform @closedbrow talking2mouth "{size=30}Shit, there's nowhere to hide here... okay, just stay against the wall, and be prepared to book it.{/size}"
+    hilda uniform @closedbrow talkingmouth "{size=30}Shit, there's nowhere to hide here... okay, just stay against the wall, and be prepared to book it.{/size}"
 
 elif (rustiestsword == "Hilbert"):
     narrator "Hilbert ignores you and presses his ear up against the wall. You awkwardly do the same."

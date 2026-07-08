@@ -135,7 +135,7 @@ label flying_class_11:
     winona @talking2mouth"Sure, it's a Flying-type. But it just gives me the creeps!"
     winona @talkingmouth "It's not even a bird! And Flying-type Pokémon used to be called 'Bird-type,' so... Perhaps I'll let Instructor Koga cover it."
     winona @surprised "{b}Sigilyph{/b}? Er, I guess it's a bird... probably? Or a freaky bird piñata?"
-    winona @smilemouth "Either way, its Magic Bounce ability makes it quite strong."
+    winona @smilemouth "Either way, its Magic Guard ability makes it quite strong."
     winona @talking2mouth "Sigilyph can only be hurt directly--it's immune to weather, status damage, and entry hazards."
     winona @smilemouth "Plus, Sigilyph can recover health using Roost, and boost its own stats with Calm Mind. It's not an easy bird(?) to take down."
     winona happy "And the best part? There's this move called Stored Power..."

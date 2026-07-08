@@ -171,7 +171,7 @@ label rock_class_13:
     olivia @angry "And you spend all your time battling or reading books! What's wrong with you people?!"
     olivia @closedbrow talking2mouth "You have {i}no idea{/i} what I'd give for one more year in my twenties. I'd dump my rocks in the ocean, for one thing."
     olivia angry "You'd better make use of the time you've got, hear me?! I'll never forgive you for leaving Kobukan single!"
-    narrator "Olivia glares at the students, as if impatiently wating for them to start making out..."
+    narrator "Olivia glares at the students, as if impatiently waiting for them to start making out..."
     return
 
 label rock_class_14:
@@ -228,7 +228,7 @@ label rock_class_17:
 label rock_class_18:
     show olivia with dis
     olivia @happy "One of my former Trial Captains brought me a flower for my birthday. She's a sweet kid."
-    olivia @sad "Unfortunately, flowers from teenaged girls and flowers from chiseled hunks hit different. But beggers can't be choosers."
+    olivia @sad "Unfortunately, flowers from teenaged girls and flowers from chiseled hunks hit different. But beggars can't be choosers."
     olivia @sad "Anyway, this is {b}Lileep{/b}. The ugliest flower I've ever gotten {i}and{/i} the prettiest flower I've gotten all year."
     olivia @sadbrow happymouth "On the bright side, it's pretty handy against Water Pokémon."
     olivia @talkingmouth "Usually, Rock-types--and {i}especially{/i} Rock/Ground types--get swamped by Water moves."

@@ -432,14 +432,13 @@ label Calem1Part2:
         persondex["Bianca"] = {"Named" : True, "Value" : 16, "Contact": True, "Sex": Genders.Female, "Relationship": "Former Dormmate", "RelationshipRank": 0, "Events": [] }
         persondex["Hilda"] = {"Named" : True, "Value" : 23, "Contact": True, "Sex": Genders.Female, "Relationship": "Former Dormmate", "RelationshipRank": 0, "Events": [] }
         persondex["Serena"] = {"Named" : True, "Value" : 28, "Contact": True, "Sex": Genders.Female, "Relationship": "Self", "RelationshipRank": 0, "Events": [] }
-        persondex["Brendan"] = {"Named" : True, "Value" : 16, "Contact": True, "Sex": Genders.Male, "Relationship": "Dormmate", "RelationshipRank": 0, "Events": [] }
         persondex["Cheren"] = {"Named" : True, "Value" : 2, "Contact": True, "Sex": Genders.Male, "Relationship": "Betrayed", "RelationshipRank": 0, "Events": [] }
         
         persondex["Dawn"] = {"Named" : True, "Value" : 43, "Contact": True, "Sex": Genders.Female, "Relationship": "Clubmate", "RelationshipRank": 0, "Events": [] }
         persondex["Klara"] = {"Named" : True, "Value" : 2, "Contact": True, "Sex": Genders.Female, "Relationship": "Clubmate", "RelationshipRank": 0, "Events": [] }
         persondex["Tia"] = {"Named" : True, "Value" : 3, "Contact": True, "Sex": Genders.Female, "Relationship": "Clubmate", "RelationshipRank": 0, "Events": [] }
         persondex["Misty"] = {"Named" : True, "Value" : 26, "Contact": True, "Sex": Genders.Female, "Relationship": "Clubmate", "RelationshipRank": 0, "Events": [] }
-        persondex["Brendan"] = {"Named" : True, "Value" : 56, "Contact": True, "Sex": Genders.Female, "Relationship": "Clubmate", "RelationshipRank": 0, "Events": [] }
+        persondex["Brendan"] = {"Named" : True, "Value" : 56, "Contact": True, "Sex": Genders.Male, "Relationship": "Dormmate", "RelationshipRank": 0, "Events": [] }
         persondex["Jasmine"] = {"Named" : True, "Value" : 35, "Contact": True, "Sex": Genders.Female, "Relationship": "Clubmate", "RelationshipRank": 0, "Events": [] }
         
         classstats = { 
@@ -514,7 +513,7 @@ label Calem1Part2:
     pause 1.0
 
     narrator "Your mother's voice, cold, level, and quiet, cuts through the implication like a knife."
-    narrator "'You think she will be well-received because the Viridian gym was run by a criminal. That's what you're saying.'"
+    narrator "'You think she will be well-received because the Viridian Gym was run by a criminal. That's what you're saying.'"
 
     pause 1.0
 

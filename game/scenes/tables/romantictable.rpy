@@ -107,7 +107,7 @@ menu:
 
             "Nevermind":
                 serena @talkingmouth "That's fine. {i}À plus tard.{/i}"
-                redmind uniform @surprisedeyebrows frownmouth "What did she call me?"
+                redmind uniform @confusedbrow frownmouth "What did she call me?"
                 jump aftercharsromantic
 
         narrator "Serena cheerfully guides you through the material, though you catch her yawning once or twice."

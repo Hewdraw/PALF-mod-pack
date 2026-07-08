@@ -998,9 +998,9 @@ redmind @sadbrow frownmouth "She's just... staring. Is she trying to intimidate 
 
 erika @surprisedmouth "{size=30}[first_name] [last_name]. Why have you chosen to come back?{/size}"
 
-redmind @frownmouth "Wow. Okay. Her slaps might be Wynaut-strength, but her scorn is like a Houndoom's flames..."
+redmind @frownmouth "Wow. Okay. I guess she's not over it."
 
-erika @surprisedmouth "{size=30}Do you have any concept of the embarrassment you've caused this school? Do you have any idea how much shame you've brought unto Kobukan's lauded battle team?{/size}"
+erika @surprisedmouth "{size=30}Do you have any concept of the embarrassment you've caused this school? Do you have any idea how much shame you've brought unto Kobukan's lauded Battle Team?{/size}"
 erika @angrymouth "{size=30}Every victory of ours from this point on will be stained by the knowledge that one of our members achieved their victory through dishonorable means.{/size}"
 
 show smoke behind erika:
@@ -1131,7 +1131,7 @@ show erika frownmouth:
     xpos 0.75 ypos 1.2 zoom 1.3 alpha 0.0
     ease 0.5 ypos 1.0 zoom 1.0 alpha 1.0
 
-erika @surprisedmouth "[first_name] has betrayed our trust, dishonored the battle team, and association with him will bruise our reputation forever on."
+erika @surprisedmouth "[first_name] has betrayed our trust, dishonored the Battle Team, and association with him will bruise our reputation forever on."
 erika @closedbrow surprisedmouth "If we ever want to participate in battle competitions with other academies--Naranjuva or Blueberry, for example--his presence is a direct impediment."
 
 pause 1.0

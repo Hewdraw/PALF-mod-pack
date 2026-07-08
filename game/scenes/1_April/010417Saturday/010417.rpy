@@ -807,7 +807,7 @@ show whitney surprisedbrow frownmouth:
 show flannery angry:
     ease 0.4 xpos 0.4
 
-flannery @angrybrow talking2mouth "You get within arms' reach of touch {i}any{/i} of us and my Numel will turn your entire team into cinders."
+flannery @angrybrow talking2mouth "You get within arms' reach of {i}any{/i} of us and my Numel will turn your entire team into cinders."
 
 roughneck @happy "Hah. Cute, girlie. I like feisty chicks like you. Why don't you ditch these losers, and come with me?"
 
